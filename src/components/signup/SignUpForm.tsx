@@ -1,8 +1,7 @@
 import SignUpButton from './SignUpButton';
 import SignUpInput from './SignUpInput';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { FormEvent } from 'react';
-import styled from '@emotion/styled';
 
 const SignUpForm = () => {
   const handleSubmit = (e: FormEvent) => {
@@ -11,18 +10,19 @@ const SignUpForm = () => {
 
   return (
     <Container>
-      <StyledForm onSubmit={handleSubmit}>
-        <SignUpInput placeholder="아이디" />
-        <SignUpInput placeholder="비밀번호" />
-        <SignUpInput placeholder="비밀번호 확인" />
-        <SignUpInput placeholder="출생연도" />
-        <SignUpInput placeholder="직업" />
+      <form onSubmit={handleSubmit}>
+        <SignUpInput placeholder="닉네임" type="text" />
+        <SignUpInput placeholder="아이디" type="text" />
+        <SignUpInput placeholder="비밀번호" type="password" />
+        <SignUpInput placeholder="비밀번호 확인" type="password" />
+        <Box sx={{ display: 'flex' }}>
+          <SignUpInput placeholder="출생연도" type="text" />
+          <SignUpInput placeholder="직업" type="text" />
+        </Box>
         <SignUpButton />
-      </StyledForm>
+      </form>
     </Container>
   );
 };
 
 export default SignUpForm;
-
-const StyledForm = styled.form``;

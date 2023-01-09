@@ -2,12 +2,13 @@ import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
 interface Props {
-  placeholder?: string;
+  placeholder: string;
+  type: string;
 }
 
-const SignUpInput = ({ placeholder }: Props) => {
+const SignUpInput = ({ placeholder, type }: Props) => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', flexGrow: 1 }}>
       <Box
         sx={{
           width: '100%',
@@ -15,7 +16,7 @@ const SignUpInput = ({ placeholder }: Props) => {
           position: 'relative',
         }}
       >
-        <Input placeholder={placeholder} />
+        <Input placeholder={placeholder} type={type} />
       </Box>
     </Box>
   );
