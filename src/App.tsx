@@ -1,16 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './components/shared/Layout';
+import Header from './components/shared/Header';
 
 import { ROUTES } from './constants/routes';
 
 const App = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route element={<Layout />}>
-          <Route path={ROUTES.HOME} element={<div>Home</div>} />
-        </Route>
+        <Route path={ROUTES.HOME} element={<div>Home</div>} />
       </Routes>
     </BrowserRouter>
   );
