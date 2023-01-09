@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import useLazyLoadImage from '../../hooks/useLazyLoadImage';
+import useLazyLoadImage from '../../../hooks/useLazyLoadImage';
 
 interface Props {
   title: string;
