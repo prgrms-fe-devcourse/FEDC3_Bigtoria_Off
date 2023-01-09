@@ -1,3 +1,14 @@
+const NotFound = () => {
+  return (
+    <WarningContainer>
+      <WarningStatus>404</WarningStatus>
+      <WarningText>Page Not Found!</WarningText>
+    </WarningContainer>
+  );
+};
+
+export default NotFound;
+
 import styled from '@emotion/styled';
 
 export const WarningContainer = styled.div`
