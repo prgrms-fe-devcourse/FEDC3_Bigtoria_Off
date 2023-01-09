@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 const NotFound = () => {
   return (
     <WarningContainer>
@@ -8,8 +10,6 @@ const NotFound = () => {
 };
 
 export default NotFound;
-
-import styled from '@emotion/styled';
 
 export const WarningContainer = styled.div`
   text-align: center;
