@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SearchForm from './components/SearchForm/SearchForm';
 
 import Header from './components/shared/Header';
 
