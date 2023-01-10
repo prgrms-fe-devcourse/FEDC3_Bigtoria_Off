@@ -1,25 +1,30 @@
 import TextField from '@mui/material/TextField';
+import { ChangeEvent } from 'react';
 
 interface Props {
   placeholder?: string;
   multiline?: boolean;
   rows?: number;
-  fullWidth?: boolean;
+  name: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const TextInput = ({
   placeholder,
-  fullWidth = true,
   multiline = false,
   rows = 10,
+  name,
+  onChange,
 }: Props) => {
   return (
     <TextField
+      fullWidth
       variant='outlined'
       placeholder={placeholder}
-      fullWidth={fullWidth}
       multiline={multiline}
       rows={rows}
+      name={name}
+      onChange={onChange}
     />
   );
 };
