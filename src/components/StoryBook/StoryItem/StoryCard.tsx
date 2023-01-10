@@ -24,7 +24,7 @@ const StoryCard = ({ title, id, lazy = false }: Props) => {
       onClick={handleClick}
     >
       <CardMedia
-        component="img"
+        component='img'
         ref={imageRef}
         sx={{ height: 280 }}
         image={
@@ -32,7 +32,7 @@ const StoryCard = ({ title, id, lazy = false }: Props) => {
             ? 'https://picsum.photos/200'
             : 'https://via.placeholder.com/200'
         }
-        title="StoryCard component sample"
+        title='StoryCard component sample'
       />
       <CardContent>
         <Typography
