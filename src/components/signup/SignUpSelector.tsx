@@ -30,7 +30,7 @@ const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
           <option key={i}>{item}</option>
         ))}
       </Selector>
-      {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
+      {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
     </Box>
   );
 };
