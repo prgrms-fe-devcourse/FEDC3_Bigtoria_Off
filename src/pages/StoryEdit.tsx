@@ -25,30 +25,38 @@ const StoryEditPage = () => {
       <form onSubmit={handleSubmit}>
         <Section>
           <Label>날짜</Label>
-          <DatePicker value={date} onChange={handleDateChange} />
+          <InputDiv>
+            <DatePicker value={date} onChange={handleDateChange} />
+          </InputDiv>
         </Section>
         <Section>
           <Label>제목</Label>
-          <TextInput
-            name='title'
-            placeholder='스토리의 제목을 입력하세요.'
-            onChange={handleChange}
-          />
-          <ErrorText>{errors.title}</ErrorText>
+          <InputDiv>
+            <TextInput
+              name='title'
+              placeholder='스토리의 제목을 입력하세요.'
+              onChange={handleChange}
+            />
+            {errors.title}
+          </InputDiv>
         </Section>
         <Section>
           <Label>사진</Label>
-          <ImageInput onChange={handleImageChange} />
+          <InputDiv>
+            <ImageInput onChange={handleImageChange} />
+          </InputDiv>
         </Section>
         <Section>
           <Label>내용</Label>
-          <TextInput
-            name='description'
-            multiline
-            placeholder='스토리의 내용을 입력하세요.'
-            onChange={handleChange}
-          />
-          <ErrorText>{errors.description}</ErrorText>
+          <InputDiv>
+            <TextInput
+              name='description'
+              multiline
+              placeholder='스토리의 내용을 입력하세요.'
+              onChange={handleChange}
+            />
+            {errors.description}
+          </InputDiv>
         </Section>
         <SubmitButton loading={isLoading} />
       </form>
@@ -74,6 +82,6 @@ const Label = styled.label`
   width: 50px;
 `;
 
-const ErrorText = styled.small`
-  color: red;
+const InputDiv = styled.div`
+  width: 100%;
 `;
