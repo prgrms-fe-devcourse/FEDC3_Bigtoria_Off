@@ -1,7 +1,8 @@
+import { Box, Container } from '@mui/material';
+
+import useForm from '../../hooks/useForm';
 import SignUpButton from './SignUpButton';
 import SignUpInput from './SignUpInput';
-import { Container, Box } from '@mui/material';
-import useForm from '../../hooks/useForm';
 import SignUpSelector from './SignUpSelector';
 
 interface SignUpOption {
@@ -26,7 +27,7 @@ const SignUpForm = () => {
     handleSubmit,
     handleChange,
   } = useForm<SignUpOption>({
-    onSubmit: async (values: SignUpOption) => {},
+    // onSubmit: async (values: SignUpOption) => {},
   });
 
   return (

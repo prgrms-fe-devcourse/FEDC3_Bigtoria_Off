@@ -1,5 +1,5 @@
-import { lightBlue } from '@mui/material/colors';
 import { Box, Button, CircularProgress } from '@mui/material';
+import { lightBlue } from '@mui/material/colors';
 
 interface Props {
   isLoading: boolean;
