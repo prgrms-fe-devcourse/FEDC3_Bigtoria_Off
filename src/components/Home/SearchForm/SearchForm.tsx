@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
-import { dummy } from './dummy';
+import { dummy } from '../dummy';
 
 const SearchForm = () => {
   const [value, setValue] = useState('');
@@ -42,14 +42,14 @@ const SearchForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box component='form' onSubmit={handleSubmit}>
       <TextField
         required
         autoFocus
-        type="text"
-        label="user name"
+        type='text'
+        label='user name'
         onChange={handleChange}
-      ></TextField>
+      />
     </Box>
   );
 };
