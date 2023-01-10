@@ -4,8 +4,6 @@ import useFetchStories from '../hooks/useFetchStories';
 
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
 
-import { Story } from '../interfaces';
-
 import { CircularProgress } from '@mui/material';
 
 const StoryBook = () => {
@@ -15,18 +13,8 @@ const StoryBook = () => {
 
   return (
     <Container>
-      {storiesByYear.map((stories) => {
-        const year: string = stories[0] as string;
-        stories.shift();
-        const onlyStories: Story[] = stories as Story[];
-
-        return (
-          <StoriesByYear
-            key={year as string}
-            year={year}
-            stories={onlyStories}
-          />
-        );
+      {storiesByYear.map(({ year, stories }) => {
+        return <StoriesByYear key={year} year={year} stories={stories} />;
       })}
     </Container>
   );

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import StoryCard from './StoryCard';
 
-import { Story, Title } from '../../interfaces';
+import { Story, Title } from '../../interfaces/story';
 
 interface Props {
   year: string;
@@ -14,7 +14,7 @@ const StoriesByYear = ({ year, stories }: Props) => {
     <Container>
       <Year>{year}</Year>
       {stories.map((story) => {
-        const { realTitle }: Pick<Title, 'realTitle'> = JSON.parse(story.title);
+        const { realTitle }: Title = JSON.parse(story.title);
 
         return (
           <StoryCard

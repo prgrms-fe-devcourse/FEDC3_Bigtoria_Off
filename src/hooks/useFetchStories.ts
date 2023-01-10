@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
-import { Story, Title } from '../interfaces';
+import { StoryDate, Story, StoriesWithYear } from '../interfaces/story';
 
-import { ERROR_MESSAGES } from '../constants/errorMessage';
+import { ERROR_MESSAGES } from '../constants/errorMessages';
 
 const useFetchStories = () => {
   const [stories, setStories] = useState([]);
@@ -14,19 +14,16 @@ const useFetchStories = () => {
   const { userId } = useParams();
   const storiesByYear = useMemo(() => {
     const yearsSet = new Set<string>();
+    const storiesWithYear: StoriesWithYear[] = [];
 
     stories.forEach((story: Story) => {
-      const { year }: Pick<Title, 'year'> = JSON.parse(story.title);
+      const { year }: Pick<StoryDate, 'year'> = JSON.parse(story.title);
       yearsSet.add(year);
     });
 
-    const yearsArray: string[] = Array.from(yearsSet).sort(
-      (yearA, yearB) => +yearB - +yearA
-    );
-
-    const storiesSortedWithYear = yearsArray.map((year) => {
+    yearsSet.forEach((year) => {
       const storiesFilteredByYear: Story[] = stories.filter((story: Story) => {
-        const { year: yearOfStory }: Pick<Title, 'year'> = JSON.parse(
+        const { year: yearOfStory }: Pick<StoryDate, 'year'> = JSON.parse(
           story.title
         );
 
@@ -38,12 +35,12 @@ const useFetchStories = () => {
           year: yearA,
           month: monthA,
           day: dayA,
-        }: Pick<Title, 'year' | 'month' | 'day'> = JSON.parse(storyA.title);
+        }: StoryDate = JSON.parse(storyA.title);
         const {
           year: yearB,
           month: monthB,
           day: dayB,
-        }: Pick<Title, 'year' | 'month' | 'day'> = JSON.parse(storyB.title);
+        }: StoryDate = JSON.parse(storyB.title);
 
         return (
           +new Date(`${yearA}.${monthA}.${dayA}`) -
@@ -51,10 +48,17 @@ const useFetchStories = () => {
         );
       });
 
-      return [year, ...storiesFilteredByYear];
+      storiesWithYear.push({
+        year,
+        stories: storiesFilteredByYear,
+      });
     });
 
-    return storiesSortedWithYear;
+    storiesWithYear.sort(
+      (storiesA, storiesB) => +storiesB.year - +storiesA.year
+    );
+
+    return storiesWithYear;
   }, [stories]);
 
   useEffect(() => {
