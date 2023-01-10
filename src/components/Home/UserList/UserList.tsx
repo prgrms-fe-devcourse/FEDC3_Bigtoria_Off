@@ -1,30 +1,39 @@
-import { useState } from 'react';
-import { dummy } from '../dummy';
+import { User } from '../dummy';
+/*
+ * TODO
+ * 1. 클릭시 유저 프로필 페이지로 넘어가기
+ * 2. component styling
+ *   - ul container
+ *   - li container
+ *   - a
+ *   - img
+ *   - text (name, info)
+ * 3. context API
+ */
 
 interface Props {
   users: Array<User>;
 }
 
-//TODO: props로 userList를 받을 예정
-const UserList = () => {
-  const [userProfiles, setUserProfiles] = useState(dummy);
-
+const UserList = ({ users }: Props) => {
   const showUserProfileList = (userProfiles: Array<User>) => {
     return (
       <ul>
-        {userProfiles.map(({ _id, fullName }) => {
+        {userProfiles.map(({ _id, image, fullName }) => {
           const {
             name,
-            image,
             info: { year, job, description },
           } = JSON.parse(fullName);
+
           return (
             <li key={_id}>
-              <img src={image} />
-              <p>{name}</p>
-              <p>
-                {year} {job} {description}
-              </p>
+              <a href='#'>
+                <img src={image} />
+                <p>{name}</p>
+                <p>
+                  {year} {job} {description}
+                </p>
+              </a>
             </li>
           );
         })}
@@ -32,7 +41,7 @@ const UserList = () => {
     );
   };
 
-  return <>{showUserProfileList(userProfiles)}</>;
+  return <>{showUserProfileList(users)}</>;
 };
 
 export default UserList;

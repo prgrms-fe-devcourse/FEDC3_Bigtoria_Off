@@ -1,24 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import UserList from './components/Home/UserList/UserList';
-
-import Header from './components/shared/Header';
 
 import { ROUTES } from './constants/routes';
+
+import Header from './components/shared/Header';
+import HomePage from './pages/Home';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route
-          path={ROUTES.HOME}
-          element={
-            <div>
-              Home
-              <UserList />
-            </div>
-          }
-        />
+        <Route path={ROUTES.HOME} element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );

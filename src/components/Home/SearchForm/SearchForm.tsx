@@ -1,8 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
-import { dummy } from '../dummy';
+import { dummy, User } from '../dummy';
 
-const SearchForm = () => {
+interface Props {
+  onSubmit: (users: Array<User>) => void;
+}
+
+const SearchForm = ({ onSubmit }: Props) => {
   const [value, setValue] = useState('');
   const userMap = new Map();
 
@@ -39,6 +43,7 @@ const SearchForm = () => {
 
     //TODO
     //1. filterUser목록 넘겨주기
+    onSubmit(filteredUsers);
   };
 
   return (
