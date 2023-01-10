@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, RefObject } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 
 interface Date {
@@ -28,10 +28,11 @@ const useForm = () => {
   const [values, setValues] = useState({
     date: getDateInfo(today),
     title: '',
+    image: '',
     description: '',
   });
   const [date, setDate] = useState<Dayjs | null>(today);
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState('');
   const [errors, setErrors] = useState<Error>({ title: '', description: '' });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,12 +43,25 @@ const useForm = () => {
 
   const handleDateChange = (newValue: Dayjs | null) => {
     setDate(newValue);
-    newValue && setValues({ ...values, date: getDateInfo(newValue) });
+    if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
+  };
+
+  const encodeFileToBase64 = (fileBlob: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        if (!reader.result || typeof reader.result !== 'string') return;
+        const result = reader.result;
+        setImage(result);
+        setValues({ ...values, image: result });
+        resolve(Promise);
+      };
+    });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    file && setImage(file);
+    encodeFileToBase64(e.target.files?.[0]);
   };
 
   const validate = ({ title, description }: Error) => {
@@ -62,8 +76,8 @@ const useForm = () => {
     e.preventDefault();
 
     const newErrors = validate(values);
-    if (Object.keys(newErrors).length === 0) {
-      // await onSubmit(values);
+    if (!newErrors.title && !newErrors.description) {
+      console.log('제출됨', values);
     }
     setErrors(newErrors);
     setIsLoading(false);

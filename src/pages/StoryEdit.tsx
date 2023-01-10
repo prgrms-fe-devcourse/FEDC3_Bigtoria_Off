@@ -11,6 +11,7 @@ import useForm from '../hooks/useStoryForm';
 const StoryEditPage = () => {
   const {
     date,
+    image,
     isLoading,
     errors,
     handleChange,
@@ -44,6 +45,9 @@ const StoryEditPage = () => {
           <Label>사진</Label>
           <InputDiv>
             <ImageInput onChange={handleImageChange} />
+            <div>
+              {image && <ImagePreview src={image} alt='preview-image' />}
+            </div>
           </InputDiv>
         </Section>
         <Section>
@@ -84,4 +88,10 @@ const Label = styled.label`
 
 const InputDiv = styled.div`
   width: 100%;
+`;
+
+const ImagePreview = styled.img`
+  max-width: 100%;
+  height: 300px;
+  object-fit: contain;
 `;
