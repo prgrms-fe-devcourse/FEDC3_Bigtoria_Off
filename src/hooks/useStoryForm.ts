@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { StoryData } from '../interfaces/story';
 
@@ -37,7 +37,7 @@ const useStoryForm = () => {
     if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
   };
 
-  const encodeFileToBase64 = (fileBlob: any) => {
+  const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise((resolve) => {
@@ -52,6 +52,7 @@ const useStoryForm = () => {
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     encodeFileToBase64(e.target.files?.[0]);
   };
 
