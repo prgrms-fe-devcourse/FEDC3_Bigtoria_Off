@@ -27,7 +27,7 @@ const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
       <Selector name={name} onChange={onChange}>
         <option value=''>출생연도</option>
         {getFullYear().map((item, i) => (
-          <option key={i}>{item}</option>
+          <option key={item}>{item}</option>
         ))}
       </Selector>
       {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
