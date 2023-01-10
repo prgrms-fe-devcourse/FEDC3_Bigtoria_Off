@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { lightBlue } from '@mui/material/colors';
 import { Box, Button, CircularProgress } from '@mui/material';
 
-export default function CircularIntegration() {
+const SignUpButton = () => {
   const [loading, setLoading] = useState(false);
 
   const handleButtonClick = () => {
@@ -45,4 +45,6 @@ export default function CircularIntegration() {
       </Box>
     </Box>
   );
-}
+};
+
+export default SignUpButton;
