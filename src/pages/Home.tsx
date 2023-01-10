@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
+
+import { getUserList, searchUserList } from '../apis/search';
 import SearchForm from '../components/Home/SearchForm/SearchForm';
 import UserList from '../components/Home/UserList/UserList';
-
-//TODO: api작업 후, dummy 삭제
-import { User } from '../components/Home/dummy';
 
 /*
  * 기능
@@ -13,54 +12,23 @@ import { User } from '../components/Home/dummy';
  *  - username 검색 범위에 포함할 것인가?
  */
 
-//TODO: API_END_POINT - env파일
-const API_END_POINT = '';
-
 const HomePage = () => {
   const [userProfiles, setUserProfiles] = useState([]);
 
   useEffect(() => {
-    //TODO: api폴더로 이동
-    const url = `${API_END_POINT}/users/get-users`;
-    const config = {
-      method: 'GET',
+    const initUserList = async () => {
+      const userList = await getUserList();
+
+      setUserProfiles(userList);
     };
 
-    const fetchUserList = async () => {
-      await fetch(url, config)
-        .then((res) => res.json())
-        .then((data) => {
-          setUserProfiles(data);
-        });
-    };
-
-    fetchUserList();
+    initUserList();
   }, []);
 
-  const handleSubmit = (keyword: string) => {
-    //TODO: api폴더로 이동
-    const url = `${API_END_POINT}/search/users/${keyword}`;
-    const config = {
-      method: 'GET',
-    };
+  const handleSubmit = async (keyword: string) => {
+    const filteredUser = await searchUserList(keyword);
 
-    const fetchFilteredUserList = async () => {
-      await fetch(url, config)
-        .then((res) => res.json())
-        .then((data) => {
-          const filteredUser = data.filter((u: User) => {
-            const { fullName } = u;
-
-            if (fullName.toLowerCase().match(keyword.toLowerCase()))
-              return true;
-            return false;
-          });
-
-          setUserProfiles(filteredUser);
-        });
-    };
-
-    fetchFilteredUserList();
+    setUserProfiles(filteredUser);
   };
 
   return (
