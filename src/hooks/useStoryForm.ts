@@ -1,20 +1,7 @@
-import { ChangeEvent, FormEvent, useState, RefObject } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 
-interface Date {
-  year: number;
-  month: number;
-  date: number;
-}
-
-interface StoryData {
-  date: Date;
-  title: string;
-  image: string;
-  description: string;
-}
-
-type Error = Pick<StoryData, 'title' | 'description'>;
+import { StoryData } from '../interfaces/story';
 
 const getDateInfo = (date: Dayjs) => ({
   year: date.get('year'),
@@ -37,7 +24,7 @@ const useStoryForm = () => {
   });
   const [date, setDate] = useState<Dayjs | null>(today);
   const [image, setImage] = useState('');
-  const [errors, setErrors] = useState<Error>({ title: '', description: '' });
+  const [errors, setErrors] = useState({ title: '', description: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +60,10 @@ const useStoryForm = () => {
     setValues({ ...values, image: '' });
   };
 
-  const validate = ({ title, description }: Error) => {
+  const validate = ({
+    title,
+    description,
+  }: Pick<StoryData, 'title' | 'description'>) => {
     const errors = { title: '', description: '' };
     if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
     if (!description || isBlank(description))
