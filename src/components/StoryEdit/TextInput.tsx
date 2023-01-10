@@ -1,4 +1,4 @@
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import { ChangeEvent } from 'react';
 
 interface Props {
