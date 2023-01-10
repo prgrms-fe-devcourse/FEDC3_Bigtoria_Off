@@ -2,6 +2,7 @@ import SignUpButton from './SignUpButton';
 import SignUpInput from './SignUpInput';
 import { Container, Box } from '@mui/material';
 import useForm from '../../hooks/useForm';
+import SignUpSelector from './SignUpSelector';
 
 type SignUpOption = {
   fullName: string;
@@ -42,7 +43,7 @@ const SignUpForm = () => {
         />
         <SignUpInput
           placeholder='이메일 주소'
-          type='email'
+          type='text'
           name='email'
           onChange={handleChange}
           errorMsg={emailError}
@@ -62,11 +63,9 @@ const SignUpForm = () => {
           errorMsg={passwordConfirmError}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <SignUpInput
-            placeholder='출생연도'
-            type='text'
-            name='birth'
+          <SignUpSelector
             onChange={handleChange}
+            name='birth'
             errorMsg={birthError}
           />
           <SignUpInput
