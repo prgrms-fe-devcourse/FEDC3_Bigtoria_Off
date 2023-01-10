@@ -66,9 +66,7 @@ const useFetchStories = () => {
       setIsLoading(true);
       try {
         const { data: fetchedStories } = await axios({
-          url: `${
-            import.meta.env.VITE_API_URL
-          }/posts/author/63bcf0d4f596c65f9ee2f226`,
+          url: `${import.meta.env.VITE_API_URL}/posts/author/${userId}`,
           method: 'GET',
         });
         setStories(fetchedStories);
