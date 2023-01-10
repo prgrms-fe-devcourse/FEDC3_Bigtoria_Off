@@ -4,14 +4,14 @@ import { Container, Box } from '@mui/material';
 import useForm from '../../hooks/useForm';
 import SignUpSelector from './SignUpSelector';
 
-type SignUpOption = {
+interface SignUpOption {
   fullName: string;
   email: string;
   password: string;
   passwordConfirm: string;
   birth: string;
   career: string;
-};
+}
 
 const SignUpForm = () => {
   const {
