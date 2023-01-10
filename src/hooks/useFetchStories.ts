@@ -1,12 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import axios from 'axios';
+
 import { useParams } from 'react-router-dom';
+
+import { Story, Title } from '../interfaces';
+
+import { ERROR_MESSAGES } from '../constants/errorMessage';
 
 const useFetchStories = () => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
+  const storiesByYear = useMemo(() => {
+    const yearsSet = new Set<string>();
+
+    stories.forEach((story: Story) => {
+      const { year }: Pick<Title, 'year'> = JSON.parse(story.title);
+      yearsSet.add(year);
+    });
+
+    const yearsArray: string[] = Array.from(yearsSet).sort(
+      (yearA, yearB) => +yearB - +yearA
+    );
+
+    const storiesSortedWithYear = yearsArray.map((year) => {
+      const storiesFilteredByYear: Story[] = stories.filter((story: Story) => {
+        const { year: yearOfStory }: Pick<Title, 'year'> = JSON.parse(
+          story.title
+        );
+
+        return year === yearOfStory;
+      });
+
+      storiesFilteredByYear.sort((storyA, storyB) => {
+        const {
+          year: yearA,
+          month: monthA,
+          day: dayA,
+        }: Pick<Title, 'year' | 'month' | 'day'> = JSON.parse(storyA.title);
+        const {
+          year: yearB,
+          month: monthB,
+          day: dayB,
+        }: Pick<Title, 'year' | 'month' | 'day'> = JSON.parse(storyB.title);
+
+        return (
+          +new Date(`${yearA}.${monthA}.${dayA}`) -
+          +new Date(`${yearB}.${monthB}.${dayB}`)
+        );
+      });
+
+      return [year, ...storiesFilteredByYear];
+    });
+
+    return storiesSortedWithYear;
+  }, [stories]);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -21,15 +70,16 @@ const useFetchStories = () => {
         setStories(fetchedStories);
       } catch (error) {
         console.error(error);
-        alert('스토리북 조회 중 에러가 발생했습니다.');
+        alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_STORIES);
       } finally {
         setIsLoading(false);
       }
     };
+
     fetchStories();
   }, []);
 
-  return { stories, isLoading };
+  return { storiesByYear, isLoading };
 };
 
 export default useFetchStories;
