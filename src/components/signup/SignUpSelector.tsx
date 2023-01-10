@@ -3,22 +3,18 @@ import { Box } from '@mui/material';
 import { ChangeEventHandler } from 'react';
 
 interface Props {
-  placeholder: string;
-  type: string;
   name: string;
   errorMsg?: string;
-  value: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
 }
 
-const SignUpInput = ({
-  placeholder,
-  type,
-  name,
-  errorMsg,
-  value,
-  onChange,
-}: Props) => {
+const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
+  const getFullYear = () => {
+    return Array(new Date().getFullYear() - 1980)
+      .fill(0)
+      .map((_, i) => new Date().getFullYear() - i);
+  };
+
   return (
     <Box
       sx={{
@@ -28,21 +24,20 @@ const SignUpInput = ({
         paddingBottom: '15px',
       }}
     >
-      <Input
-        placeholder={placeholder}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
-      {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
+      <Selector name={name} onChange={onChange}>
+        <option value=''>출생연도</option>
+        {getFullYear().map((item) => (
+          <option key={item}>{item}</option>
+        ))}
+      </Selector>
+      {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
     </Box>
   );
 };
 
-export default SignUpInput;
+export default SignUpSelector;
 
-const Input = styled.input`
+const Selector = styled.select`
   height: 36px;
   width: 100%;
   padding: 6px 16px;

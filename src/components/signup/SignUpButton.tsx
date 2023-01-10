@@ -1,17 +1,11 @@
-import { Box, Button, CircularProgress } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
-import { useState } from 'react';
+import { Box, Button, CircularProgress } from '@mui/material';
 
-const SignUpButton = () => {
-  const [loading, setLoading] = useState(false);
+interface Props {
+  isLoading: boolean;
+}
 
-  const handleButtonClick = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
+const SignUpButton = ({ isLoading }: Props) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <Box
@@ -24,12 +18,12 @@ const SignUpButton = () => {
         <Button
           fullWidth={true}
           variant='contained'
-          disabled={loading}
-          onClick={handleButtonClick}
+          type='submit'
+          disabled={isLoading}
         >
           회원가입
         </Button>
-        {loading && (
+        {isLoading && (
           <CircularProgress
             size={24}
             sx={{
