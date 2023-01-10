@@ -1,38 +1,42 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import useLazyLoadImage from '../../../hooks/useLazyLoadImage';
+import useLazyLoadImage from '../../hooks/useLazyLoadImage';
+
+import defaultImage from '../../assets/images/defaultImage.png';
 
 interface Props {
   title: string;
-  id: string;
+  storyId: string;
+  image?: string;
   lazy?: boolean;
 }
 
-const StoryCard = ({ title, id, lazy = false }: Props) => {
+const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
   const { loaded, imageRef } = useLazyLoadImage(lazy);
   const navigate = useNavigate();
 
   const handleClick = () => {
     // todo: StoryCard 클릭 시 해당 story detail 페이지로 이동.
-    // navigate(`/story/${id}`);
+    // navigate(`/story/${storyId}`);
   };
 
   return (
     <Card
-      sx={{ maxWidth: 210, marginRight: '16px', cursor: 'pointer' }}
+      sx={{
+        maxWidth: 210,
+        marginRight: '16px',
+        cursor: 'pointer',
+        boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
+      }}
       onClick={handleClick}
     >
       <CardMedia
-        component="img"
+        component='img'
         ref={imageRef}
         sx={{ height: 280 }}
-        image={
-          loaded
-            ? 'https://picsum.photos/200'
-            : 'https://via.placeholder.com/200'
-        }
-        title="StoryCard component sample"
+        image={loaded ? (!!image ? image : defaultImage) : defaultImage}
+        title={`${title} 사진`}
       />
       <CardContent>
         <Typography
