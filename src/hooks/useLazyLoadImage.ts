@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const LOAD_IMAGE_EVENT_TYPE = 'loadImage';
 
