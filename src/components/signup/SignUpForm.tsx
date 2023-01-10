@@ -15,7 +15,7 @@ const SignUpForm = () => {
         <SignUpInput placeholder="아이디" type="text" />
         <SignUpInput placeholder="비밀번호" type="password" />
         <SignUpInput placeholder="비밀번호 확인" type="password" />
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           <SignUpInput placeholder="출생연도" type="text" />
           <SignUpInput placeholder="직업" type="text" />
         </Box>

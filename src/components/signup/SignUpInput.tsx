@@ -8,16 +8,8 @@ interface Props {
 
 const SignUpInput = ({ placeholder, type }: Props) => {
   return (
-    <Box sx={{ display: 'flex', flexGrow: 1 }}>
-      <Box
-        sx={{
-          width: '100%',
-          alignItems: 'center',
-          position: 'relative',
-        }}
-      >
-        <Input placeholder={placeholder} type={type} />
-      </Box>
+    <Box sx={{ width: '100%', alignItems: 'center', position: 'relative' }}>
+      <Input placeholder={placeholder} type={type} />
     </Box>
   );
 };
