@@ -36,6 +36,7 @@ const SignUpForm = () => {
           placeholder='닉네임'
           type='text'
           name='fullName'
+          value={values.fullName}
           onChange={handleChange}
           errorMsg={fullNameError}
         />
@@ -43,6 +44,7 @@ const SignUpForm = () => {
           placeholder='이메일 주소'
           type='text'
           name='email'
+          value={values.email}
           onChange={handleChange}
           errorMsg={emailError}
         />
@@ -50,6 +52,7 @@ const SignUpForm = () => {
           placeholder='비밀번호'
           type='password'
           name='password'
+          value={values.password}
           onChange={handleChange}
           errorMsg={passwordError}
         />
@@ -57,6 +60,7 @@ const SignUpForm = () => {
           placeholder='비밀번호 확인'
           type='password'
           name='passwordConfirm'
+          value={values.passwordConfirm}
           onChange={handleChange}
           errorMsg={passwordConfirmError}
         />
@@ -70,6 +74,7 @@ const SignUpForm = () => {
             placeholder='직업'
             type='text'
             name='career'
+            value={values.career}
             onChange={handleChange}
             errorMsg={careerError}
           />

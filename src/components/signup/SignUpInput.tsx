@@ -7,6 +7,7 @@ interface Props {
   type: string;
   name: string;
   errorMsg?: string;
+  value: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -15,6 +16,7 @@ const SignUpInput = ({
   type,
   name,
   errorMsg,
+  value,
   onChange,
 }: Props) => {
   return (
@@ -30,6 +32,7 @@ const SignUpInput = ({
         placeholder={placeholder}
         type={type}
         name={name}
+        value={value}
         onChange={onChange}
       />
       {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}

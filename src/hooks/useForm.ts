@@ -25,7 +25,7 @@ const useForm = <T>({ onSubmit }: Props<T>) => {
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
