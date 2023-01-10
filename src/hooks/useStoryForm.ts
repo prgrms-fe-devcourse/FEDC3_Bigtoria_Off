@@ -24,6 +24,10 @@ const getDateInfo = (date: Dayjs) => ({
 
 const today = dayjs(new Date());
 
+const isBlank = (string: string) => {
+  return string.trim().length === 0;
+};
+
 const useStoryForm = () => {
   const [values, setValues] = useState({
     date: getDateInfo(today),
@@ -71,8 +75,9 @@ const useStoryForm = () => {
 
   const validate = ({ title, description }: Error) => {
     const errors = { title: '', description: '' };
-    if (!title) errors.title = '제목을 입력해 주세요.';
-    if (!description) errors.description = '내용을 입력해 주세요.';
+    if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
+    if (!description || isBlank(description))
+      errors.description = '내용을 입력해 주세요.';
     return errors;
   };
 
