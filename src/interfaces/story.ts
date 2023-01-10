@@ -25,3 +25,10 @@ export interface StoryDate extends StoryYear, StoryMonth, StoryDay {}
 export interface StoriesWithYear extends StoryYear {
   stories: Story[];
 }
+
+export interface StoryData {
+  date: StoryDate;
+  title: string; // TODO: 협의 필요(realTitle)
+  image: string;
+  description: string;
+}

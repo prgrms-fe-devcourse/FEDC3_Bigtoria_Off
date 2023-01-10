@@ -1,24 +1,23 @@
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
 
-const DatePicker = () => {
-  const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
+interface Props {
+  value: Dayjs | null;
+  onChange: (newValue: Dayjs | null) => void;
+}
 
-  const handleChange = (newValue: Dayjs | null) => {
-    setValue(newValue);
-  };
-
+const DatePicker = ({ value, onChange }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DesktopDatePicker
+      <MobileDatePicker
         inputFormat='YYYY/MM/DD'
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         renderInput={(params) => <TextField {...params} />}
+        maxDate={dayjs(new Date())}
       />
     </LocalizationProvider>
   );
