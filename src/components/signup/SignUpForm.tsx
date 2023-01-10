@@ -26,9 +26,7 @@ const SignUpForm = () => {
     handleSubmit,
     handleChange,
   } = useForm<SignUpOption>({
-    onSubmit: async (values: SignUpOption) => {
-      console.log('submit');
-    },
+    onSubmit: async (values: SignUpOption) => {},
   });
 
   return (
