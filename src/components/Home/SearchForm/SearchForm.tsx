@@ -1,7 +1,6 @@
 import { Box, TextField } from '@mui/material';
+import { dummy } from 'dummy';
 import { ChangeEvent, useEffect, useState } from 'react';
-
-import { dummy } from './dummy';
 
 const SearchForm = () => {
   const [value, setValue] = useState('');
