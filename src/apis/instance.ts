@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 
 import { HTTP_METHODS } from '../constants/httpMethods';
-import { getLocalStorage } from './../utils/storage';
+import { getLocalStorage } from '../utils/storage';
 
 const TOKEN_KEY = 'token';
 

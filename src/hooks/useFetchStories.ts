@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import {
@@ -9,11 +8,13 @@ import {
   StoryDate,
   StoryYear,
 } from '../interfaces/story';
+import { getStoriesOfUser } from './../apis/story';
 
 const useFetchStories = () => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
+  const navigate = useNavigate();
   const storiesByYear = useMemo(() => {
     const yearsSet = new Set<string>();
     const storiesWithYear: StoriesWithYear[] = [];
@@ -65,11 +66,13 @@ const useFetchStories = () => {
     const fetchStories = async () => {
       setIsLoading(true);
       try {
-        const { data: fetchedStories } = await axios({
-          url: `${import.meta.env.VITE_API_URL}/posts/author/${userId}`,
-          method: 'GET',
-        });
-        setStories(fetchedStories);
+        if (userId) {
+          const fetchedStories = await getStoriesOfUser(userId);
+          setStories(fetchedStories);
+        } else {
+          // todo: 404 페이지로 리다이렉팅
+          // navigate(404 페이지)
+        }
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_STORIES);

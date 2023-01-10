@@ -2,7 +2,7 @@ const storage = localStorage;
 
 export const getLocalStorage = (key: string, defaultValue = '') => {
   try {
-    const storedValue = JSON.parse(storage.getItem(key) || '');
+    const storedValue = JSON.parse(storage.getItem(key) || '""');
 
     return storedValue ? storedValue : defaultValue;
   } catch (error) {
