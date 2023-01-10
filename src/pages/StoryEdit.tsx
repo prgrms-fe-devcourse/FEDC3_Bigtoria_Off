@@ -6,7 +6,7 @@ import {
   TextInput,
   ImageInput,
 } from '../components/StoryEdit';
-import useForm from '../hooks/useStoryForm';
+import useStoryForm from '../hooks/useStoryForm';
 
 const StoryEditPage = () => {
   const {
@@ -17,8 +17,9 @@ const StoryEditPage = () => {
     handleChange,
     handleDateChange,
     handleImageChange,
+    handleImageDelete,
     handleSubmit,
-  } = useForm();
+  } = useStoryForm();
 
   return (
     <Container>
@@ -44,7 +45,11 @@ const StoryEditPage = () => {
         <Section>
           <Label>사진</Label>
           <InputDiv>
-            <ImageInput onChange={handleImageChange} />
+            <ImageInput
+              onChange={handleImageChange}
+              onDelete={handleImageDelete}
+              isAdded={image !== ''}
+            />
             <div>
               {image && <ImagePreview src={image} alt='preview-image' />}
             </div>

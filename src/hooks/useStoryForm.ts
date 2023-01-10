@@ -24,7 +24,7 @@ const getDateInfo = (date: Dayjs) => ({
 
 const today = dayjs(new Date());
 
-const useForm = () => {
+const useStoryForm = () => {
   const [values, setValues] = useState({
     date: getDateInfo(today),
     title: '',
@@ -64,6 +64,11 @@ const useForm = () => {
     encodeFileToBase64(e.target.files?.[0]);
   };
 
+  const handleImageDelete = () => {
+    setImage('');
+    setValues({ ...values, image: '' });
+  };
+
   const validate = ({ title, description }: Error) => {
     const errors = { title: '', description: '' };
     if (!title) errors.title = '제목을 입력해 주세요.';
@@ -77,7 +82,7 @@ const useForm = () => {
 
     const newErrors = validate(values);
     if (!newErrors.title && !newErrors.description) {
-      console.log('제출됨', values);
+      // onSubmit(values)
     }
     setErrors(newErrors);
     setIsLoading(false);
@@ -92,8 +97,9 @@ const useForm = () => {
     handleChange,
     handleDateChange,
     handleImageChange,
+    handleImageDelete,
     handleSubmit,
   };
 };
 
-export default useForm;
+export default useStoryForm;
