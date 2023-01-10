@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
-import StoryCard from './StoryCard';
-
 import { StoriesWithYear, Title } from '../../interfaces/story';
+import StoryCard from './StoryCard';
 
 const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
   return (

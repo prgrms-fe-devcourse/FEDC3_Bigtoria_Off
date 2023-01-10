@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-
-import useFetchStories from '../hooks/useFetchStories';
+import { CircularProgress } from '@mui/material';
 
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
-
-import { CircularProgress } from '@mui/material';
+import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
   const { storiesByYear, isLoading } = useFetchStories();

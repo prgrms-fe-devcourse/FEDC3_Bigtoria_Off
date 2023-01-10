@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { lightBlue } from '@mui/material/colors';
 import { Box, Button, CircularProgress } from '@mui/material';
+import { lightBlue } from '@mui/material/colors';
+import { useState } from 'react';
 
 const SignUpButton = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const SignUpButton = () => {
       >
         <Button
           fullWidth={true}
-          variant="contained"
+          variant='contained'
           disabled={loading}
           onClick={handleButtonClick}
         >
