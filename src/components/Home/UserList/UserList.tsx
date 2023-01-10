@@ -1,38 +1,43 @@
+import styled from '@emotion/styled';
 import { User } from '../dummy';
 /*
  * TODO
  * 1. 클릭시 유저 프로필 페이지로 넘어가기
- * 2. component styling
+ * 2. component styling with MUI
  *   - ul container
  *   - li container
  *   - a
  *   - img
  *   - text (name, info)
- * 3. context API
  */
 
+type UserList = Array<User>;
+
 interface Props {
-  users: Array<User>;
+  users: UserList;
 }
 
 const UserList = ({ users }: Props) => {
-  const showUserProfileList = (userProfiles: Array<User>) => {
+  const showUserProfileList = (userProfiles: UserList) => {
     return (
       <ul>
-        {userProfiles.map(({ _id, image, fullName }) => {
-          const {
-            name,
-            info: { year, job, description },
-          } = JSON.parse(fullName);
+        {userProfiles.map(({ _id, image, fullName, username }) => {
+          let description = null;
+
+          if (username) {
+            description = JSON.parse(username);
+          }
 
           return (
             <li key={_id}>
               <a href='#'>
                 <img src={image} />
-                <p>{name}</p>
-                <p>
-                  {year} {job} {description}
-                </p>
+                <p>{fullName}</p>
+                {description && (
+                  <p>
+                    {description.year} {description.job}
+                  </p>
+                )}
               </a>
             </li>
           );
@@ -41,7 +46,19 @@ const UserList = ({ users }: Props) => {
     );
   };
 
-  return <>{showUserProfileList(users)}</>;
+  return (
+    <div>
+      {!users || users.length === 0 ? (
+        <NoResultContainer>0 Results...</NoResultContainer>
+      ) : (
+        showUserProfileList(users)
+      )}
+    </div>
+  );
 };
 
 export default UserList;
+
+const NoResultContainer = styled.div`
+  font-size: 25px;
+`;
