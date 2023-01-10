@@ -2,7 +2,8 @@ export const dummy = [
   {
     _id: '1',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"Tomas Hiddleston","role":["1995","student"]}',
+    fullName:
+      '{"name":"Tomas Hiddleston","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
@@ -22,7 +23,7 @@ export const dummy = [
   {
     _id: '2',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"Helen","role":["1995","student"]}',
+    fullName: '{"name":"Christina","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
@@ -42,7 +43,7 @@ export const dummy = [
   {
     _id: '3',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"Christina","role":["1995","student"]}',
+    fullName: '{"name":"갈미현","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
@@ -62,7 +63,7 @@ export const dummy = [
   {
     _id: '4',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"갈미현","role":["1995","student"]}',
+    fullName: '{"name":"갈베베","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
@@ -82,7 +83,7 @@ export const dummy = [
   {
     _id: '5',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"갈베베","role":["1995","student"]}',
+    fullName: '{"name":"Chris","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
@@ -102,7 +103,7 @@ export const dummy = [
   {
     _id: '6',
     image: '#', // 프로필 이미지
-    fullName: '{"name":"Chris","role":["1995","student"]}',
+    fullName: '{"name":"Tomas","info":{"year":"1995","job":"gagman"}}',
     role: 'Regular',
     coverImage: '', // 커버 이미지
     emailVerified: false, // 사용되지 않음
