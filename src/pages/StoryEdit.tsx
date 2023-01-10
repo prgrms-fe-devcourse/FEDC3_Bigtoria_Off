@@ -1,102 +1,19 @@
 import styled from '@emotion/styled';
+import StoryEditForm from '../components/StoryEdit/StoryEditForm';
 
-import {
-  DatePicker,
-  SubmitButton,
-  TextInput,
-  ImageInput,
-} from '../components/StoryEdit';
-import useStoryForm from '../hooks/useStoryForm';
-
-const StoryEditPage = () => {
-  const {
-    date,
-    image,
-    isLoading,
-    errors,
-    handleChange,
-    handleDateChange,
-    handleImageChange,
-    handleImageDelete,
-    handleSubmit,
-  } = useStoryForm();
-
+const StoryEdit = () => {
   return (
     <Container>
       <h1>스토리 추가</h1>
-      <form onSubmit={handleSubmit}>
-        <Section>
-          <Label>날짜</Label>
-          <InputDiv>
-            <DatePicker value={date} onChange={handleDateChange} />
-          </InputDiv>
-        </Section>
-        <Section>
-          <Label>제목</Label>
-          <InputDiv>
-            <TextInput
-              name='title'
-              placeholder='스토리의 제목을 입력하세요.'
-              onChange={handleChange}
-            />
-            {errors.title}
-          </InputDiv>
-        </Section>
-        <Section>
-          <Label>사진</Label>
-          <InputDiv>
-            <ImageInput
-              onChange={handleImageChange}
-              onDelete={handleImageDelete}
-              isAdded={image !== ''}
-            />
-            <div>
-              {image && <ImagePreview src={image} alt='preview-image' />}
-            </div>
-          </InputDiv>
-        </Section>
-        <Section>
-          <Label>내용</Label>
-          <InputDiv>
-            <TextInput
-              name='description'
-              multiline
-              placeholder='스토리의 내용을 입력하세요.'
-              onChange={handleChange}
-            />
-            {errors.description}
-          </InputDiv>
-        </Section>
-        <SubmitButton loading={isLoading} />
-      </form>
+      <StoryEditForm />
     </Container>
   );
 };
 
-export default StoryEditPage;
+export default StoryEdit;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px;
-`;
-
-const Section = styled.section`
-  display: flex;
-  align-items: center;
-  padding-bottom: 20px;
-`;
-
-const Label = styled.label`
-  width: 50px;
-`;
-
-const InputDiv = styled.div`
-  width: 100%;
-`;
-
-const ImagePreview = styled.img`
-  max-width: 100%;
-  height: 300px;
-  object-fit: contain;
 `;
