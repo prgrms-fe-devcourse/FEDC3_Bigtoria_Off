@@ -4,7 +4,12 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
-import { StoryDate, Story, StoriesWithYear } from '../interfaces/story';
+import {
+  StoryDate,
+  Story,
+  StoriesWithYear,
+  StoryYear,
+} from '../interfaces/story';
 
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 
@@ -17,15 +22,13 @@ const useFetchStories = () => {
     const storiesWithYear: StoriesWithYear[] = [];
 
     stories.forEach((story: Story) => {
-      const { year }: Pick<StoryDate, 'year'> = JSON.parse(story.title);
+      const { year }: StoryYear = JSON.parse(story.title);
       yearsSet.add(year);
     });
 
     yearsSet.forEach((year) => {
       const storiesFilteredByYear: Story[] = stories.filter((story: Story) => {
-        const { year: yearOfStory }: Pick<StoryDate, 'year'> = JSON.parse(
-          story.title
-        );
+        const { year: yearOfStory }: StoryYear = JSON.parse(story.title);
 
         return year === yearOfStory;
       });

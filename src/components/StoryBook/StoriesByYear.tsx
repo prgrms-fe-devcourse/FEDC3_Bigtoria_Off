@@ -2,14 +2,9 @@ import styled from '@emotion/styled';
 
 import StoryCard from './StoryCard';
 
-import { Story, Title } from '../../interfaces/story';
+import { StoriesWithYear, Title } from '../../interfaces/story';
 
-interface Props {
-  year: string;
-  stories: Story[];
-}
-
-const StoriesByYear = ({ year, stories }: Props) => {
+const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
   return (
     <Container>
       <Year>{year}</Year>

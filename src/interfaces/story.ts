@@ -4,9 +4,15 @@ export interface Story {
   image: string;
 }
 
-export interface StoryDate {
+export interface StoryYear {
   year: string;
+}
+
+export interface StoryMonth {
   month: string;
+}
+
+export interface StoryDay {
   day: string;
 }
 
@@ -14,9 +20,8 @@ export interface Title {
   realTitle: string;
 }
 
-export interface StoriesWithYear {
-  year: string;
+export interface StoryDate extends StoryYear, StoryMonth, StoryDay {}
+
+export interface StoriesWithYear extends StoryYear {
   stories: Story[];
 }
-
-export interface StoryInfo extends Date, Title {}
