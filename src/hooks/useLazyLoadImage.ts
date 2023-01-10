@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const LOAD_IMAGE_EVENT_TYPE = 'loadImage';
 
@@ -39,7 +39,7 @@ const useLazyLoadImage = (lazy = false) => {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.3,
       }
     );
 
