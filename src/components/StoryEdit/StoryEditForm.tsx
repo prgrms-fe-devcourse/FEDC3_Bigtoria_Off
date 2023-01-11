@@ -61,7 +61,7 @@ const StoryEditForm = () => {
           {errors.content}
         </InputDiv>
       </Section>
-      <SubmitButton loading={isLoading} />
+      <SubmitButton isLoading={isLoading} />
     </form>
   );
 };
