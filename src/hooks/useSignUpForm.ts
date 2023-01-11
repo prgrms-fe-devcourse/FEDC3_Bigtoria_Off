@@ -35,15 +35,6 @@ const useSignUpForm = () => {
       setIsLoading(true);
       try {
         await postSignUp(values);
-        // await axios.post(`${import.meta.env.VITE_API_URL}/signup`, {
-        //   email: values.email,
-        //   fullName: values.fullName,
-        //   password: values.password,
-        //   username: JSON.stringify({
-        //     birth: values.birth,
-        //     career: values.career,
-        //   }),
-        // });
         // login()
         // redirect('/')
       } catch (error) {
