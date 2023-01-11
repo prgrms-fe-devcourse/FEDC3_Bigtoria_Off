@@ -6,18 +6,8 @@ import SignUpInput from './SignUpInput';
 import SignUpSelector from './SignUpSelector';
 
 const SignUpForm = () => {
-  const {
-    values,
-    isLoading,
-    fullNameError,
-    emailError,
-    passwordError,
-    passwordConfirmError,
-    birthError,
-    careerError,
-    handleSubmit,
-    handleChange,
-  } = useSignUpForm();
+  const { values, isLoading, errors, handleSubmit, handleChange } =
+    useSignUpForm();
 
   return (
     <Container>
@@ -28,7 +18,7 @@ const SignUpForm = () => {
           name='fullName'
           value={values.fullName}
           onChange={handleChange}
-          errorMsg={fullNameError}
+          errorMsg={errors.fullName}
         />
         <SignUpInput
           placeholder='이메일 주소'
@@ -36,7 +26,7 @@ const SignUpForm = () => {
           name='email'
           value={values.email}
           onChange={handleChange}
-          errorMsg={emailError}
+          errorMsg={errors.email}
         />
         <SignUpInput
           placeholder='비밀번호'
@@ -44,7 +34,7 @@ const SignUpForm = () => {
           name='password'
           value={values.password}
           onChange={handleChange}
-          errorMsg={passwordError}
+          errorMsg={errors.password}
         />
         <SignUpInput
           placeholder='비밀번호 확인'
@@ -52,13 +42,13 @@ const SignUpForm = () => {
           name='passwordConfirm'
           value={values.passwordConfirm}
           onChange={handleChange}
-          errorMsg={passwordConfirmError}
+          errorMsg={errors.passwordConfirm}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
           <SignUpSelector
             onChange={handleChange}
             name='birth'
-            errorMsg={birthError}
+            errorMsg={errors.birth}
           />
           <SignUpInput
             placeholder='직업'
@@ -66,7 +56,7 @@ const SignUpForm = () => {
             name='career'
             value={values.career}
             onChange={handleChange}
-            errorMsg={careerError}
+            errorMsg={errors.career}
           />
         </Box>
         <SignUpButton isLoading={isLoading} />
