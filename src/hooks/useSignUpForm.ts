@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-const useForm = () => {
+const useSignUpForm = () => {
   const [values, setValues] = useState({
     fullName: '',
     email: '',
@@ -109,4 +109,4 @@ const useForm = () => {
   };
 };
 
-export default useForm;
+export default useSignUpForm;

@@ -1,6 +1,6 @@
 import { Box, Container } from '@mui/material';
 
-import useForm from '../../hooks/useForm';
+import useSignUpForm from '../../hooks/useSignUpForm';
 import SignUpButton from './SignUpButton';
 import SignUpInput from './SignUpInput';
 import SignUpSelector from './SignUpSelector';
@@ -17,7 +17,7 @@ const SignUpForm = () => {
     careerError,
     handleSubmit,
     handleChange,
-  } = useForm();
+  } = useSignUpForm();
 
   return (
     <Container>
