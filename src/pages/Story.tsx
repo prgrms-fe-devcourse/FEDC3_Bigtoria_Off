@@ -1,95 +1,97 @@
 import styled from '@emotion/styled';
-import { Divider, Paper } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Paper,
+  Typography,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import CommentForm from '../components/Story/CommentForm';
 import CommentList from '../components/Story/CommentList';
 import LikeButton from '../components/Story/LikeButton';
+import useFetchStory from '../hooks/useFetchStory';
 
-const user = {
-  _id: '1',
-  image: '',
-  fullName: '유리',
-};
-
-const comments = [
-  {
-    _id: '1',
-    comment: '멋집니다!',
-    author: user,
-    createdAt: '2023-01-11 15:06',
-  },
-  {
-    _id: '2',
-    comment: '멋집니다!',
-    author: user,
-    createdAt: '2023-01-11 15:06',
-  },
-  {
-    _id: '3',
-    comment: '멋집니다!',
-    author: user,
-    createdAt: '2023-01-11 15:06',
-  },
-];
 const Story = () => {
+  const { story, isLoading } = useFetchStory();
+  const navigate = useNavigate();
+
+  if (isLoading || !story.title) return <CircularProgress />;
+
+  const { realTitle, year, month, day, content } = JSON.parse(story.title);
+
   return (
-    <Container>
-      <Title>
-        <h1>스토리 제목</h1>
-        <LikeButton likeCount={3} />
-      </Title>
-      <StoryContainer>
-        <p>2023-01-11</p>
-        <StoryImage
-          src='https://user-images.githubusercontent.com/63575891/211744952-c87a61ad-b130-4d93-933b-96a438bccea3.jpeg'
-          alt='story image'
-        />
-        <Paper variant='outlined' sx={{ padding: '30px', margin: '20px 0' }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nisl
-          dolor, egestas sit amet tellus eu, varius dictum leo. Vivamus mi nibh,
-          condimentum vitae rutrum non, facilisis vitae mi. Duis iaculis
-          imperdiet molestie. Etiam ornare molestie laoreet. Vivamus nisi
-          tellus, fermentum vitae arcu vitae, dictum molestie elit. Proin vitae
-          lacus nisl. Curabitur id sollicitudin erat. Pellentesque vulputate id
-          turpis eu tempus. Aenean euismod risus eget accumsan gravida. Ut
-          cursus massa non dictum interdum. Morbi venenatis luctus tellus, et
-          auctor justo eleifend id.
-        </Paper>
-      </StoryContainer>
+    <Box sx={{ display: 'flex', flexDirection: 'column', padding: '30px' }}>
+      <Box>
+        <Box sx={{ display: 'flex' }}>
+          <Typography
+            variant='h3'
+            gutterBottom
+            sx={{ fontSize: '2rem', fontWeight: '500' }}
+          >
+            {realTitle}
+          </Typography>
+          {/* TODO: 작성자만 수정 삭제 버튼 보이도록 처리 */}
+          <Box>
+            <Button
+              variant='text'
+              onClick={() => navigate(`/story/edit/${story._id}`)}
+            >
+              수정
+            </Button>
+            {/* TODO: 삭제 API 연동 */}
+            <Button variant='text'>삭제</Button>
+          </Box>
+        </Box>
+        <Typography variant='subtitle1' gutterBottom>
+          {year}.{month}.{day}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            cursor: 'pointer',
+          }}
+          onClick={() => navigate(`/story-book/${story.author._id}`)}
+        >
+          <Avatar src={story.author.image} alt='profile image'></Avatar>
+          <p>{story.author.fullName}</p>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          paddingBottom: '20px',
+        }}
+      >
+        {story.image && <StoryImage src={story.image} alt='story image' />}
+        {content && (
+          <Paper variant='outlined' sx={{ padding: '30px', margin: '20px 0' }}>
+            {content}
+          </Paper>
+        )}
+        <LikeButton likeCount={story.likes.length} />
+      </Box>
       <Divider />
-      <CommentContainer>
-        <CommentList comments={comments} />
+      <Box>
+        <CommentList comments={story.comments} />
         <CommentForm />
-      </CommentContainer>
-    </Container>
+      </Box>
+    </Box>
   );
 };
 
 export default Story;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-`;
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const StoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 20px;
-`;
-
 const StoryImage = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
+  padding: 15px 0;
 `;
-
-const CommentContainer = styled.div``;
