@@ -1,10 +1,7 @@
+import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-interface Props<T> {
-  onSubmit?: (args: T) => void;
-}
-
-const useForm = <T>({ onSubmit }: Props<T>) => {
+const useForm = () => {
   const [values, setValues] = useState({
     fullName: '',
     email: '',
@@ -28,9 +25,10 @@ const useForm = <T>({ onSubmit }: Props<T>) => {
     setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const passwordRegex =
@@ -62,8 +60,39 @@ const useForm = <T>({ onSubmit }: Props<T>) => {
 
     if (!values.career) setCareerError('직업을 입력해주세요.');
     else setCareerError('');
-
-    setIsLoading(false);
+    if (Object.values(values).filter((item) => item === '').length === 0) {
+      try {
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/signup`, {
+            email: values.email,
+            fullName: values.fullName,
+            password: values.password,
+          })
+          .then(({ data }) =>
+            axios({
+              url: `${import.meta.env.VITE_API_URL}/settings/update-user`,
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${data.token}`,
+              },
+              data: {
+                fullName: values.fullName,
+                username: JSON.stringify({
+                  birth: values.birth,
+                  career: values.career,
+                }),
+              },
+            })
+          );
+        // login()
+        // redirect('/')
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   return {
