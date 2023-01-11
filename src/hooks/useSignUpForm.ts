@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
+import { postSignUp } from '../apis/signup';
 import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
 
@@ -34,15 +34,16 @@ const useSignUpForm = () => {
     if (signUpIsValid(newError)) {
       setIsLoading(true);
       try {
-        await axios.post(`${import.meta.env.VITE_API_URL}/signup`, {
-          email: values.email,
-          fullName: values.fullName,
-          password: values.password,
-          username: JSON.stringify({
-            birth: values.birth,
-            career: values.career,
-          }),
-        });
+        await postSignUp(values);
+        // await axios.post(`${import.meta.env.VITE_API_URL}/signup`, {
+        //   email: values.email,
+        //   fullName: values.fullName,
+        //   password: values.password,
+        //   username: JSON.stringify({
+        //     birth: values.birth,
+        //     career: values.career,
+        //   }),
+        // });
         // login()
         // redirect('/')
       } catch (error) {
