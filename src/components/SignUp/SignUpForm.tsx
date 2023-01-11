@@ -5,15 +5,6 @@ import SignUpButton from './SignUpButton';
 import SignUpInput from './SignUpInput';
 import SignUpSelector from './SignUpSelector';
 
-interface SignUpOption {
-  fullName: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  birth: string;
-  career: string;
-}
-
 const SignUpForm = () => {
   const {
     values,
@@ -26,9 +17,7 @@ const SignUpForm = () => {
     careerError,
     handleSubmit,
     handleChange,
-  } = useForm<SignUpOption>({
-    // onSubmit: async (values: SignUpOption) => {},
-  });
+  } = useForm();
 
   return (
     <Container>
