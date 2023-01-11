@@ -1,4 +1,4 @@
-declare interface User {
+export interface User {
   _id: string;
   image: string; // 프로필 이미지
   fullName: string;
@@ -17,8 +17,8 @@ declare interface User {
   email?: string;
   createdAt?: string;
   updatedAt?: string;
+  username?: string;
 }
 
-declare module 'dummy' {
-  declare const dummy: Array<User>;
-}
+export type GetUserList = () => Promise<User[]>;
+export type SearchUserList = (keyword: string) => Promise<User[]>;
