@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+  const navigate = useNavigate();
 
   return (
     <Container>
-      <span>빅토리아</span>
+      <Logo onClick={() => navigate('/')}>빅토리아</Logo>
       <div onClick={handleClick}>
         {click ? (
           <img src='/public/icons/close.svg' />
@@ -15,13 +17,13 @@ const Header = () => {
           <img src='/public/icons/hamburger_menu.svg' />
         )}
       </div>
-      <NavMenu onClick={handleClick} click={click}>
+      <Hamburger onClick={handleClick} click={click}>
         <img src='/public/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
         <NavLinks>팔로우 목록</NavLinks>
         <NavLinks>로그아웃/로그인</NavLinks>
-      </NavMenu>
+      </Hamburger>
     </Container>
   );
 };
@@ -35,7 +37,7 @@ const Container = styled.header`
   justify-content: space-between;
 `;
 
-const NavMenu = styled.nav<{ click: boolean }>`
+const Hamburger = styled.nav<{ click: boolean }>`
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -50,6 +52,11 @@ const NavMenu = styled.nav<{ click: boolean }>`
   background: #167fe7;
   z-index: 999;
   padding-top: 4rem;
+`;
+
+const Logo = styled.h1`
+  margin: 0;
+  cursor: pointer;
 `;
 
 const NavLinks = styled.div`
