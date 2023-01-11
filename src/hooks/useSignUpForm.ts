@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
+import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
 
 const initialState = {
@@ -30,7 +31,7 @@ const useSignUpForm = () => {
     const newError = signUpValidate(values);
     setErrors(newError);
 
-    if (Object.values(newError).filter((item) => item === '').length === 6) {
+    if (signUpIsValid(newError)) {
       setIsLoading(true);
       try {
         await axios.post(`${import.meta.env.VITE_API_URL}/signup`, {
