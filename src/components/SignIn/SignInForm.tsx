@@ -6,15 +6,26 @@ import {
   Grid,
   Link,
   TextField,
+  Typography,
 } from '@mui/material';
+
+import { signin } from '../../apis/auth';
 
 const SignInForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
+  const temp = () => {
+    signin({
+      email: 'alohajune22@gmail.com',
+      password: 'metamong',
+    });
+  };
+
   return (
     <Container component='main' maxWidth='xs' sx={{ padding: '1rem' }}>
+      <button onClick={temp}>asd</button>
       <Box
         component='form'
         onSubmit={handleSubmit}
@@ -25,6 +36,9 @@ const SignInForm = () => {
           gap: '1rem',
         }}
       >
+        <Typography component='h1' variant='h5'>
+          로그인
+        </Typography>
         <TextField
           label='이메일'
           name='email'
