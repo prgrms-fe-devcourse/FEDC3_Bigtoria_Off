@@ -1,4 +1,3 @@
-import Error from '@mui/icons-material/Error';
 import { Box, Typography } from '@mui/material';
 
 const NoResultBox = () => {
@@ -9,16 +8,9 @@ const NoResultBox = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: '40px',
       }}
     >
-      <Error
-        sx={{
-          width: '100px',
-          height: '100px',
-          marginBottom: '20px',
-          color: 'rgba(0, 0, 0, 0.5)',
-        }}
-      />
       <Typography
         component='h1'
         sx={{

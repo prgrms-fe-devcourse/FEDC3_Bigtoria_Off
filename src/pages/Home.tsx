@@ -1,52 +1,87 @@
-import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { lightBlue } from '@mui/material/colors';
+import { useEffect } from 'react';
 
-import { getUserList, searchUserList } from '../apis/search';
+import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
-import Title from '../components/Home/Title';
 import UserList from '../components/Home/UserList';
+import useFetchUserList from '../hooks/useFetchUserList';
 
 const HomePage = () => {
-  const [userProfiles, setUserProfiles] = useState([]);
+  const { isLoading, userProfiles, initUserProfiles, searchUserProfiles } =
+    useFetchUserList();
 
   useEffect(() => {
-    const initUserList = async () => {
-      const userList = await getUserList();
-
-      setUserProfiles(userList);
-    };
-
-    initUserList();
+    initUserProfiles();
   }, []);
 
   const handleSubmit = async (keyword: string) => {
-    const filteredUser = await searchUserList(keyword);
-
-    setUserProfiles(filteredUser);
+    searchUserProfiles(keyword);
   };
 
   return (
-    <Box>
-      <Box
-        component='header'
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px 20px 30px 20px',
-        }}
-      >
-        <Title title='Bigtoria' />
+    <Box
+      sx={{
+        minWidth: '320px',
+        maxWidth: '480px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Box component='header'>
+        <FontText
+          component='h1'
+          title='Bigtoria.'
+          sx={{
+            display: 'inline-block',
+            marginBottom: '30px',
+            fontSize: '5rem',
+          }}
+        />
       </Box>
       <Box
         component='main'
         sx={{
-          width: 400,
+          width: '92%',
+          display: 'block',
           margin: '0 auto',
         }}
       >
         <SearchForm onSubmit={handleSubmit} />
-        <UserList users={userProfiles} />
+        <FontText
+          component='p'
+          title='profiles..'
+          sx={{
+            display: 'inline-block',
+            fontSize: '28px',
+            paddingLeft: '5px',
+          }}
+        />
+        {isLoading ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '30px',
+              padding: '40px',
+            }}
+          >
+            <CircularProgress
+              size={48}
+              sx={{
+                color: lightBlue[500],
+                position: 'absolute',
+              }}
+            />
+          </Box>
+        ) : (
+          userProfiles && <UserList users={userProfiles} />
+        )}
       </Box>
     </Box>
   );

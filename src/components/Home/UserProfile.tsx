@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   path: string;
@@ -16,32 +17,29 @@ interface Props {
   year: string;
 }
 
-//Thinking: 이름을 띄우는 게 나은가, 사람 이미지가 나은가?
-const stringToAvatar = (name: string) => {
-  const nameArr = name.split(' ');
-
-  return {
-    children: `${nameArr[0][0]}${nameArr.length > 1 ? nameArr[1][0] : ''}`,
-  };
-};
-
 const UserProfile = ({ path, image, fullName, job, year }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <ListItem
       sx={{
-        boxShadow: 1,
+        border: '1px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
         borderRadius: 2,
-        marginBottom: '20px',
+        marginBottom: '12px',
         padding: 0,
       }}
     >
-      <ListItemButton component='a' href={path} sx={{ padding: '15px' }}>
-        <ListItemAvatar sx={{ marginRight: '15px' }}>
-          {image ? (
-            <Avatar sx={{ width: 56, height: 56 }} alt={fullName} src={image} />
-          ) : (
-            <Avatar sx={{ width: 56, height: 56 }} alt={fullName} />
-          )}
+      <ListItemButton
+        onClick={() => navigate(path)}
+        sx={{ padding: '20px 18px' }}
+      >
+        <ListItemAvatar sx={{ marginRight: '20px' }}>
+          <Avatar
+            sx={{ width: 42, height: 42 }}
+            alt={fullName}
+            src={image ? image : ''}
+          />
         </ListItemAvatar>
         <ListItemText
           primary={fullName}
