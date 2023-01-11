@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { User } from '../dummy';
+import { User } from '../../../interfaces/user';
 /*
  * TODO
  * 1. 클릭시 유저 프로필 페이지로 넘어가기
@@ -12,17 +12,15 @@ import { User } from '../dummy';
  *   - text (name, info)
  */
 
-type UserList = Array<User>;
-
 interface Props {
-  users: UserList;
+  users: User[];
 }
 
 const UserList = ({ users }: Props) => {
-  const showUserProfileList = (userProfiles: UserList) => {
+  const showUserProfileList = (userProfiles: User[]) => {
     return (
       <ul>
-        {userProfiles.map(({ _id, image, fullName, username }) => {
+        {userProfiles.map(({ _id, image, fullName, username }: User) => {
           let description = null;
 
           if (username) {

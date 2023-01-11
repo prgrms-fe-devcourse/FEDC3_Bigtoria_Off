@@ -17,9 +17,8 @@ export interface User {
   email?: string;
   createdAt?: string;
   updatedAt?: string;
+  username?: string;
 }
 
-export type UserList = Array<User>;
-
-export type GetUserList = () => Promise<UserList>;
-export type SearchUserList = (keyword: string) => Promise<UserList>;
+export type GetUserList = () => Promise<User[]>;
+export type SearchUserList = (keyword: string) => Promise<User[]>;
