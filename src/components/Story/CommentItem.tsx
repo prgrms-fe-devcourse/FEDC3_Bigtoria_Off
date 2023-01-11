@@ -7,6 +7,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
+import { useDeleteComment } from '../../hooks/useComment';
 import { Comment } from '../../interfaces/comment';
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const CommentItem = ({ comment }: Props) => {
+  const { handleDelete } = useDeleteComment(comment);
+
   return (
     <ListItem
       secondaryAction={<IconButton edge='end' aria-label='delete'></IconButton>}
@@ -26,7 +29,9 @@ const CommentItem = ({ comment }: Props) => {
         primary={comment.author?.fullName}
         secondary={comment.comment}
       />
-      <Button variant='text'>삭제</Button>
+      <Button variant='text' onClick={handleDelete}>
+        삭제
+      </Button>
     </ListItem>
   );
 };

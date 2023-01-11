@@ -16,3 +16,29 @@ export const getStoryDetail = async (storyId: string) => {
 
   return story;
 };
+
+export const postStoryComment = async (comment: string, storyId: string) => {
+  const { data: commentData } = await http.post({
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: API_URLS.COMMENT.CREATE_COMMENT,
+    data: JSON.stringify({
+      comment,
+      postId: storyId,
+    }),
+  });
+  console.log(commentData);
+};
+
+export const deleteStoryComment = async (commentId: string) => {
+  await http.delete({
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: API_URLS.COMMENT.DELETE_COMMENT,
+    data: JSON.stringify({
+      id: commentId,
+    }),
+  });
+};
