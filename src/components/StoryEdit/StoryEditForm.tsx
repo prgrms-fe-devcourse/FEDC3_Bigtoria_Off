@@ -53,12 +53,12 @@ const StoryEditForm = () => {
         <Label>내용</Label>
         <InputDiv>
           <TextInput
-            name='description'
+            name='content'
             multiline
             placeholder='스토리의 내용을 입력하세요.'
             onChange={handleChange}
           />
-          {errors.description}
+          {errors.content}
         </InputDiv>
       </Section>
       <SubmitButton loading={isLoading} />

@@ -20,11 +20,11 @@ const useStoryForm = () => {
     date: getDateInfo(today),
     title: '',
     image: '',
-    description: '',
+    content: '',
   });
   const [date, setDate] = useState<Dayjs | null>(today);
   const [image, setImage] = useState('');
-  const [errors, setErrors] = useState({ title: '', description: '' });
+  const [errors, setErrors] = useState({ title: '', content: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +63,11 @@ const useStoryForm = () => {
 
   const validate = ({
     title,
-    description,
-  }: Pick<StoryData, 'title' | 'description'>) => {
-    const errors = { title: '', description: '' };
+    content,
+  }: Pick<StoryData, 'title' | 'content'>) => {
+    const errors = { title: '', content: '' };
     if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
-    if (!description || isBlank(description))
-      errors.description = '내용을 입력해 주세요.';
+    if (!content || isBlank(content)) errors.content = '내용을 입력해 주세요.';
     return errors;
   };
 
@@ -77,7 +76,7 @@ const useStoryForm = () => {
     e.preventDefault();
 
     const newErrors = validate(values);
-    if (!newErrors.title && !newErrors.description) {
+    if (!newErrors.title && !newErrors.content) {
       // onSubmit(values)
     }
     setErrors(newErrors);
