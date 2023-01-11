@@ -14,14 +14,7 @@ const initialState = {
 
 const useSignUpForm = () => {
   const [values, setValues] = useState(initialState);
-  const [errors, setErrors] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    birth: '',
-    career: '',
-  });
+  const [errors, setErrors] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
