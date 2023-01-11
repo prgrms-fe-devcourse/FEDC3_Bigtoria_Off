@@ -16,7 +16,11 @@ const SearchForm = ({ onSubmit }: Props) => {
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    onSubmit(value);
+    const keyword = value;
+
+    if (keyword.replace(/[\s]/g, '').length) {
+      onSubmit(value);
+    }
     setValue('');
   };
 

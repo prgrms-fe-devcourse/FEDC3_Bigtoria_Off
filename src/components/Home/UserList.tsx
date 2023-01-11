@@ -21,11 +21,8 @@ const UserList = ({ users }: Props) => {
         }}
       >
         {userProfiles.map(({ _id, image, fullName, username }) => {
-          let description = null;
-
-          if (username) {
-            description = JSON.parse(username);
-          }
+          const job = username ? JSON.parse(username).job : '';
+          const year = username ? JSON.parse(username).year : '';
 
           return (
             <UserProfile
@@ -33,8 +30,8 @@ const UserList = ({ users }: Props) => {
               path='#'
               image={image}
               fullName={fullName}
-              job={description && description.job}
-              year={description && description.year}
+              job={job}
+              year={year}
             />
           );
         })}

@@ -40,10 +40,6 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
           {image ? (
             <Avatar sx={{ width: 56, height: 56 }} alt={fullName} src={image} />
           ) : (
-            // <Avatar
-            //   sx={{ width: 56, height: 56 }}
-            //   {...stringToAvatar(fullName)}
-            // />
             <Avatar sx={{ width: 56, height: 56 }} alt={fullName} />
           )}
         </ListItemAvatar>
