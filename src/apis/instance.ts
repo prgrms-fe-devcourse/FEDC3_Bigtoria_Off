@@ -1,9 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 
+import { TOKEN_KEY } from '../constants/auth';
 import { HTTP_METHODS } from '../constants/httpMethods';
 import { getStorage } from '../utils/storage';
-
-const TOKEN_KEY = 'token';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
