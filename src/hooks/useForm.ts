@@ -62,11 +62,29 @@ const useForm = () => {
     else setCareerError('');
     if (Object.values(values).filter((item) => item === '').length === 0) {
       try {
-        await axios.post(`${import.meta.env.VITE_API_URL}/signup`, {
-          email: values.email,
-          fullName: values.fullName,
-          password: values.password,
-        });
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/signup`, {
+            email: values.email,
+            fullName: values.fullName,
+            password: values.password,
+          })
+          .then(({ data }) =>
+            axios({
+              url: `${import.meta.env.VITE_API_URL}/settings/update-user`,
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${data.token}`,
+              },
+              data: {
+                fullName: values.fullName,
+                username: JSON.stringify({
+                  birth: values.birth,
+                  career: values.career,
+                }),
+              },
+            })
+          );
         // login()
         // redirect('/')
       } catch (error) {
