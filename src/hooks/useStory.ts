@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postStoryDetail } from '../apis/story';
+import { deleteStory, postStory } from '../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
 
 const getDateInfo = (date: Dayjs) => ({
@@ -17,7 +17,7 @@ const isBlank = (string: string) => {
   return string.trim().length === 0;
 };
 
-const useStoryForm = () => {
+export const useStoryForm = () => {
   const [values, setValues] = useState({
     title: '',
     date: getDateInfo(today),
@@ -94,7 +94,7 @@ const useStoryForm = () => {
         );
         imageFile && formData.append('image', imageFile);
         formData.append('channelId', channelId);
-        const story = await postStoryDetail(formData);
+        const story = await postStory(formData);
         navigate(`/story/${story._id}`);
       } catch (error) {
         console.error(error);
@@ -119,4 +119,18 @@ const useStoryForm = () => {
   };
 };
 
-export default useStoryForm;
+export const useDeleteStory = () => {
+  const handleDelete = async (storyId: string) => {
+    if (confirm('스토리를 삭제하시겠습니까?')) {
+      try {
+        if (!storyId) throw Error();
+        await deleteStory(storyId);
+      } catch (error) {
+        console.error(error);
+        alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_STORY);
+      }
+    }
+  };
+
+  return { handleDelete };
+};

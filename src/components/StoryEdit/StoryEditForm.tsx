@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
-import useStoryForm from '../../hooks/useStoryForm';
+import { useStoryForm } from '../../hooks/useStory';
 import DatePicker from './DatePicker';
 import ImageInput from './ImageInput';
 import SubmitButton from './SubmitButton';

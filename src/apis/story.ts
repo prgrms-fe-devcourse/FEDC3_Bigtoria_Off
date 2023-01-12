@@ -17,7 +17,7 @@ export const getStoryDetail = async (storyId: string) => {
   return story;
 };
 
-export const postStoryDetail = async (formData: FormData) => {
+export const postStory = async (formData: FormData) => {
   const { data: story } = await http.post({
     url: API_URLS.POST.CREATE_POST_ON_SPECIFIC_CHANNEL,
     headers: {
@@ -27,6 +27,18 @@ export const postStoryDetail = async (formData: FormData) => {
   });
 
   return story;
+};
+
+export const deleteStory = async (storyId: string) => {
+  await http.delete({
+    url: API_URLS.POST.DELETE_POST,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      id: storyId,
+    }),
+  });
 };
 
 export const postStoryComment = async (comment: string, storyId: string) => {
