@@ -3,7 +3,7 @@ import { CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
-import useFetchStory from '../hooks/useFetchStory';
+import { useFetchStory } from '../hooks/useStory';
 
 const StoryEdit = () => {
   const { storyId } = useParams();
