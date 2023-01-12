@@ -1,9 +1,17 @@
-import './title.css';
+import './fontText.css';
 
 import { createTheme, ThemeProvider, Typography } from '@mui/material';
 
 interface Props {
+  component: React.ElementType;
   title: string;
+  sx: {
+    display?: string;
+    marginTop?: string;
+    marginBottom?: string;
+    fontSize?: string;
+    paddingLeft?: string;
+  };
 }
 
 const theme = createTheme({
@@ -12,17 +20,14 @@ const theme = createTheme({
   },
 });
 
-const Title = ({ title }: Props) => {
+const FontText = ({ component, title, sx }: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <Typography
-        variant='h1'
-        sx={{ display: 'inline-block', padding: '20px' }}
-      >
+      <Typography component={component} sx={sx}>
         {title}
       </Typography>
     </ThemeProvider>
   );
 };
 
-export default Title;
+export default FontText;

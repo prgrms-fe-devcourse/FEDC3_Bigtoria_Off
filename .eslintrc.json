@@ -35,7 +35,7 @@
     "import/no-duplicates": "error",
     "prettier/prettier": [
       "error",
-      { "singleQuote": true, "endOfLine": "auto" }
+      { "singleQuote": true, "endOfLine": "auto", "bracketSameLine": true }
     ],
     "react/react-in-jsx-scope": "off",
     "no-undef": "off"
