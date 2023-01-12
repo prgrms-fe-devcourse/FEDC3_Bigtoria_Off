@@ -37,10 +37,7 @@ const StoryInfo = ({ story }: Props) => {
             </Button>
             <Button
               variant='text'
-              onClick={() => {
-                handleDelete(story._id);
-                navigate(`/story-book/${story.author._id}`);
-              }}
+              onClick={() => handleDelete(story._id, story.author._id)}
             >
               삭제
             </Button>

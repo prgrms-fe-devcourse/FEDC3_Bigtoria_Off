@@ -11,13 +11,13 @@ const getDateInfo = (date: Dayjs) => ({
   date: date.get('date'),
 });
 
-const today = dayjs(new Date());
-
 const isBlank = (string: string) => {
   return string.trim().length === 0;
 };
 
 export const useStoryForm = () => {
+  const today = dayjs(new Date());
+  const channelId = '63b6822ade9d2a22cc1d45c3';
   const [values, setValues] = useState({
     title: '',
     date: getDateInfo(today),
@@ -28,6 +28,7 @@ export const useStoryForm = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [errors, setErrors] = useState({ title: '', content: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,9 +72,6 @@ export const useStoryForm = () => {
 
     return errors;
   };
-
-  const channelId = '63b6822ade9d2a22cc1d45c3';
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -120,11 +118,14 @@ export const useStoryForm = () => {
 };
 
 export const useDeleteStory = () => {
-  const handleDelete = async (storyId: string) => {
+  const navigate = useNavigate();
+
+  const handleDelete = async (storyId: string, authorId: string) => {
     if (confirm('스토리를 삭제하시겠습니까?')) {
       try {
         if (!storyId) throw Error();
         await deleteStory(storyId);
+        navigate(`/story-book/${authorId}`);
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_STORY);
