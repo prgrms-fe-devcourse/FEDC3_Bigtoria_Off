@@ -9,8 +9,8 @@ const initialState = {
   email: '',
   password: '',
   passwordConfirm: '',
-  birth: '',
-  career: '',
+  year: '',
+  job: '',
 };
 
 const useSignUpForm = () => {

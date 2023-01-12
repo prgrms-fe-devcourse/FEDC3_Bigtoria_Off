@@ -47,16 +47,16 @@ const SignUp = () => {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <SignUpSelector
             onChange={handleChange}
-            name='birth'
-            errorMsg={errors.birth}
+            name='year'
+            errorMsg={errors.year}
           />
           <SignUpInput
             placeholder='직업'
             type='text'
-            name='career'
-            value={values.career}
+            name='job'
+            value={values.job}
             onChange={handleChange}
-            errorMsg={errors.career}
+            errorMsg={errors.job}
           />
         </Box>
         <SignUpButton isLoading={isLoading} />

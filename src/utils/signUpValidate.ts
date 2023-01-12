@@ -10,8 +10,8 @@ export const signUpValidate = (values: args) => {
     email: '',
     password: '',
     passwordConfirm: '',
-    birth: '',
-    career: '',
+    year: '',
+    job: '',
   };
 
   if (!values.fullName) newError.fullName = '닉네임을 입력해주세요.';
@@ -34,11 +34,11 @@ export const signUpValidate = (values: args) => {
     newError.passwordConfirm = '비밀번호가 일치하지 않습니다.';
   else newError.passwordConfirm = '';
 
-  if (!values.birth) newError.birth = '출생연도를 선택해주세요.';
-  else newError.birth = '';
+  if (!values.year) newError.year = '출생연도를 선택해주세요.';
+  else newError.year = '';
 
-  if (!values.career) newError.career = '직업을 입력해주세요.';
-  else newError.career = '';
+  if (!values.job) newError.job = '직업을 입력해주세요.';
+  else newError.job = '';
 
   return newError;
 };

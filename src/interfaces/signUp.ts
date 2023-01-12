@@ -3,6 +3,6 @@ export interface args {
   email: string;
   password: string;
   passwordConfirm: string;
-  birth: string;
-  career: string;
+  year: string;
+  job: string;
 }
