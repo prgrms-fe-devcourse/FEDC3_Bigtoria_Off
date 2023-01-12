@@ -18,3 +18,11 @@ export const setLocalStorage = <T>(key: string, value: T) => {
     console.error(error);
   }
 };
+
+export const removeLocalStorage = (key: string) => {
+  try {
+    storage.removeItem(key);
+  } catch (error) {
+    console.error(error);
+  }
+};

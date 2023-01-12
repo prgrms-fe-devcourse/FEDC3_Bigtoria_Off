@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 
 import { TOKEN_KEY } from '../constants/auth';
-import { HTTP_METHODS } from '../constants/httpMethods';
+import { HTTP_METHODS } from '../constants/http';
 import { getLocalStorage } from '../utils/storage';
 
 const axiosInstance: AxiosInstance = axios.create({
