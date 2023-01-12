@@ -50,6 +50,6 @@ const Wrapper = styled.div`
   align-items: center;
   border: 2px solid gray;
   border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
   box-sizing: border-box;
-  margin-bottom: 1rem;
 `;
