@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Box, CircularProgress, Divider } from '@mui/material';
 
-import { TOKEN_KEY } from '../apis/instance';
 import StoryComment from '../components/Story/StoryComment';
 import StoryInfo from '../components/Story/StoryInfo';
+import { TOKEN_KEY } from '../constants/auth';
 import useFetchStory from '../hooks/useFetchStory';
 import { getLocalStorage } from '../utils/storage';
 
