@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { TOKEN_KEY } from '../constants/auth';
-import { setStorage } from '../utils/storage';
+import { setLocalStorage } from '../utils/storage';
 import http from './instance';
 
 export const signin = async ({
@@ -22,7 +22,7 @@ export const signin = async ({
       },
     });
 
-    token && setStorage(TOKEN_KEY, token);
+    token && setLocalStorage(TOKEN_KEY, token);
   } catch (error) {
     console.error(error);
     if (error && axios.isAxiosError(error)) {

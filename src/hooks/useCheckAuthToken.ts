@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { TOKEN_KEY } from '../constants/auth';
 import { ROUTES } from '../constants/routes';
-import { getStorage } from './../utils/storage';
+import { getLocalStorage } from '../utils/storage';
 
 const useCheckAuthToken = () => {
-  const token = getStorage(TOKEN_KEY);
+  const token = getLocalStorage(TOKEN_KEY);
   const navigate = useNavigate();
 
   useEffect(() => {

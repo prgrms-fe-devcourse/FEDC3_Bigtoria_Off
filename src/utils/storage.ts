@@ -1,6 +1,6 @@
 const storage = localStorage;
 
-export const getStorage = (key: string, defaultValue = '') => {
+export const getLocalStorage = (key: string, defaultValue = '') => {
   try {
     const storedValue = JSON.parse(storage.getItem(key) || '""');
 
@@ -11,7 +11,7 @@ export const getStorage = (key: string, defaultValue = '') => {
   }
 };
 
-export const setStorage = <T>(key: string, value: T) => {
+export const setLocalStorage = <T>(key: string, value: T) => {
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch (error) {
