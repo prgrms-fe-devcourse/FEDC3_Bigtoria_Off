@@ -13,9 +13,10 @@ import { Comment } from '../../interfaces/comment';
 interface Props {
   comments: Comment[];
   handleDelete: (commentId: string) => void;
+  hasToken: boolean;
 }
 
-const CommentList = ({ comments, handleDelete }: Props) => {
+const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
   return (
     <List>
       {comments.map((comment) => (
@@ -33,9 +34,11 @@ const CommentList = ({ comments, handleDelete }: Props) => {
             primary={comment.author.fullName}
             secondary={comment.comment}
           />
-          <Button variant='text' onClick={() => handleDelete(comment._id)}>
-            삭제
-          </Button>
+          {hasToken && (
+            <Button variant='text' onClick={() => handleDelete(comment._id)}>
+              삭제
+            </Button>
+          )}
         </ListItem>
       ))}
     </List>

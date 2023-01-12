@@ -9,9 +9,10 @@ import LikeButton from './LikeButton';
 
 interface Props {
   story: StoryData;
+  hasToken: boolean;
 }
 
-const StoryInfo = ({ story }: Props) => {
+const StoryInfo = ({ story, hasToken }: Props) => {
   const navigate = useNavigate();
   const { handleDelete } = useDeleteStory();
 
@@ -28,20 +29,22 @@ const StoryInfo = ({ story }: Props) => {
           >
             {storyTitle}
           </Typography>
-          <Box>
-            <Button
-              variant='text'
-              onClick={() => navigate(`/story/edit/${story._id}`)}
-            >
-              수정
-            </Button>
-            <Button
-              variant='text'
-              onClick={() => handleDelete(story._id, story.author._id)}
-            >
-              삭제
-            </Button>
-          </Box>
+          {hasToken && (
+            <Box>
+              <Button
+                variant='text'
+                onClick={() => navigate(`/story/edit/${story._id}`)}
+              >
+                수정
+              </Button>
+              <Button
+                variant='text'
+                onClick={() => handleDelete(story._id, story.author._id)}
+              >
+                삭제
+              </Button>
+            </Box>
+          )}
         </StoryHeader>
         <Typography variant='subtitle1' gutterBottom>
           {year}.{month}.{day}
