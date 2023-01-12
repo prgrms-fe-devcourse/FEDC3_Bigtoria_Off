@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { signin } from '../apis/auth';
+import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { validateSignInInput } from './../utils/validations';
 
@@ -41,7 +42,7 @@ const useSignInForm = (initialState: InitialState) => {
       if (errorMessage) {
         setErrors({
           ...newErrors,
-          password: errorMessage + ' Please check your email or password.',
+          password: errorMessage + ' ' + ERROR_MESSAGES.CHECK_EMAIL_OR_PASSWORD,
         });
         setIsLoading(false);
         return;

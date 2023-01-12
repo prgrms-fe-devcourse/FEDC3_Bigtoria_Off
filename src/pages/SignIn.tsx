@@ -24,36 +24,35 @@ const SignIn = () => {
   };
 
   return (
-    <>
-      <Container component='main' maxWidth='xs' sx={{ padding: '1rem' }}>
-        <SignInForm
-          values={values}
-          errors={errors}
-          isLoading={isLoading}
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          onClick={handleClickButtonWithoutSignIn}
-        />
-        <Divider
-          sx={{
-            marginTop: '1rem',
-          }}
-        />
-        <Grid container sx={{ marginTop: '1rem' }}>
-          <Grid item xs>
-            <Link variant='body2' sx={{ cursor: 'pointer' }}>
-              비밀번호를 잊으셨나요?
-            </Link>
-          </Grid>
-          <Grid item onClick={handleClickButtonToSignUp}>
-            <Link variant='body2' sx={{ cursor: 'pointer' }}>
-              <span>아직 계정이 없으신가요?</span>
-              <span> 회원가입</span>
-            </Link>
-          </Grid>
+    <Container component='main' maxWidth='xs' sx={{ padding: '1rem' }}>
+      <SignInForm
+        values={values}
+        errors={errors}
+        isLoading={isLoading}
+        onSubmit={handleSubmit}
+        onChange={handleChange}
+        onClick={handleClickButtonWithoutSignIn}
+      />
+      <Divider
+        sx={{
+          marginTop: '1rem',
+        }}
+      />
+      <Grid container sx={{ marginTop: '1rem' }}>
+        {/* todo: 비밀번호 변경 페이지 및 api 개발 */}
+        <Grid item xs>
+          <Link variant='body2' sx={{ cursor: 'pointer' }}>
+            비밀번호를 잊으셨나요?
+          </Link>
         </Grid>
-      </Container>
-    </>
+        <Grid item onClick={handleClickButtonToSignUp}>
+          <Link variant='body2' sx={{ cursor: 'pointer' }}>
+            <span>아직 계정이 없으신가요?</span>
+            <span> 회원가입</span>
+          </Link>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
