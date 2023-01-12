@@ -12,7 +12,7 @@ interface Props {
   fullName: string;
 }
 
-const FollowList = ({ src, size = '80px', fullName }: Props) => {
+const FollowingList = ({ src, size = '80px', fullName }: Props) => {
   return (
     <List
       dense
@@ -32,4 +32,4 @@ const FollowList = ({ src, size = '80px', fullName }: Props) => {
   );
 };
 
-export default FollowList;
+export default FollowingList;
