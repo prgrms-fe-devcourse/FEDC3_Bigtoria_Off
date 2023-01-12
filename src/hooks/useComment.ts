@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
-import { Comment } from '../interfaces/comment';
 
 export const useCommentForm = () => {
   const [comment, setComment] = useState('');
@@ -18,8 +17,9 @@ export const useCommentForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (comment.trim().length === 0) alert('댓글 내용을 입력해 주세요.');
-    else {
+    if (comment.trim().length === 0) {
+      alert('댓글 내용을 입력해 주세요.');
+    } else {
       setIsLoading(true);
       try {
         if (!storyId) throw Error;
@@ -28,6 +28,7 @@ export const useCommentForm = () => {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
       } finally {
+        setComment('');
         setIsLoading(false);
       }
     }
@@ -36,12 +37,12 @@ export const useCommentForm = () => {
   return { comment, isLoading, handleChange, handleSubmit };
 };
 
-export const useDeleteComment = (comment: Comment) => {
-  const handleDelete = async () => {
+export const useDeleteComment = () => {
+  const handleDelete = async (commentId: string) => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
       try {
-        if (!comment._id) throw Error();
-        await deleteStoryComment(comment._id);
+        if (!commentId) throw Error();
+        await deleteStoryComment(commentId);
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_COMMENT);

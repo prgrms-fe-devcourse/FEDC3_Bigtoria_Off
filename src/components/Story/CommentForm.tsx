@@ -1,11 +1,20 @@
 import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
+import { ChangeEvent, FormEvent } from 'react';
 
-import { useCommentForm } from '../../hooks/useComment';
+interface Props {
+  comment: string;
+  isLoading: boolean;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: FormEvent) => void;
+}
 
-const CommentForm = () => {
-  const { comment, isLoading, handleChange, handleSubmit } = useCommentForm();
-
+const CommentForm = ({
+  comment,
+  isLoading,
+  handleChange,
+  handleSubmit,
+}: Props) => {
   return (
     <Form onSubmit={handleSubmit}>
       <TextField

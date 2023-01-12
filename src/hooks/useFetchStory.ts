@@ -13,7 +13,7 @@ const useFetchStory = () => {
     imagePublicId: '',
     title: '',
     channel: {},
-    author: { image: '', fullName: '', _id: '' },
+    author: { image: '', fullName: '', _id: '', role: '' },
     createdAt: '',
     updatedAt: '',
   });
@@ -41,7 +41,19 @@ const useFetchStory = () => {
     fetchStory();
   }, []);
 
-  return { story, isLoading };
+  const fetchComment = async () => {
+    try {
+      if (storyId) {
+        const fetchedStories = await getStoryDetail(storyId);
+        setStory({ ...story, comments: fetchedStories.comments });
+      }
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_STORY);
+    }
+  };
+
+  return { story, fetchComment, isLoading };
 };
 
 export default useFetchStory;
