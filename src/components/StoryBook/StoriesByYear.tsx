@@ -8,12 +8,12 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
     <Container>
       <Year>{year}</Year>
       {stories.map((story) => {
-        const { realTitle }: Title = JSON.parse(story.title);
+        const { storyTitle }: Title = JSON.parse(story.title);
 
         return (
           <StoryCard
             key={story._id}
-            title={realTitle}
+            title={storyTitle}
             storyId={story._id}
             image={story.image}
             lazy
