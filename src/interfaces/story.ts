@@ -21,7 +21,7 @@ export interface StoryDay {
 }
 
 export interface Title {
-  realTitle: string;
+  storyTitle: string;
 }
 
 export interface StoryDate extends StoryYear, StoryMonth, StoryDay {}
@@ -34,6 +34,7 @@ export interface StoryData {
   likes: Like[];
   comments: Comment[];
   _id: string;
+  date: StoryDate;
   image: string;
   title: string;
   author: User;

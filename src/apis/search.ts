@@ -1,40 +1,26 @@
-import axios from 'axios';
-
+import { API_URLS } from '../constants/apiUrls';
 import { User } from '../interfaces/user';
+import http from './instance';
 
-const API_END_POINT = import.meta.env.VITE_API_URL;
-
-const API_ROUTES = {
-  GET_USERS: `${API_END_POINT}/users/get-users`,
-  SEARCH_USERS: `${API_END_POINT}/search/users`,
-};
-
-const { GET_USERS, SEARCH_USERS } = API_ROUTES;
+const { USER, SEARCH } = API_URLS;
 
 export const getUserList = async () => {
-  const config = {
-    method: 'GET',
-    url: GET_USERS,
-  };
-
   try {
-    const { data: userList } = await axios(config);
+    const { data: userList } = await http.get({
+      url: USER.GET_USERS,
+    });
 
     return userList;
   } catch (error) {
-    console.log(error);
-    //TODO: Error message
+    console.error(error);
   }
 };
 
 export const searchUserList = async (keyword: string) => {
-  const config = {
-    method: 'GET',
-    url: `${SEARCH_USERS}/${keyword}`,
-  };
-
   try {
-    const { data: userList } = await axios(config);
+    const { data: userList } = await http.get({
+      url: SEARCH.GET_USERS_BY_QUERY(keyword),
+    });
 
     const filteredUser = userList.filter((u: User) => {
       const { fullName } = u;
@@ -45,7 +31,6 @@ export const searchUserList = async (keyword: string) => {
 
     return filteredUser;
   } catch (error) {
-    console.log(error);
-    //TODO: Error message
+    console.error(error);
   }
 };

@@ -1,28 +1,15 @@
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Box, InputAdornment, TextField } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { HighlightOff } from '@mui/icons-material';
+import { Box, IconButton, TextField } from '@mui/material';
+
+import useSearhForm from '../../hooks/useSearchForm';
 
 interface Props {
   onSubmit: (keyword: string) => void;
 }
 
 const SearchForm = ({ onSubmit }: Props) => {
-  const [value, setValue] = useState('');
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const keyword = value;
-
-    if (keyword.replace(/[\s]/g, '').length) {
-      onSubmit(value);
-    }
-    setValue('');
-  };
+  const { value, handleInputChange, handleInputClear, handleFormSubmit } =
+    useSearhForm({ onSubmit });
 
   return (
     <Box>
@@ -30,29 +17,42 @@ const SearchForm = ({ onSubmit }: Props) => {
         component='form'
         sx={{
           width: '100%',
+          position: 'relative',
+          marginBottom: '10px',
         }}
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
       >
         <TextField
-          id='input-with-icon-textfield'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <AccountCircle />
-              </InputAdornment>
-            ),
-          }}
           sx={{
             width: '100%',
+            '& input': {
+              height: '50px',
+              borderBottom: '2px solid black',
+              paddingLeft: '11px',
+            },
+            //TODO: input focus boder-bottom #f99b0f
           }}
-          variant='outlined'
+          variant='standard'
           required
           autoFocus
           type='text'
           label='user name'
           value={value}
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
+        <IconButton
+          color='primary'
+          component='label'
+          sx={{
+            position: 'absolute',
+            right: '2px',
+            top: '30px',
+            color: '#167fe7',
+          }}
+          onClick={handleInputClear}
+        >
+          <HighlightOff />
+        </IconButton>
       </Box>
     </Box>
   );

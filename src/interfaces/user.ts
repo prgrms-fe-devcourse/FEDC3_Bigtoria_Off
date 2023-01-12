@@ -19,6 +19,3 @@ export interface User {
   updatedAt?: string;
   username?: string;
 }
-
-export type GetUserList = () => Promise<User[]>;
-export type SearchUserList = (keyword: string) => Promise<User[]>;
