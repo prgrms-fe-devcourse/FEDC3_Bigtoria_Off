@@ -6,7 +6,7 @@ import SearchForm from '../components/Home/SearchForm';
 import Title from '../components/Home/Title';
 import UserList from '../components/Home/UserList';
 
-const HomePage = () => {
+const Home = () => {
   const [userProfiles, setUserProfiles] = useState([]);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
