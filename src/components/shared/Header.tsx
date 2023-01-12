@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <Container>
-      <Logo onClick={() => navigate('/')}>빅토리아</Logo>
+      <Logo onClick={() => navigate('/')}>빅</Logo>
       <div onClick={handleClick}>
         {click ? (
           <img src='/public/icons/close.svg' />
