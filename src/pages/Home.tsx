@@ -7,7 +7,7 @@ import SearchForm from '../components/Home/SearchForm';
 import UserList from '../components/Home/UserList';
 import useFetchUserList from '../hooks/useFetchUserList';
 
-const HomePage = () => {
+const Home = () => {
   const { isLoading, userProfiles, initUserProfiles, searchUserProfiles } =
     useFetchUserList();
 
@@ -88,4 +88,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
