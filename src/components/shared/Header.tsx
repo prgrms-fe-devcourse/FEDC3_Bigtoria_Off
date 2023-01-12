@@ -10,13 +10,13 @@ const Header = () => {
   return (
     <Container>
       <Logo onClick={() => navigate('/')}>빅토리아</Logo>
-      <div onClick={handleClick}>
+      <HamburgerButton onClick={handleClick}>
         {click ? (
           <img src='/public/icons/close.svg' />
         ) : (
           <img src='/public/icons/hamburger_menu.svg' />
         )}
-      </div>
+      </HamburgerButton>
       <Hamburger onClick={handleClick} click={click}>
         <img src='/public/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
@@ -52,6 +52,10 @@ const Hamburger = styled.nav<{ click: boolean }>`
   background: #167fe7;
   z-index: 999;
   padding-top: 4rem;
+`;
+
+const HamburgerButton = styled.div`
+  cursor: pointer;
 `;
 
 const Logo = styled.h1`
