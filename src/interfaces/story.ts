@@ -17,7 +17,7 @@ export interface StoryDay {
 }
 
 export interface Title {
-  realTitle: string;
+  storyTitle: string;
 }
 
 export interface StoryDate extends StoryYear, StoryMonth, StoryDay {}
@@ -28,7 +28,7 @@ export interface StoriesWithYear extends StoryYear {
 
 export interface StoryData {
   date: StoryDate;
-  title: string; // TODO: 협의 필요(realTitle)
+  title: string;
   image: string;
   description: string;
 }
