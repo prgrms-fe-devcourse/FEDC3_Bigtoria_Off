@@ -1,0 +1,138 @@
+import dayjs, { Dayjs } from 'dayjs';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { deleteStory, postStory } from '../apis/story';
+import { ERROR_MESSAGES } from './../constants/errorMessages';
+
+const getDateInfo = (date: Dayjs) => ({
+  year: date.get('year'),
+  month: date.get('month') + 1,
+  date: date.get('date'),
+});
+
+const isBlank = (string: string) => {
+  return string.trim().length === 0;
+};
+
+export const useStoryForm = () => {
+  const today = dayjs(new Date());
+  const channelId = '63b6822ade9d2a22cc1d45c3';
+  const [values, setValues] = useState({
+    title: '',
+    date: getDateInfo(today),
+    content: '',
+  });
+  const [date, setDate] = useState<Dayjs | null>(today);
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState({ title: '', content: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleDateChange = (newValue: Dayjs | null) => {
+    setDate(newValue);
+    if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
+  };
+
+  const encodeFileToBase64 = (fileBlob: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        if (!reader.result || typeof reader.result !== 'string') return;
+        const result = reader.result;
+        setImageBase64(result);
+        resolve(Promise);
+      };
+    });
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setImageFile(e.target.files?.[0]);
+    encodeFileToBase64(e.target.files?.[0]);
+  };
+
+  const handleImageDelete = () => {
+    setImageFile(null);
+    setImageBase64('');
+  };
+
+  const validate = () => {
+    const { title, content } = values;
+    const errors = { title: '', content: '' };
+    if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
+    if (!content || isBlank(content)) errors.content = '내용을 입력해 주세요.';
+
+    return errors;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const newErrors = validate();
+    if (!newErrors.title && !newErrors.content) {
+      try {
+        const formData = new FormData();
+        formData.append(
+          'title',
+          JSON.stringify({
+            storyTitle: values.title,
+            year: values.date.year,
+            month: values.date.month,
+            day: values.date.date,
+            content: values.content,
+          })
+        );
+        imageFile && formData.append('image', imageFile);
+        formData.append('channelId', channelId);
+        const story = await postStory(formData);
+        navigate(`/story/${story._id}`);
+      } catch (error) {
+        console.error(error);
+        alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
+      }
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
+  return {
+    values,
+    date,
+    imageBase64,
+    errors,
+    isLoading,
+    handleChange,
+    handleDateChange,
+    handleImageChange,
+    handleImageDelete,
+    handleSubmit,
+  };
+};
+
+export const useDeleteStory = () => {
+  const navigate = useNavigate();
+
+  const handleDelete = async (storyId: string, authorId: string) => {
+    if (confirm('스토리를 삭제하시겠습니까?')) {
+      try {
+        if (!storyId) throw Error();
+        await deleteStory(storyId);
+        navigate(`/story-book/${authorId}`);
+      } catch (error) {
+        console.error(error);
+        alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_STORY);
+      }
+    }
+  };
+
+  return { handleDelete };
+};

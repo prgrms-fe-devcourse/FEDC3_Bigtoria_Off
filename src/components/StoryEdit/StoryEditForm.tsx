@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { Box } from '@mui/material';
 
-import useStoryForm from '../../hooks/useStoryForm';
+import { useStoryForm } from '../../hooks/useStory';
 import DatePicker from './DatePicker';
 import ImageInput from './ImageInput';
 import SubmitButton from './SubmitButton';
@@ -9,7 +10,7 @@ import TextInput from './TextInput';
 const StoryEditForm = () => {
   const {
     date,
-    image,
+    imageBase64,
     isLoading,
     errors,
     handleChange,
@@ -23,9 +24,9 @@ const StoryEditForm = () => {
     <form onSubmit={handleSubmit}>
       <Section>
         <Label>날짜</Label>
-        <InputDiv>
+        <Box sx={{ width: '100%' }}>
           <DatePicker value={date} onChange={handleDateChange} />
-        </InputDiv>
+        </Box>
       </Section>
       <Section>
         <Label>제목</Label>
@@ -44,31 +45,34 @@ const StoryEditForm = () => {
           <ImageInput
             onChange={handleImageChange}
             onDelete={handleImageDelete}
-            isAdded={image !== ''}
+            isAdded={imageBase64 !== ''}
           />
-          <div>{image && <ImagePreview src={image} alt='preview-image' />}</div>
+          <div>
+            {imageBase64 && (
+              <ImagePreview src={imageBase64} alt='preview-image' />
+            )}
+          </div>
         </InputDiv>
       </Section>
       <Section>
         <Label>내용</Label>
         <InputDiv>
           <TextInput
-            name='description'
+            name='content'
             multiline
             placeholder='스토리의 내용을 입력하세요.'
             onChange={handleChange}
           />
-          {errors.description}
+          {errors.content}
         </InputDiv>
       </Section>
-      <SubmitButton loading={isLoading} />
+      <SubmitButton isLoading={isLoading} />
     </form>
   );
 };
-
 export default StoryEditForm;
 
-const Section = styled.section`
+const Section = styled(Box)`
   display: flex;
   align-items: center;
   padding-bottom: 20px;
@@ -78,7 +82,7 @@ const Label = styled.label`
   width: 50px;
 `;
 
-const InputDiv = styled.div`
+const InputDiv = styled(Box)`
   width: 100%;
 `;
 
