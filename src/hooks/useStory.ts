@@ -88,6 +88,7 @@ export const useStoryForm = () => {
             year: values.date.year,
             month: values.date.month,
             day: values.date.date,
+            content: values.content,
           })
         );
         imageFile && formData.append('image', imageFile);

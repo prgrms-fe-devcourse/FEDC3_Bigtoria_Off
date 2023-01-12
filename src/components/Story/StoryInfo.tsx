@@ -54,7 +54,10 @@ const StoryInfo = ({ story }: Props) => {
       <StoryContainer>
         {story.image && <StoryImage src={story.image} alt='story image' />}
         {content && (
-          <Paper variant='outlined' sx={{ padding: '30px', margin: '20px 0' }}>
+          <Paper
+            variant='outlined'
+            sx={{ width: '90%', padding: '30px', margin: '20px 0' }}
+          >
             {content}
           </Paper>
         )}
