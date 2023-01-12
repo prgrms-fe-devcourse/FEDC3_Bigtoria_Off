@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   Box,
   Button,
@@ -7,8 +6,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-
-import { color } from '../../constants/color';
 
 interface Props {
   values: {
@@ -58,8 +55,8 @@ const SignInForm = ({
         autoComplete='email'
         onChange={onChange}
         fullWidth
+        helperText={errors.email && errors.email}
       />
-      {errors.email && <Text>{errors.email}</Text>}
       <TextField
         error={errors.password !== ''}
         label='비밀번호'
@@ -69,8 +66,8 @@ const SignInForm = ({
         autoComplete='current-password'
         onChange={onChange}
         fullWidth
+        helperText={errors.password && errors.password}
       />
-      {errors.password && <Text>{errors.password}</Text>}
       <Grid container sx={{ gap: '1rem' }}>
         <Grid
           item
@@ -120,8 +117,3 @@ const SignInForm = ({
 };
 
 export default SignInForm;
-
-const Text = styled.div`
-  color: ${color.error};
-  align-self: start;
-`;
