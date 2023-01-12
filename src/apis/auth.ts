@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { API_URLS } from '../constants/apiUrls';
 import { TOKEN_KEY } from '../constants/auth';
 import { setLocalStorage } from '../utils/storage';
 import http from './instance';
@@ -15,7 +16,7 @@ export const signin = async ({
     const {
       data: { token },
     } = await http.post({
-      url: '/login',
+      url: API_URLS.AUTH.LOGIN,
       data: {
         email,
         password,

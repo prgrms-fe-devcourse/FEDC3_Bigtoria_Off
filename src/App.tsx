@@ -2,9 +2,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './components/shared/Header';
 import { ROUTES } from './constants/routes';
-import SignIn from './pages/SignIn';
 import Home from './pages/Home';
 import Notification from './pages/Notification';
+import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import StoryBook from './pages/StoryBook';
 
