@@ -20,7 +20,6 @@ export const useCommentForm = () => {
     if (comment.trim().length === 0) {
       alert('댓글 내용을 입력해 주세요.');
     } else {
-      setIsLoading(true);
       try {
         if (!storyId) throw Error;
         await postStoryComment(comment, storyId);
@@ -29,9 +28,10 @@ export const useCommentForm = () => {
         alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
       } finally {
         setComment('');
-        setIsLoading(false);
       }
     }
+
+    setIsLoading(false);
   };
 
   return { comment, isLoading, handleChange, handleSubmit };

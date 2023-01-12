@@ -20,7 +20,7 @@ const StoryComment = ({ comments, fetchComment }: Props) => {
         comments={comments}
         handleDelete={async (comment) => {
           await handleDelete(comment);
-          await fetchComment();
+          fetchComment();
         }}
       />
       <CommentForm
@@ -29,7 +29,7 @@ const StoryComment = ({ comments, fetchComment }: Props) => {
         handleChange={handleChange}
         handleSubmit={async (e) => {
           await handleSubmit(e);
-          await fetchComment();
+          fetchComment();
         }}
       />
     </Box>

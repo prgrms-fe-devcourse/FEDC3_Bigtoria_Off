@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 import { HTTP_METHODS } from '../constants/httpMethods';
 import { getLocalStorage } from '../utils/storage';
 
-const TOKEN_KEY = 'token';
+export const TOKEN_KEY = 'token';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
