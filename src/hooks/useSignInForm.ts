@@ -42,7 +42,7 @@ const useSignInForm = (initialState: InitialState) => {
       if (errorMessage) {
         setErrors({
           ...newErrors,
-          password: errorMessage + ' ' + ERROR_MESSAGES.CHECK_EMAIL_OR_PASSWORD,
+          password: ERROR_MESSAGES.CHECK_EMAIL_OR_PASSWORD,
         });
         setIsLoading(false);
         return;

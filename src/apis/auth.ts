@@ -11,9 +11,6 @@ export const signin = async ({
   email: string;
   password: string;
 }) => {
-  let isSignInFailed = false;
-  let errorMessage = '';
-
   try {
     const {
       data: { token },
@@ -27,12 +24,11 @@ export const signin = async ({
 
     token && setStorage(TOKEN_KEY, token);
   } catch (error) {
-    if (error && axios.isAxiosError(error)) {
-      isSignInFailed = true;
-      errorMessage = error.response?.data;
-    }
     console.error(error);
+    if (error && axios.isAxiosError(error)) {
+      return { isSignInFailed: true, errorMessage: error.response?.data };
+    }
   }
 
-  return { isSignInFailed, errorMessage };
+  return { isSignInFailed: false, errorMessage: '' };
 };
