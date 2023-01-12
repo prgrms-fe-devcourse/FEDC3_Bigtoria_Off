@@ -10,19 +10,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { TOKEN_KEY } from '../constants/auth';
 import { color } from '../constants/color';
 import { ROUTES } from '../constants/routes';
+import useCheckAuthToken from '../hooks/useCheckAuthToken';
 import useSignInForm from '../hooks/useSignInForm';
-import { getStorage } from '../utils/storage';
 
 const SignIn = () => {
+  useCheckAuthToken();
   const navigate = useNavigate();
-  const token = getStorage(TOKEN_KEY);
-
   const { values, errors, isLoading, handleChange, handleSubmit } =
     useSignInForm({
       email: '',
@@ -33,9 +30,9 @@ const SignIn = () => {
     navigate(ROUTES.HOME);
   };
 
-  useEffect(() => {
-    if (token) navigate(ROUTES.HOME);
-  }, [token]);
+  const handleClickButtonToSignUp = () => {
+    navigate(ROUTES.SIGNUP);
+  };
 
   return (
     <>
@@ -131,7 +128,7 @@ const SignIn = () => {
               비밀번호를 잊으셨나요?
             </Link>
           </Grid>
-          <Grid item>
+          <Grid item onClick={handleClickButtonToSignUp}>
             <Link variant='body2' sx={{ cursor: 'pointer' }}>
               <span>아직 계정이 없으신가요?</span>
               <span> 회원가입</span>
