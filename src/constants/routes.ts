@@ -4,4 +4,5 @@ export const ROUTES = {
   SIGNUP: '/signup',
   STORY: '/story/:storyId',
   STORY_EDIT: '/story/edit/:storyId',
+  STORY_CREATE: '/story/edit/new',
 };

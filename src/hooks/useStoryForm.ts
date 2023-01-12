@@ -1,7 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { StoryData } from '../interfaces/story';
+import { postStoryDetail } from '../apis/story';
+import { ERROR_MESSAGES } from './../constants/errorMessages';
 
 const getDateInfo = (date: Dayjs) => ({
   year: date.get('year'),
@@ -17,13 +19,13 @@ const isBlank = (string: string) => {
 
 const useStoryForm = () => {
   const [values, setValues] = useState({
-    date: getDateInfo(today),
     title: '',
-    image: '',
+    date: getDateInfo(today),
     content: '',
   });
   const [date, setDate] = useState<Dayjs | null>(today);
-  const [image, setImage] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [errors, setErrors] = useState({ title: '', content: '' });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,8 +46,7 @@ const useStoryForm = () => {
       reader.onload = () => {
         if (!reader.result || typeof reader.result !== 'string') return;
         const result = reader.result;
-        setImage(result);
-        setValues({ ...values, image: result });
+        setImageBase64(result);
         resolve(Promise);
       };
     });
@@ -53,31 +54,52 @@ const useStoryForm = () => {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
+    setImageFile(e.target.files?.[0]);
     encodeFileToBase64(e.target.files?.[0]);
   };
 
   const handleImageDelete = () => {
-    setImage('');
-    setValues({ ...values, image: '' });
+    setImageFile(null);
+    setImageBase64('');
   };
 
-  const validate = ({
-    title,
-    content,
-  }: Pick<StoryData, 'title' | 'content'>) => {
+  const validate = () => {
+    const { title, content } = values;
     const errors = { title: '', content: '' };
     if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
     if (!content || isBlank(content)) errors.content = '내용을 입력해 주세요.';
+
     return errors;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    setIsLoading(true);
-    e.preventDefault();
+  const channelId = '63b6822ade9d2a22cc1d45c3';
+  const navigate = useNavigate();
 
-    const newErrors = validate(values);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const newErrors = validate();
     if (!newErrors.title && !newErrors.content) {
-      // onSubmit(values)
+      try {
+        const formData = new FormData();
+        formData.append(
+          'title',
+          JSON.stringify({
+            storyTitle: values.title,
+            year: values.date.year,
+            month: values.date.month,
+            day: values.date.date,
+          })
+        );
+        imageFile && formData.append('image', imageFile);
+        formData.append('channelId', channelId);
+        const story = await postStoryDetail(formData);
+        navigate(`/story/${story._id}`);
+      } catch (error) {
+        console.error(error);
+        alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
+      }
     }
     setErrors(newErrors);
     setIsLoading(false);
@@ -86,7 +108,7 @@ const useStoryForm = () => {
   return {
     values,
     date,
-    image,
+    imageBase64,
     errors,
     isLoading,
     handleChange,

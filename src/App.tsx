@@ -18,6 +18,7 @@ const App = () => {
         <Route path={ROUTES.SIGNUP} element={<SignUp />} />
         <Route path={ROUTES.STORY} element={<Story />} />
         <Route path={ROUTES.STORY_EDIT} element={<StoryEdit />} />
+        <Route path={ROUTES.STORY_CREATE} element={<StoryEdit />} />
       </Routes>
     </BrowserRouter>
   );

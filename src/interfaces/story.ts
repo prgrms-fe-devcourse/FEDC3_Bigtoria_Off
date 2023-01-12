@@ -1,3 +1,7 @@
+import { Comment } from './comment';
+import { Like } from './like';
+import { User } from './user';
+
 export interface Story {
   _id: string;
   title: string;
@@ -27,8 +31,11 @@ export interface StoriesWithYear extends StoryYear {
 }
 
 export interface StoryData {
-  date: StoryDate;
-  title: string; // TODO: 협의 필요(realTitle)
+  likes: Like[];
+  comments: Comment[];
+  _id: string;
   image: string;
-  description: string;
+  title: string;
+  author: User;
+  createdAt: string;
 }
