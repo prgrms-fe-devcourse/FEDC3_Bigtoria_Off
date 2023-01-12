@@ -1,13 +1,19 @@
+import axios from 'axios';
+
 import { TOKEN_KEY } from '../constants/auth';
 import { setStorage } from '../utils/storage';
 import http from './instance';
 
-interface AuthInput {
+export const signin = async ({
+  email,
+  password,
+}: {
   email: string;
   password: string;
-}
+}) => {
+  let isSignInFailed = false;
+  let errorMessage = '';
 
-export const signin = async ({ email, password }: AuthInput) => {
   try {
     const {
       data: { token },
@@ -21,6 +27,12 @@ export const signin = async ({ email, password }: AuthInput) => {
 
     token && setStorage(TOKEN_KEY, token);
   } catch (error) {
+    if (error && axios.isAxiosError(error)) {
+      isSignInFailed = true;
+      errorMessage = error.response?.data;
+    }
     console.error(error);
   }
+
+  return { isSignInFailed, errorMessage };
 };
