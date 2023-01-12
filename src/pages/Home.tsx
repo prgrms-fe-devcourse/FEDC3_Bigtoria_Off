@@ -58,6 +58,7 @@ const HomePage = () => {
             display: 'inline-block',
             fontSize: '28px',
             paddingLeft: '5px',
+            marginTop: '20px',
           }}
         />
         {isLoading ? (

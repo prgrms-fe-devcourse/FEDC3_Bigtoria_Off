@@ -7,6 +7,7 @@ interface Props {
   title: string;
   sx: {
     display?: string;
+    marginTop?: string;
     marginBottom?: string;
     fontSize?: string;
     paddingLeft?: string;
