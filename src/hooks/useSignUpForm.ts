@@ -22,7 +22,10 @@ const useSignUpForm = () => {
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value.replace(/\s/g, '') });
+    if (name === 'fullName') {
+      const newValue = value.replace(/^\s/g, '').replace(/\s{2,}/g, ' ');
+      setValues({ ...values, [name]: newValue });
+    } else setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const handleSubmit = async (e: FormEvent) => {
