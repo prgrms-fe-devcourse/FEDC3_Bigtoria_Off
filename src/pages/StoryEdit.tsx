@@ -13,7 +13,6 @@ const StoryEdit = () => {
   } else {
     const { story, isLoading } = useFetchStory();
     if (isLoading || !story.title) return <CircularProgress />;
-    // TODO: 스토리 정보 Form으로 전달(hook 매개변수로 initialState 전달)
   }
 
   return (

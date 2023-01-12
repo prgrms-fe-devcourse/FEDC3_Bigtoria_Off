@@ -34,7 +34,6 @@ export interface StoryData {
   likes: Like[];
   comments: Comment[];
   _id: string;
-  date: StoryDate;
   image: string;
   title: string;
   author: User;

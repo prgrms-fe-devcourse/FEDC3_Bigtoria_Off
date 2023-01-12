@@ -25,8 +25,7 @@ const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
           secondaryAction={
             <IconButton edge='end' aria-label='delete'></IconButton>
           }
-          sx={{ paddingRight: 0 }}
-        >
+          sx={{ paddingRight: 0 }}>
           <ListItemAvatar>
             <Avatar alt='profile image' src={comment.author?.image} />
           </ListItemAvatar>

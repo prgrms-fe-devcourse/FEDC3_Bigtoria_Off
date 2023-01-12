@@ -27,8 +27,7 @@ const CommentForm = ({
         value={comment}
         onChange={handleChange}
         required
-        disabled={!hasToken}
-      ></TextField>
+        disabled={!hasToken}></TextField>
       <Button type='submit' disabled={!hasToken || isLoading}>
         등록
       </Button>

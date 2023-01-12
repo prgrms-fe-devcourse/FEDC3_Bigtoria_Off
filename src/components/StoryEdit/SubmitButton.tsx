@@ -11,8 +11,7 @@ const SubmitButton = ({ isLoading = false }: Props) => {
       variant='contained'
       size='large'
       fullWidth
-      disabled={isLoading}
-    >
+      disabled={isLoading}>
       {isLoading ? '저장 중' : '저장'}
     </Button>
   );

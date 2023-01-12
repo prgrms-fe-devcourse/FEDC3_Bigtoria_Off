@@ -25,22 +25,19 @@ const StoryInfo = ({ story, hasToken }: Props) => {
           <Typography
             variant='h3'
             gutterBottom
-            sx={{ fontSize: '2rem', fontWeight: '500' }}
-          >
+            sx={{ fontSize: '2rem', fontWeight: '500' }}>
             {storyTitle}
           </Typography>
           {hasToken && (
             <Box>
               <Button
                 variant='text'
-                onClick={() => navigate(`/story/edit/${story._id}`)}
-              >
+                onClick={() => navigate(`/story/edit/${story._id}`)}>
                 수정
               </Button>
               <Button
                 variant='text'
-                onClick={() => handleDelete(story._id, story.author._id)}
-              >
+                onClick={() => handleDelete(story._id, story.author._id)}>
                 삭제
               </Button>
             </Box>
@@ -59,8 +56,7 @@ const StoryInfo = ({ story, hasToken }: Props) => {
         {content && (
           <Paper
             variant='outlined'
-            sx={{ width: '90%', padding: '30px', margin: '20px 0' }}
-          >
+            sx={{ width: '90%', padding: '30px', margin: '20px 0' }}>
             {content}
           </Paper>
         )}
