@@ -3,7 +3,8 @@ import { isAxiosError } from 'axios';
 import { API_URLS } from '../constants/apiUrls';
 import { TOKEN_KEY } from '../constants/auth';
 import { HTTP_STATUS_CODE } from '../constants/http';
-import { setLocalStorage } from '../utils/storage';
+import { ROUTES } from '../constants/routes';
+import { removeLocalStorage, setLocalStorage } from '../utils/storage';
 import http from './instance';
 
 export const signin = async ({
@@ -40,6 +41,11 @@ export const signout = async () => {
     const { status } = await http.post({
       url: API_URLS.AUTH.LOGOUT,
     });
+
+    if (status === HTTP_STATUS_CODE.OK) {
+      removeLocalStorage(TOKEN_KEY);
+      location.href = ROUTES.HOME;
+    }
   } catch (error) {
     console.error(error);
   }
