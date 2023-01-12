@@ -9,10 +9,10 @@ import {
 interface Props {
   src: string;
   size?: string;
-  hover?: boolean;
+  fullName: string;
 }
 
-const FollowList = ({ src, size = '80px' }: Props) => {
+const FollowList = ({ src, size = '80px', fullName }: Props) => {
   return (
     <List
       dense
@@ -26,7 +26,7 @@ const FollowList = ({ src, size = '80px' }: Props) => {
         <ListItemAvatar>
           <Avatar src={src} sx={{ width: size, height: size }} />
         </ListItemAvatar>
-        <ListItemText primary='fullName' />
+        <ListItemText primary={fullName} />
       </ListItem>
     </List>
   );
