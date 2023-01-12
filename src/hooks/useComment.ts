@@ -21,7 +21,7 @@ export const useCommentForm = () => {
       alert('댓글 내용을 입력해 주세요.');
     } else {
       try {
-        if (!storyId) throw Error;
+        if (!storyId) throw Error('잘못된 스토리 접근(storyId)');
         await postStoryComment(comment, storyId);
       } catch (error) {
         console.error(error);
@@ -41,7 +41,7 @@ export const useDeleteComment = () => {
   const handleDelete = async (commentId: string) => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
       try {
-        if (!commentId) throw Error();
+        if (!commentId) throw Error('잘못된 댓글 접근(commentId)');
         await deleteStoryComment(commentId);
       } catch (error) {
         console.error(error);
