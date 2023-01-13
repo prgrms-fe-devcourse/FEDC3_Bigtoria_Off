@@ -19,7 +19,6 @@ const Following = () => {
     (async () => {
       try {
         const data = await userInfo(DUMMY_USER_ID);
-        console.log(data);
         setUser(data);
       } catch (error) {
         console.error(error);
@@ -57,8 +56,6 @@ const Following = () => {
         follow.followers?.filter((item: Follow) => item.user === id)
       );
       const followingId = following.filter((item) => item.length > 0)[0][0]._id; // 바꿔야함
-      console.log(id);
-      console.log(followingId);
 
       if (e.target.innerText === '삭제') {
         e.target.innerText = '팔로우';
