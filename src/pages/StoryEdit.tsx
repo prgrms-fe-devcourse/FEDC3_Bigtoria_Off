@@ -14,15 +14,15 @@ const StoryEdit = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isNew || isUserLoading) return;
+    if (isNew || isUserLoading || isStoryLoading) return;
 
     if (user._id && user._id !== story.author._id) {
       alert('올바르지 않은 접근입니다.');
       navigate(ROUTES.HOME);
     }
-  }, [user]);
+  }, []);
 
-  if (!user._id || isStoryLoading) return <CircularProgress />;
+  if (isUserLoading || isStoryLoading) return <CircularProgress />;
 
   return (
     <Container>

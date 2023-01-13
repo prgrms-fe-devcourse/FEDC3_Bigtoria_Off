@@ -36,7 +36,7 @@ const StoryEditForm = ({ story }: Props) => {
     handleImageChange,
     handleImageDelete,
     handleSubmit,
-  } = useStoryForm({ initialValues });
+  } = useStoryForm(initialValues);
 
   const image = values.imageURL || imageBase64;
 

@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
 import useFetchUser from '../../hooks/useFetchUser';
 import { Comment } from '../../interfaces/comment';
 
@@ -32,14 +33,18 @@ const CommentList = ({ comments, handleDelete }: Props) => {
           sx={{ paddingRight: 0 }}>
           <ListItemAvatar
             sx={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/story-book/${comment.author._id}`)}>
+            onClick={() =>
+              navigate(ROUTES.STORY_BOOK_BY_USER_ID(comment.author._id))
+            }>
             <Avatar alt='profile image' src={comment.author?.image} />
           </ListItemAvatar>
           <ListItemText
             sx={{ cursor: 'pointer' }}
             primary={comment.author.fullName}
             secondary={comment.comment}
-            onClick={() => navigate(`/story-book/${comment.author._id}`)}
+            onClick={() =>
+              navigate(ROUTES.STORY_BOOK_BY_USER_ID(comment.author._id))
+            }
           />
           {user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>

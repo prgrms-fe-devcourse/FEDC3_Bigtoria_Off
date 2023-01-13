@@ -79,11 +79,7 @@ interface StoryInfo {
   content: string;
 }
 
-interface Params {
-  initialValues?: StoryInfo;
-}
-
-export const useStoryForm = ({ initialValues }: Params) => {
+export const useStoryForm = (initialValues: StoryInfo | undefined) => {
   const channelId = '63b6822ade9d2a22cc1d45c3';
   const today = dayjs(new Date());
 
@@ -98,9 +94,9 @@ export const useStoryForm = ({ initialValues }: Params) => {
     if (initialValues && Object.keys(initialValues.date).length) {
       const { year, month, date } = initialValues.date;
       return dayjs(new Date(year, month - 1, date));
-    } else {
-      return today;
     }
+
+    return today;
   });
   const [imageBase64, setImageBase64] = useState('');
   const [imageFile, setImageFile] = useState<File | null>();
@@ -154,44 +150,51 @@ export const useStoryForm = ({ initialValues }: Params) => {
     return errors;
   };
 
+  const generateFormData = (imagePublicId: string) => {
+    const formData = new FormData();
+    formData.append(
+      'title',
+      JSON.stringify({
+        storyTitle: values.title,
+        year: values.date.year,
+        month: values.date.month,
+        day: values.date.date,
+        content: values.content,
+      })
+    );
+    formData.append('channelId', channelId);
+    initialValues && storyId && formData.append('postId', storyId);
+
+    if (values.imageURL) return formData;
+
+    imageFile
+      ? formData.append('image', imageFile)
+      : formData.append('imageToDeletePublicId', imagePublicId);
+
+    return formData;
+  };
+
   const handleSubmit = async (e: FormEvent, imagePublicId: string) => {
     e.preventDefault();
     setIsLoading(true);
 
     const newErrors = validate();
-    if (!newErrors.title && !newErrors.content) {
-      try {
-        const formData = new FormData();
-        formData.append(
-          'title',
-          JSON.stringify({
-            storyTitle: values.title,
-            year: values.date.year,
-            month: values.date.month,
-            day: values.date.date,
-            content: values.content,
-          })
-        );
-        if (!values.imageURL) {
-          if (imageFile) {
-            formData.append('image', imageFile);
-          } else {
-            formData.append('imageToDeletePublicId', imagePublicId);
-          }
-        }
-        formData.append('channelId', channelId);
-        initialValues && storyId && formData.append('postId', storyId);
-
-        const story = initialValues
-          ? await putStory(formData)
-          : await postStory(formData);
-        navigate(ROUTES.STORY_BY_STORY_ID(story._id));
-      } catch (error) {
-        console.error(error);
-        alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
-      }
+    if (Object.keys(newErrors).length) {
+      setErrors(newErrors);
+      return;
     }
-    setErrors(newErrors);
+
+    try {
+      const formData = generateFormData(imagePublicId);
+      const story = initialValues
+        ? await putStory(formData)
+        : await postStory(formData);
+
+      navigate(ROUTES.STORY_BY_STORY_ID(story._id));
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
+    }
     setIsLoading(false);
   };
 
