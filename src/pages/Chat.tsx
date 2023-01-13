@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-import MessageConversation from '../components/Message/Conversation/MessageConversation';
-import MessageInputForm from '../components/Message/InputForm/MessageInputForm';
+import MessageConversation from '../components/Message/MessageConversation';
+import MessageInputForm from '../components/Message/MessageInputForm';
 
 const Chat = () => {
   return (

@@ -40,6 +40,10 @@ const MessageInputForm = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    console.log(specificUsers);
+  }, [specificUsers]);
+
   return (
     <ChatWrapper>
       <ChatList>
