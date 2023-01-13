@@ -21,6 +21,7 @@ export const useFetchStory = () => {
     updatedAt: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isNew, setIsNew] = useState(false);
   const { storyId } = useParams();
 
   useEffect(() => {
@@ -29,7 +30,9 @@ export const useFetchStory = () => {
       try {
         if (!storyId) return Error('잘못된 스토리 접근(storyId)'); // TODO: 404 페이지로 리다이렉트
 
-        if (storyId !== 'new') {
+        if (storyId === 'new') {
+          setIsNew(true);
+        } else {
           const fetchedStories = await getStoryDetail(storyId);
           setStory(fetchedStories);
         }
@@ -56,7 +59,7 @@ export const useFetchStory = () => {
     }
   };
 
-  return { story, fetchComment, isLoading };
+  return { story, isNew, isLoading, fetchComment };
 };
 
 const getDateInfo = (date: Dayjs) => ({

@@ -7,9 +7,11 @@ const useFetchUser = () => {
   const [user, setUser] = useState({
     _id: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
+      setIsLoading(true);
       try {
         const user = await checkAuth();
         setUser(user);
@@ -17,12 +19,13 @@ const useFetchUser = () => {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_USER);
       }
+      setIsLoading(false);
     };
 
     fetchUser();
   }, []);
 
-  return { user };
+  return { user, isLoading };
 };
 
 export default useFetchUser;
