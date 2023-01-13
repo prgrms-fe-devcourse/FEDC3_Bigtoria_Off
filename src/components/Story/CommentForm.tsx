@@ -15,8 +15,7 @@ const CommentForm = () => {
         fullWidth
         placeholder='댓글을 입력해 주세요.'
         value={text}
-        onChange={handleChange}
-      ></TextField>
+        onChange={handleChange}></TextField>
       <Button type='submit'>확인</Button>
     </Form>
   );

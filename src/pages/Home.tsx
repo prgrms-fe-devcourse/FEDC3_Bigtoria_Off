@@ -29,8 +29,7 @@ const HomePage = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       <Box component='header'>
         <FontText
           component='h1'
@@ -48,8 +47,7 @@ const HomePage = () => {
           width: '92%',
           display: 'block',
           margin: '0 auto',
-        }}
-      >
+        }}>
         <SearchForm onSubmit={handleSubmit} />
         <FontText
           component='p'
@@ -70,8 +68,7 @@ const HomePage = () => {
               alignItems: 'center',
               marginBottom: '30px',
               padding: '40px',
-            }}
-          >
+            }}>
             <CircularProgress
               size={48}
               sx={{

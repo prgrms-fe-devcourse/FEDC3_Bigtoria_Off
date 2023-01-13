@@ -20,8 +20,7 @@ const SearchForm = ({ onSubmit }: Props) => {
           position: 'relative',
           marginBottom: '10px',
         }}
-        onSubmit={handleFormSubmit}
-      >
+        onSubmit={handleFormSubmit}>
         <TextField
           sx={{
             width: '100%',
@@ -49,8 +48,7 @@ const SearchForm = ({ onSubmit }: Props) => {
             top: '30px',
             color: '#167fe7',
           }}
-          onClick={handleInputClear}
-        >
+          onClick={handleInputClear}>
           <HighlightOff />
         </IconButton>
       </Box>

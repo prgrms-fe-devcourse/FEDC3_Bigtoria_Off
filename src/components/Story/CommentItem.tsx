@@ -17,8 +17,7 @@ const CommentItem = ({ comment }: Props) => {
   return (
     <ListItem
       secondaryAction={<IconButton edge='end' aria-label='delete'></IconButton>}
-      sx={{ paddingRight: 0 }}
-    >
+      sx={{ paddingRight: 0 }}>
       <ListItemAvatar>
         <Avatar alt='profile image' src={comment.author?.image} />
       </ListItemAvatar>

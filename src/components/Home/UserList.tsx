@@ -19,16 +19,14 @@ const UserList = ({ users }: Props) => {
         width: '100%',
         marginTop: '10px',
         padding: 0,
-      }}
-    >
+      }}>
       {!users || users.length === 0 ? (
         <NoResultBox />
       ) : (
         <List
           sx={{
             width: '100%',
-          }}
-        >
+          }}>
           {users.map(({ _id, image, fullName, username }) => {
             const job = username ? JSON.parse(username).job : '';
             const year = username ? JSON.parse(username).year : '';

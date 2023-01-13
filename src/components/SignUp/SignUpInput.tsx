@@ -26,8 +26,7 @@ const SignUpInput = ({
         alignItems: 'center',
         position: 'relative',
         paddingBottom: '15px',
-      }}
-    >
+      }}>
       <Input
         placeholder={placeholder}
         type={type}

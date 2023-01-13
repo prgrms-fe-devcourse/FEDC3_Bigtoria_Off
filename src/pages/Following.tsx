@@ -30,7 +30,7 @@ const Following = () => {
 
   // 팔로잉 유저 id
   const followingIdList: string[] =
-    user?.following?.map((following) => following.user) ?? [];
+    user?.following?.map((following) => following.user) || [];
   //id로 유저 정보 가져오기
   useEffect(() => {
     (async () => {
@@ -50,12 +50,13 @@ const Following = () => {
       return;
     }
 
-    if (e.target.dataset) {
+    if (e.target.dataset !== undefined) {
       const id = e.target.dataset.followid; //삭제버튼 누른 userId
       const following = followingList.map((follow) =>
         follow.followers?.filter((item: Follow) => item.user === id)
       );
-      const followingId = following.filter((item) => item.length > 0)[0][0]._id; // 바꿔야함
+      console.log(following);
+      const followingId = following.filter((item) => item.length > 0)[0][0]._id; // 현재 삭제하려는 followingId
 
       if (e.target.innerText === '삭제') {
         e.target.innerText = '팔로우';
