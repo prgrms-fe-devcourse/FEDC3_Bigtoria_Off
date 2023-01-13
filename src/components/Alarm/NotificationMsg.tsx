@@ -17,8 +17,7 @@ const NotificationMsg = ({ message }: Props) => {
         boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
         borderRadius: 2,
         marginBottom: '12px',
-      }}
-    >
+      }}>
       <ListItemText primary={message} />
       <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
         <DeleteIcon />

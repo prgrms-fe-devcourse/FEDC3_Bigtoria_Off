@@ -35,8 +35,7 @@ const NotificationList = ({ type }: Props) => {
     <List
       sx={{
         width: '100%',
-      }}
-    >
+      }}>
       {type === 'message'
         ? dummyMsgArr.map((m, i) => <NotificationMsg key={i} message={m} />)
         : dummyPostArr.map((m, i) => <NotificationMsg key={i} message={m} />)}

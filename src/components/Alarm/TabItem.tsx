@@ -11,8 +11,7 @@ const TabButtonItem = ({ text, type, curTabValue, onClick }: Props) => {
     <Button
       onClick={onClick}
       variant={`${curTabValue === type ? 'contained' : 'outlined'}`}
-      sx={{ flex: 1 }}
-    >
+      sx={{ flex: 1 }}>
       {text}
     </Button>
   );

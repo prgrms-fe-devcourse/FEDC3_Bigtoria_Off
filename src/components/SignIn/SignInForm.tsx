@@ -41,8 +41,7 @@ const SignInForm = ({
         flexDirection: 'column',
         alignItems: 'center',
         gap: '1rem',
-      }}
-    >
+      }}>
       <Typography component='h1' variant='h5'>
         로그인
       </Typography>
@@ -76,14 +75,12 @@ const SignInForm = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }}
-        >
+          }}>
           <Button
             disabled={isLoading}
             variant='contained'
             type='submit'
-            fullWidth
-          >
+            fullWidth>
             로그인
           </Button>
           {isLoading && (
@@ -97,14 +94,12 @@ const SignInForm = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }}
-        >
+          }}>
           <Button
             disabled={isLoading}
             variant='outlined'
             fullWidth
-            onClick={onClick}
-          >
+            onClick={onClick}>
             로그인 없이 접속
           </Button>
           {isLoading && (

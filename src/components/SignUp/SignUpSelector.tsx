@@ -22,8 +22,7 @@ const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
         alignItems: 'center',
         position: 'relative',
         paddingBottom: '15px',
-      }}
-    >
+      }}>
       <Selector name={name} onChange={onChange}>
         <option value=''>출생연도</option>
         {getFullYear().map((item) => (

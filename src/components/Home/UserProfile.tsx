@@ -28,12 +28,10 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
         borderRadius: 2,
         marginBottom: '12px',
         padding: 0,
-      }}
-    >
+      }}>
       <ListItemButton
         onClick={() => navigate(path)}
-        sx={{ padding: '20px 18px' }}
-      >
+        sx={{ padding: '20px 18px' }}>
         <ListItemAvatar sx={{ marginRight: '20px' }}>
           <Avatar
             sx={{ width: 42, height: 42 }}
@@ -49,8 +47,7 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
                 {year} {job}
               </Typography>
             </React.Fragment>
-          }
-        ></ListItemText>
+          }></ListItemText>
       </ListItemButton>
     </ListItem>
   );

@@ -26,8 +26,7 @@ const TabContainer = ({ onClick }: Props) => {
     <Stack
       direction='row'
       spacing={2}
-      divider={<Divider orientation='vertical' flexItem />}
-    >
+      divider={<Divider orientation='vertical' flexItem />}>
       <TabButtonItem
         text='메세지'
         type={MESSAGE}

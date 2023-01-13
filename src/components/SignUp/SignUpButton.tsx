@@ -13,14 +13,12 @@ const SignUpButton = ({ isLoading }: Props) => {
           width: '100%',
           alignItems: 'center',
           position: 'relative',
-        }}
-      >
+        }}>
         <Button
           fullWidth={true}
           variant='contained'
           type='submit'
-          disabled={isLoading}
-        >
+          disabled={isLoading}>
           회원가입
         </Button>
         {isLoading && (
