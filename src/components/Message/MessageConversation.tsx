@@ -15,6 +15,7 @@ import { Message } from '../../interfaces/message';
 
 const MessageConversation = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -22,12 +23,14 @@ const MessageConversation = () => {
         .get({
           url: '/messages/conversations',
         })
-        .then((data) => setMessages(data.data));
+        .then((data) => setMessages(data.data))
+        .catch(() => setError(true));
     })();
   }, [messages]);
 
   return (
     <List sx={{ width: '40%', overflowY: 'scroll' }}>
+      {error && <div>로그인이 필요해요</div>}
       {messages?.map((message) => {
         return (
           <ListItem key={message.createdAt} disablePadding>
