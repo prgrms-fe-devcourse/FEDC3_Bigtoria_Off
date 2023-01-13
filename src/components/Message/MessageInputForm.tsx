@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
 import { useEffect, useRef, useState } from 'react';
 
-import http from '../../../apis/instance';
-import { Message } from '../../../interfaces/message';
+import http from '../../apis/instance';
+import { Message } from '../../interfaces/message';
+import MessageBubble from './MessageBubble';
 
 const MessageInputForm = () => {
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -40,22 +41,15 @@ const MessageInputForm = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(specificUsers);
-  }, [specificUsers]);
-
   return (
     <ChatWrapper>
       <ChatList>
-        {specificUsers?.map((messageTotal) => {
-          return (
-            <div key={messageTotal.createdAt}>
-              <div>
-                {messageTotal.message} {messageTotal.seen ? '봤음' : '안 봤음'}
-              </div>
-            </div>
-          );
-        })}
+        {specificUsers?.map((specificUser) => (
+          <MessageBubble
+            key={specificUser.createdAt}
+            specificUser={specificUser}
+          />
+        ))}
       </ChatList>
       <MessageInputFormWrap onSubmit={handleSubmit}>
         <MessageInput

@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import http from '../../../apis/instance';
-import { Message } from '../../../interfaces/message';
+import http from '../../apis/instance';
+import { Message } from '../../interfaces/message';
 
 const MessageConversation = () => {
   const [messages, setMessages] = useState<Message[]>([]);
