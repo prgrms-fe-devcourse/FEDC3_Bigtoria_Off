@@ -77,3 +77,29 @@ export const deleteStoryComment = async (commentId: string) => {
     }),
   });
 };
+
+export const postStoryLike = async (storyId: string) => {
+  const { data: like } = await http.post({
+    url: API_URLS.LIKE.CREATE_LIKE,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      postId: storyId,
+    }),
+  });
+
+  return like;
+};
+
+export const deleteStoryLike = async (userId: string) => {
+  await http.delete({
+    url: API_URLS.LIKE.DELETE_LIKE,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      id: userId,
+    }),
+  });
+};

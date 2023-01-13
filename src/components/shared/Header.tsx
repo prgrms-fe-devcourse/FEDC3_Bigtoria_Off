@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
+import FontText from '../Home/FontText';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
@@ -11,19 +13,29 @@ const Header = () => {
 
   return (
     <Container>
-      <Logo onClick={() => navigate('/')}>빅토리아</Logo>
+      <Logo onClick={() => navigate(ROUTES.HOME)}>
+        <FontText
+          component='h4'
+          title='B.'
+          sx={{
+            display: 'inline-block',
+            marginBottom: '30px',
+            fontSize: '30px',
+          }}
+        />
+      </Logo>
       <ButtonsContainer>
         <StoryAddButton />
         <HamburgerButton onClick={handleClick}>
           {click ? (
-            <img src='/public/icons/close.svg' />
+            <img src='/icons/close.svg' />
           ) : (
-            <img src='/public/icons/hamburger_menu.svg' />
+            <img src='/icons/hamburger_menu.svg' />
           )}
         </HamburgerButton>
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
-        <img src='/public/icons/user_profile.svg' width={120} />
+        <img src='/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
         <NavLinks>팔로우 목록</NavLinks>

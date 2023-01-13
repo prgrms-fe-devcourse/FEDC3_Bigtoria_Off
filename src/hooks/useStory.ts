@@ -179,7 +179,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
     setIsLoading(true);
 
     const newErrors = validate();
-    if (Object.keys(newErrors).length) {
+    if (newErrors.title || newErrors.content) {
       setErrors(newErrors);
       return;
     }
@@ -189,12 +189,12 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
       const story = initialValues
         ? await putStory(formData)
         : await postStory(formData);
-
       navigate(ROUTES.STORY_BY_STORY_ID(story._id));
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
     }
+
     setIsLoading(false);
   };
 

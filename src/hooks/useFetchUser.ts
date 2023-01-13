@@ -6,6 +6,7 @@ import { ERROR_MESSAGES } from '../constants/errorMessages';
 const useFetchUser = () => {
   const [user, setUser] = useState({
     _id: '',
+    likes: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
