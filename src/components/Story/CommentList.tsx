@@ -7,6 +7,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import useFetchUser from '../../hooks/useFetchUser';
 import { Comment } from '../../interfaces/comment';
@@ -19,6 +20,7 @@ interface Props {
 
 const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
   const { user } = useFetchUser();
+  const navigate = useNavigate();
 
   return (
     <List>
@@ -29,12 +31,16 @@ const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
             <IconButton edge='end' aria-label='delete'></IconButton>
           }
           sx={{ paddingRight: 0 }}>
-          <ListItemAvatar>
+          <ListItemAvatar
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate(`/story-book/${comment.author._id}`)}>
             <Avatar alt='profile image' src={comment.author?.image} />
           </ListItemAvatar>
           <ListItemText
+            sx={{ cursor: 'pointer' }}
             primary={comment.author.fullName}
             secondary={comment.comment}
+            onClick={() => navigate(`/story-book/${comment.author._id}`)}
           />
           {hasToken && user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>
