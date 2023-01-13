@@ -24,7 +24,10 @@ const FollowingList = ({ src, size = '80px', fullName }: Props) => {
       }}>
       <ListItem>
         <ListItemAvatar>
-          <Avatar src={src} sx={{ width: size, height: size }} />
+          <Avatar
+            src={src}
+            sx={{ width: size, height: size, marginRight: '0.5rem' }}
+          />
         </ListItemAvatar>
         <ListItemText primary={fullName} />
       </ListItem>
