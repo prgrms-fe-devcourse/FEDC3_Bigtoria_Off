@@ -29,6 +29,18 @@ export const postStory = async (formData: FormData) => {
   return story;
 };
 
+export const putStory = async (formData: FormData) => {
+  const { data: story } = await http.put({
+    url: API_URLS.POST.UPDATE_POST,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formData,
+  });
+
+  return story;
+};
+
 export const deleteStory = async (storyId: string) => {
   await http.delete({
     url: API_URLS.POST.DELETE_POST,

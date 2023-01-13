@@ -46,10 +46,12 @@ const StoryInfo = ({ story, hasToken }: Props) => {
         <Typography variant='subtitle1' gutterBottom>
           {year}.{month}.{day}
         </Typography>
-        <Profile onClick={() => navigate(`/story-book/${story.author._id}`)}>
-          <Avatar src={story.author.image} alt='profile image'></Avatar>
-          <p>{story.author.fullName}</p>
-        </Profile>
+        <Box>
+          <Profile onClick={() => navigate(`/story-book/${story.author._id}`)}>
+            <Avatar src={story.author.image} alt='profile image'></Avatar>
+            <span>{story.author.fullName}</span>
+          </Profile>
+        </Box>
       </Box>
       <StoryContainer>
         {story.image && <StoryImage src={story.image} alt='story image' />}
@@ -73,8 +75,8 @@ const StoryHeader = styled(Box)`
   justify-content: space-between;
 `;
 
-const Profile = styled(Box)`
-  display: flex;
+const Profile = styled.span`
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;

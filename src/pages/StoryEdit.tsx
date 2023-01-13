@@ -1,24 +1,17 @@
 import styled from '@emotion/styled';
 import { CircularProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
 
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
 import { useFetchStory } from '../hooks/useStory';
 
 const StoryEdit = () => {
-  const { storyId } = useParams();
-  let title;
-  if (!storyId) {
-    title = '스토리 추가';
-  } else {
-    const { story, isLoading } = useFetchStory();
-    if (isLoading || !story.title) return <CircularProgress />;
-  }
+  const { story, isLoading } = useFetchStory();
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Container>
-      <h1>{title}</h1>
-      <StoryEditForm />
+      <h1>스토리 {story._id ? '수정' : '추가'}</h1>
+      <StoryEditForm story={story} />
     </Container>
   );
 };

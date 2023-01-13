@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
+import { putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
 
 export const useFetchStory = () => {
@@ -25,11 +26,11 @@ export const useFetchStory = () => {
     const fetchStory = async () => {
       setIsLoading(true);
       try {
-        if (storyId) {
+        if (!storyId) return Error('잘못된 스토리 접근(storyId)'); // TODO: 404 페이지로 리다이렉트
+
+        if (storyId !== 'new') {
           const fetchedStories = await getStoryDetail(storyId);
           setStory(fetchedStories);
-        } else {
-          // TODO: 404 페이지로 리다이렉트
         }
       } catch (error) {
         console.error(error);
@@ -50,7 +51,7 @@ export const useFetchStory = () => {
       }
     } catch (error) {
       console.error(error);
-      alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_STORY);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_COMMENT);
     }
   };
 
@@ -62,25 +63,46 @@ const getDateInfo = (date: Dayjs) => ({
   month: date.get('month') + 1,
   date: date.get('date'),
 });
+interface StoryInfo {
+  title: string;
+  date: {
+    year: number;
+    month: number;
+    date: number;
+  };
+  imageURL?: string;
+  content: string;
+}
 
-const isBlank = (string: string) => {
-  return string.trim().length === 0;
-};
+interface Params {
+  initialValues?: StoryInfo;
+}
 
-export const useStoryForm = () => {
-  const today = dayjs(new Date());
+export const useStoryForm = ({ initialValues }: Params) => {
   const channelId = '63b6822ade9d2a22cc1d45c3';
-  const [values, setValues] = useState({
-    title: '',
-    date: getDateInfo(today),
-    content: '',
+  const today = dayjs(new Date());
+
+  const [values, setValues] = useState(
+    initialValues || {
+      title: '',
+      date: getDateInfo(today),
+      content: '',
+    }
+  );
+  const [date, setDate] = useState<Dayjs | null>(() => {
+    if (initialValues && Object.keys(initialValues.date).length) {
+      const { year, month, date } = initialValues.date;
+      return dayjs(new Date(year, month - 1, date));
+    } else {
+      return today;
+    }
   });
-  const [date, setDate] = useState<Dayjs | null>(today);
   const [imageBase64, setImageBase64] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>();
   const [errors, setErrors] = useState({ title: '', content: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { storyId } = useParams();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -112,6 +134,7 @@ export const useStoryForm = () => {
   };
 
   const handleImageDelete = () => {
+    setValues({ ...values, imageURL: '' });
     setImageFile(null);
     setImageBase64('');
   };
@@ -125,7 +148,7 @@ export const useStoryForm = () => {
     return errors;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent, imagePublicId: string) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -143,9 +166,19 @@ export const useStoryForm = () => {
             content: values.content,
           })
         );
-        imageFile && formData.append('image', imageFile);
+        if (!values.imageURL) {
+          if (imageFile) {
+            formData.append('image', imageFile);
+          } else {
+            formData.append('imageToDeletePublicId', imagePublicId);
+          }
+        }
         formData.append('channelId', channelId);
-        const story = await postStory(formData);
+        initialValues && storyId && formData.append('postId', storyId);
+
+        const story = initialValues
+          ? await putStory(formData)
+          : await postStory(formData);
         navigate(`/story/${story._id}`);
       } catch (error) {
         console.error(error);
