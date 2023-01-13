@@ -3,7 +3,7 @@ import http from './instance';
 
 export const getStoriesOfUser = async (userId: string) => {
   const { data: stories } = await http.get({
-    url: `/posts/author/${userId}`,
+    url: `${API_URLS.POST.GET_POSTS_OF_SPECIFIC_USER(userId)}`,
   });
 
   return stories;
