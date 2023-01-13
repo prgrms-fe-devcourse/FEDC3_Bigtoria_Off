@@ -22,7 +22,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
   return (
     <Card
       sx={{
-        maxWidth: 210,
+        width: '210px',
         marginRight: '16px',
         cursor: 'pointer',
         boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
