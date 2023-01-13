@@ -7,7 +7,17 @@ import useFetchStories from '../hooks/useFetchStories';
 const StoryBook = () => {
   const { storiesByYear, isLoading } = useFetchStories();
 
-  if (isLoading) return <CircularProgress />;
+  if (!isLoading)
+    return (
+      <CircularProgress
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, 50%)',
+        }}
+      />
+    );
 
   return (
     <Container>

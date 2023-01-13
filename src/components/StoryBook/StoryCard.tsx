@@ -16,7 +16,6 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // todo: StoryCard 클릭 시 해당 story detail 페이지로 이동.
     navigate(`/story/${storyId}`);
   };
 
@@ -28,8 +27,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
         cursor: 'pointer',
         boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
       }}
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       <CardMedia
         component='img'
         ref={imageRef}
@@ -45,8 +43,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-          }}
-        >
+          }}>
           {title}
         </Typography>
       </CardContent>
