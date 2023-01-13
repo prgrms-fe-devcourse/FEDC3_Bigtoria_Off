@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { isBlankString } from '../utils/validations';
 
 export const useCommentForm = () => {
   const [comment, setComment] = useState('');
@@ -17,7 +18,7 @@ export const useCommentForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (comment.trim().length === 0) {
+    if (isBlankString(comment)) {
       alert('댓글 내용을 입력해 주세요.');
     } else {
       try {

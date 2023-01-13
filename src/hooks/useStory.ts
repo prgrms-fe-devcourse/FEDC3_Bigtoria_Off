@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
+import { isBlankString } from '../utils/validations';
 import { putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
 
@@ -142,8 +143,9 @@ export const useStoryForm = ({ initialValues }: Params) => {
   const validate = () => {
     const { title, content } = values;
     const errors = { title: '', content: '' };
-    if (!title || isBlank(title)) errors.title = '제목을 입력해 주세요.';
-    if (!content || isBlank(content)) errors.content = '내용을 입력해 주세요.';
+    if (!title || isBlankString(title)) errors.title = '제목을 입력해 주세요.';
+    if (!content || isBlankString(content))
+      errors.content = '내용을 입력해 주세요.';
 
     return errors;
   };
