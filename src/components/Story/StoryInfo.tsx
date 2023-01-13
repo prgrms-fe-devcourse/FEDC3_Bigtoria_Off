@@ -54,7 +54,11 @@ const StoryInfo = ({ story, hasToken }: Props) => {
         </Box>
       </Box>
       <StoryContainer>
-        {story.image && <StoryImage src={story.image} alt='story image' />}
+        {story.image && (
+          <StoryImageWrapper>
+            <StoryImage src={story.image} alt='story image' />
+          </StoryImageWrapper>
+        )}
         {content && (
           <Paper
             variant='outlined'
@@ -87,6 +91,10 @@ const StoryContainer = styled(Box)`
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
+`;
+
+const StoryImageWrapper = styled.div`
+  height: 300px;
 `;
 
 const StoryImage = styled.img`
