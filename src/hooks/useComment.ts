@@ -1,14 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { isBlankString } from '../utils/validations';
+import { postNotification } from './../apis/notification';
+import { ROUTES } from './../constants/routes';
 
 export const useCommentForm = () => {
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { storyId } = useParams();
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
@@ -20,16 +23,22 @@ export const useCommentForm = () => {
 
     if (isBlankString(comment)) {
       alert('댓글 내용을 입력해 주세요.');
-    } else {
-      try {
-        if (!storyId) throw Error('잘못된 스토리 접근(storyId)');
-        await postStoryComment(comment, storyId);
-      } catch (error) {
-        console.error(error);
-        alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
-      } finally {
-        setComment('');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      if (!storyId) {
+        navigate(ROUTES.NOT_FOUND);
+        return;
       }
+      const { _id, author, post } = await postStoryComment(comment, storyId);
+      await postNotification('COMMENT', _id, author._id, post);
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
+    } finally {
+      setComment('');
     }
 
     setIsLoading(false);
@@ -39,15 +48,19 @@ export const useCommentForm = () => {
 };
 
 export const useDeleteComment = () => {
+  const navigate = useNavigate();
+
   const handleDelete = async (commentId: string) => {
-    if (confirm('댓글을 삭제하시겠습니까?')) {
-      try {
-        if (!commentId) throw Error('잘못된 댓글 접근(commentId)');
-        await deleteStoryComment(commentId);
-      } catch (error) {
-        console.error(error);
-        alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_COMMENT);
+    if (!confirm('댓글을 삭제하시겠습니까?')) return;
+    try {
+      if (!commentId) {
+        navigate(ROUTES.NOT_FOUND);
+        return;
       }
+      await deleteStoryComment(commentId);
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_COMMENT);
     }
   };
 

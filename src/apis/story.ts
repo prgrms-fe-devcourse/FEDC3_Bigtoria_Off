@@ -54,7 +54,7 @@ export const deleteStory = async (storyId: string) => {
 };
 
 export const postStoryComment = async (comment: string, storyId: string) => {
-  await http.post({
+  const { data: commentData } = await http.post({
     url: API_URLS.COMMENT.CREATE_COMMENT,
     headers: {
       'Content-Type': 'application/json',
@@ -64,6 +64,8 @@ export const postStoryComment = async (comment: string, storyId: string) => {
       postId: storyId,
     }),
   });
+
+  return commentData;
 };
 
 export const deleteStoryComment = async (commentId: string) => {
