@@ -12,3 +12,16 @@ export const removeFollow = async (id: string) => {
     console.error(error);
   }
 };
+
+export const createFollow = async (userId: string) => {
+  try {
+    await http.post({
+      url: '/follow/create',
+      data: {
+        userId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};

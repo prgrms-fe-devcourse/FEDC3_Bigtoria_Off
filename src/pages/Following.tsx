@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { Button, Container } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
+import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
-import { removeFollow } from '../apis/removeFollow';
 import { userInfo } from '../apis/userInfo';
 import FollowList from '../components/Follow/FollowingList';
-import { User } from '../interfaces/user';
+import { Follow, User } from '../interfaces/user';
 
 const DUMMY_USER_ID = '63b9844b4a1b585b777da2ea';
 
@@ -14,12 +14,12 @@ const Following = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
   const [followingList, setFollowingList] = useState<User[]>([]);
-  const followingId = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     (async () => {
       try {
         const data = await userInfo(DUMMY_USER_ID);
+        console.log(data);
         setUser(data);
       } catch (error) {
         console.error(error);
@@ -32,7 +32,6 @@ const Following = () => {
   // 팔로잉 유저 id
   const followingIdList: string[] =
     user?.following?.map((following) => following.user) ?? [];
-
   //id로 유저 정보 가져오기
   useEffect(() => {
     (async () => {
@@ -47,29 +46,47 @@ const Following = () => {
     })();
   }, [user]);
 
-  const handleClick = async () => {
-    const id = followingId.current?.dataset.followid;
-    const removeId = followingList.map((follow) =>
-      follow.followers?.filter((item) => item.user === id)
-    );
-    const followId = removeId.filter((item) => item.length !== 0)[0][0]._id;
-    await removeFollow(followId);
+  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
+    if (!(e.target instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    if (e.target.dataset) {
+      const id = e.target.dataset.followid; //삭제버튼 누른 userId
+      const following = followingList.map((follow) =>
+        follow.followers?.filter((item: Follow) => item.user === id)
+      );
+      const followingId = following.filter((item) => item.length > 0)[0][0]._id; // 바꿔야함
+      console.log(id);
+      console.log(followingId);
+
+      if (e.target.innerText === '삭제') {
+        e.target.innerText = '팔로우';
+        await removeFollow(followingId);
+      } else if (e.target.innerText === '팔로우') {
+        e.target.innerText = '삭제';
+        await createFollow(id);
+      }
+    }
   };
 
   return (
     <Container>
-      {console.log(followingList)}
       {followingList ? (
         followingList.map((following) => (
-          <Wrapper
-            key={following._id}
-            data-followid={following._id}
-            ref={followingId}>
+          <Wrapper key={following._id}>
             <FollowList src={following.image} fullName={following.fullName} />
             <Button
               variant='outlined'
               size='small'
-              sx={{ height: '30px', marginRight: '0.5rem', padding: '1rem' }}
+              sx={{
+                height: '30px',
+                width: '100px',
+                marginRight: '0.5rem',
+                padding: '0.5rem',
+                boxSizing: 'border-box',
+              }}
+              data-followid={following._id}
               onClick={handleClick}>
               삭제
             </Button>
