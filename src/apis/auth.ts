@@ -50,3 +50,11 @@ export const signout = async () => {
     console.error(error);
   }
 };
+
+export const checkAuth = async () => {
+  const { data: user } = await http.get({
+    url: API_URLS.AUTH.CHECK_AUTH,
+  });
+
+  return user;
+};

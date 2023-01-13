@@ -2,13 +2,31 @@ import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
 import { useStoryForm } from '../../hooks/useStory';
+import { StoryData } from '../../interfaces/story';
 import DatePicker from './DatePicker';
 import ImageInput from './ImageInput';
 import SubmitButton from './SubmitButton';
 import TextInput from './TextInput';
 
-const StoryEditForm = () => {
+interface Props {
+  story: StoryData;
+}
+
+const StoryEditForm = ({ story }: Props) => {
+  let initialValues;
+  if (story._id) {
+    const { storyTitle, year, month, day, content } = JSON.parse(story.title);
+
+    initialValues = {
+      title: storyTitle,
+      date: { year: Number(year), month: Number(month), date: Number(day) },
+      imageURL: story.image,
+      content,
+    };
+  }
+
   const {
+    values,
     date,
     imageBase64,
     isLoading,
@@ -18,10 +36,12 @@ const StoryEditForm = () => {
     handleImageChange,
     handleImageDelete,
     handleSubmit,
-  } = useStoryForm();
+  } = useStoryForm(initialValues);
+
+  const image = values.imageURL || imageBase64;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => handleSubmit(e, story.imagePublicId)}>
       <Section>
         <Label>날짜</Label>
         <Box sx={{ width: '100%' }}>
@@ -33,6 +53,7 @@ const StoryEditForm = () => {
         <InputDiv>
           <TextInput
             name='title'
+            value={values.title}
             placeholder='스토리의 제목을 입력하세요.'
             onChange={handleChange}
           />
@@ -45,13 +66,9 @@ const StoryEditForm = () => {
           <ImageInput
             onChange={handleImageChange}
             onDelete={handleImageDelete}
-            isAdded={imageBase64 !== ''}
+            isAdded={image !== ''}
           />
-          <div>
-            {imageBase64 && (
-              <ImagePreview src={imageBase64} alt='preview-image' />
-            )}
-          </div>
+          <div>{image && <ImagePreview src={image} alt='preview image' />}</div>
         </InputDiv>
       </Section>
       <Section>
@@ -59,7 +76,9 @@ const StoryEditForm = () => {
         <InputDiv>
           <TextInput
             name='content'
+            value={values.content}
             multiline
+            rows={10}
             placeholder='스토리의 내용을 입력하세요.'
             onChange={handleChange}
           />
