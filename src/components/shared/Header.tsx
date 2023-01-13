@@ -15,11 +15,9 @@ const Header = () => {
     <Container>
       <Logo onClick={() => navigate(ROUTES.HOME)}>
         <FontText
-          component='h4'
+          component='p'
           title='B.'
           sx={{
-            display: 'inline-block',
-            marginBottom: '30px',
             fontSize: '30px',
           }}
         />
