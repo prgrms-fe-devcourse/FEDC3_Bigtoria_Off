@@ -9,7 +9,8 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
       <Year>{year}</Year>
       <CardsContainer>
         {stories.map((story) => {
-          const { storyTitle }: Title = JSON.parse(story.title);
+          const { storyTitle, month }: { storyTitle: string; month: string } =
+            JSON.parse(story.title);
 
           return (
             <StoryCard

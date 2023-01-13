@@ -1,5 +1,6 @@
 export const ROUTES = {
   HOME: '/',
+  NOT_FOUND: '/not-found',
   STORY_BOOK: '/story-book/:userId',
   SIGNUP: '/signup',
   SIGNIN: '/signin',

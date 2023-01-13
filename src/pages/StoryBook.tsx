@@ -11,9 +11,9 @@ const StoryBook = () => {
 
   return (
     <Container>
-      {storiesByYear.map(({ year, stories }) => {
-        return <StoriesByYear key={year} year={year} stories={stories} />;
-      })}
+      {storiesByYear.map(({ year, stories }) => (
+        <StoriesByYear key={year} year={year} stories={stories} />
+      ))}
     </Container>
   );
 };
