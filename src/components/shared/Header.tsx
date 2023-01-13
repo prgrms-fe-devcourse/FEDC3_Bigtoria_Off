@@ -70,7 +70,7 @@ const Hamburger = styled.nav<{ click: boolean }>`
   right: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
   transition: all 0.5s ease;
-  background: #167fe7;
+  background: #ffffff;
   z-index: 999;
   padding-top: 4rem;
 `;
