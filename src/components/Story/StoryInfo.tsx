@@ -73,7 +73,13 @@ const StoryInfo = ({ story }: Props) => {
             {content}
           </Paper>
         )}
-        <LikeButton likeCount={story.likes.length} />
+        {user._id && (
+          <LikeButton
+            userId={user._id}
+            storyId={story._id}
+            likes={story.likes}
+          />
+        )}
       </StoryContainer>
     </>
   );
@@ -102,11 +108,11 @@ const StoryContainer = styled(Box)`
 
 const StoryImageWrapper = styled.div`
   height: 300px;
+  padding: 15px 0;
 `;
 
 const StoryImage = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
-  padding: 15px 0;
 `;
