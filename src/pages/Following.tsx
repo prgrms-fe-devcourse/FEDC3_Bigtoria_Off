@@ -3,6 +3,7 @@ import { Button, Container } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
 import { getFollowingUser } from '../apis/getFollowingUser';
+import { removeFollow } from '../apis/removeFollow';
 import { userInfo } from '../apis/userInfo';
 import FollowList from '../components/Follow/FollowingList';
 import { User } from '../interfaces/user';
@@ -13,7 +14,6 @@ const Following = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
   const [followingList, setFollowingList] = useState<User[]>([]);
-  const [toggle, setToggle] = useState(false);
   const followingId = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,17 +47,18 @@ const Following = () => {
     })();
   }, [user]);
 
-  // 버튼 클릭시
-  const handleClick = () => {
+  const handleClick = async () => {
     const id = followingId.current?.dataset.followid;
     const removeId = followingList.map((follow) =>
       follow.followers?.filter((item) => item.user === id)
     );
-    console.log(removeId.filter((item) => item.length !== 0)[0][0]._id);
+    const followId = removeId.filter((item) => item.length !== 0)[0][0]._id;
+    await removeFollow(followId);
   };
 
   return (
     <Container>
+      {console.log(followingList)}
       {followingList ? (
         followingList.map((following) => (
           <Wrapper
