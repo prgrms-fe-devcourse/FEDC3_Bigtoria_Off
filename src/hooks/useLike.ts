@@ -14,12 +14,10 @@ const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    for (const storyLike of storyLikes) {
-      if (storyLike.user === userId) {
-        setIsLike(true);
-        setLikeId(storyLike._id);
-        return;
-      }
+    const findStoryLike = storyLikes.find((data) => data.user === userId);
+    if (findStoryLike) {
+      setIsLike(true);
+      setLikeId(findStoryLike._id);
     }
   }, []);
 
