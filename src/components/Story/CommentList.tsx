@@ -8,6 +8,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
+import useFetchUser from '../../hooks/useFetchUser';
 import { Comment } from '../../interfaces/comment';
 
 interface Props {
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
+  const { user } = useFetchUser();
+
   return (
     <List>
       {comments.map((comment) => (
@@ -33,7 +36,7 @@ const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
             primary={comment.author.fullName}
             secondary={comment.comment}
           />
-          {hasToken && (
+          {hasToken && user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>
               삭제
             </Button>

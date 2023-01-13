@@ -3,6 +3,7 @@ import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
+import useFetchUser from '../../hooks/useFetchUser';
 import { useDeleteStory } from '../../hooks/useStory';
 import { StoryData } from '../../interfaces/story';
 import LikeButton from './LikeButton';
@@ -15,6 +16,7 @@ interface Props {
 const StoryInfo = ({ story, hasToken }: Props) => {
   const navigate = useNavigate();
   const { handleDelete } = useDeleteStory();
+  const { user } = useFetchUser();
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
@@ -28,7 +30,7 @@ const StoryInfo = ({ story, hasToken }: Props) => {
             sx={{ fontSize: '2rem', fontWeight: '500' }}>
             {storyTitle}
           </Typography>
-          {hasToken && (
+          {hasToken && user._id === story.author._id && (
             <Box>
               <Button
                 variant='text'
