@@ -19,7 +19,7 @@ const StoryAddButton = () => {
 
   return (
     <Button variant='outlined' onClick={handleClick}>
-      스토리 추가
+      스토리 쓰기
     </Button>
   );
 };
