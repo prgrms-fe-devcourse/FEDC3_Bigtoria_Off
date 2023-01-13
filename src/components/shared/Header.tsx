@@ -12,13 +12,13 @@ const Header = () => {
       <Logo onClick={() => navigate('/')}>빅토리아</Logo>
       <HamburgerButton onClick={handleClick}>
         {click ? (
-          <img src='/public/icons/close.svg' />
+          <img src='/icons/close.svg' />
         ) : (
-          <img src='/public/icons/hamburger_menu.svg' />
+          <img src='/icons/hamburger_menu.svg' />
         )}
       </HamburgerButton>
       <Hamburger onClick={handleClick} click={click}>
-        <img src='/public/icons/user_profile.svg' width={120} />
+        <img src='/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
         <NavLinks>팔로우 목록</NavLinks>
