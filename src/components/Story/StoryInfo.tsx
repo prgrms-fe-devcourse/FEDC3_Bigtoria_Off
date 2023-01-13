@@ -3,18 +3,20 @@ import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
+import useFetchUser from '../../hooks/useFetchUser';
 import { useDeleteStory } from '../../hooks/useStory';
 import { StoryData } from '../../interfaces/story';
 import LikeButton from './LikeButton';
 
 interface Props {
   story: StoryData;
-  hasToken: boolean;
 }
 
-const StoryInfo = ({ story, hasToken }: Props) => {
+const StoryInfo = ({ story }: Props) => {
   const navigate = useNavigate();
   const { handleDelete } = useDeleteStory();
+  const { user } = useFetchUser();
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
@@ -28,11 +30,13 @@ const StoryInfo = ({ story, hasToken }: Props) => {
             sx={{ fontSize: '2rem', fontWeight: '500' }}>
             {storyTitle}
           </Typography>
-          {hasToken && (
+          {user._id === story.author._id && (
             <Box>
               <Button
                 variant='text'
-                onClick={() => navigate(`/story/edit/${story._id}`)}>
+                onClick={() =>
+                  navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id))
+                }>
                 수정
               </Button>
               <Button
@@ -46,13 +50,22 @@ const StoryInfo = ({ story, hasToken }: Props) => {
         <Typography variant='subtitle1' gutterBottom>
           {year}.{month}.{day}
         </Typography>
-        <Profile onClick={() => navigate(`/story-book/${story.author._id}`)}>
-          <Avatar src={story.author.image} alt='profile image'></Avatar>
-          <p>{story.author.fullName}</p>
-        </Profile>
+        <Box>
+          <Profile
+            onClick={() =>
+              navigate(ROUTES.STORY_BOOK_BY_USER_ID(story.author._id))
+            }>
+            <Avatar src={story.author.image} alt='profile image'></Avatar>
+            <span>{story.author.fullName}</span>
+          </Profile>
+        </Box>
       </Box>
       <StoryContainer>
-        {story.image && <StoryImage src={story.image} alt='story image' />}
+        {story.image && (
+          <StoryImageWrapper>
+            <StoryImage src={story.image} alt='story image' />
+          </StoryImageWrapper>
+        )}
         {content && (
           <Paper
             variant='outlined'
@@ -73,8 +86,8 @@ const StoryHeader = styled(Box)`
   justify-content: space-between;
 `;
 
-const Profile = styled(Box)`
-  display: flex;
+const Profile = styled.span`
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
@@ -85,6 +98,10 @@ const StoryContainer = styled(Box)`
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
+`;
+
+const StoryImageWrapper = styled.div`
+  height: 300px;
 `;
 
 const StoryImage = styled.img`

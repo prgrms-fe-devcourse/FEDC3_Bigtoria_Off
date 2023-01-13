@@ -3,25 +3,18 @@ import { Box, CircularProgress, Divider } from '@mui/material';
 
 import StoryComment from '../components/Story/StoryComment';
 import StoryInfo from '../components/Story/StoryInfo';
-import { TOKEN_KEY } from '../constants/auth';
-import useFetchStory from '../hooks/useFetchStory';
-import { getLocalStorage } from '../utils/storage';
+import { useFetchStory } from '../hooks/useStory';
 
 const Story = () => {
   const { story, fetchComment, isLoading } = useFetchStory();
-  const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
 
   if (isLoading || !story.title) return <CircularProgress />;
 
   return (
     <Container>
-      <StoryInfo story={story} hasToken={hasToken} />
+      <StoryInfo story={story} />
       <Divider />
-      <StoryComment
-        comments={story.comments}
-        fetchComment={fetchComment}
-        hasToken={hasToken}
-      />
+      <StoryComment comments={story.comments} fetchComment={fetchComment} />
     </Container>
   );
 };
