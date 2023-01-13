@@ -6,6 +6,11 @@ export interface Story {
   _id: string;
   title: string;
   image: string;
+  isFirstInSameMonths?: boolean;
+}
+
+export interface StoryWithIsFirstInSameMonths extends Story {
+  isFirstInSameMonths: boolean;
 }
 
 export interface StoryYear {

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { StoriesWithYear, Title } from '../../interfaces/story';
+import { StoriesWithYear } from '../../interfaces/story';
 import StoryCard from './StoryCard';
 
 const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
@@ -13,13 +13,15 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
             JSON.parse(story.title);
 
           return (
-            <StoryCard
-              key={story._id}
-              title={storyTitle}
-              storyId={story._id}
-              image={story.image}
-              lazy
-            />
+            <CardContainer key={story._id}>
+              {story.isFirstInSameMonths && month}
+              <StoryCard
+                title={storyTitle}
+                storyId={story._id}
+                image={story.image}
+                lazy
+              />
+            </CardContainer>
           );
         })}
       </CardsContainer>
@@ -51,4 +53,11 @@ const CardsContainer = styled.div`
   > div {
     flex: 0 0 auto;
   }
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
