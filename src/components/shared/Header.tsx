@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import FontText from '../Home/FontText';
+
 const Header = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -9,7 +11,17 @@ const Header = () => {
 
   return (
     <Container>
-      <Logo onClick={() => navigate('/')}>빅토리아</Logo>
+      <Logo onClick={() => navigate('/')}>
+        <FontText
+          component='h4'
+          title='B.'
+          sx={{
+            display: 'inline-block',
+            marginBottom: '30px',
+            fontSize: '30px',
+          }}
+        />
+      </Logo>
       <HamburgerButton onClick={handleClick}>
         {click ? (
           <img src='/icons/close.svg' />

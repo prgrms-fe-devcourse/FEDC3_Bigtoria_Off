@@ -6,3 +6,7 @@ export const HTTP_METHODS: Record<string, Method> = {
   PUT: 'PUT',
   DELETE: 'DELETE',
 };
+
+export const HTTP_STATUS_CODE = {
+  OK: 200,
+};

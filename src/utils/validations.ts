@@ -21,3 +21,7 @@ export const validateSignInInput = ({
     errors,
   };
 };
+
+export const isBlankString = (string: string) => {
+  return string.trim().length === 0;
+};

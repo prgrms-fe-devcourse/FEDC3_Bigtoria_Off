@@ -28,8 +28,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
         cursor: 'pointer',
         boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
       }}
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       <CardMedia
         component='img'
         ref={imageRef}
@@ -45,8 +44,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-          }}
-        >
+          }}>
           {title}
         </Typography>
       </CardContent>
