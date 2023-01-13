@@ -1,25 +1,30 @@
 import styled from '@emotion/styled';
 
-import { StoriesWithYear, Title } from '../../interfaces/story';
+import { StoriesWithYear } from '../../interfaces/story';
 import StoryCard from './StoryCard';
 
 const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
   return (
     <Container>
       <Year>{year}</Year>
-      {stories.map((story) => {
-        const { storyTitle }: Title = JSON.parse(story.title);
+      <CardsContainer>
+        {stories.map((story) => {
+          const { storyTitle, month }: { storyTitle: string; month: string } =
+            JSON.parse(story.title);
 
-        return (
-          <StoryCard
-            key={story._id}
-            title={storyTitle}
-            storyId={story._id}
-            image={story.image}
-            lazy
-          />
-        );
-      })}
+          return (
+            <CardContainer key={story._id}>
+              {story.isFirstInSameMonths && month}
+              <StoryCard
+                title={storyTitle}
+                storyId={story._id}
+                image={story.image}
+                lazy
+              />
+            </CardContainer>
+          );
+        })}
+      </CardsContainer>
     </Container>
   );
 };
@@ -35,4 +40,20 @@ const Container = styled.div`
 
 const Year = styled.div`
   width: 4rem;
+`;
+
+const CardsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
+  padding: 1rem;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

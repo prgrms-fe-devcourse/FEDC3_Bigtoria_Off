@@ -16,14 +16,13 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // todo: StoryCard 클릭 시 해당 story detail 페이지로 이동.
     navigate(`/story/${storyId}`);
   };
 
   return (
     <Card
       sx={{
-        maxWidth: 210,
+        width: '210px',
         marginRight: '16px',
         cursor: 'pointer',
         boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
