@@ -15,10 +15,9 @@ import { Comment } from '../../interfaces/comment';
 interface Props {
   comments: Comment[];
   handleDelete: (commentId: string) => void;
-  hasToken: boolean;
 }
 
-const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
+const CommentList = ({ comments, handleDelete }: Props) => {
   const { user } = useFetchUser();
   const navigate = useNavigate();
 
@@ -42,7 +41,7 @@ const CommentList = ({ comments, handleDelete, hasToken }: Props) => {
             secondary={comment.comment}
             onClick={() => navigate(`/story-book/${comment.author._id}`)}
           />
-          {hasToken && user._id === comment.author._id && (
+          {user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>
               삭제
             </Button>

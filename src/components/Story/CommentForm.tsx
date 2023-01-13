@@ -2,12 +2,14 @@ import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent } from 'react';
 
+import { TOKEN_KEY } from '../../constants/auth';
+import { getLocalStorage } from '../../utils/storage';
+
 interface Props {
   comment: string;
   isLoading: boolean;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: FormEvent) => void;
-  hasToken: boolean;
 }
 
 const CommentForm = ({
@@ -15,8 +17,9 @@ const CommentForm = ({
   isLoading,
   handleChange,
   handleSubmit,
-  hasToken,
 }: Props) => {
+  const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
+
   return (
     <Form onSubmit={handleSubmit}>
       <TextField

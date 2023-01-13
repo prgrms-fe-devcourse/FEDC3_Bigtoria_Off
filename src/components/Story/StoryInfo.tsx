@@ -10,10 +10,9 @@ import LikeButton from './LikeButton';
 
 interface Props {
   story: StoryData;
-  hasToken: boolean;
 }
 
-const StoryInfo = ({ story, hasToken }: Props) => {
+const StoryInfo = ({ story }: Props) => {
   const navigate = useNavigate();
   const { handleDelete } = useDeleteStory();
   const { user } = useFetchUser();
@@ -30,7 +29,7 @@ const StoryInfo = ({ story, hasToken }: Props) => {
             sx={{ fontSize: '2rem', fontWeight: '500' }}>
             {storyTitle}
           </Typography>
-          {hasToken && user._id === story.author._id && (
+          {user._id === story.author._id && (
             <Box>
               <Button
                 variant='text'

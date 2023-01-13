@@ -8,10 +8,9 @@ import CommentList from './CommentList';
 interface Props {
   comments: Comment[];
   fetchComment: () => void;
-  hasToken: boolean;
 }
 
-const StoryComment = ({ comments, fetchComment, hasToken }: Props) => {
+const StoryComment = ({ comments, fetchComment }: Props) => {
   const { comment, isLoading, handleChange, handleSubmit } = useCommentForm();
   const { handleDelete } = useDeleteComment();
 
@@ -23,7 +22,6 @@ const StoryComment = ({ comments, fetchComment, hasToken }: Props) => {
           await handleDelete(comment);
           fetchComment();
         }}
-        hasToken={hasToken}
       />
       <CommentForm
         comment={comment}
@@ -33,7 +31,6 @@ const StoryComment = ({ comments, fetchComment, hasToken }: Props) => {
           await handleSubmit(e);
           fetchComment();
         }}
-        hasToken={hasToken}
       />
     </Box>
   );
