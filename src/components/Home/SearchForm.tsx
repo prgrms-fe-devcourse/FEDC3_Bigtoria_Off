@@ -8,8 +8,13 @@ interface Props {
 }
 
 const SearchForm = ({ onSubmit }: Props) => {
-  const { value, handleInputChange, handleInputClear, handleFormSubmit } =
-    useSearhForm({ onSubmit });
+  const {
+    value,
+    error,
+    handleInputChange,
+    handleInputClear,
+    handleFormSubmit,
+  } = useSearhForm({ onSubmit });
 
   return (
     <Box>
@@ -20,8 +25,7 @@ const SearchForm = ({ onSubmit }: Props) => {
           position: 'relative',
           marginBottom: '10px',
         }}
-        onSubmit={handleFormSubmit}
-      >
+        onSubmit={handleFormSubmit}>
         <TextField
           sx={{
             width: '100%',
@@ -33,11 +37,12 @@ const SearchForm = ({ onSubmit }: Props) => {
             //TODO: input focus boder-bottom #f99b0f
           }}
           variant='standard'
-          required
           autoFocus
           type='text'
           label='user name'
           value={value}
+          error={error.keyword !== ''}
+          helperText={error.keyword}
           onChange={handleInputChange}
         />
         <IconButton
@@ -49,8 +54,7 @@ const SearchForm = ({ onSubmit }: Props) => {
             top: '30px',
             color: '#167fe7',
           }}
-          onClick={handleInputClear}
-        >
+          onClick={handleInputClear}>
           <HighlightOff />
         </IconButton>
       </Box>
