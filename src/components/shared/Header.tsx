@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import StoryAddButton from '../StoryBook/StoryAddButton';
+
 const Header = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -10,13 +12,16 @@ const Header = () => {
   return (
     <Container>
       <Logo onClick={() => navigate('/')}>빅토리아</Logo>
-      <HamburgerButton onClick={handleClick}>
-        {click ? (
-          <img src='/public/icons/close.svg' />
-        ) : (
-          <img src='/public/icons/hamburger_menu.svg' />
-        )}
-      </HamburgerButton>
+      <ButtonsContainer>
+        <StoryAddButton />
+        <HamburgerButton onClick={handleClick}>
+          {click ? (
+            <img src='/public/icons/close.svg' />
+          ) : (
+            <img src='/public/icons/hamburger_menu.svg' />
+          )}
+        </HamburgerButton>
+      </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <img src='/public/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
@@ -35,6 +40,12 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const Hamburger = styled.nav<{ click: boolean }>`

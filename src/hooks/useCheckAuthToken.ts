@@ -7,8 +7,8 @@ import { getLocalStorage } from '../utils/storage';
 import { checkAuth } from './../apis/auth';
 
 const useCheckAuthToken = () => {
-  const token = getLocalStorage(TOKEN_KEY);
   const navigate = useNavigate();
+  const token = getLocalStorage(TOKEN_KEY);
 
   useEffect(() => {
     const fetchIsOnline = async () => {
