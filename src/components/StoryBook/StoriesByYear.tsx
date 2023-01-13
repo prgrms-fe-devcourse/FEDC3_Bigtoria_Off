@@ -49,10 +49,6 @@ const CardsContainer = styled.div`
   align-items: center;
   overflow-x: auto;
   padding: 1rem;
-
-  > div {
-    flex: 0 0 auto;
-  }
 `;
 
 const CardContainer = styled.div`
