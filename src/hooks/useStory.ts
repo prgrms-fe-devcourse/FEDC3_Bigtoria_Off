@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
+import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
 import { putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
@@ -184,7 +185,7 @@ export const useStoryForm = ({ initialValues }: Params) => {
         const story = initialValues
           ? await putStory(formData)
           : await postStory(formData);
-        navigate(`/story/${story._id}`);
+        navigate(ROUTES.STORY_BY_STORY_ID(story._id));
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);

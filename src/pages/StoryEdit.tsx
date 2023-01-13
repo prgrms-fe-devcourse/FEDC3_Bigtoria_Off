@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
+import { ROUTES } from '../constants/routes';
 import useFetchUser from '../hooks/useFetchUser';
 import { useFetchStory } from '../hooks/useStory';
 
@@ -17,7 +18,7 @@ const StoryEdit = () => {
 
     if (user._id && user._id !== story.author._id) {
       alert('올바르지 않은 접근입니다.');
-      navigate('/');
+      navigate(ROUTES.HOME);
     }
   }, [user]);
 

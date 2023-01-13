@@ -3,6 +3,7 @@ import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
 import useFetchUser from '../../hooks/useFetchUser';
 import { useDeleteStory } from '../../hooks/useStory';
 import { StoryData } from '../../interfaces/story';
@@ -33,7 +34,9 @@ const StoryInfo = ({ story }: Props) => {
             <Box>
               <Button
                 variant='text'
-                onClick={() => navigate(`/story/edit/${story._id}`)}>
+                onClick={() =>
+                  navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id))
+                }>
                 수정
               </Button>
               <Button
@@ -48,7 +51,10 @@ const StoryInfo = ({ story }: Props) => {
           {year}.{month}.{day}
         </Typography>
         <Box>
-          <Profile onClick={() => navigate(`/story-book/${story.author._id}`)}>
+          <Profile
+            onClick={() =>
+              navigate(ROUTES.STORY_BOOK_BY_USER_ID(story.author._id))
+            }>
             <Avatar src={story.author.image} alt='profile image'></Avatar>
             <span>{story.author.fullName}</span>
           </Profile>
