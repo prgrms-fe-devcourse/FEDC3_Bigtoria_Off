@@ -78,6 +78,7 @@ const StoryEditForm = ({ story }: Props) => {
             name='content'
             value={values.content}
             multiline
+            rows={10}
             placeholder='스토리의 내용을 입력하세요.'
             onChange={handleChange}
           />

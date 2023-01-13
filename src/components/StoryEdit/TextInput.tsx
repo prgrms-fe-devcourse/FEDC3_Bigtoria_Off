@@ -13,7 +13,7 @@ interface Props {
 const TextInput = ({
   placeholder,
   multiline = false,
-  rows = 10,
+  rows,
   name,
   value,
   onChange,
