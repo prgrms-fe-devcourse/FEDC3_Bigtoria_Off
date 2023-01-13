@@ -16,7 +16,7 @@ interface Props {
 const StoryInfo = ({ story }: Props) => {
   const navigate = useNavigate();
   const { handleDelete } = useDeleteStory();
-  const { user } = useFetchUser();
+  const { user, isLoading } = useFetchUser();
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
@@ -73,7 +73,7 @@ const StoryInfo = ({ story }: Props) => {
             {content}
           </Paper>
         )}
-        {user._id && (
+        {!isLoading && (
           <LikeButton
             userId={user._id}
             storyId={story._id}
