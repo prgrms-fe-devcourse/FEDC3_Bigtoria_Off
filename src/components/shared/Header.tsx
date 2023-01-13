@@ -46,10 +46,14 @@ const Header = () => {
 export default Header;
 
 const Container = styled.header`
+  position: sticky;
+  top: 0;
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #ffffff;
+  z-index: 999;
 `;
 
 const ButtonsContainer = styled.div`
