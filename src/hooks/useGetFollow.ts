@@ -4,17 +4,24 @@ import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
 import { userInfo } from '../apis/userInfo';
 
+interface List {
+  _id: string;
+  user: string;
+  fullName?: string;
+  image?: string;
+}
+
 const DUMMY_USER_ID = '63b9844b4a1b585b777da2ea';
 const useGetFollow = () => {
   const [loading, setLoading] = useState(false);
-  const [followingIdList, setFollowingIdList] = useState([]);
+  const [followingIdList, setFollowingIdList] = useState<List[]>([]);
 
   const getUserInfo = async () => {
     try {
       setLoading(true);
-      const newList = [];
+      const newList: List[] = [];
       await userInfo(DUMMY_USER_ID).then((res) => {
-        res.following.map(({ _id, user }) => {
+        res.following.map(({ _id, user }: List) => {
           newList.push({ _id: _id, user: user });
         });
       });
@@ -42,10 +49,10 @@ const useGetFollow = () => {
       const userId = e.target.dataset.userid;
       if (e.target.innerText === '삭제') {
         e.target.innerText = '팔로우';
-        await removeFollow(followId);
+        followId && (await removeFollow(followId));
       } else if (e.target.innerText === '팔로우') {
         e.target.innerText = '삭제';
-        await createFollow(userId);
+        userId && (await createFollow(userId));
       }
     }
   };

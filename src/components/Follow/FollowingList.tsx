@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 
 interface Props {
-  src: string;
+  src: string | undefined;
   size?: string;
-  fullName: string;
+  fullName: string | undefined;
 }
 
 const FollowingList = ({ src, size = '80px', fullName }: Props) => {
