@@ -4,9 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
 import { ROUTES } from '../constants/routes';
+import { Story } from '../interfaces/story';
 import { isBlankString } from '../utils/validations';
-import { putStory } from './../apis/story';
+import { getStoriesOfChannel, putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
+
+const channelId = '63b6822ade9d2a22cc1d45c3';
 
 export const useFetchStory = () => {
   const [story, setStory] = useState({
@@ -38,8 +41,14 @@ export const useFetchStory = () => {
         if (storyId === 'new') {
           setIsNew(true);
         } else {
-          const fetchedStories = await getStoryDetail(storyId);
-          setStory(fetchedStories);
+          const stories = await getStoriesOfChannel(channelId);
+          if (!stories.find((story: Story) => story._id === storyId)) {
+            alert('존재하지 않는 스토리입니다.');
+            navigate(ROUTES.HOME);
+          }
+
+          const storyDetail = await getStoryDetail(storyId);
+          setStory(storyDetail);
         }
       } catch (error) {
         console.error(error);
@@ -84,7 +93,6 @@ interface StoryInfo {
 }
 
 export const useStoryForm = (initialValues: StoryInfo | undefined) => {
-  const channelId = '63b6822ade9d2a22cc1d45c3';
   const today = dayjs(new Date());
 
   const [values, setValues] = useState(
@@ -225,7 +233,7 @@ export const useDeleteStory = () => {
       try {
         if (!storyId) throw Error();
         await deleteStory(storyId);
-        navigate(`/story-book/${authorId}`);
+        navigate(ROUTES.STORY_BOOK_BY_USER_ID(authorId));
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_STORY);
