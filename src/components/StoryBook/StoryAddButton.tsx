@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage } from '../../utils/storage';
@@ -11,10 +10,9 @@ const StoryAddButton = () => {
 
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);
-    const { isOnline } = await checkAuth();
 
-    token && isOnline && navigate(ROUTES.STORY_CREATE);
-    (!token || !isOnline) && navigate(ROUTES.SIGNIN);
+    token && navigate(ROUTES.STORY_CREATE);
+    !token && navigate(ROUTES.SIGNIN);
   };
 
   return (

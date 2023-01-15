@@ -19,7 +19,7 @@ const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
       setIsLike(true);
       setLikeId(findStoryLike._id);
     }
-  }, []);
+  }, [userId]);
 
   const handleClick = async () => {
     if (!userId) {

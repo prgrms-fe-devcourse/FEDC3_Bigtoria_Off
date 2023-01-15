@@ -57,7 +57,7 @@ const StoryEditForm = ({ story }: Props) => {
             placeholder='스토리의 제목을 입력하세요.'
             onChange={handleChange}
           />
-          {errors.title}
+          <ErrorText>{errors.title}</ErrorText>
         </InputDiv>
       </Section>
       <Section>
@@ -82,7 +82,7 @@ const StoryEditForm = ({ story }: Props) => {
             placeholder='스토리의 내용을 입력하세요.'
             onChange={handleChange}
           />
-          {errors.content}
+          <ErrorText>{errors.content}</ErrorText>
         </InputDiv>
       </Section>
       <SubmitButton isLoading={isLoading} />
@@ -109,4 +109,8 @@ const ImagePreview = styled.img`
   max-width: 100%;
   height: 300px;
   object-fit: contain;
+`;
+
+const ErrorText = styled.small`
+  color: red;
 `;

@@ -1,5 +1,5 @@
 import AlarmIcon from '@mui/icons-material/Alarm';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { useState } from 'react';
 
 import NotificationList from '../components/Alarm/NotificationList';

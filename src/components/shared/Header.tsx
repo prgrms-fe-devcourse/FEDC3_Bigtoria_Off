@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
-import { TOKEN_KEY } from '../../constants/auth';
+import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
@@ -16,6 +16,10 @@ const Header = () => {
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
 
+  const handleClickWatchStoriesButton = () => {
+    navigate(ROUTES.HOME);
+  };
+
   const handleClickMyStoryButton = async () => {
     if (token) {
       const { _id: userId } = await checkAuth();
@@ -26,15 +30,17 @@ const Header = () => {
     navigate(ROUTES.SIGNIN);
   };
 
-  const handleClickFollowListButton = () => {
+  const handleClickFollowListButton = async () => {
     if (token) {
-      navigate(ROUTES.FOLLOW);
+      const { _id: userId } = await checkAuth();
+      navigate(ROUTES.FOLLOW_BY_USER_ID(userId));
     }
   };
 
   const handleClickAuthButton = () => {
     if (token) {
       removeLocalStorage(TOKEN_KEY);
+      removeLocalStorage(USER_ID_KEY);
       navigate(ROUTES.HOME);
       return;
     }
@@ -65,7 +71,9 @@ const Header = () => {
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <img src='/icons/user_profile.svg' width={120} />
-        <NavLinks>스토리 구경하기</NavLinks>
+        <NavLinks onClick={handleClickWatchStoriesButton}>
+          스토리 구경하기
+        </NavLinks>
         <NavLinks onClick={handleClickMyStoryButton}>내 스토리</NavLinks>
         <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
         <NavLinks onClick={handleClickAuthButton}>
