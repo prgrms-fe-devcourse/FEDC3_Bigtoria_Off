@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { getUserList } from '../apis/search';
 import { DATA_LIMIT } from '../constants/apiParams';
