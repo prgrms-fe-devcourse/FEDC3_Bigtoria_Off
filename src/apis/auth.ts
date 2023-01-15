@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios';
 
 import { API_URLS } from '../constants/apiUrls';
-import { TOKEN_KEY } from '../constants/auth';
+import { TOKEN_KEY, USER_ID_KEY } from '../constants/auth';
 import { HTTP_STATUS_CODE } from '../constants/http';
 import { ROUTES } from '../constants/routes';
 import { removeLocalStorage, setLocalStorage } from '../utils/storage';
@@ -16,7 +16,10 @@ export const signin = async ({
 }) => {
   try {
     const {
-      data: { token },
+      data: {
+        token,
+        user: { _id: userId },
+      },
     } = await http.post({
       url: API_URLS.AUTH.LOGIN,
       data: {
@@ -26,6 +29,7 @@ export const signin = async ({
     });
 
     token && setLocalStorage(TOKEN_KEY, token);
+    userId && setLocalStorage(USER_ID_KEY, userId);
   } catch (error) {
     console.error(error);
     if (error && isAxiosError(error)) {
@@ -44,6 +48,7 @@ export const signout = async () => {
 
     if (status === HTTP_STATUS_CODE.OK) {
       removeLocalStorage(TOKEN_KEY);
+      removeLocalStorage(USER_ID_KEY);
       location.href = ROUTES.HOME;
     }
   } catch (error) {

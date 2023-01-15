@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
-import { TOKEN_KEY } from '../../constants/auth';
+import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import FontText from '../Home/FontText';
@@ -34,6 +34,7 @@ const Header = () => {
   const handleClickAuthButton = () => {
     if (token) {
       removeLocalStorage(TOKEN_KEY);
+      removeLocalStorage(USER_ID_KEY);
       navigate(ROUTES.HOME);
       return;
     }
