@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './components/shared/Header';
+import ScrollToTop from './components/shared/ScrollToTop';
 import { ROUTES } from './constants/routes';
 import NotFound from './pages/404';
 import Chat from './pages/Chat';
@@ -16,6 +17,7 @@ import StoryEdit from './pages/StoryEdit';
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path={ROUTES.HOME} element={<Home />} />

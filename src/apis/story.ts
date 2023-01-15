@@ -3,7 +3,15 @@ import http from './instance';
 
 export const getStoriesOfUser = async (userId: string) => {
   const { data: stories } = await http.get({
-    url: `${API_URLS.POST.GET_POSTS_OF_SPECIFIC_USER(userId)}`,
+    url: API_URLS.POST.GET_POSTS_OF_SPECIFIC_USER(userId),
+  });
+
+  return stories;
+};
+
+export const getStoriesOfChannel = async (channelId: string) => {
+  const { data: stories } = await http.get({
+    url: API_URLS.POST.GET_POSTS_OF_SPECIFIC_CHANNEL(channelId),
   });
 
   return stories;

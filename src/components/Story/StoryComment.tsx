@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import { useCommentForm, useDeleteComment } from '../../hooks/useComment';
+import { useCommentForm } from '../../hooks/useComment';
 import { Comment } from '../../interfaces/comment';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
@@ -11,8 +11,8 @@ interface Props {
 }
 
 const StoryComment = ({ comments, fetchComment }: Props) => {
-  const { comment, isLoading, handleChange, handleSubmit } = useCommentForm();
-  const { handleDelete } = useDeleteComment();
+  const { comment, isLoading, handleChange, handleDelete, handleSubmit } =
+    useCommentForm();
 
   return (
     <Box>
