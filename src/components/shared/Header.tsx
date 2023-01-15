@@ -90,7 +90,7 @@ const ButtonsContainer = styled.div`
 
 const Hamburger = styled.nav<{ click: boolean }>`
   width: 100%;
-  display: flex;
+  display: ${({ click }) => (click ? 'flex' : 'none')};
   gap: 1rem;
   flex-direction: column;
   align-items: center;
@@ -99,10 +99,21 @@ const Hamburger = styled.nav<{ click: boolean }>`
   top: 3.6rem;
   right: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
+  animation-name: slide;
+  animation-duration: 0.5s;
   transition: all 0.5s ease;
   background: #ffffff;
   z-index: 999;
   padding-top: 4rem;
+
+  @keyframes slide {
+    from {
+      right: -100%;
+    }
+    to {
+      right: 0;
+    }
+  }
 `;
 
 const HamburgerButton = styled.div`
