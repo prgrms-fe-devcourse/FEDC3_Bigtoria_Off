@@ -32,7 +32,6 @@ const Home = () => {
       }}>
       <Box component='header'>
         <FontText
-          component='h1'
           title='Bigtoria.'
           sx={{
             display: 'inline-block',
@@ -50,7 +49,6 @@ const Home = () => {
         }}>
         <SearchForm onSubmit={handleSubmit} />
         <FontText
-          component='p'
           title='profiles..'
           sx={{
             display: 'inline-block',
