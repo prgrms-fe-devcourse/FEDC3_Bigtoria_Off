@@ -6,6 +6,7 @@ import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
+import NotificationButton from '../Alarm/NotificationButton';
 import FontText from '../Home/FontText';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
@@ -51,7 +52,6 @@ const Header = () => {
     <Container>
       <Logo onClick={() => navigate(ROUTES.HOME)}>
         <FontText
-          component='p'
           title='B.'
           sx={{
             fontSize: '30px',
@@ -60,6 +60,7 @@ const Header = () => {
       </Logo>
       <ButtonsContainer>
         <StoryAddButton />
+        <NotificationButton />
         <HamburgerButton onClick={handleClick}>
           {click ? (
             <img src='/icons/close.svg' />

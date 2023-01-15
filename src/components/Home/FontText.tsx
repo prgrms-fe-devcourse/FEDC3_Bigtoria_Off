@@ -3,7 +3,6 @@ import './fontText.css';
 import { createTheme, ThemeProvider, Typography } from '@mui/material';
 
 interface Props {
-  component: React.ElementType;
   title: string;
   sx: {
     display?: string;
@@ -20,10 +19,10 @@ const theme = createTheme({
   },
 });
 
-const FontText = ({ component, title, sx }: Props) => {
+const FontText = ({ title, sx }: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <Typography component={component} sx={sx}>
+      <Typography component='p' sx={sx}>
         {title}
       </Typography>
     </ThemeProvider>
