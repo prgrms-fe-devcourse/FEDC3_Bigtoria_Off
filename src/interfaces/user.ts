@@ -1,3 +1,11 @@
+export interface Follow {
+  _id: string;
+  user: string;
+  follower: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface User {
   _id: string;
   image: string; // 프로필 이미지
@@ -11,7 +19,7 @@ export interface User {
   likes?: [];
   comments?: [];
   followers?: [];
-  following?: [];
+  following?: Follow[];
   notifications?: [];
   messages?: [];
   email?: string;

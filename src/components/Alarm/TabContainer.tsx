@@ -1,4 +1,4 @@
-import { Divider, IconButton, Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import { useState } from 'react';
 
 import TabButtonItem from './TabItem';

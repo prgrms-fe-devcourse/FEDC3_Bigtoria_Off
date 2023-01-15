@@ -9,8 +9,7 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
       <Year>{year}</Year>
       <CardsContainer>
         {stories.map((story) => {
-          const { storyTitle, month }: { storyTitle: string; month: string } =
-            JSON.parse(story.title);
+          const { storyTitle, month } = JSON.parse(story.title);
 
           return (
             <CardContainer key={story._id}>
@@ -46,7 +45,7 @@ const CardsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-end;
   overflow-x: auto;
   padding: 1rem;
 `;

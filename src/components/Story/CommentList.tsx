@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import {
   Avatar,
   Button,
@@ -19,18 +20,18 @@ interface Props {
 }
 
 const CommentList = ({ comments, handleDelete }: Props) => {
-  const { user } = useFetchUser();
+  const { user, isLoading } = useFetchUser();
   const navigate = useNavigate();
 
   return (
-    <List>
+    <List sx={{ padding: '20px 0' }}>
       {comments.map((comment) => (
         <ListItem
           key={comment._id}
           secondaryAction={
             <IconButton edge='end' aria-label='delete'></IconButton>
           }
-          sx={{ paddingRight: 0 }}>
+          sx={{ padding: '15px 0', alignItems: 'flex-start' }}>
           <ListItemAvatar
             sx={{ cursor: 'pointer' }}
             onClick={() =>
@@ -38,15 +39,16 @@ const CommentList = ({ comments, handleDelete }: Props) => {
             }>
             <Avatar alt='profile image' src={comment.author?.image} />
           </ListItemAvatar>
-          <ListItemText
-            sx={{ cursor: 'pointer' }}
-            primary={comment.author.fullName}
-            secondary={comment.comment}
-            onClick={() =>
-              navigate(ROUTES.STORY_BOOK_BY_USER_ID(comment.author._id))
-            }
-          />
-          {user._id === comment.author._id && (
+          <ListItemText>
+            <NameWrapper
+              onClick={() =>
+                navigate(ROUTES.STORY_BOOK_BY_USER_ID(comment.author._id))
+              }>
+              {comment.author.fullName}
+            </NameWrapper>
+            <ContentWrapper>{comment.comment}</ContentWrapper>
+          </ListItemText>
+          {!isLoading && user && user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>
               삭제
             </Button>
@@ -58,3 +60,12 @@ const CommentList = ({ comments, handleDelete }: Props) => {
 };
 
 export default CommentList;
+
+const NameWrapper = styled.span`
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const ContentWrapper = styled.div`
+  white-space: pre-wrap;
+`;

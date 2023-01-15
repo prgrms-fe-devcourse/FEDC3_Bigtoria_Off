@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
 import { postNotification } from './../apis/notification';
 import { ROUTES } from './../constants/routes';
@@ -15,6 +16,21 @@ export const useCommentForm = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
+  };
+
+  const handleDelete = async (commentId: string) => {
+    if (confirm('댓글을 삭제하시겠습니까?')) {
+      try {
+        if (!commentId) {
+          navigate(ROUTES.NOT_FOUND);
+          return;
+        }
+        await deleteStoryComment(commentId);
+      } catch (error) {
+        console.error(error);
+        alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_COMMENT);
+      }
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -44,7 +60,7 @@ export const useCommentForm = () => {
     setIsLoading(false);
   };
 
-  return { comment, isLoading, handleChange, handleSubmit };
+  return { comment, isLoading, handleChange, handleDelete, handleSubmit };
 };
 
 export const useDeleteComment = () => {

@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { checkAuth } from '../apis/auth';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { User } from '../interfaces/user';
 
 const useFetchUser = () => {
-  const [user, setUser] = useState({
-    _id: '',
-    likes: [],
-  });
+  const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

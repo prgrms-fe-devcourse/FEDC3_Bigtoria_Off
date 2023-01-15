@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
-import { Avatar, Button, Paper, Typography } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,17 +26,22 @@ const StoryInfo = ({ story }: Props) => {
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
+  if (isLoading) return <CircularProgress />;
+
   return (
     <>
       <Box>
-        <StoryHeader>
-          <Typography
-            variant='h3'
-            gutterBottom
-            sx={{ fontSize: '2rem', fontWeight: '500' }}>
-            {storyTitle}
+        <Typography
+          variant='h3'
+          gutterBottom
+          sx={{ fontSize: '2rem', fontWeight: '500' }}>
+          {storyTitle}
+        </Typography>
+        <DateContainer>
+          <Typography variant='subtitle1'>
+            {year}년 {month}월 {day}일
           </Typography>
-          {user._id === story.author._id && (
+          {user && user._id === story.author._id && (
             <Box>
               <Button
                 variant='text'
@@ -46,11 +57,8 @@ const StoryInfo = ({ story }: Props) => {
               </Button>
             </Box>
           )}
-        </StoryHeader>
-        <Typography variant='subtitle1' gutterBottom>
-          {year}.{month}.{day}
-        </Typography>
-        <Box>
+        </DateContainer>
+        <Box sx={{ padding: '3px 0' }}>
           <Profile
             onClick={() =>
               navigate(ROUTES.STORY_BOOK_BY_USER_ID(story.author._id))
@@ -67,13 +75,11 @@ const StoryInfo = ({ story }: Props) => {
           </StoryImageWrapper>
         )}
         {content && (
-          <Paper
-            variant='outlined'
-            sx={{ width: '90%', padding: '30px', margin: '20px 0' }}>
+          <StoryContentWrapper variant='outlined'>
             {content}
-          </Paper>
+          </StoryContentWrapper>
         )}
-        {!isLoading && (
+        {!isLoading && user && (
           <LikeButton
             userId={user._id}
             storyId={story._id}
@@ -87,9 +93,10 @@ const StoryInfo = ({ story }: Props) => {
 
 export default StoryInfo;
 
-const StoryHeader = styled(Box)`
+const DateContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Profile = styled.span`
@@ -107,12 +114,21 @@ const StoryContainer = styled(Box)`
 `;
 
 const StoryImageWrapper = styled.div`
-  height: 300px;
+  display: flex;
   padding: 15px 0;
 `;
 
 const StoryImage = styled.img`
   width: 100%;
-  max-height: 300px;
   object-fit: contain;
+  cursor: pointer;
+`;
+
+const StoryContentWrapper = styled(Paper)`
+  min-width: 90%;
+  padding: 25px;
+  margin: 15px 0;
+  line-height: 1.5rem;
+  word-break: keep-all;
+  white-space: pre-wrap;
 `;

@@ -1,25 +1,27 @@
-import { Button } from '@mui/material';
+import { Notifications } from '@mui/icons-material';
+import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage } from '../../utils/storage';
 
-const StoryAddButton = () => {
+const { NOTIFICATION, SIGNIN } = ROUTES;
+
+const AlarmButton = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);
 
-    token && navigate(ROUTES.STORY_CREATE);
-    !token && navigate(ROUTES.SIGNIN);
+    token ? navigate(NOTIFICATION) : navigate(SIGNIN);
   };
 
   return (
-    <Button variant='outlined' onClick={handleClick}>
-      스토리 쓰기
-    </Button>
+    <Box>
+      <Notifications onClick={handleClick} />
+    </Box>
   );
 };
 
-export default StoryAddButton;
+export default AlarmButton;

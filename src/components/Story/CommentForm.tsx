@@ -24,15 +24,16 @@ const CommentForm = ({
     <Form onSubmit={handleSubmit}>
       <TextField
         fullWidth
+        multiline
+        rows={4}
         placeholder={
           hasToken ? '댓글을 입력해 주세요.' : '로그인 후 이용해 주세요'
         }
         value={comment}
         onChange={handleChange}
-        required
         disabled={!hasToken}></TextField>
       <Button type='submit' disabled={!hasToken || isLoading}>
-        등록
+        댓글 작성
       </Button>
     </Form>
   );
@@ -42,4 +43,7 @@ export default CommentForm;
 
 const Form = styled.form`
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
 `;

@@ -1,11 +1,12 @@
 import {
   Box,
-  Button,
   CircularProgress,
   Grid,
   TextField,
   Typography,
 } from '@mui/material';
+
+import SignInButton from '../shared/SignInButton';
 
 interface Props {
   values: {
@@ -76,13 +77,7 @@ const SignInForm = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Button
-            disabled={isLoading}
-            variant='contained'
-            type='submit'
-            fullWidth>
-            로그인
-          </Button>
+          <SignInButton disabled={isLoading}>로그인</SignInButton>
           {isLoading && (
             <CircularProgress size={24} sx={{ position: 'absolute' }} />
           )}
@@ -95,13 +90,13 @@ const SignInForm = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Button
+          <SignInButton
             disabled={isLoading}
             variant='outlined'
-            fullWidth
-            onClick={onClick}>
+            type='button'
+            onNavigate={onClick}>
             로그인 없이 접속
-          </Button>
+          </SignInButton>
           {isLoading && (
             <CircularProgress size={24} sx={{ position: 'absolute' }} />
           )}
