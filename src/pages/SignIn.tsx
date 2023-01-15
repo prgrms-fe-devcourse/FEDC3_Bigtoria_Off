@@ -2,6 +2,7 @@ import { Container, Divider, Grid, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import SignInForm from '../components/SignIn/SignInForm';
+import SignInLinks from '../components/SignIn/SignInLinks';
 import { ROUTES } from '../constants/routes';
 import useCheckAuthToken from '../hooks/useCheckAuthToken';
 import useSignInForm from '../hooks/useSignInForm';
@@ -38,20 +39,7 @@ const SignIn = () => {
           marginTop: '1rem',
         }}
       />
-      <Grid container sx={{ marginTop: '1rem' }}>
-        {/* todo: 비밀번호 변경 페이지 및 api 개발 */}
-        <Grid item xs>
-          <Link variant='body2' sx={{ cursor: 'pointer' }}>
-            비밀번호를 잊으셨나요?
-          </Link>
-        </Grid>
-        <Grid item onClick={handleClickButtonToSignUp}>
-          <Link variant='body2' sx={{ cursor: 'pointer' }}>
-            <span>아직 계정이 없으신가요?</span>
-            <span> 회원가입</span>
-          </Link>
-        </Grid>
-      </Grid>
+      <SignInLinks onClick={handleClickButtonToSignUp} />
     </Container>
   );
 };
