@@ -1,22 +1,24 @@
 import { Box, CircularProgress } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
-import { useEffect } from 'react';
 
+import { searchUserList } from '../apis/search';
 import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
 import UserList from '../components/Home/UserList';
-import useFetchUserList from '../hooks/useFetchUserList';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 const Home = () => {
-  const { isLoading, userProfiles, initUserProfiles, searchUserProfiles } =
-    useFetchUserList();
-
-  useEffect(() => {
-    initUserProfiles();
-  }, []);
+  const { setTarget, data, setData, isLoaded, setIsLoaded, isAllRendered } =
+    useInfiniteScroll();
 
   const handleSubmit = async (keyword: string) => {
-    searchUserProfiles(keyword);
+    setIsLoaded(true);
+
+    const filteredUser = await searchUserList(keyword);
+
+    setData(filteredUser);
+
+    setIsLoaded(false);
   };
 
   return (
@@ -59,16 +61,20 @@ const Home = () => {
             marginTop: '20px',
           }}
         />
-        {isLoading ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '30px',
-              padding: '40px',
-            }}>
+        <Box>{data && <UserList users={data} />}</Box>
+      </Box>
+      {!isAllRendered && (
+        <Box
+          ref={setTarget}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '30px',
+            padding: '40px',
+          }}>
+          {isLoaded && (
             <CircularProgress
               size={48}
               sx={{
@@ -76,11 +82,9 @@ const Home = () => {
                 position: 'absolute',
               }}
             />
-          </Box>
-        ) : (
-          userProfiles && <UserList users={userProfiles} />
-        )}
-      </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
