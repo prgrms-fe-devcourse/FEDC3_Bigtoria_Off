@@ -23,12 +23,15 @@ const StoryInfo = ({ story }: Props) => {
   return (
     <>
       <Box>
-        <StoryHeader>
-          <Typography
-            variant='h3'
-            gutterBottom
-            sx={{ fontSize: '2rem', fontWeight: '500' }}>
-            {storyTitle}
+        <Typography
+          variant='h3'
+          gutterBottom
+          sx={{ fontSize: '2rem', fontWeight: '500' }}>
+          {storyTitle}
+        </Typography>
+        <DateContainer>
+          <Typography variant='subtitle1'>
+            {year}.{month}.{day}
           </Typography>
           {user._id === story.author._id && (
             <Box>
@@ -46,11 +49,8 @@ const StoryInfo = ({ story }: Props) => {
               </Button>
             </Box>
           )}
-        </StoryHeader>
-        <Typography variant='subtitle1' gutterBottom>
-          {year}.{month}.{day}
-        </Typography>
-        <Box>
+        </DateContainer>
+        <Box sx={{ padding: '3px 0' }}>
           <Profile
             onClick={() =>
               navigate(ROUTES.STORY_BOOK_BY_USER_ID(story.author._id))
@@ -67,11 +67,9 @@ const StoryInfo = ({ story }: Props) => {
           </StoryImageWrapper>
         )}
         {content && (
-          <Paper
-            variant='outlined'
-            sx={{ width: '90%', padding: '30px', margin: '20px 0' }}>
+          <StoryContentWrapper variant='outlined'>
             {content}
-          </Paper>
+          </StoryContentWrapper>
         )}
         {!isLoading && (
           <LikeButton
@@ -87,9 +85,10 @@ const StoryInfo = ({ story }: Props) => {
 
 export default StoryInfo;
 
-const StoryHeader = styled(Box)`
+const DateContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Profile = styled.span`
@@ -115,4 +114,14 @@ const StoryImage = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
+  cursor: pointer;
+`;
+
+const StoryContentWrapper = styled(Paper)`
+  min-width: 90%;
+  padding: 25px;
+  margin: 15px 0;
+  line-height: 1.5rem;
+  word-break: keep-all;
+  white-space: pre-wrap;
 `;
