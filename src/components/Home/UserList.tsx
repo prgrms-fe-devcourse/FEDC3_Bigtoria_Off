@@ -34,7 +34,7 @@ const UserList = ({ users }: Props) => {
             return (
               <UserProfile
                 key={_id}
-                path={`/story-book/63bcf0d4f596c65f9ee2f226`}
+                path={`/story-book/63c4108b63d3a277ca7afae3`}
                 image={image}
                 fullName={fullName}
                 job={job}
