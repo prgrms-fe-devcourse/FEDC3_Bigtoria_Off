@@ -6,7 +6,6 @@ import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
 import { postNotification } from './../apis/notification';
-import { ROUTES } from './../constants/routes';
 
 export const useCommentForm = () => {
   const [comment, setComment] = useState('');
