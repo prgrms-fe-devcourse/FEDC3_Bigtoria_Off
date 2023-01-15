@@ -3,10 +3,6 @@ import { Box, List } from '@mui/material';
 import { User } from '../../interfaces/user';
 import NoResultBox from './NoResultBox';
 import UserProfile from './UserProfile';
-/*
- * TODO
- * 1. 클릭시 유저 프로필 페이지로 넘어가기
- */
 
 interface Props {
   users: User[] | null;
@@ -34,7 +30,7 @@ const UserList = ({ users }: Props) => {
             return (
               <UserProfile
                 key={_id}
-                path={`/story-book/63bcf0d4f596c65f9ee2f226`}
+                path={`/story-book/${_id}`}
                 image={image}
                 fullName={fullName}
                 job={job}
