@@ -3,6 +3,7 @@ export const ROUTES = {
   NOT_FOUND: '/not-found',
   STORY_BOOK: '/story-book/:userId',
   SIGNUP: '/signup',
+  FOLLOW: '/follow',
   SIGNIN: '/signin',
   NOTIFICATION: '/notification/:userId',
   STORY: '/story/:storyId',

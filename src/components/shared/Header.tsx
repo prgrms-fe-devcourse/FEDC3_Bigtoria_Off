@@ -36,7 +36,7 @@ const Header = () => {
         <img src='/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
-        <NavLinks>팔로우 목록</NavLinks>
+        <NavLinks onClick={() => navigate('/follow')}>팔로우 목록</NavLinks>
         <NavLinks>로그아웃/로그인</NavLinks>
       </Hamburger>
     </Container>
