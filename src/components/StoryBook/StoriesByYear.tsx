@@ -45,7 +45,7 @@ const CardsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-end;
   overflow-x: auto;
   padding: 1rem;
 `;
