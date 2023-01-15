@@ -5,7 +5,7 @@ export const ROUTES = {
   SIGNUP: '/signup',
   FOLLOW: '/follow/:userId',
   SIGNIN: '/signin',
-  NOTIFICATION: '/notification/:userId',
+  NOTIFICATION: '/notification',
   STORY: '/story/:storyId',
   STORY_EDIT: '/story/edit/:storyId',
   STORY_CREATE: '/story/edit/new',

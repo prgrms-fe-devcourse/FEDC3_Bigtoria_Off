@@ -1,9 +1,13 @@
 import AlarmIcon from '@mui/icons-material/Alarm';
 import { Box, IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { getNotificationList } from '../apis/notification';
 import NotificationList from '../components/Alarm/NotificationList';
 import TabContainer from '../components/Alarm/TabContainer';
+import { ROUTES } from '../constants/routes';
+
 /*
  * TODO
  * 1. 알림 정보 받아오기
@@ -13,8 +17,23 @@ import TabContainer from '../components/Alarm/TabContainer';
  *   - 내부에 tabValue 상태 가지고 있음.
  */
 
+const { SIGNIN } = ROUTES;
+
 const Notification = () => {
   const [tabValue, setTabValue] = useState('message');
+  const [notifications, setNotifications] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await getNotificationList();
+
+      if (!result) navigate(SIGNIN);
+      setNotifications(result);
+    };
+
+    init();
+  });
 
   return (
     <Box
@@ -44,6 +63,7 @@ const Notification = () => {
             sx={{
               width: '50px',
               height: '50px',
+              color: '#f99b0f',
             }}
           />
         </IconButton>

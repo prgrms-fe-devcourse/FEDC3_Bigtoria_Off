@@ -18,7 +18,7 @@ const AlarmButton = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ cursor: 'pointer' }}>
       <Notifications onClick={handleClick} />
     </Box>
   );

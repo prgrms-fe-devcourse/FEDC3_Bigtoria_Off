@@ -31,6 +31,7 @@ const Home = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        userSelect: 'none',
       }}>
       <Box component='header'>
         <FontText
@@ -50,15 +51,17 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <FontText
-          title='profiles..'
-          sx={{
-            display: 'inline-block',
-            fontSize: '28px',
-            paddingLeft: '5px',
-            marginTop: '20px',
-          }}
-        />
+        <Box sx={{ userSelect: 'none' }}>
+          <FontText
+            title='profiles..'
+            sx={{
+              display: 'inline-block',
+              fontSize: '28px',
+              paddingLeft: '5px',
+              marginTop: '20px',
+            }}
+          />
+        </Box>
         <Box>{data && <UserList users={data} />}</Box>
       </Box>
       {!isAllRendered && (
