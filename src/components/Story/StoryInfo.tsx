@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
-import { Avatar, Button, Paper, Typography } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +26,8 @@ const StoryInfo = ({ story }: Props) => {
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
+  if (isLoading) return <CircularProgress />;
+
   return (
     <>
       <Box>
@@ -33,7 +41,7 @@ const StoryInfo = ({ story }: Props) => {
           <Typography variant='subtitle1'>
             {year}.{month}.{day}
           </Typography>
-          {user._id === story.author._id && (
+          {user && user._id === story.author._id && (
             <Box>
               <Button
                 variant='text'
@@ -71,7 +79,7 @@ const StoryInfo = ({ story }: Props) => {
             {content}
           </StoryContentWrapper>
         )}
-        {!isLoading && (
+        {!isLoading && user && (
           <LikeButton
             userId={user._id}
             storyId={story._id}
@@ -106,13 +114,12 @@ const StoryContainer = styled(Box)`
 `;
 
 const StoryImageWrapper = styled.div`
-  height: 300px;
+  display: flex;
   padding: 15px 0;
 `;
 
 const StoryImage = styled.img`
   width: 100%;
-  max-height: 300px;
   object-fit: contain;
   cursor: pointer;
 `;

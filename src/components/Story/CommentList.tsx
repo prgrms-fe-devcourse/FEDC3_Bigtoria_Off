@@ -20,7 +20,7 @@ interface Props {
 }
 
 const CommentList = ({ comments, handleDelete }: Props) => {
-  const { user } = useFetchUser();
+  const { user, isLoading } = useFetchUser();
   const navigate = useNavigate();
 
   return (
@@ -48,7 +48,7 @@ const CommentList = ({ comments, handleDelete }: Props) => {
             </NameWrapper>
             <ContentWrapper>{comment.comment}</ContentWrapper>
           </ListItemText>
-          {user._id === comment.author._id && (
+          {!isLoading && user && user._id === comment.author._id && (
             <Button variant='text' onClick={() => handleDelete(comment._id)}>
               삭제
             </Button>

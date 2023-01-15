@@ -24,12 +24,16 @@ export const useFetchStory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isNew, setIsNew] = useState(false);
   const { storyId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStory = async () => {
       setIsLoading(true);
       try {
-        if (!storyId) return Error('잘못된 스토리 접근(storyId)'); // TODO: 404 페이지로 리다이렉트
+        if (!storyId) {
+          navigate(ROUTES.NOT_FOUND);
+          return;
+        }
 
         if (storyId === 'new') {
           setIsNew(true);
@@ -46,7 +50,7 @@ export const useFetchStory = () => {
     };
 
     fetchStory();
-  }, []);
+  }, [storyId]);
 
   const fetchComment = async () => {
     try {
@@ -181,6 +185,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
     const newErrors = validate();
     if (newErrors.title || newErrors.content) {
       setErrors(newErrors);
+      setIsLoading(false);
       return;
     }
 

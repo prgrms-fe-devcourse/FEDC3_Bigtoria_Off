@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { ROUTES } from '../constants/routes';
 import {
   StoriesWithYear,
   Story,
@@ -83,8 +84,7 @@ const useFetchStories = () => {
           const fetchedStories = await getStoriesOfUser(userId);
           setStories(fetchedStories);
         } else {
-          // todo: 404 페이지로 리다이렉팅
-          // navigate(404 페이지)
+          navigate(ROUTES.NOT_FOUND);
         }
       } catch (error) {
         console.error(error);
