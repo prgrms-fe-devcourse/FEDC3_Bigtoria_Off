@@ -45,7 +45,7 @@ export default Following;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 400px;
+  width: 100%;
   margin: 0 auto;
   justify-content: space-between;
   align-items: center;
