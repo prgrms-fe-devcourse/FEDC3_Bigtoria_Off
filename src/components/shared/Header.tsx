@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
+import { getLocalStorage } from '../../utils/storage';
 import FontText from '../Home/FontText';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
@@ -10,6 +12,10 @@ const Header = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
+  const token = getLocalStorage(TOKEN_KEY);
+  const handleClickSignInButton = () => {
+    navigate(ROUTES.SIGNIN);
+  };
 
   return (
     <Container>
@@ -37,7 +43,7 @@ const Header = () => {
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
         <NavLinks>팔로우 목록</NavLinks>
-        <NavLinks>로그아웃/로그인</NavLinks>
+        <NavLinks>{token ? '로그아웃' : '로그인'}</NavLinks>
       </Hamburger>
     </Container>
   );
