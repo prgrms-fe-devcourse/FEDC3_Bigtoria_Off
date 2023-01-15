@@ -10,6 +10,10 @@ const style = css`
   html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    @media all and (min-width: 768px) {
+      width: 412px;
+      margin: 0 auto;
+    }
   }
   body {
     margin: 0;
