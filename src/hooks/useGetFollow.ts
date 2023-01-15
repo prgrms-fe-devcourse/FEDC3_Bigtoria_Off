@@ -1,8 +1,10 @@
 import { MouseEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
 import { userInfo } from '../apis/userInfo';
+import { ROUTES } from './../constants/routes';
 
 interface List {
   _id: string;
@@ -11,28 +13,32 @@ interface List {
   image?: string;
 }
 
-const DUMMY_USER_ID = '63b9844b4a1b585b777da2ea';
 const useGetFollow = () => {
+  const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [followingIdList, setFollowingIdList] = useState<List[]>([]);
+  const navigate = useNavigate();
 
   const getUserInfo = async () => {
     try {
       setLoading(true);
       const newList: List[] = [];
-      await userInfo(DUMMY_USER_ID).then((res) => {
-        res.following.map(({ _id, user }: List) => {
-          newList.push({ _id: _id, user: user });
-        });
-      });
-      await getFollowingUser(newList.map((data) => data.user)).then((res) =>
-        res.map(({ fullName, image }, index) => {
-          newList[index].fullName = fullName;
-          newList[index].image = image;
-        })
-      );
+      userId &&
+        (await userInfo(userId).then((res) => {
+          res.following.map(({ _id, user }: List) => {
+            newList.push({ _id: _id, user: user });
+          });
+        }));
+      userId &&
+        (await getFollowingUser(newList.map((data) => data.user)).then((res) =>
+          res.map(({ fullName, image }, index) => {
+            newList[index].fullName = fullName;
+            newList[index].image = image;
+          })
+        ));
       setFollowingIdList(newList);
     } catch (error) {
+      navigate(ROUTES.NOT_FOUND);
       console.error(error);
     } finally {
       setLoading(false);

@@ -29,9 +29,10 @@ const Header = () => {
     navigate(ROUTES.SIGNIN);
   };
 
-  const handleClickFollowListButton = () => {
+  const handleClickFollowListButton = async () => {
     if (token) {
-      navigate(ROUTES.FOLLOW);
+      const { _id: userId } = await checkAuth();
+      navigate(ROUTES.FOLLOW_BY_USER_ID(userId));
     }
   };
 

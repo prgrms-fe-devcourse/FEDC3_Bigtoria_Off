@@ -2,10 +2,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './components/shared/Header';
 import { ROUTES } from './constants/routes';
-import Following from './pages/Following';
-import HomePage from './pages/Home';
 import NotFound from './pages/404';
 import Chat from './pages/Chat';
+import Following from './pages/Following';
 import Home from './pages/Home';
 import Notification from './pages/Notification';
 import SignIn from './pages/SignIn';
@@ -27,8 +26,8 @@ const App = () => {
         <Route path={ROUTES.SIGNIN} element={<SignIn />} />
         <Route path={ROUTES.STORY} element={<Story />} />
         <Route path={ROUTES.STORY_EDIT} element={<StoryEdit />} />
-        <Route path='*' element={<NotFound />} />
         <Route path={ROUTES.CHAT} element={<Chat />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
