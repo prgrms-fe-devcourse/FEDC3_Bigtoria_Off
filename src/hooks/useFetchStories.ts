@@ -6,9 +6,12 @@ import {
   StoriesWithYear,
   Story,
   StoryDate,
+  StoryMonth,
   StoryYear,
 } from '../interfaces/story';
 import { getStoriesOfUser } from './../apis/story';
+
+const TOTAL_MONTHS_NUMBER = 12;
 
 const useFetchStories = () => {
   const [stories, setStories] = useState([]);
@@ -25,6 +28,8 @@ const useFetchStories = () => {
     });
 
     yearsSet.forEach((year) => {
+      const months = new Array(TOTAL_MONTHS_NUMBER).fill(false);
+
       const storiesFilteredByYear: Story[] = stories.filter((story: Story) => {
         const { year: yearOfStory }: StoryYear = JSON.parse(story.title);
 
@@ -47,6 +52,14 @@ const useFetchStories = () => {
           +new Date(`${yearA}.${monthA}.${dayA}`) -
           +new Date(`${yearB}.${monthB}.${dayB}`)
         );
+      });
+
+      storiesFilteredByYear.forEach((story) => {
+        const { month }: StoryMonth = JSON.parse(story.title);
+        if (!months[Number(month) - 1]) {
+          months[Number(month) - 1] = true;
+          story.isFirstInSameMonths = true;
+        }
       });
 
       storiesWithYear.push({

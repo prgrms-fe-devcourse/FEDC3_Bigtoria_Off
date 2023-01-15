@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
-import { CircularProgress } from '@mui/material';
 
+import Loading from '../components/StoryBook/Loading';
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
 import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
   const { storiesByYear, isLoading } = useFetchStories();
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <Loading />;
 
   return (
     <Container>
-      {storiesByYear.map(({ year, stories }) => {
-        return <StoriesByYear key={year} year={year} stories={stories} />;
-      })}
+      {storiesByYear.map(({ year, stories }) => (
+        <StoriesByYear key={year} year={year} stories={stories} />
+      ))}
     </Container>
   );
 };

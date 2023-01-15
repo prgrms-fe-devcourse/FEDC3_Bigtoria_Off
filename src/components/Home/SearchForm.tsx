@@ -8,8 +8,13 @@ interface Props {
 }
 
 const SearchForm = ({ onSubmit }: Props) => {
-  const { value, handleInputChange, handleInputClear, handleFormSubmit } =
-    useSearhForm({ onSubmit });
+  const {
+    value,
+    error,
+    handleInputChange,
+    handleInputClear,
+    handleFormSubmit,
+  } = useSearhForm({ onSubmit });
 
   return (
     <Box>
@@ -32,11 +37,12 @@ const SearchForm = ({ onSubmit }: Props) => {
             //TODO: input focus boder-bottom #f99b0f
           }}
           variant='standard'
-          required
           autoFocus
           type='text'
           label='user name'
           value={value}
+          error={error.keyword !== ''}
+          helperText={error.keyword}
           onChange={handleInputChange}
         />
         <IconButton

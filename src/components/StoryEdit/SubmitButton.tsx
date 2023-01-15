@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
 
 interface Props {
-  loading: boolean;
+  isLoading: boolean;
 }
 
-const SubmitButton = ({ loading = false, ...props }: Props) => {
+const SubmitButton = ({ isLoading = false }: Props) => {
   return (
     <Button
       type='submit'

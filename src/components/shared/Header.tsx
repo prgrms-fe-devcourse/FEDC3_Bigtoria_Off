@@ -2,6 +2,10 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
+import FontText from '../Home/FontText';
+import StoryAddButton from '../StoryBook/StoryAddButton';
+
 const Header = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -9,16 +13,27 @@ const Header = () => {
 
   return (
     <Container>
-      <Logo onClick={() => navigate('/')}>빅</Logo>
-      <div onClick={handleClick}>
-        {click ? (
-          <img src='/public/icons/close.svg' />
-        ) : (
-          <img src='/public/icons/hamburger_menu.svg' />
-        )}
-      </div>
+      <Logo onClick={() => navigate(ROUTES.HOME)}>
+        <FontText
+          component='p'
+          title='B.'
+          sx={{
+            fontSize: '30px',
+          }}
+        />
+      </Logo>
+      <ButtonsContainer>
+        <StoryAddButton />
+        <HamburgerButton onClick={handleClick}>
+          {click ? (
+            <img src='/icons/close.svg' />
+          ) : (
+            <img src='/icons/hamburger_menu.svg' />
+          )}
+        </HamburgerButton>
+      </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
-        <img src='/public/icons/user_profile.svg' width={120} />
+        <img src='/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks>내 스토리</NavLinks>
         <NavLinks onClick={() => navigate('/follow')}>팔로우 목록</NavLinks>
@@ -31,10 +46,20 @@ const Header = () => {
 export default Header;
 
 const Container = styled.header`
+  position: sticky;
+  top: 0;
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #ffffff;
+  z-index: 999;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const Hamburger = styled.nav<{ click: boolean }>`
@@ -49,9 +74,13 @@ const Hamburger = styled.nav<{ click: boolean }>`
   right: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
   transition: all 0.5s ease;
-  background: #167fe7;
+  background: #ffffff;
   z-index: 999;
   padding-top: 4rem;
+`;
+
+const HamburgerButton = styled.div`
+  cursor: pointer;
 `;
 
 const Logo = styled.h1`

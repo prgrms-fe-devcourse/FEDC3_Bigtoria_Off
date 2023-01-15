@@ -1,14 +1,24 @@
 import { ChangeEvent, useState } from 'react';
 
+import { validateSearchInput } from '../utils/validationSearchForm';
+
 interface Props {
   onSubmit: (keyword: string) => void;
 }
 
 const useSearhForm = ({ onSubmit }: Props) => {
   const [value, setValue] = useState('');
+  const [error, setError] = useState({
+    keyword: '',
+  });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const keyword = e.target.value;
+
+    const newError = validateSearchInput(keyword);
+    setError(newError);
+
+    setValue(keyword.replace(/[\s]/g, ''));
   };
 
   const handleInputClear = () => {
@@ -20,14 +30,19 @@ const useSearhForm = ({ onSubmit }: Props) => {
 
     const keyword = value;
 
-    if (keyword.replace(/[\s]/g, '').length) {
-      onSubmit(value.trim());
-    }
+    const newError = validateSearchInput(keyword);
+    setError(newError);
 
-    setValue(value.trim());
+    !newError.keyword.length && onSubmit(keyword);
   };
 
-  return { value, handleInputChange, handleInputClear, handleFormSubmit };
+  return {
+    value,
+    error,
+    handleInputChange,
+    handleInputClear,
+    handleFormSubmit,
+  };
 };
 
 export default useSearhForm;
