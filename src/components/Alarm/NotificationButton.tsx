@@ -8,6 +8,13 @@ import { getLocalStorage } from '../../utils/storage';
 
 const { NOTIFICATION, SIGNIN } = ROUTES;
 
+/*
+ * TODO: 알림 확인하는 방법
+ *  1. 주기적으로 알림 체크하기?
+ *  2. 확인 안한 알림 있으면 뱃지로 표시하기
+ *  3. 알림이 오는 순간, 알림페이지에 있다면 -> 확인, 미확인을 나누긴 해야할 듯
+ */
+
 const NotificationButton = () => {
   const navigate = useNavigate();
 

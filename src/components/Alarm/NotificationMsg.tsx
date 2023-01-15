@@ -1,6 +1,13 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, ListItem, ListItemText } from '@mui/material';
-import { useState } from 'react';
+import {
+  Avatar,
+  IconButton,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { Notification } from '../../interfaces/noti';
 
@@ -10,25 +17,45 @@ interface Props {
 
 const NOTI_MESSAGE = {
   LIKE: `님이 회원님께 좋아요를 보냈습니다.`,
-  COMMENT: `님이 회원님을 팔로우합니다. `,
-  FOLLOW: `님이 회원님께 메세지를 보냈습니다.`,
-  MESSAGE: `님이 회원님 게시글에 댓글을 남겼습니다.`,
+  FOLLOW: `님이 회원님을 팔로우합니다. `,
+  MESSAGE: `님이 회원님께 메세지를 보냈습니다.`,
+  COMMENT: `님이 회원님 게시글에 댓글을 남겼습니다.`,
 };
 
 const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
 
 const NotificationMsg = ({ noti }: Props) => {
-  const { author } = noti;
+  const {
+    author: { fullName, image, _id },
+    createdAt,
+  } = noti;
 
-  //TODO
-  //회원 프로필 사진이랑 링크
-  //게시글 링크
+  const navigate = useNavigate();
+
+  const calcCurrentToCreateDate = (createdAt: string) => {
+    if (createdAt === '') return '';
+
+    const curTime = new Date();
+    const createdTime = new Date(createdAt);
+
+    const elapsedTime = curTime.getTime() - createdTime.getTime();
+
+    const eDay = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+    const eHour = Math.floor(elapsedTime / (1000 * 60 * 60));
+    const eMinutes = Math.floor(elapsedTime / (1000 * 60));
+
+    if (eDay === 0) {
+      if (eHour === 0) return `${eMinutes}분 전`;
+      return `${eHour}시간 전`;
+    }
+    return `${eDay}일 전`;
+  };
 
   const generateMsg = (noti: Notification) => {
-    if (noti.like) return `${author.fullName}${LIKE}`;
-    if (noti.comment) return `${author.fullName}${COMMENT}`;
-    if (noti.follow) return `${author.fullName}${FOLLOW}`;
-    if (noti.message) return `${author.fullName}${MESSAGE}`;
+    if (noti.like) return `${fullName}${LIKE}`;
+    if (noti.comment) return `${fullName}${COMMENT}`;
+    if (noti.follow) return `${fullName}${FOLLOW}`;
+    if (noti.message) return `${fullName}${MESSAGE}`;
   };
 
   const handleDeleteClick = () => {
@@ -38,12 +65,24 @@ const NotificationMsg = ({ noti }: Props) => {
   return (
     <ListItem
       sx={{
-        border: '1px solid rgba(0, 0, 0, 0.1)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
         boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
         borderRadius: 2,
         marginBottom: '12px',
       }}>
-      <ListItemText primary={generateMsg(noti)} />
+      <ListItemButton
+        onClick={() => navigate(`/story-book/${_id}`)}
+        sx={{
+          padding: '10px ',
+        }}>
+        <ListItemAvatar>
+          <Avatar alt={fullName} src={image ? image : ''} />
+        </ListItemAvatar>
+      </ListItemButton>
+      <ListItemText
+        primary={generateMsg(noti)}
+        secondary={calcCurrentToCreateDate(createdAt || '')}
+      />
       <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
         <DeleteIcon />
       </IconButton>
