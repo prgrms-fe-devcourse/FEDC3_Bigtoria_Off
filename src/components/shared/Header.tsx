@@ -25,6 +25,12 @@ const Header = () => {
     navigate(ROUTES.SIGNIN);
   };
 
+  const handleClickFollowListButton = () => {
+    if (token) {
+      navigate(ROUTES.FOLLOW);
+    }
+  };
+
   const handleClickAuthButton = () => {
     if (token) {
       removeLocalStorage(TOKEN_KEY);
@@ -60,7 +66,7 @@ const Header = () => {
         <img src='/icons/user_profile.svg' width={120} />
         <NavLinks>스토리 구경하기</NavLinks>
         <NavLinks onClick={handleClickMyStoryButton}>내 스토리</NavLinks>
-        <NavLinks>팔로우 목록</NavLinks>
+        <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
         <NavLinks onClick={handleClickAuthButton}>
           {token ? '로그아웃' : '로그인'}
         </NavLinks>
