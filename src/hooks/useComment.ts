@@ -5,6 +5,7 @@ import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
+import { postNotification } from './../apis/notification';
 
 export const useCommentForm = () => {
   const [comment, setComment] = useState('');
@@ -37,23 +38,46 @@ export const useCommentForm = () => {
 
     if (isBlankString(comment)) {
       alert('댓글 내용을 입력해 주세요.');
-    } else {
-      try {
-        if (!storyId) {
-          navigate(ROUTES.NOT_FOUND);
-          return;
-        }
-        await postStoryComment(comment, storyId);
-      } catch (error) {
-        console.error(error);
-        alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
-      } finally {
-        setComment('');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      if (!storyId) {
+        navigate(ROUTES.NOT_FOUND);
+        return;
       }
+      const { _id, author, post } = await postStoryComment(comment, storyId);
+      await postNotification('COMMENT', _id, author._id, post);
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);
+    } finally {
+      setComment('');
     }
 
     setIsLoading(false);
   };
 
   return { comment, isLoading, handleChange, handleDelete, handleSubmit };
+};
+
+export const useDeleteComment = () => {
+  const navigate = useNavigate();
+
+  const handleDelete = async (commentId: string) => {
+    if (!confirm('댓글을 삭제하시겠습니까?')) return;
+    try {
+      if (!commentId) {
+        navigate(ROUTES.NOT_FOUND);
+        return;
+      }
+      await deleteStoryComment(commentId);
+    } catch (error) {
+      console.error(error);
+      alert(ERROR_MESSAGES.INVOKED_ERROR_DELETING_COMMENT);
+    }
+  };
+
+  return { handleDelete };
 };

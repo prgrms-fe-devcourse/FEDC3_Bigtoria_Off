@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
+import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
 import { ROUTES } from './../constants/routes';
 
@@ -55,7 +56,10 @@ const useGetFollow = () => {
       const userId = e.target.dataset.userid;
       if (e.target.innerText === '삭제') {
         e.target.innerText = '팔로우';
-        followId && (await removeFollow(followId));
+        if (followId && userId) {
+          await removeFollow(followId);
+          await postNotification('FOLLOW', followId, userId, null);
+        }
       } else if (e.target.innerText === '팔로우') {
         e.target.innerText = '삭제';
         userId && (await createFollow(userId));

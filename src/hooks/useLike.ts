@@ -5,6 +5,7 @@ import { deleteStoryLike } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { Like } from '../interfaces/like';
+import { postNotification } from './../apis/notification';
 import { postStoryLike } from './../apis/story';
 
 const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
@@ -39,6 +40,7 @@ const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
         setIsLike(true);
         setLikeId(like);
         setLikeCount(likeCount + 1);
+        await postNotification('LIKE', like._id, userId, storyId);
       }
     } catch (error) {
       console.error(error);
