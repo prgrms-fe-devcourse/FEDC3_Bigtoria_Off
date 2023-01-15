@@ -10,9 +10,6 @@ import { ROUTES } from '../constants/routes';
 
 /*
  * TODO
- * 1. 알림 정보 받아오기
- *   - 사용자 토큰 확인
- *   - 없다면, 리다이렉션 or 로그인해주세요 문구?
  * 2. tab에 따라 다른 알림 정보 보여주기
  *   - 내부에 tabValue 상태 가지고 있음.
  */
@@ -33,7 +30,7 @@ const Notification = () => {
     };
 
     init();
-  });
+  }, []);
 
   return (
     <Box
@@ -87,7 +84,7 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
-          <NotificationList type={tabValue} />
+          <NotificationList type={tabValue} notifications={notifications} />
         </Box>
       </Box>
     </Box>
