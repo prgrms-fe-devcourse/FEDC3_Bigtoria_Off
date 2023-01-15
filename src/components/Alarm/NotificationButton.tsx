@@ -1,5 +1,5 @@
 import { Notifications } from '@mui/icons-material';
-import { Box } from '@mui/material';
+import { Badge, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { TOKEN_KEY } from '../../constants/auth';
@@ -8,7 +8,7 @@ import { getLocalStorage } from '../../utils/storage';
 
 const { NOTIFICATION, SIGNIN } = ROUTES;
 
-const AlarmButton = () => {
+const NotificationButton = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
@@ -19,9 +19,12 @@ const AlarmButton = () => {
 
   return (
     <Box sx={{ cursor: 'pointer' }}>
-      <Notifications onClick={handleClick} />
+      {/* thinking: badgeContent={4}를 통해서 안에 숫자를 넣어주는 방향도 있다. */}
+      <Badge variant='dot' color='primary'>
+        <Notifications onClick={handleClick} />
+      </Badge>
     </Box>
   );
 };
 
-export default AlarmButton;
+export default NotificationButton;

@@ -18,7 +18,7 @@ const { SIGNIN } = ROUTES;
 
 const Notification = () => {
   const [tabValue, setTabValue] = useState('message');
-  const [notifications, setNotifications] = useState();
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

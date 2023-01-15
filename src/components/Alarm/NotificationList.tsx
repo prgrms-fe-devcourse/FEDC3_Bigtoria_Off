@@ -24,7 +24,7 @@ const NotificationList = ({ type, notifications }: Props) => {
       (noti) => noti.like || noti.comment
     );
 
-    setPostList(filteredNoti);
+    setPostList(filteredNoti || []);
   };
 
   const filteredMsgNotification = (notifications: Notification[]) => {
@@ -32,7 +32,7 @@ const NotificationList = ({ type, notifications }: Props) => {
       (noti) => noti.follow || noti.message
     );
 
-    setMsgList(filteredNoti);
+    setMsgList(filteredNoti || []);
   };
 
   useEffect(() => {
@@ -46,8 +46,8 @@ const NotificationList = ({ type, notifications }: Props) => {
         width: '100%',
       }}>
       {type === 'message'
-        ? msgList.map((n, i) => <NotificationMsg key={i} noti={n} />)
-        : postList.map((n, i) => <NotificationMsg key={i} noti={n} />)}
+        ? msgList?.map((n, i) => <NotificationMsg key={i} noti={n} />)
+        : postList?.map((n, i) => <NotificationMsg key={i} noti={n} />)}
     </List>
   );
 };
