@@ -15,6 +15,10 @@ const Header = () => {
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
 
+  const handleClickWatchStoriesButton = () => {
+    navigate(ROUTES.HOME);
+  };
+
   const handleClickMyStoryButton = async () => {
     if (token) {
       const { _id: userId } = await checkAuth();
@@ -65,7 +69,9 @@ const Header = () => {
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <img src='/icons/user_profile.svg' width={120} />
-        <NavLinks>스토리 구경하기</NavLinks>
+        <NavLinks onClick={handleClickWatchStoriesButton}>
+          스토리 구경하기
+        </NavLinks>
         <NavLinks onClick={handleClickMyStoryButton}>내 스토리</NavLinks>
         <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
         <NavLinks onClick={handleClickAuthButton}>
