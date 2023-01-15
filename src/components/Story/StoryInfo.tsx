@@ -39,7 +39,7 @@ const StoryInfo = ({ story }: Props) => {
         </Typography>
         <DateContainer>
           <Typography variant='subtitle1'>
-            {year}.{month}.{day}
+            {year}년 {month}월 {day}일
           </Typography>
           {user && user._id === story.author._id && (
             <Box>
