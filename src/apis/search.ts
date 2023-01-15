@@ -14,7 +14,6 @@ export const getUserList = async (offset: number) => {
         offset,
       },
     });
-    console.log(userList);
     return userList;
   } catch (error) {
     console.error(error);

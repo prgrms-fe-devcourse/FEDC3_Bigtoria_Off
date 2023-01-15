@@ -1,54 +1,25 @@
 import { Box, CircularProgress } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
-import { useEffect, useRef, useState } from 'react';
 
-import { getUserList } from '../apis/search';
+import { searchUserList } from '../apis/search';
 import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
 import UserList from '../components/Home/UserList';
-import { DATA_LIMIT } from '../constants/apiParams';
-import useFetchUserList from '../hooks/useFetchUserList';
-import useIntersectionObserver from '../hooks/useIntersectionObserver';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 const Home = () => {
-  const {
-    userProfiles,
-    setUserProfiles,
-    initUserProfiles,
-    searchUserProfiles,
-  } = useFetchUserList();
-
-  const [isLoaded, setIsLoaded] = useState(false);
-  const dataOffset = useRef(0);
-  const [isAllRendered, setIsAllRendered] = useState(false);
+  const { setTarget, data, setData, isLoaded, setIsLoaded, isAllRendered } =
+    useInfiniteScroll();
 
   const handleSubmit = async (keyword: string) => {
-    searchUserProfiles(keyword);
-  };
-
-  const getMoreItem = async () => {
     setIsLoaded(true);
 
-    const result = await getUserList(dataOffset.current * DATA_LIMIT);
-    dataOffset.current++;
+    const filteredUser = await searchUserList(keyword);
 
-    if (result.length === 0) setIsAllRendered(true);
-
-    setUserProfiles([...(userProfiles || []), ...result]);
+    setData(filteredUser);
 
     setIsLoaded(false);
   };
-
-  const { setTarget } = useIntersectionObserver({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-    onIntersect: async ([{ isIntersecting }]) => {
-      if (isIntersecting && !isLoaded) {
-        await getMoreItem();
-      }
-    },
-  });
 
   return (
     <Box
@@ -90,7 +61,7 @@ const Home = () => {
             marginTop: '20px',
           }}
         />
-        <Box>{userProfiles && <UserList users={userProfiles} />}</Box>
+        <Box>{data && <UserList users={data} />}</Box>
       </Box>
       {!isAllRendered && (
         <Box
