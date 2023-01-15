@@ -26,8 +26,8 @@ const App = () => {
         <Route path={ROUTES.SIGNIN} element={<SignIn />} />
         <Route path={ROUTES.STORY} element={<Story />} />
         <Route path={ROUTES.STORY_EDIT} element={<StoryEdit />} />
-        <Route path='*' element={<NotFound />} />
         <Route path={ROUTES.CHAT} element={<Chat />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
