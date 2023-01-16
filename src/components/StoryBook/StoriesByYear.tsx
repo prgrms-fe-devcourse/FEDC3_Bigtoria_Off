@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { COLORS } from '../../constants/colors';
 import { StoriesWithYear } from '../../interfaces/story';
 import StoryCard from './StoryCard';
 
@@ -48,6 +49,15 @@ const CardsContainer = styled.div`
   align-items: flex-end;
   overflow-x: auto;
   padding: 1rem;
+
+  &::-webkit-scrollbar {
+    height: 0.15rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${COLORS.MUI_PRIMARY_LIGHT};
+    border-radius: 1rem;
+  }
 `;
 
 const CardContainer = styled.div`
