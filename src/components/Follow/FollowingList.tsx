@@ -58,8 +58,6 @@ const OnlineBadge = styled(Badge)(({ theme }) => ({
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     '&::after': {
       position: 'absolute',
-      top: 0,
-      left: 0,
       width: '100%',
       height: '100%',
       borderRadius: '50%',
@@ -70,11 +68,11 @@ const OnlineBadge = styled(Badge)(({ theme }) => ({
   },
   '@keyframes ripple': {
     '0%': {
-      transform: 'scale(.5)',
+      transform: 'scale(.8)',
       opacity: 1,
     },
     '100%': {
-      transform: 'scale(1.5)',
+      transform: 'scale(2)',
       opacity: 0,
     },
   },
