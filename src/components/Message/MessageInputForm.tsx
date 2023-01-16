@@ -1,49 +1,44 @@
 import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import http from '../../apis/instance';
 import { Message } from '../../interfaces/message';
 import MessageBubble from './MessageBubble';
 
-const MessageInputForm = () => {
+interface Prop {
+  conversationPartner: string;
+  specificUsers: Message[];
+}
+
+const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
+  const scrollRef = useRef<null | HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
-  const [specificUsers, setSpecificUser] = useState<Message[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-  };
-
-  const handleOnKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && event.shiftKey) event.preventDefault();
   };
 
   const sendMessage = async () => {
     await http.post({
       url: '/messages/create',
       data: {
-        message: 'hai',
-        receiver: '63bcf0d4f596c65f9ee2f226',
+        message: messageInputRef.current?.value,
+        receiver: conversationPartner,
       },
     });
   };
 
   useEffect(() => {
-    (async () => {
-      await http
-        .get({
-          url: '/messages',
-          params: {
-            userId: '63bcf0d4f596c65f9ee2f226',
-          },
-        })
-        .then((data) => setSpecificUser(data.data));
-    })();
-  }, []);
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current?.scrollHeight,
+      behavior: 'smooth',
+    });
+  }, [specificUsers]);
 
   return (
     <ChatWrapper>
-      <ChatList>
+      <ChatList ref={scrollRef}>
         {specificUsers?.map((specificUser) => (
           <MessageBubble
             key={specificUser.createdAt}
@@ -53,11 +48,11 @@ const MessageInputForm = () => {
       </ChatList>
       <MessageInputFormWrap onSubmit={handleSubmit}>
         <MessageInput
+          autoFocus
           ref={messageInputRef}
           data-testid='textarea'
           cols={30}
           rows={5}
-          onKeyPress={handleOnKeyPress}
         />
         <MessageInputSubmitButton
           data-testid='submit'
@@ -77,24 +72,22 @@ const ChatWrapper = styled.div`
 `;
 
 const MessageInputFormWrap = styled.form`
-  position: absolute;
-  bottom: 0px;
   background-color: white;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 58%;
+  width: 100%;
   padding: 1rem 0;
 `;
 
 const MessageInput = styled.textarea`
   all: unset;
   height: 55px;
-  width: 100%;
+  width: 60%;
   border: 1px solid #e2e5e6;
   border-radius: 8px;
-  padding: 4px;
+  padding: 14px;
 `;
 
 const MessageInputSubmitButton = styled.button`
@@ -104,12 +97,15 @@ const MessageInputSubmitButton = styled.button`
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
-  padding: 4px;
+  padding: 14px;
 `;
 
 const ChatList = styled.div`
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
-  padding-bottom: 100px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
