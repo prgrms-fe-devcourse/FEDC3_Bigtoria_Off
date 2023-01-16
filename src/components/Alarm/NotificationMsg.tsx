@@ -17,7 +17,7 @@ import { Notification } from '../../interfaces/notification';
 import { calcCreatedToCurrentDate } from '../../utils/calcCreatedToCurrentTime';
 
 interface Props {
-  noti: Notification;
+  notification: Notification;
 }
 
 const NOTI_MESSAGE = {
@@ -34,7 +34,7 @@ const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 //TODO
 //알림 확인할 때, 색상 변화값 주기 or 뱃지 사라지게 하기
 
-const NotificationMsg = ({ noti }: Props) => {
+const NotificationMsg = ({ notification }: Props) => {
   const {
     author: { fullName, image },
     like,
@@ -43,7 +43,7 @@ const NotificationMsg = ({ noti }: Props) => {
     comment,
     message,
     createdAt,
-  } = noti;
+  } = notification;
   const navigate = useNavigate();
 
   const generateMsg = () => {
@@ -67,7 +67,7 @@ const NotificationMsg = ({ noti }: Props) => {
   const handleListItemClick = () => {
     if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
-    if (noti.message) '';
+    if (message) '';
   };
 
   const handleDeleteClick = () => {

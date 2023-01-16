@@ -42,8 +42,8 @@ const NotificationList = ({ type, notifications }: Props) => {
         width: '100%',
       }}>
       {type === MESSAGE
-        ? msgList?.map((n, i) => <NotificationMsg key={i} noti={n} />)
-        : postList?.map((n, i) => <NotificationMsg key={i} noti={n} />)}
+        ? msgList?.map((n, i) => <NotificationMsg key={i} notification={n} />)
+        : postList?.map((n, i) => <NotificationMsg key={i} notification={n} />)}
     </List>
   );
 };
