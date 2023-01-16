@@ -14,7 +14,11 @@ const Story = () => {
     <Container>
       <StoryInfo story={story} />
       <Divider />
-      <StoryComment comments={story.comments} fetchComment={fetchComment} />
+      <StoryComment
+        storyAuthorId={story.author._id}
+        comments={story.comments}
+        fetchComment={fetchComment}
+      />
     </Container>
   );
 };
