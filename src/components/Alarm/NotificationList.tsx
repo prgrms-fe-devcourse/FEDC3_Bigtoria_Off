@@ -1,7 +1,7 @@
 import { List } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { Notification } from '../../interfaces/noti';
+import { Notification } from '../../interfaces/notification';
 import NotificationMsg from './NotificationMsg';
 
 const MESSAGE = 'message';

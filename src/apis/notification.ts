@@ -11,8 +11,7 @@ export const getNotificationList = async () => {
 
     return notificationList;
   } catch (error) {
-    //Thinking: console.error 보여줘야 하는가?
-    // console.error(error);
+    console.error(error);
     return null;
   }
 };

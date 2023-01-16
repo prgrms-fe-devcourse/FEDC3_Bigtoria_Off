@@ -13,8 +13,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
-import useCalcElaspedTime from '../../hooks/useCalcElaspedTime';
-import { Notification } from '../../interfaces/noti';
+import { Notification } from '../../interfaces/notification';
+import { calcCreatedToCurrentDate } from '../../utils/calcCreatedToCurrentTime';
 
 interface Props {
   noti: Notification;
@@ -45,7 +45,6 @@ const NotificationMsg = ({ noti }: Props) => {
     createdAt,
   } = noti;
   const navigate = useNavigate();
-  const { calcCurrentToCreatedDate } = useCalcElaspedTime();
 
   const generateMsg = () => {
     if (like) return `${fullName}${LIKE}`;
@@ -95,7 +94,7 @@ const NotificationMsg = ({ noti }: Props) => {
         </ListItemAvatar>
         <ListItemText
           primary={generateMsg()}
-          secondary={calcCurrentToCreatedDate(createdAt || '')}
+          secondary={calcCreatedToCurrentDate(createdAt || '')}
         />
         <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
           <DeleteIcon />
