@@ -25,22 +25,22 @@ const useGetFollow = () => {
   const getUserInfo = async () => {
     try {
       setLoading(true);
-      const newList: List[] = [];
+      const infoList: List[] = [];
       userId &&
         (await userInfo(userId).then((res) => {
           res.following.map(({ _id, user }: List) => {
-            newList.push({ _id, user });
+            infoList.push({ _id, user });
           });
         }));
       userId &&
-        (await getFollowingUser(newList.map((data) => data.user)).then((res) =>
+        (await getFollowingUser(infoList.map((data) => data.user)).then((res) =>
           res.map(({ fullName, image, isOnline }, index) => {
-            newList[index].fullName = fullName;
-            newList[index].image = image;
-            newList[index].isOnline = isOnline;
+            infoList[index].fullName = fullName;
+            infoList[index].image = image;
+            infoList[index].isOnline = isOnline;
           })
         ));
-      setFollowingIdList(newList);
+      setFollowingIdList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
       console.error(error);
@@ -68,15 +68,14 @@ const useGetFollow = () => {
         } else if (target.innerText === '팔로우') {
           target.innerText = '삭제';
           if (userId) {
-            const res = await createFollow(userId); // _id , userId
-            console.log(res?.data);
+            const res = await createFollow(userId);
             const foundIndex = followingIdList.findIndex(
               (item) => item._id === followId
             );
-            const newList = [...followingIdList];
-            const foundItem = newList[foundIndex];
+            const infoList = [...followingIdList];
+            const foundItem = infoList[foundIndex];
             foundItem._id = res?.data._id;
-            setFollowingIdList(newList);
+            setFollowingIdList(infoList);
           }
         }
       } catch (error) {
