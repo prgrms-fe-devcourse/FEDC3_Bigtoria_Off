@@ -5,15 +5,14 @@ import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
 import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
+import { List } from '../interfaces/followList';
+import { getChangedIndex } from '../utils/getChangedIndex';
 import { ROUTES } from './../constants/routes';
 
-interface List {
-  _id: string;
-  user: string;
-  fullName?: string;
-  image?: string;
-  isOnline?: boolean;
-}
+const BUTTON_MESSAGE = {
+  FOLLOW: '팔로우',
+  DELETE: '삭제',
+};
 
 const useGetFollow = () => {
   const { userId } = useParams();
@@ -54,27 +53,24 @@ const useGetFollow = () => {
     if (!(target instanceof HTMLButtonElement)) {
       return;
     }
-    if (target.dataset !== undefined) {
+
+    if (target.dataset) {
       try {
         setFollowLoading(true);
-        const followId = target.dataset.followid;
-        const userId = target.dataset.userid;
-        if (target.innerText === '삭제') {
-          target.innerText = '팔로우';
-          if (followId && userId) {
-            await removeFollow(followId);
-            await postNotification('FOLLOW', followId, userId, null);
+        const { followid, userid } = target.dataset;
+        if (target.innerText === BUTTON_MESSAGE.DELETE) {
+          target.innerText = BUTTON_MESSAGE.FOLLOW;
+          if (followid && userid) {
+            await removeFollow(followid);
+            await postNotification('FOLLOW', followid, userid, null);
           }
-        } else if (target.innerText === '팔로우') {
-          target.innerText = '삭제';
-          if (userId) {
-            const res = await createFollow(userId);
-            const foundIndex = followingIdList.findIndex(
-              (item) => item._id === followId
-            );
+        } else {
+          target.innerText = BUTTON_MESSAGE.DELETE;
+          if (userid) {
+            const res = await createFollow(userid);
+            const changedIndex = getChangedIndex(followingIdList, followid);
             const infoList = [...followingIdList];
-            const foundItem = infoList[foundIndex];
-            foundItem._id = res?.data._id;
+            infoList[changedIndex]._id = res?.data._id;
             setFollowingIdList(infoList);
           }
         }
