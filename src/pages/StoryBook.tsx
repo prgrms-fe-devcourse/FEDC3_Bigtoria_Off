@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import Loading from '../components/StoryBook/Loading';
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
+import StoryBookTitle from '../components/StoryBook/StoryBookTitle';
 import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
@@ -12,7 +13,7 @@ const StoryBook = () => {
   return (
     <Container>
       <StoriesContainer>
-        {fullName && <h3>{fullName}님의 스토리북</h3>}
+        {!!fullName && <StoryBookTitle fullName={fullName} />}
         {storiesByYear.map(({ year, stories }) => (
           <StoriesByYear key={year} year={year} stories={stories} />
         ))}
