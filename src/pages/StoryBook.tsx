@@ -7,11 +7,12 @@ import useFetchStories from '../hooks/useFetchStories';
 const StoryBook = () => {
   const { storiesByYear, fullName, isLoading } = useFetchStories();
 
+  if (isLoading) return <Loading />;
+
   return (
     <Container>
-      {isLoading && <Loading />}
       <StoriesContainer>
-        <div>{fullName}</div>
+        {fullName && <h3>{fullName}님의 스토리북</h3>}
         {storiesByYear.map(({ year, stories }) => (
           <StoriesByYear key={year} year={year} stories={stories} />
         ))}
@@ -26,4 +27,7 @@ const Container = styled.main`
   padding: 0 1rem;
 `;
 
-const StoriesContainer = styled.div``;
+const StoriesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

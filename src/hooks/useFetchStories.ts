@@ -93,8 +93,8 @@ const useFetchStories = () => {
         if (userId) {
           const fetchedStories = await getStoriesOfUser(userId);
           const { fullName } = await userInfo(userId);
-          setFullName(fullName);
           setStories(fetchedStories);
+          setFullName(fullName);
         } else {
           navigate(ROUTES.NOT_FOUND);
         }
