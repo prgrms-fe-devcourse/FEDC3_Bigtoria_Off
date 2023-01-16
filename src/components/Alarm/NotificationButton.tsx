@@ -51,8 +51,9 @@ const NotificationButton = () => {
     if (!token) {
       navigate(SIGNIN);
     } else {
-      await checkNotificationSeen();
-      setInvisible(true);
+      //Thinking: 알림 버튼을 눌렀을 때, 일괄 확인처리할 지 아직 고려중
+      // await checkNotificationSeen();
+      // setInvisible(true);
       navigate(NOTIFICATION);
     }
   };
