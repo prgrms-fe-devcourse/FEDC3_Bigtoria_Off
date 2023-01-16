@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import { useEffect } from 'react';
 
 import FollowingButton from '../components/Follow/FollowingButton';
@@ -15,7 +15,17 @@ const Following = () => {
   return (
     <Container>
       {loading ? (
-        <div>loading...</div>
+        <CircularProgress
+          size={60}
+          sx={{
+            color: 'royalblue',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: '-30px',
+            marginLeft: '-30px',
+          }}
+        />
       ) : (
         followingIdList.map((following) => (
           <Wrapper key={following._id}>
