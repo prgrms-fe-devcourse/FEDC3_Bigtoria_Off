@@ -5,15 +5,17 @@ import StoriesByYear from '../components/StoryBook/StoriesByYear';
 import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
-  const { storiesByYear, isLoading } = useFetchStories();
-
-  if (isLoading) return <Loading />;
+  const { storiesByYear, fullName, isLoading } = useFetchStories();
 
   return (
     <Container>
-      {storiesByYear.map(({ year, stories }) => (
-        <StoriesByYear key={year} year={year} stories={stories} />
-      ))}
+      {isLoading && <Loading />}
+      <StoriesContainer>
+        <div>{fullName}</div>
+        {storiesByYear.map(({ year, stories }) => (
+          <StoriesByYear key={year} year={year} stories={stories} />
+        ))}
+      </StoriesContainer>
     </Container>
   );
 };
@@ -21,5 +23,7 @@ const StoryBook = () => {
 export default StoryBook;
 
 const Container = styled.main`
-  padding-left: 1rem;
+  padding: 0 1rem;
 `;
+
+const StoriesContainer = styled.div``;
