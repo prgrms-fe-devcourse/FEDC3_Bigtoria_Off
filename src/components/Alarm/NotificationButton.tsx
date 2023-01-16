@@ -1,9 +1,15 @@
 import { Notifications } from '@mui/icons-material';
 import { Badge, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import {
+  checkNotificationSeen,
+  getNotificationList,
+} from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
+import { Notification } from '../../interfaces/notification';
 import { getLocalStorage } from '../../utils/storage';
 
 const { NOTIFICATION, SIGNIN } = ROUTES;
@@ -11,23 +17,49 @@ const { NOTIFICATION, SIGNIN } = ROUTES;
 /*
  * TODO: 알림 확인하는 방법
  *  1. 주기적으로 알림 체크하기?
- *  2. 확인 안한 알림 있으면 뱃지로 표시하기
- *  3. 알림이 오는 순간, 알림페이지에 있다면 -> 확인, 미확인을 나누긴 해야할 듯
  */
 
 const NotificationButton = () => {
+  const [badgeCount, setBadgeCount] = useState(0);
+  const [invisible, setInvisible] = useState(false);
+  const token = getLocalStorage(TOKEN_KEY);
   const navigate = useNavigate();
 
-  const handleClick = async () => {
-    const token = getLocalStorage(TOKEN_KEY);
+  useEffect(() => {
+    const getBadgeCount = async () => {
+      if (!token) return;
 
-    token ? navigate(NOTIFICATION) : navigate(SIGNIN);
+      const result = await getNotificationList();
+
+      const unSeenNotificationCount = result.filter(
+        (notification: Notification) => {
+          const { seen, like, follow, comment, message } = notification;
+
+          if (!seen && (like || follow || comment || message)) return true;
+          return false;
+        }
+      ).length;
+
+      setBadgeCount(unSeenNotificationCount);
+      unSeenNotificationCount === 0 && setInvisible(true);
+    };
+
+    getBadgeCount();
+  }, [token]);
+
+  const handleClick = async () => {
+    if (!token) {
+      navigate(SIGNIN);
+    } else {
+      await checkNotificationSeen();
+      setInvisible(true);
+      navigate(NOTIFICATION);
+    }
   };
 
   return (
     <Box sx={{ cursor: 'pointer' }}>
-      {/* thinking: badgeContent={4}를 통해서 안에 숫자를 넣어주는 방향도 있다. */}
-      <Badge variant='dot' color='primary'>
+      <Badge badgeContent={badgeCount} color='primary' invisible={invisible}>
         <Notifications onClick={handleClick} />
       </Badge>
     </Box>

@@ -1,9 +1,12 @@
 import AlarmIcon from '@mui/icons-material/Alarm';
-import { Box, IconButton } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getNotificationList } from '../apis/notification';
+import {
+  checkNotificationSeen,
+  getNotificationList,
+} from '../apis/notification';
 import NotificationList from '../components/Alarm/NotificationList';
 import TabContainer from '../components/Alarm/TabContainer';
 import { ROUTES } from '../constants/routes';
@@ -25,6 +28,15 @@ const Notification = () => {
 
     init();
   }, [tabValue]);
+
+  const handleCheckNotificationBtnClick = async () => {
+    await checkNotificationSeen();
+
+    const result = await getNotificationList();
+
+    if (!result) navigate(SIGNIN);
+    setNotifications(result);
+  };
 
   return (
     <Box
@@ -78,6 +90,7 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
+          <Button onClick={handleCheckNotificationBtnClick}>전체 읽음</Button>
           <NotificationList type={tabValue} notifications={notifications} />
         </Box>
       </Box>
