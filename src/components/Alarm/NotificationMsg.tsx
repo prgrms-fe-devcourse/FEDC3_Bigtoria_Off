@@ -31,6 +31,9 @@ const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
 
 const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 
+//TODO
+//알림 확인할 때, 색상 변화값 주기 or 뱃지 사라지게 하기
+
 const NotificationMsg = ({ noti }: Props) => {
   const {
     author: { fullName, image },
@@ -59,8 +62,8 @@ const NotificationMsg = ({ noti }: Props) => {
   };
 
   //TODO
-  //1. like, comment => 게시글로 이동
-  //2. follow => 사용자 프로필로 이동
+  //1. like, comment => 게시글로 이동 (o)
+  //2. follow => 사용자 프로필로 이동 (o)
   //3. message => 메세지 대화창으로 이동
   const handleListItemClick = () => {
     if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));

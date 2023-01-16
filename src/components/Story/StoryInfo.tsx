@@ -81,7 +81,7 @@ const StoryInfo = ({ story }: Props) => {
         )}
         {!isLoading && user && (
           <LikeButton
-            userId={user._id}
+            userId={story.author._id}
             storyId={story._id}
             likes={story.likes}
           />

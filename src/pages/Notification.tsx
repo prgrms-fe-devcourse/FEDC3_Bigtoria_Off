@@ -24,7 +24,7 @@ const Notification = () => {
     };
 
     init();
-  }, []);
+  }, [tabValue]);
 
   return (
     <Box
