@@ -2,7 +2,7 @@ import http from './instance';
 
 export const removeFollow = async (id: string) => {
   try {
-    await http.delete({
+    return await http.delete({
       url: '/follow/delete',
       data: {
         id,
@@ -15,7 +15,7 @@ export const removeFollow = async (id: string) => {
 
 export const createFollow = async (userId: string) => {
   try {
-    await http.post({
+    return await http.post({
       url: '/follow/create',
       data: {
         userId,
