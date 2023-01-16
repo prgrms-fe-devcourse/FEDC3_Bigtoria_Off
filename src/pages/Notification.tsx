@@ -8,12 +8,6 @@ import NotificationList from '../components/Alarm/NotificationList';
 import TabContainer from '../components/Alarm/TabContainer';
 import { ROUTES } from '../constants/routes';
 
-/*
- * TODO
- * 2. tab에 따라 다른 알림 정보 보여주기
- *   - 내부에 tabValue 상태 가지고 있음.
- */
-
 const { SIGNIN } = ROUTES;
 
 const Notification = () => {

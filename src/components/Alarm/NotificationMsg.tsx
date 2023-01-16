@@ -13,6 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
+import useCalcElaspedTime from '../../hooks/useCalcElaspedTime';
 import { Notification } from '../../interfaces/noti';
 
 interface Props {
@@ -28,54 +29,43 @@ const NOTI_MESSAGE = {
 
 const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
 
-const { STORY_BOOK_BY_USER_ID } = ROUTES;
+const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 
 const NotificationMsg = ({ noti }: Props) => {
   const {
-    author: { fullName, image, _id },
+    author: { fullName, image },
+    like,
+    post,
+    follow,
+    comment,
+    message,
     createdAt,
   } = noti;
-
   const navigate = useNavigate();
+  const { calcCurrentToCreatedDate } = useCalcElaspedTime();
 
-  const calcCurrentToCreateDate = (createdAt: string) => {
-    if (createdAt === '') return '';
-
-    const curTime = new Date();
-    const createdTime = new Date(createdAt);
-
-    const elapsedTime = curTime.getTime() - createdTime.getTime();
-
-    const eDay = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
-    const eHour = Math.floor(elapsedTime / (1000 * 60 * 60));
-    const eMinutes = Math.floor(elapsedTime / (1000 * 60));
-
-    if (eDay === 0) {
-      if (eHour === 0) return `${eMinutes}분 전`;
-      return `${eHour}시간 전`;
-    }
-    return `${eDay}일 전`;
+  const generateMsg = () => {
+    if (like) return `${fullName}${LIKE}`;
+    if (comment) return `${fullName}${COMMENT}`;
+    if (follow) return `${fullName}${FOLLOW}`;
+    if (message) return `${fullName}${MESSAGE}`;
   };
 
-  const generateMsg = (noti: Notification) => {
-    if (noti.like) return `${fullName}${LIKE}`;
-    if (noti.comment) return `${fullName}${COMMENT}`;
-    if (noti.follow) return `${fullName}${FOLLOW}`;
-    if (noti.message) return `${fullName}${MESSAGE}`;
+  const generateAvatar = () => {
+    if (like) return <ThumbUp />;
+    if (comment) return <CommentIcon />;
+    if (follow) return <Avatar alt={fullName} src={image ? image : ''} />;
+    if (message) return <SendIcon />;
   };
 
-  const generateAvatar = (noti: Notification) => {
-    if (noti.like) return <ThumbUp />;
-    if (noti.comment) return <CommentIcon />;
-    if (noti.follow) return <Avatar alt={fullName} src={image ? image : ''} />;
-    if (noti.message) return <SendIcon />;
-  };
-
-  const handleListItemClick = (noti: Notification) => {
-    //TODO
-    //1. like, comment => 게시글로 이동
-    //2. follow => 사용자 프로필로 이동
-    //3. message => 메세지 대화창으로 이동
+  //TODO
+  //1. like, comment => 게시글로 이동
+  //2. follow => 사용자 프로필로 이동
+  //3. message => 메세지 대화창으로 이동
+  const handleListItemClick = () => {
+    if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
+    if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
+    if (noti.message) '';
   };
 
   const handleDeleteClick = () => {
@@ -89,24 +79,25 @@ const NotificationMsg = ({ noti }: Props) => {
         boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
         borderRadius: 2,
         marginBottom: '12px',
+        padding: 0,
       }}>
-      <ListItemButton
-        onClick={() => navigate(STORY_BOOK_BY_USER_ID(_id))}
-        sx={{
-          borderRadius: '50%',
-          marginRight: '10px',
-          width: '60px',
-          height: '60px',
-        }}>
-        <ListItemAvatar>{generateAvatar(noti)}</ListItemAvatar>
+      <ListItemButton onClick={handleListItemClick}>
+        <ListItemAvatar
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {generateAvatar()}
+        </ListItemAvatar>
+        <ListItemText
+          primary={generateMsg()}
+          secondary={calcCurrentToCreatedDate(createdAt || '')}
+        />
+        <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
+          <DeleteIcon />
+        </IconButton>
       </ListItemButton>
-      <ListItemText
-        primary={generateMsg(noti)}
-        secondary={calcCurrentToCreateDate(createdAt || '')}
-      />
-      <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
-        <DeleteIcon />
-      </IconButton>
     </ListItem>
   );
 };

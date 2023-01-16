@@ -6,7 +6,7 @@ import { Follow, User } from './user';
 export interface Notification {
   _id: string;
   author: User;
-  posts?: string;
+  post?: string;
   like?: Like;
   comment?: Comment;
   follow?: Follow;
