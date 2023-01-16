@@ -1,4 +1,7 @@
+import CommentIcon from '@mui/icons-material/Comment';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
   IconButton,
@@ -9,6 +12,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/noti';
 
 interface Props {
@@ -23,6 +27,8 @@ const NOTI_MESSAGE = {
 };
 
 const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
+
+const { STORY_BOOK_BY_USER_ID } = ROUTES;
 
 const NotificationMsg = ({ noti }: Props) => {
   const {
@@ -58,6 +64,20 @@ const NotificationMsg = ({ noti }: Props) => {
     if (noti.message) return `${fullName}${MESSAGE}`;
   };
 
+  const generateAvatar = (noti: Notification) => {
+    if (noti.like) return <ThumbUp />;
+    if (noti.comment) return <CommentIcon />;
+    if (noti.follow) return <Avatar alt={fullName} src={image ? image : ''} />;
+    if (noti.message) return <SendIcon />;
+  };
+
+  const handleListItemClick = (noti: Notification) => {
+    //TODO
+    //1. like, comment => 게시글로 이동
+    //2. follow => 사용자 프로필로 이동
+    //3. message => 메세지 대화창으로 이동
+  };
+
   const handleDeleteClick = () => {
     //Todo: remove alarm
   };
@@ -71,13 +91,14 @@ const NotificationMsg = ({ noti }: Props) => {
         marginBottom: '12px',
       }}>
       <ListItemButton
-        onClick={() => navigate(`/story-book/${_id}`)}
+        onClick={() => navigate(STORY_BOOK_BY_USER_ID(_id))}
         sx={{
-          padding: '10px ',
+          borderRadius: '50%',
+          marginRight: '10px',
+          width: '60px',
+          height: '60px',
         }}>
-        <ListItemAvatar>
-          <Avatar alt={fullName} src={image ? image : ''} />
-        </ListItemAvatar>
+        <ListItemAvatar>{generateAvatar(noti)}</ListItemAvatar>
       </ListItemButton>
       <ListItemText
         primary={generateMsg(noti)}

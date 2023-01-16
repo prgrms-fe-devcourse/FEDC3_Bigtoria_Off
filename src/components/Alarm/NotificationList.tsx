@@ -4,12 +4,8 @@ import { useEffect, useState } from 'react';
 import { Notification } from '../../interfaces/noti';
 import NotificationMsg from './NotificationMsg';
 
-/* Todo
- * 2. message탭인지, post탭인지 알려주자.
- *   - message: 나에게 온 메세지
- *   - post: 내 게시글에 댓글, 좋아요
- *   - 나를 팔로우한 알림은 어디로 보내야 하는가...
- */
+const MESSAGE = 'message';
+
 interface Props {
   type: string;
   notifications: Notification[];
@@ -45,7 +41,7 @@ const NotificationList = ({ type, notifications }: Props) => {
       sx={{
         width: '100%',
       }}>
-      {type === 'message'
+      {type === MESSAGE
         ? msgList?.map((n, i) => <NotificationMsg key={i} noti={n} />)
         : postList?.map((n, i) => <NotificationMsg key={i} noti={n} />)}
     </List>
