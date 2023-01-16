@@ -18,6 +18,7 @@ interface List {
 const useGetFollow = () => {
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
   const [followingIdList, setFollowingIdList] = useState<List[]>([]);
   const navigate = useNavigate();
 
@@ -54,17 +55,34 @@ const useGetFollow = () => {
       return;
     }
     if (target.dataset !== undefined) {
-      const followId = target.dataset.followid;
-      const userId = target.dataset.userid;
-      if (target.innerText === '삭제') {
-        target.innerText = '팔로우';
-        if (followId && userId) {
-          await removeFollow(followId);
-          await postNotification('FOLLOW', followId, userId, null);
+      try {
+        setFollowLoading(true);
+        const followId = target.dataset.followid;
+        const userId = target.dataset.userid;
+        if (target.innerText === '삭제') {
+          target.innerText = '팔로우';
+          if (followId && userId) {
+            await removeFollow(followId);
+            await postNotification('FOLLOW', followId, userId, null);
+          }
+        } else if (target.innerText === '팔로우') {
+          target.innerText = '삭제';
+          if (userId) {
+            const res = await createFollow(userId); // _id , userId
+            console.log(res?.data);
+            const foundIndex = followingIdList.findIndex(
+              (item) => item._id === followId
+            );
+            const newList = [...followingIdList];
+            const foundItem = newList[foundIndex];
+            foundItem._id = res?.data._id;
+            setFollowingIdList(newList);
+          }
         }
-      } else if (target.innerText === '팔로우') {
-        target.innerText = '삭제';
-        userId && (await createFollow(userId));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setFollowLoading(false);
       }
     }
   };
@@ -72,6 +90,7 @@ const useGetFollow = () => {
   return {
     followingIdList,
     loading,
+    followLoading,
     getUserInfo,
     handleClick,
   };

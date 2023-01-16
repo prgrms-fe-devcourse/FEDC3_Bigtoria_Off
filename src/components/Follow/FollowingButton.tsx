@@ -30,7 +30,6 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           }}
           data-followid={followId}
           data-userid={userId}
-          disabled={isLoading}
           onClick={onClick}>
           삭제
         </Button>
