@@ -27,15 +27,16 @@ const useGetFollow = () => {
       const newList: List[] = [];
       userId &&
         (await userInfo(userId).then((res) => {
-          res.following.map(({ _id, user, isOnline }: List) => {
-            newList.push({ _id, user, isOnline });
+          res.following.map(({ _id, user }: List) => {
+            newList.push({ _id, user });
           });
         }));
       userId &&
         (await getFollowingUser(newList.map((data) => data.user)).then((res) =>
-          res.map(({ fullName, image }, index) => {
+          res.map(({ fullName, image, isOnline }, index) => {
             newList[index].fullName = fullName;
             newList[index].image = image;
+            newList[index].isOnline = isOnline;
           })
         ));
       setFollowingIdList(newList);
