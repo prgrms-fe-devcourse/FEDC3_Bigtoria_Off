@@ -16,3 +16,22 @@ export const getNotificationList = async () => {
     return null;
   }
 };
+
+export const postNotification = async (
+  type: 'COMMENT' | 'FOLLOW' | 'LIKE' | 'MESSAGE',
+  typeId: string,
+  userId: string,
+  postId: string | null
+) => {
+  const { data: notification } = await http.post({
+    url: API_URLS.NOTIFICATION.CREATE_NOTIFICATION,
+    data: {
+      notificationType: type,
+      notificationTypeId: typeId,
+      userId,
+      postId,
+    },
+  });
+
+  return notification;
+};
