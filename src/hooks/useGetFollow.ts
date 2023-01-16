@@ -26,20 +26,20 @@ const useGetFollow = () => {
     try {
       setLoading(true);
       const infoList: List[] = [];
-      userId &&
-        (await userInfo(userId).then((res) => {
-          res.following.map(({ _id, user }: List) => {
-            infoList.push({ _id, user });
-          });
-        }));
-      userId &&
-        (await getFollowingUser(infoList.map((data) => data.user)).then((res) =>
-          res.map(({ fullName, image, isOnline }, index) => {
-            infoList[index].fullName = fullName;
-            infoList[index].image = image;
-            infoList[index].isOnline = isOnline;
-          })
-        ));
+      if (userId) {
+        const res = await userInfo(userId);
+        res.following.map(({ _id, user }: List) => {
+          infoList.push({ _id, user });
+        });
+      }
+      if (userId) {
+        const res = await getFollowingUser(infoList.map((data) => data.user));
+        res.map(({ fullName, image, isOnline }, index) => {
+          infoList[index].fullName = fullName;
+          infoList[index].image = image;
+          infoList[index].isOnline = isOnline;
+        });
+      }
       setFollowingIdList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
