@@ -59,13 +59,11 @@ const useGetFollow = () => {
         setFollowLoading(true);
         const { followid, userid } = target.dataset;
         if (target.innerText === BUTTON_MESSAGE.DELETE) {
-          target.innerText = BUTTON_MESSAGE.FOLLOW;
           if (followid && userid) {
             await removeFollow(followid);
             await postNotification('FOLLOW', followid, userid, null);
           }
         } else {
-          target.innerText = BUTTON_MESSAGE.DELETE;
           if (userid) {
             const res = await createFollow(userid);
             const changedIndex = getChangedIndex(followingIdList, followid);

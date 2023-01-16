@@ -12,6 +12,7 @@ const Following = () => {
   useEffect(() => {
     getUserInfo();
   }, []);
+
   return (
     <Container>
       {loading ? (
