@@ -1,5 +1,4 @@
-import { Box, Button, CircularProgress } from '@mui/material';
-import { lightBlue } from '@mui/material/colors';
+import { Box, Button } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 interface Props {
@@ -33,25 +32,13 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           }}
           data-followid={followId}
           data-userid={userId}
+          disabled={isLoading ? true : false}
           onClick={(e) => {
             onClick(e);
             setToggle(!toggle);
           }}>
           {toggle ? '팔로우' : '삭제'}
         </Button>
-        {isLoading && (
-          <CircularProgress
-            size={20}
-            sx={{
-              color: lightBlue[500],
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              marginTop: '-10px',
-              marginLeft: '-10px',
-            }}
-          />
-        )}
       </Box>
     </Box>
   );

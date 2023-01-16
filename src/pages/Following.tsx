@@ -7,7 +7,8 @@ import FollowList from '../components/Follow/FollowingList';
 import useGetFollow from '../hooks/useGetFollow';
 
 const Following = () => {
-  const { followingIdList, loading, getUserInfo, handleClick } = useGetFollow();
+  const { followingIdList, loading, followLoading, getUserInfo, handleClick } =
+    useGetFollow();
 
   useEffect(() => {
     getUserInfo();
@@ -39,6 +40,7 @@ const Following = () => {
             <FollowingButton
               followId={following._id}
               userId={following.user}
+              isLoading={followLoading}
               onClick={handleClick}
             />
           </Wrapper>
