@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useEffect } from 'react';
 
+import FollowingButton from '../components/Follow/FollowingButton';
 import FollowList from '../components/Follow/FollowingList';
 import useGetFollow from '../hooks/useGetFollow';
 
@@ -24,21 +25,11 @@ const Following = () => {
               isOnline={following.isOnline}
               userId={following.user}
             />
-            <Button
-              variant='outlined'
-              size='small'
-              sx={{
-                height: '30px',
-                width: '100px',
-                marginRight: '0.5rem',
-                padding: '0.5rem',
-                boxSizing: 'border-box',
-              }}
-              data-followid={following._id}
-              data-userid={following.user}
-              onClick={handleClick}>
-              삭제
-            </Button>
+            <FollowingButton
+              followId={following._id}
+              userId={following.user}
+              onClick={handleClick}
+            />
           </Wrapper>
         ))
       )}
