@@ -50,8 +50,16 @@ const useFetchStories = () => {
         }: StoryDate = JSON.parse(storyB.title);
 
         return (
-          +new Date(`${yearA}.${monthA}.${dayA}`) -
-          +new Date(`${yearB}.${monthB}.${dayB}`)
+          +new Date(
+            `${String(yearA)}-${String(monthA).padStart(2, '0')}-${String(
+              dayA
+            ).padStart(2, '0')}`
+          ) -
+          +new Date(
+            `${String(yearB)}-${String(monthB).padStart(2, '0')}-${String(
+              dayB
+            ).padStart(2, '0')}`
+          )
         );
       });
 
