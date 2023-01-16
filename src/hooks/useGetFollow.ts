@@ -12,6 +12,7 @@ interface List {
   user: string;
   fullName?: string;
   image?: string;
+  isOnline?: boolean;
 }
 
 const useGetFollow = () => {
@@ -26,8 +27,8 @@ const useGetFollow = () => {
       const newList: List[] = [];
       userId &&
         (await userInfo(userId).then((res) => {
-          res.following.map(({ _id, user }: List) => {
-            newList.push({ _id: _id, user: user });
+          res.following.map(({ _id, user, isOnline }: List) => {
+            newList.push({ _id, user, isOnline });
           });
         }));
       userId &&
@@ -47,21 +48,21 @@ const useGetFollow = () => {
   };
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    if (!(e.target instanceof HTMLButtonElement)) {
+    const { target } = e;
+    if (!(target instanceof HTMLButtonElement)) {
       return;
     }
-
-    if (e.target.dataset !== undefined) {
-      const followId = e.target.dataset.followid;
-      const userId = e.target.dataset.userid;
-      if (e.target.innerText === '삭제') {
-        e.target.innerText = '팔로우';
+    if (target.dataset !== undefined) {
+      const followId = target.dataset.followid;
+      const userId = target.dataset.userid;
+      if (target.innerText === '삭제') {
+        target.innerText = '팔로우';
         if (followId && userId) {
           await removeFollow(followId);
           await postNotification('FOLLOW', followId, userId, null);
         }
-      } else if (e.target.innerText === '팔로우') {
-        e.target.innerText = '삭제';
+      } else if (target.innerText === '팔로우') {
+        target.innerText = '삭제';
         userId && (await createFollow(userId));
       }
     }

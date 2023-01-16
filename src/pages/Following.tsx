@@ -18,7 +18,11 @@ const Following = () => {
       ) : (
         followingIdList.map((following) => (
           <Wrapper key={following._id}>
-            <FollowList src={following.image} fullName={following.fullName} />
+            <FollowList
+              src={following.image}
+              fullName={following.fullName}
+              isOnline={following.isOnline}
+            />
             <Button
               variant='outlined'
               size='small'
