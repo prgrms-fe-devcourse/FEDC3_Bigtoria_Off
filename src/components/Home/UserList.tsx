@@ -1,5 +1,6 @@
 import { Box, List } from '@mui/material';
 
+import { ROUTES } from '../../constants/routes';
 import { User } from '../../interfaces/user';
 import NoResultBox from './NoResultBox';
 import UserProfile from './UserProfile';
@@ -7,6 +8,8 @@ import UserProfile from './UserProfile';
 interface Props {
   users: User[] | null;
 }
+
+const { STORY_BOOK_BY_USER_ID } = ROUTES;
 
 const UserList = ({ users }: Props) => {
   return (
@@ -30,7 +33,7 @@ const UserList = ({ users }: Props) => {
             return (
               <UserProfile
                 key={_id}
-                path={`/story-book/${_id}`}
+                path={STORY_BOOK_BY_USER_ID(_id)}
                 image={image}
                 fullName={fullName}
                 job={job}

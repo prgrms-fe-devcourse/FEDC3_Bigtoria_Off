@@ -1,20 +1,30 @@
 import AlarmIcon from '@mui/icons-material/Alarm';
 import { Box, IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { getNotificationList } from '../apis/notification';
 import NotificationList from '../components/Alarm/NotificationList';
 import TabContainer from '../components/Alarm/TabContainer';
-/*
- * TODO
- * 1. 알림 정보 받아오기
- *   - 사용자 토큰 확인
- *   - 없다면, 리다이렉션 or 로그인해주세요 문구?
- * 2. tab에 따라 다른 알림 정보 보여주기
- *   - 내부에 tabValue 상태 가지고 있음.
- */
+import { ROUTES } from '../constants/routes';
+
+const { SIGNIN } = ROUTES;
 
 const Notification = () => {
   const [tabValue, setTabValue] = useState('message');
+  const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      const result = await getNotificationList();
+
+      if (!result) navigate(SIGNIN);
+      setNotifications(result);
+    };
+
+    init();
+  }, [tabValue]);
 
   return (
     <Box
@@ -44,6 +54,7 @@ const Notification = () => {
             sx={{
               width: '50px',
               height: '50px',
+              color: '#f99b0f',
             }}
           />
         </IconButton>
@@ -67,7 +78,7 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
-          <NotificationList type={tabValue} />
+          <NotificationList type={tabValue} notifications={notifications} />
         </Box>
       </Box>
     </Box>
