@@ -6,15 +6,8 @@ import { createFollow, removeFollow } from '../../apis/follow';
 import { userInfo } from '../../apis/userInfo';
 import { USER_ID_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
+import { Follow as Following } from '../../interfaces/user';
 import { getLocalStorage } from '../../utils/storage';
-
-interface Following {
-  _id: string;
-  user: string;
-  follower: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const FollowButton = () => {
   const [isFollowing, setIsFollowing] = useState(false);
