@@ -15,7 +15,7 @@ interface Props {
   isOnline: boolean | undefined;
 }
 
-const FollowingList = ({ src, size = '60px', fullName, isOnline }: Props) => {
+const FollowingList = ({ src, size = '50px', fullName, isOnline }: Props) => {
   return (
     <List
       dense
@@ -27,15 +27,21 @@ const FollowingList = ({ src, size = '60px', fullName, isOnline }: Props) => {
       }}>
       <ListItem>
         <ListItemAvatar>
-          <StyledBadge
-            overlap='circular'
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            variant='dot'>
-            <Avatar
-              src={src}
-              sx={{ width: size, height: size, marginRight: '0.5rem' }}
-            />
-          </StyledBadge>
+          {isOnline ? (
+            <OnlineBadge
+              overlap='circular'
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              variant='dot'>
+              <Avatar src={src} sx={{ width: size, height: size }} />
+            </OnlineBadge>
+          ) : (
+            <OfflineBadge
+              overlap='circular'
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              variant='dot'>
+              <Avatar src={src} sx={{ width: size, height: size }} />
+            </OfflineBadge>
+          )}
         </ListItemAvatar>
         <ListItemText primary={fullName} />
       </ListItem>
@@ -45,7 +51,7 @@ const FollowingList = ({ src, size = '60px', fullName, isOnline }: Props) => {
 
 export default FollowingList;
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
+const OnlineBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: '#44b700',
     color: '#44b700',
@@ -70,6 +76,23 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     '100%': {
       transform: 'scale(2.4)',
       opacity: 0,
+    },
+  },
+}));
+
+const OfflineBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: '#7b7b7b',
+    color: '#7b7b7b',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      content: '""',
     },
   },
 }));
