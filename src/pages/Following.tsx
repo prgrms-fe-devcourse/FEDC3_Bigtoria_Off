@@ -22,6 +22,7 @@ const Following = () => {
               src={following.image}
               fullName={following.fullName}
               isOnline={following.isOnline}
+              userId={following.user}
             />
             <Button
               variant='outlined'

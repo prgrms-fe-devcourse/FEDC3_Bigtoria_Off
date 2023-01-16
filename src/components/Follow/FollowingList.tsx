@@ -7,15 +7,27 @@ import {
   ListItemText,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+
+import { ROUTES } from '../../constants/routes';
 
 interface Props {
   src: string | undefined;
   size?: string;
+  userId: string;
   fullName: string | undefined;
   isOnline: boolean | undefined;
 }
 
-const FollowingList = ({ src, size = '50px', fullName, isOnline }: Props) => {
+const FollowingList = ({
+  src,
+  size = '50px',
+  fullName,
+  isOnline,
+  userId,
+}: Props) => {
+  const navigate = useNavigate();
+
   return (
     <List
       dense
@@ -32,14 +44,22 @@ const FollowingList = ({ src, size = '50px', fullName, isOnline }: Props) => {
               overlap='circular'
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               variant='dot'>
-              <Avatar src={src} sx={{ width: size, height: size }} />
+              <Avatar
+                src={src}
+                sx={{ width: size, height: size }}
+                onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
+              />
             </OnlineBadge>
           ) : (
             <OfflineBadge
               overlap='circular'
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               variant='dot'>
-              <Avatar src={src} sx={{ width: size, height: size }} />
+              <Avatar
+                src={src}
+                sx={{ width: size, height: size }}
+                onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
+              />
             </OfflineBadge>
           )}
         </ListItemAvatar>
