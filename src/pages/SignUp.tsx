@@ -53,11 +53,6 @@ const SignUp = () => {
           errorMsg={errors.passwordConfirm}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {/* <SignUpSelector
-            onChange={handleChange}
-            name='year'
-            errorMsg={errors.year}
-          /> */}
           <DatePicker value={dayjs(new Date())} onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'

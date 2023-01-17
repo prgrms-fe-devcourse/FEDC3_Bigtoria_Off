@@ -40,10 +40,7 @@ const useSignUpForm = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'fullName') {
-      const newValue = value.replace(/^\s/g, '').replace(/\s{2,}/g, ' ');
-      setValues({ ...values, [name]: newValue });
-    } else setValues({ ...values, [name]: value.replace(/\s/g, '') });
+    setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {

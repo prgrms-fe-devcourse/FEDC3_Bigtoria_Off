@@ -3,7 +3,8 @@ import { args } from '../interfaces/signUp';
 export const signUpValidate = (values: args) => {
   const emailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+  const fullNameRegex = /^[A-Za-z0-9가-힣]{4,12}$/;
+  const passwordRegex = /^.{6,15}$/;
 
   const newError = {
     fullName: '',
@@ -15,6 +16,8 @@ export const signUpValidate = (values: args) => {
   };
 
   if (!values.fullName) newError.fullName = '닉네임을 입력해 주세요.';
+  else if (!fullNameRegex.test(values.fullName))
+    newError.fullName = '영어, 숫자, 한글만 입력가능합니다.(4-12자리)';
   else newError.fullName = '';
 
   if (!values.email) newError.email = '이메일을 입력해 주세요.';
@@ -24,7 +27,7 @@ export const signUpValidate = (values: args) => {
 
   if (!values.password) newError.password = '비밀번호를 입력해 주세요.';
   else if (!passwordRegex.test(values.password))
-    newError.password = '8자리 이상 입력해 주세요.';
+    newError.password = '비밀번호는 6자리 이상, 15자리 이하로 입력해주세요';
   else newError.password = '';
 
   if (!values.passwordConfirm)
