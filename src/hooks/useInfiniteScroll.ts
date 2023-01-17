@@ -7,27 +7,28 @@ import useIntersectionObserver from './useIntersectionObserver';
 
 const useInfiniteScroll = () => {
   const [data, setData] = useState<User[] | null>(null);
-  const [searchedData, setSearchedData] = useState<User[] | null>([]);
+  const [searchedData, setSearchedData] = useState<User[] | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
   const [isAllRendered, setIsAllRendered] = useState(false);
   const [offset, setOffset] = useState(0);
 
-  const getMoreDataWithAPI = async () => {
+  const initAllStateAndGetDataWithAPI = async () => {
     setIsLoaded(true);
 
-    const result = await getUserList(offset * DATA_LIMIT);
+    //initialize
+    setIsAllRendered(false);
+    setIsSearched(false);
+    setOffset(1);
 
-    setOffset((cur) => cur + 1);
+    const result = await getUserList();
 
-    if (result.length === 0) setIsAllRendered(true);
-
-    setData([...(data || []), ...result]);
+    setData(result);
 
     setIsLoaded(false);
   };
 
-  const searchDataWithStateInit = async (keyword: string) => {
+  const searchDataWithState = async (keyword: string) => {
     setIsLoaded(true);
 
     //initialize
@@ -45,6 +46,20 @@ const useInfiniteScroll = () => {
     setIsLoaded(false);
   };
 
+  const getMoreDataWithAPI = async () => {
+    setIsLoaded(true);
+
+    const result = await getUserList(offset * DATA_LIMIT);
+
+    setData([...(data || []), ...result]);
+
+    setOffset((cur) => cur + 1);
+
+    if (result.length === 0) setIsAllRendered(true);
+
+    setIsLoaded(false);
+  };
+
   const getMoreDataWithState = () => {
     const start = offset * DATA_LIMIT;
     const bound =
@@ -53,6 +68,7 @@ const useInfiniteScroll = () => {
         : start * DATA_LIMIT;
 
     setData([...(data || []), ...(searchedData?.slice(start, bound) || [])]);
+
     setOffset((cur) => cur + 1);
 
     searchedData && bound === searchedData.length && setIsAllRendered(true);
@@ -76,7 +92,8 @@ const useInfiniteScroll = () => {
     isLoaded,
     setIsLoaded,
     isAllRendered,
-    searchDataWithStateInit,
+    initAllStateAndGetDataWithAPI,
+    searchDataWithState,
   };
 };
 

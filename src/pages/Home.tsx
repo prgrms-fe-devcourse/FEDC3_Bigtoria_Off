@@ -7,11 +7,19 @@ import UserList from '../components/Home/UserList';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 const Home = () => {
-  const { setTarget, data, isLoaded, isAllRendered, searchDataWithStateInit } =
-    useInfiniteScroll();
+  const {
+    setTarget,
+    data,
+    isLoaded,
+    isAllRendered,
+    initAllStateAndGetDataWithAPI,
+    searchDataWithState,
+  } = useInfiniteScroll();
 
   const handleSubmit = async (keyword: string) => {
-    await searchDataWithStateInit(keyword);
+    keyword === ''
+      ? await initAllStateAndGetDataWithAPI()
+      : await searchDataWithState(keyword);
   };
 
   return (
