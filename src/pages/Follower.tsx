@@ -35,7 +35,7 @@ const Follower = () => {
               src={follower.image}
               fullName={follower.fullName}
               isOnline={follower.isOnline}
-              userId={follower.user}
+              userId={follower.follower}
             />
           </Wrapper>
         ))
