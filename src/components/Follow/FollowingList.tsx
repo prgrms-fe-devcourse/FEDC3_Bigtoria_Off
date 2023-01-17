@@ -47,12 +47,20 @@ const FollowingList = ({
             variant='dot'>
             <Avatar
               src={src}
-              sx={{ width: size, height: size }}
+              sx={{ width: size, height: size, cursor: 'pointer' }}
               onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
             />
           </StateBadge>
         </ListItemAvatar>
-        <ListItemText primary={fullName} />
+        <ListItemText
+          primary={fullName}
+          sx={{
+            maxWidth: '100px',
+            height: '1rem',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          }}
+        />
       </ListItem>
     </List>
   );

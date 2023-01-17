@@ -10,8 +10,8 @@ import { getChangedIndex } from '../utils/getChangedIndex';
 import { ROUTES } from './../constants/routes';
 
 const BUTTON_MESSAGE = {
-  FOLLOW: '팔로우',
-  DELETE: '삭제',
+  FOLLOW: 'PersonAddIcon',
+  DELETE: 'PersonRemoveIcon',
 };
 
 const useGetFollow = () => {
@@ -49,16 +49,14 @@ const useGetFollow = () => {
   };
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    const { target } = e;
-    if (!(target instanceof HTMLButtonElement)) {
-      return;
-    }
+    const { currentTarget } = e;
 
-    if (target.dataset) {
+    if (currentTarget.dataset) {
       try {
         setFollowLoading(true);
-        const { followid, userid } = target.dataset;
-        if (target.innerText === BUTTON_MESSAGE.DELETE) {
+        const { followid, userid } = currentTarget.dataset;
+        const { testid } = currentTarget.firstChild.dataset;
+        if (testid === BUTTON_MESSAGE.DELETE) {
           if (followid && userid) {
             await removeFollow(followid);
             await postNotification('FOLLOW', followid, userid, null);
