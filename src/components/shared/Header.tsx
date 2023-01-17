@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
@@ -34,7 +35,10 @@ const Header = () => {
     if (token) {
       const { _id: userId } = await checkAuth();
       navigate(ROUTES.FOLLOW_BY_USER_ID(userId));
+      return;
     }
+
+    navigate(ROUTES.SIGNIN);
   };
 
   const handleClickAuthButton = () => {
@@ -75,7 +79,9 @@ const Header = () => {
           스토리 구경하기
         </NavLinks>
         <NavLinks onClick={handleClickMyStoryButton}>내 스토리</NavLinks>
-        <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
+        {token && (
+          <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
+        )}
         <NavLinks onClick={handleClickAuthButton}>
           {token ? '로그아웃' : '로그인'}
         </NavLinks>
@@ -95,6 +101,8 @@ const Container = styled.header`
   justify-content: space-between;
   background-color: #ffffff;
   z-index: 999;
+  border-bottom: 1px solid ${COLORS.STORY_CARD_BORDER};
+  box-shadow: 0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER};
 `;
 
 const ButtonsContainer = styled.div`

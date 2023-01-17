@@ -8,6 +8,7 @@ export interface Message {
   receiver: {
     createdAt: string;
     fullName: string;
+    _id: string;
   };
   seen: boolean;
   createdAt: string;

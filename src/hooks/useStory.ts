@@ -25,7 +25,6 @@ export const useFetchStory = () => {
     updatedAt: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isNew, setIsNew] = useState(false);
   const { storyId } = useParams();
   const navigate = useNavigate();
 
@@ -37,19 +36,16 @@ export const useFetchStory = () => {
           navigate(ROUTES.NOT_FOUND);
           return;
         }
+        if (storyId === 'new') return;
 
-        if (storyId === 'new') {
-          setIsNew(true);
-        } else {
-          const stories = await getStoriesOfChannel(channelId);
-          if (!stories.find((story: Story) => story._id === storyId)) {
-            alert('존재하지 않는 스토리입니다.');
-            navigate(ROUTES.HOME);
-          }
-
-          const storyDetail = await getStoryDetail(storyId);
-          setStory(storyDetail);
+        const stories = await getStoriesOfChannel(channelId);
+        if (!stories.find((story: Story) => story._id === storyId)) {
+          alert('존재하지 않는 스토리입니다.');
+          navigate(ROUTES.HOME);
         }
+
+        const storyDetail = await getStoryDetail(storyId);
+        setStory(storyDetail);
       } catch (error) {
         console.error(error);
         alert(ERROR_MESSAGES.INVOKED_ERROR_GETTING_STORY);
@@ -73,7 +69,7 @@ export const useFetchStory = () => {
     }
   };
 
-  return { story, isNew, isLoading, fetchComment };
+  return { story, isLoading, fetchComment };
 };
 
 const getDateInfo = (date: Dayjs) => ({
@@ -140,10 +136,9 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
     });
   };
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setImageFile(e.target.files?.[0]);
-    encodeFileToBase64(e.target.files?.[0]);
+  const handleImageChange = (imageFile: File) => {
+    setImageFile(imageFile);
+    encodeFileToBase64(imageFile);
   };
 
   const handleImageDelete = () => {

@@ -12,32 +12,35 @@ interface List {
   user: string;
   fullName?: string;
   image?: string;
+  isOnline?: boolean;
 }
 
 const useGetFollow = () => {
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
   const [followingIdList, setFollowingIdList] = useState<List[]>([]);
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
     try {
       setLoading(true);
-      const newList: List[] = [];
+      const infoList: List[] = [];
       userId &&
         (await userInfo(userId).then((res) => {
           res.following.map(({ _id, user }: List) => {
-            newList.push({ _id: _id, user: user });
+            infoList.push({ _id, user });
           });
         }));
       userId &&
-        (await getFollowingUser(newList.map((data) => data.user)).then((res) =>
-          res.map(({ fullName, image }, index) => {
-            newList[index].fullName = fullName;
-            newList[index].image = image;
+        (await getFollowingUser(infoList.map((data) => data.user)).then((res) =>
+          res.map(({ fullName, image, isOnline }, index) => {
+            infoList[index].fullName = fullName;
+            infoList[index].image = image;
+            infoList[index].isOnline = isOnline;
           })
         ));
-      setFollowingIdList(newList);
+      setFollowingIdList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
       console.error(error);
@@ -47,22 +50,38 @@ const useGetFollow = () => {
   };
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    if (!(e.target instanceof HTMLButtonElement)) {
+    const { target } = e;
+    if (!(target instanceof HTMLButtonElement)) {
       return;
     }
-
-    if (e.target.dataset !== undefined) {
-      const followId = e.target.dataset.followid;
-      const userId = e.target.dataset.userid;
-      if (e.target.innerText === '삭제') {
-        e.target.innerText = '팔로우';
-        if (followId && userId) {
-          await removeFollow(followId);
-          await postNotification('FOLLOW', followId, userId, null);
+    if (target.dataset !== undefined) {
+      try {
+        setFollowLoading(true);
+        const followId = target.dataset.followid;
+        const userId = target.dataset.userid;
+        if (target.innerText === '삭제') {
+          target.innerText = '팔로우';
+          if (followId && userId) {
+            await removeFollow(followId);
+            await postNotification('FOLLOW', followId, userId, null);
+          }
+        } else if (target.innerText === '팔로우') {
+          target.innerText = '삭제';
+          if (userId) {
+            const res = await createFollow(userId);
+            const foundIndex = followingIdList.findIndex(
+              (item) => item._id === followId
+            );
+            const infoList = [...followingIdList];
+            const foundItem = infoList[foundIndex];
+            foundItem._id = res?.data._id;
+            setFollowingIdList(infoList);
+          }
         }
-      } else if (e.target.innerText === '팔로우') {
-        e.target.innerText = '삭제';
-        userId && (await createFollow(userId));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setFollowLoading(false);
       }
     }
   };
@@ -70,6 +89,7 @@ const useGetFollow = () => {
   return {
     followingIdList,
     loading,
+    followLoading,
     getUserInfo,
     handleClick,
   };

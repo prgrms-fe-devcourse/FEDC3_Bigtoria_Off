@@ -1,11 +1,5 @@
 import styled from '@emotion/styled';
-import {
-  Avatar,
-  Button,
-  CircularProgress,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,22 +20,15 @@ const StoryInfo = ({ story }: Props) => {
 
   const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
-  if (isLoading) return <CircularProgress />;
-
   return (
     <>
       <Box>
-        <Typography
-          variant='h3'
-          gutterBottom
-          sx={{ fontSize: '2rem', fontWeight: '500' }}>
-          {storyTitle}
-        </Typography>
+        <h1>{storyTitle}</h1>
         <DateContainer>
           <Typography variant='subtitle1'>
             {year}년 {month}월 {day}일
           </Typography>
-          {user && user._id === story.author._id && (
+          {!isLoading && user?._id === story.author._id && (
             <Box>
               <Button
                 variant='text'
@@ -79,12 +66,8 @@ const StoryInfo = ({ story }: Props) => {
             {content}
           </StoryContentWrapper>
         )}
-        {!isLoading && user && (
-          <LikeButton
-            userId={story.author._id}
-            storyId={story._id}
-            likes={story.likes}
-          />
+        {!isLoading && (
+          <LikeButton user={user} storyId={story._id} likes={story.likes} />
         )}
       </StoryContainer>
     </>
@@ -126,7 +109,7 @@ const StoryImage = styled.img`
 
 const StoryContentWrapper = styled(Paper)`
   min-width: 90%;
-  padding: 25px;
+  padding: 15px;
   margin: 15px 0;
   line-height: 1.5rem;
   word-break: keep-all;

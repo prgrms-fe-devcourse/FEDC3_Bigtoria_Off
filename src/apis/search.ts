@@ -5,7 +5,7 @@ import http from './instance';
 
 const { USER, SEARCH } = API_URLS;
 
-export const getUserList = async (offset: number) => {
+export const getUserList = async (offset = 0) => {
   try {
     const { data: userList } = await http.get({
       url: USER.GET_USERS,
