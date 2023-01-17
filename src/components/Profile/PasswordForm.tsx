@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 import { putPassword } from '../../apis/userInfo';
@@ -23,7 +23,7 @@ const initialErrors = {
   newValueCheck: '',
 };
 
-const PasswordModal = ({ open, handleOpen }: Props) => {
+const PasswordForm = ({ open, handleOpen }: Props) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const [isLoading, setIsLoading] = useState(false);
@@ -83,71 +83,48 @@ const PasswordModal = ({ open, handleOpen }: Props) => {
   };
 
   return (
-    <Modal open={open} onClose={handleOpen}>
-      <ContentWrapper>
-        <Typography variant='h6' component='h2'>
-          비밀번호 변경
-        </Typography>
-        <Form onSubmit={handleSubmit}>
-          <InputDiv>
-            <TextField
-              type='password'
-              name='oldValue'
-              placeholder='기존 비밀번호'
-              size='small'
-              fullWidth
-              onChange={handleChange}
-            />
-            {errors.oldValue && <ErrorText>{errors.oldValue}</ErrorText>}
-          </InputDiv>
-          <InputDiv>
-            <TextField
-              type='password'
-              name='newValue'
-              placeholder='새 비밀번호'
-              size='small'
-              fullWidth
-              onChange={handleChange}
-            />
-            {errors.newValue && <ErrorText>{errors.newValue}</ErrorText>}
-          </InputDiv>
-          <InputDiv>
-            <TextField
-              type='password'
-              name='newValueCheck'
-              placeholder='새 비밀번호 확인'
-              size='small'
-              fullWidth
-              onChange={handleChange}
-            />
-            {errors.newValueCheck && (
-              <ErrorText>{errors.newValueCheck}</ErrorText>
-            )}
-          </InputDiv>
-          <Button type='submit' disabled={isLoading} fullWidth>
-            비밀번호 변경
-          </Button>
-        </Form>
-      </ContentWrapper>
-    </Modal>
+    <Form onSubmit={handleSubmit}>
+      <InputDiv>
+        <TextField
+          type='password'
+          name='oldValue'
+          label='기존 비밀번호'
+          size='small'
+          fullWidth
+          onChange={handleChange}
+        />
+        {errors.oldValue && <ErrorText>{errors.oldValue}</ErrorText>}
+      </InputDiv>
+      <InputDiv>
+        <TextField
+          type='password'
+          name='newValue'
+          label='새 비밀번호'
+          size='small'
+          fullWidth
+          onChange={handleChange}
+        />
+        {errors.newValue && <ErrorText>{errors.newValue}</ErrorText>}
+      </InputDiv>
+      <InputDiv>
+        <TextField
+          type='password'
+          name='newValueCheck'
+          label='새 비밀번호 확인'
+          size='small'
+          fullWidth
+          onChange={handleChange}
+        />
+        {errors.newValueCheck && <ErrorText>{errors.newValueCheck}</ErrorText>}
+      </InputDiv>
+      <Button type='submit' disabled={isLoading} fullWidth>
+        비밀번호 변경
+      </Button>
+    </Form>
   );
 };
 
-export default PasswordModal;
-
-const ContentWrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  width: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 10px 5px 5px grey;
-`;
+export default PasswordForm;
 
 const Form = styled.form`
   width: 100%;
