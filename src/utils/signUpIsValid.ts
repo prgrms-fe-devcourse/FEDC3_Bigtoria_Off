@@ -1,4 +1,11 @@
-import { args } from '../interfaces/signUp';
+interface args {
+  fullName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  date: string;
+  job: string;
+}
 
 export const signUpIsValid = (newError: args) => {
   const ErrorNum = 6;
