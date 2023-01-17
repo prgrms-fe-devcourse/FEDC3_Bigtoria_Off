@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
+import useFetchUser from '../../hooks/useFetchUser';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
 import FontText from '../Home/FontText';
+import Loading from '../StoryBook/Loading';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
@@ -15,6 +17,13 @@ const Header = () => {
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
+  const { user, isLoading } = useFetchUser();
+
+  if (isLoading) return <Loading />;
+
+  const handleClickProfileButton = () => {
+    user?._id ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
+  };
 
   const handleClickWatchStoriesButton = () => {
     navigate(ROUTES.HOME);
@@ -70,7 +79,10 @@ const Header = () => {
         </HamburgerButton>
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
-        <img src='/icons/user_profile.svg' width={120} />
+        <NavLinks onClick={handleClickProfileButton}>
+          <img src={user?.image || '/icons/user_profile.svg'} width={120} />
+          {user?.fullName && <p>{user.fullName}</p>}
+        </NavLinks>
         <NavLinks onClick={handleClickWatchStoriesButton}>
           스토리 구경하기
         </NavLinks>
@@ -145,4 +157,7 @@ const NavLinks = styled.div`
   padding: 2rem;
   font-weight: bold;
   cursor: pointer;
+  p {
+    text-align: center;
+  }
 `;
