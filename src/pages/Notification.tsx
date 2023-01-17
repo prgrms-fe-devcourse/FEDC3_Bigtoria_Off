@@ -22,7 +22,7 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
-  const setNotificationOrRedirection = async () => {
+  const setNotificationsOrRedirection = async () => {
     const result = await getNotificationList();
 
     result ? setNotifications(result) : navigate(SIGNIN);
@@ -30,7 +30,7 @@ const Notification = () => {
 
   useEffect(() => {
     const getNotifications = async () => {
-      await setNotificationOrRedirection();
+      await setNotificationsOrRedirection();
     };
 
     getNotifications();
@@ -38,7 +38,7 @@ const Notification = () => {
 
   const handleCheckNotificationBtnClick = async () => {
     await checkNotificationSeen();
-    await setNotificationOrRedirection();
+    await setNotificationsOrRedirection();
   };
 
   return (
