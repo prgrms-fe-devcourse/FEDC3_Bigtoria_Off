@@ -35,7 +35,10 @@ const Header = () => {
     if (token) {
       const { _id: userId } = await checkAuth();
       navigate(ROUTES.FOLLOW_BY_USER_ID(userId));
+      return;
     }
+
+    navigate(ROUTES.SIGNIN);
   };
 
   const handleClickAuthButton = () => {
@@ -76,7 +79,9 @@ const Header = () => {
           스토리 구경하기
         </NavLinks>
         <NavLinks onClick={handleClickMyStoryButton}>내 스토리</NavLinks>
-        <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
+        {token && (
+          <NavLinks onClick={handleClickFollowListButton}>팔로우 목록</NavLinks>
+        )}
         <NavLinks onClick={handleClickAuthButton}>
           {token ? '로그아웃' : '로그인'}
         </NavLinks>
