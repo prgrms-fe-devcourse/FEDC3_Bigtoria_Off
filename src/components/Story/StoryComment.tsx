@@ -6,13 +6,14 @@ import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 
 interface Props {
+  storyAuthorId: string;
   comments: Comment[];
   fetchComment: () => void;
 }
 
-const StoryComment = ({ comments, fetchComment }: Props) => {
+const StoryComment = ({ storyAuthorId, comments, fetchComment }: Props) => {
   const { comment, isLoading, handleChange, handleDelete, handleSubmit } =
-    useCommentForm();
+    useCommentForm(storyAuthorId);
 
   return (
     <Box>

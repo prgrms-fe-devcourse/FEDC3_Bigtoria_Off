@@ -36,11 +36,13 @@ const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
         setLikeId('');
         setLikeCount(likeCount - 1);
       } else {
-        const like = await postStoryLike(storyId);
+        const { _id, user } = await postStoryLike(storyId);
         setIsLike(true);
-        setLikeId(like);
+        setLikeId(_id);
         setLikeCount(likeCount + 1);
-        await postNotification('LIKE', like._id, userId, storyId);
+        if (user !== userId) {
+          await postNotification('LIKE', _id, userId, storyId);
+        }
       }
     } catch (error) {
       console.error(error);
