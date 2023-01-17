@@ -36,7 +36,7 @@ export const postCoverImage = async (formData: FormData) => {
   return user;
 };
 
-export const putFullName = async (fullName: string) => {
+export const putUserInfo = async (fullName: string, username: string) => {
   const { data: user } = await http.put({
     url: API_URLS.SETTING.UPDATE_MY_INFO,
     headers: {
@@ -44,16 +44,6 @@ export const putFullName = async (fullName: string) => {
     },
     data: JSON.stringify({
       fullName,
-    }),
-  });
-
-  return user;
-};
-
-export const putUsername = async (username: string) => {
-  const { data: user } = await http.put({
-    url: API_URLS.SETTING.UPDATE_MY_INFO,
-    data: JSON.stringify({
       username,
     }),
   });

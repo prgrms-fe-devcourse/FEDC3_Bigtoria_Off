@@ -46,8 +46,8 @@ const Profile = () => {
   if (isLoading || !user) return <Loading />;
 
   const { image, coverImage, fullName, username } = user;
-  const job = (username && JSON.parse(username).job) || '';
-  const date = (username && JSON.parse(username).date) || '';
+  const job = username ? JSON.parse(username).job : '';
+  const date = username ? JSON.parse(username).date : '';
 
   return (
     <Container>
@@ -78,14 +78,14 @@ const Profile = () => {
               수정
             </Button>
           </ListItem>
-          <ListItem>
-            <ListItemText primary='생년월일' />
-            {date && (
+          {date.year && (
+            <ListItem>
+              <ListItemText primary='생년월일' />
               <span>
                 {date.year}년 {date.month}월 {date.day}일
               </span>
-            )}
-          </ListItem>
+            </ListItem>
+          )}
           <ListItem sx={{ paddingLeft: '8px' }}>
             <Button
               data-type='password'

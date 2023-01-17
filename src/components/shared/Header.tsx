@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
@@ -10,20 +10,25 @@ import useFetchUser from '../../hooks/useFetchUser';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
 import FontText from '../Home/FontText';
-import Loading from '../StoryBook/Loading';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
   const { user, isLoading } = useFetchUser();
 
-  if (isLoading) return <Loading />;
+  useEffect(() => {
+    if (!isLoading) return;
+    user?.image && setImage(user.image);
+    user?.fullName && setName(user.fullName);
+  }, [isLoading, user?._id]);
 
   const handleClickProfileButton = () => {
-    user?._id ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
+    token ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
   };
 
   const handleClickWatchStoriesButton = () => {
@@ -84,8 +89,8 @@ const Header = () => {
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <NavLinks onClick={handleClickProfileButton}>
-          <img src={user?.image || '/icons/user_profile.svg'} width={120} />
-          {user?.fullName && <p>{user.fullName}</p>}
+          <img src={image || '/icons/user_profile.svg'} width={120} />
+          <p>{name}</p>
         </NavLinks>
         <NavLinks onClick={handleClickWatchStoriesButton}>
           스토리 구경하기

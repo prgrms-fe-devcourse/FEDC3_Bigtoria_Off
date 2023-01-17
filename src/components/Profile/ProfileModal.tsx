@@ -4,8 +4,8 @@ import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 
 import { ModalType } from '../../pages/Profile';
-import NicknameForm from './NicknameForm';
 import PasswordForm from './PasswordForm';
+import TextForm from './TextForm';
 
 interface Props {
   type: ModalType;
@@ -33,15 +33,24 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
     nickname: {
       title: '닉네임',
       form: (
-        <NicknameForm
-          oldNickname={user?.fullName || ''}
+        <TextForm
+          type='닉네임'
+          fullName={user.fullName || ''}
+          username={user.username || ''}
           open={open}
-          handleOpen={handleOpen}></NicknameForm>
+          handleOpen={handleOpen}></TextForm>
       ),
     },
     job: {
       title: '직업',
-      form: <div></div>,
+      form: (
+        <TextForm
+          type='직업'
+          fullName={user.fullName || ''}
+          username={user.username || ''}
+          open={open}
+          handleOpen={handleOpen}></TextForm>
+      ),
     },
     coverImage: {
       title: '커버 이미지',
