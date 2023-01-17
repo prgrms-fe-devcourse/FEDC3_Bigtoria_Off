@@ -2,6 +2,7 @@ import { List } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { Notification } from '../../interfaces/notification';
+import { isExpiredDate } from '../../utils/calcCreatedToCurrentTime';
 import NotificationMsg from './NotificationMsg';
 
 const MESSAGE = 'message';
@@ -16,13 +17,21 @@ const NotificationList = ({ type, notifications }: Props) => {
   const [postList, setPostList] = useState<Notification[]>([]);
 
   const filteredPostNotification = (notifications: Notification[]) => {
-    const filteredNoti = notifications?.filter((n) => n.like || n.comment);
+    const filteredNoti = notifications?.filter(
+      (n) =>
+        (n.like || n.comment) &&
+        (!n.seen || (n.seen && !isExpiredDate(n.createdAt || '')))
+    );
 
     setPostList(filteredNoti || []);
   };
 
   const filteredMsgNotification = (notifications: Notification[]) => {
-    const filteredNoti = notifications?.filter((n) => n.follow || n.message);
+    const filteredNoti = notifications?.filter(
+      (n) =>
+        (n.follow || n.message) &&
+        (!n.seen || (n.seen && !isExpiredDate(n.createdAt || '')))
+    );
 
     setMsgList(filteredNoti || []);
   };
