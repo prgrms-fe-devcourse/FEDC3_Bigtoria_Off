@@ -43,14 +43,16 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
     const errors = { oldValue: '', newValue: '', newValueCheck: '' };
 
     if (isBlankString(oldValue))
-      errors.oldValue = '기존 비밀번호를 입력해 주세요.';
+      errors.oldValue = '현재 비밀번호를 입력해 주세요.';
     if (isBlankString(newValue))
       errors.newValue = '새 비밀번호를 입력해 주세요.';
+    else if (oldValue === newValue) {
+      errors.newValue = '현재 비밀번호와 일치합니다.';
+    }
     if (isBlankString(newValueCheck))
       errors.newValueCheck = '새 비밀번호 확인을 입력해 주세요.';
-    if (newValue !== newValueCheck)
+    else if (newValue !== newValueCheck)
       errors.newValueCheck = '비밀번호가 일치하지 않습니다';
-    if (oldValue === newValue) errors.newValue = '기존 비밀번호와 일치합니다.';
 
     return errors;
   };
@@ -88,12 +90,13 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
         <TextField
           type='password'
           name='oldValue'
-          label='기존 비밀번호'
+          label='현재 비밀번호'
           size='small'
+          error={!!errors.oldValue}
+          helperText={errors.oldValue}
           fullWidth
           onChange={handleChange}
         />
-        {errors.oldValue && <ErrorText>{errors.oldValue}</ErrorText>}
       </InputDiv>
       <InputDiv>
         <TextField
@@ -101,10 +104,11 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           name='newValue'
           label='새 비밀번호'
           size='small'
+          error={!!errors.newValue}
+          helperText={errors.newValue}
           fullWidth
           onChange={handleChange}
         />
-        {errors.newValue && <ErrorText>{errors.newValue}</ErrorText>}
       </InputDiv>
       <InputDiv>
         <TextField
@@ -112,12 +116,13 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           name='newValueCheck'
           label='새 비밀번호 확인'
           size='small'
+          error={!!errors.newValueCheck}
+          helperText={errors.newValueCheck}
           fullWidth
           onChange={handleChange}
         />
-        {errors.newValueCheck && <ErrorText>{errors.newValueCheck}</ErrorText>}
       </InputDiv>
-      <Button type='submit' disabled={isLoading} fullWidth>
+      <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
         비밀번호 변경
       </Button>
     </Form>
@@ -134,8 +139,4 @@ const Form = styled.form`
 const InputDiv = styled.div`
   width: 100%;
   padding-bottom: 13px;
-`;
-
-const ErrorText = styled.small`
-  color: red;
 `;
