@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const LOAD_IMAGE_EVENT_TYPE = 'loadImage';
 
+const observerOptions = {
+  rootMargin: '200px',
+  threshold: 0.1,
+};
+
 const useLazyLoadImage = (lazy = false) => {
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -38,9 +43,7 @@ const useLazyLoadImage = (lazy = false) => {
           }
         });
       },
-      {
-        threshold: 0.3,
-      }
+      observerOptions
     );
 
     imageRef.current && observer.observe(imageRef.current);
