@@ -1,7 +1,5 @@
 import { Box, Container } from '@mui/material';
-import dayjs from 'dayjs';
 
-// import SignUpSelector from '../components/SignUp/./SignUpSelector';
 import SignUpInput from '../components/SignUp//SignUpInput';
 import SignUpButton from '../components/SignUp/SignUpButton';
 import DatePicker from '../components/StoryEdit/DatePicker';
@@ -12,6 +10,7 @@ const SignUp = () => {
     values,
     isLoading,
     errors,
+    date,
     handleSubmit,
     handleChange,
     handleDateChange,
@@ -53,7 +52,7 @@ const SignUp = () => {
           errorMsg={errors.passwordConfirm}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <DatePicker value={dayjs(new Date())} onChange={handleDateChange} />
+          <DatePicker value={date} onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'
             type='text'

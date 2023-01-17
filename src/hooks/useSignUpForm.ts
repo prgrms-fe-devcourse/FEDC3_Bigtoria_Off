@@ -32,9 +32,12 @@ const initialState = {
   job: '',
 };
 
+const today = dayjs(new Date());
+
 const useSignUpForm = () => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState(error);
+  const [date, setDate] = useState<Dayjs | null>(today);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -44,6 +47,7 @@ const useSignUpForm = () => {
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
+    setDate(newValue);
     if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
   };
 
@@ -70,6 +74,7 @@ const useSignUpForm = () => {
   return {
     values,
     isLoading,
+    date,
     handleSubmit,
     handleChange,
     handleDateChange,
