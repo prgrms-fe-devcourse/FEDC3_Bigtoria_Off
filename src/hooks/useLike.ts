@@ -45,7 +45,7 @@ const useLike = (
         setIsLike(true);
         setLikeId(_id);
         setLikeCount(likeCount + 1);
-        //like를 누른 사람과 게시글 작성자가 다르다면 Like보내기
+        //like를 누른 사람(user)과 게시글 작성자(authorId)가 다르다면 Like보내기
         if (user !== authorId) {
           await postNotification('LIKE', _id, authorId, storyId);
         }

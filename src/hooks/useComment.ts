@@ -49,6 +49,7 @@ export const useCommentForm = (storyAuthorId: string) => {
       }
       const { _id, author, post } = await postStoryComment(comment, storyId);
 
+      //게시글 작성자(storyAuthorId)에게 알림 보내기
       if (author._id !== storyAuthorId) {
         await postNotification('COMMENT', _id, storyAuthorId, post);
       }
