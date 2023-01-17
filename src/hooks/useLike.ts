@@ -8,7 +8,12 @@ import { Like } from '../interfaces/like';
 import { postNotification } from './../apis/notification';
 import { postStoryLike } from './../apis/story';
 
-const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
+const useLike = (
+  userId: string,
+  authorId: string,
+  storyLikes: Like[],
+  storyId: string
+) => {
   const [isLike, setIsLike] = useState(false);
   const [likeId, setLikeId] = useState('');
   const [likeCount, setLikeCount] = useState(storyLikes.length);
@@ -40,8 +45,9 @@ const useLike = (userId: string, storyLikes: Like[], storyId: string) => {
         setIsLike(true);
         setLikeId(_id);
         setLikeCount(likeCount + 1);
-        if (user !== userId) {
-          await postNotification('LIKE', _id, userId, storyId);
+        //like를 누른 사람(user)과 게시글 작성자(authorId)가 다르다면 Like보내기
+        if (user !== authorId) {
+          await postNotification('LIKE', _id, authorId, storyId);
         }
       }
     } catch (error) {
