@@ -1,8 +1,8 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
 import { Tab, Tabs } from '@mui/material';
-import { SyntheticEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { SyntheticEvent, useLayoutEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY } from '../../constants/auth';
@@ -31,6 +31,15 @@ const FollowHeader = () => {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
+  const location = useLocation().pathname.split('/')[1];
+
+  useLayoutEffect(() => {
+    if (location === 'follow') {
+      setValue(0);
+    } else if (location === 'follower') {
+      setValue(1);
+    }
+  }, [location]);
 
   const handleChange = (e: SyntheticEvent, newValue: number) => {
     setValue(newValue);
