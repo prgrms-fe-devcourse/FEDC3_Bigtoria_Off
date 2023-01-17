@@ -140,6 +140,8 @@ const Hamburger = styled.nav<{ click: boolean }>`
 `;
 
 const HamburgerButton = styled.div`
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
 `;
 
