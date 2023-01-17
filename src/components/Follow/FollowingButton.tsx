@@ -32,7 +32,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           }}
           data-followid={followId}
           data-userid={userId}
-          disabled={isLoading ? true : false}
+          disabled={isLoading}
           onClick={(e) => {
             onClick(e);
             setToggle(!toggle);
