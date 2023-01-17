@@ -10,7 +10,7 @@ const SignUp = () => {
     useSignUpForm();
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '1rem' }}>
       <form onSubmit={handleSubmit}>
         <SignUpInput
           placeholder='닉네임'

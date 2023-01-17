@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { postSignUp } from '../apis/signup';
@@ -19,7 +20,7 @@ const useSignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>
   ) => {
     const { name, value } = e.target;
     if (name === 'fullName') {

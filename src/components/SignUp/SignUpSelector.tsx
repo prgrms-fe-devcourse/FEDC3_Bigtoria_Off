@@ -1,11 +1,20 @@
-import styled from '@emotion/styled';
-import { Box } from '@mui/material';
-import { ChangeEventHandler } from 'react';
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { ReactNode } from 'react';
+
+import DatePicker from '../StoryEdit/DatePicker';
 
 interface Props {
   name: string;
   errorMsg?: string;
-  onChange?: ChangeEventHandler<HTMLSelectElement>;
+  onChange?: (event: SelectChangeEvent<string>, child: ReactNode) => void;
 }
 
 const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
@@ -23,33 +32,29 @@ const SignUpSelector = ({ name, errorMsg, onChange }: Props) => {
         position: 'relative',
         paddingBottom: '15px',
       }}>
-      <Selector name={name} onChange={onChange}>
-        <option value=''>출생연도</option>
-        {getFullYear().map((item) => (
-          <option key={item}>{item}</option>
-        ))}
-      </Selector>
-      {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
+      <FormControl fullWidth>
+        <InputLabel id='select-label'>Age</InputLabel>
+        <Select
+          error={!!errorMsg}
+          labelId='select-label'
+          name={name}
+          onChange={onChange}
+          label='age'
+          defaultValue=''
+          fullWidth>
+          <MenuItem disabled value='' sx={{ display: 'none' }}></MenuItem>
+          {getFullYear().map((item) => (
+            <MenuItem key={item} value={`${item}`}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {errorMsg && (
+        <FormHelperText error={!!errorMsg}>{errorMsg}</FormHelperText>
+      )}
     </Box>
   );
 };
 
 export default SignUpSelector;
-
-const Selector = styled.select`
-  height: 36px;
-  width: 100%;
-  padding: 6px 16px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  border: 1px solid #b1b7c0;
-  outline: none;
-  &:focus {
-    border: 2px solid royalblue;
-  }
-`;
-
-const ErrorText = styled.span`
-  color: red;
-  font-size: 0.8rem;
-`;
