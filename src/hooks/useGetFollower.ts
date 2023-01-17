@@ -32,7 +32,6 @@ const useGetFollower = () => {
           infoList[index].isOnline = isOnline;
         });
       }
-      console.log(infoList);
       setFollowerList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
