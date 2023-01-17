@@ -13,29 +13,32 @@ import { ROUTES } from '../constants/routes';
 
 const { SIGNIN } = ROUTES;
 
+//TODO: Tab type 값 상수롤 따로 빼기(Notification, NotificationList)
+const MESSAGE = 'message';
+const CHECK_ALL_NOTIFICATION = '전체 읽음';
+
 const Notification = () => {
-  const [tabValue, setTabValue] = useState('message');
+  const [tabValue, setTabValue] = useState(MESSAGE);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
-  const setNotificationWithRedirection = async () => {
+  const setNotificationOrRedirection = async () => {
     const result = await getNotificationList();
 
-    if (!result) navigate(SIGNIN);
-    setNotifications(result);
+    result ? setNotifications(result) : navigate(SIGNIN);
   };
 
   useEffect(() => {
-    const init = async () => {
-      await setNotificationWithRedirection();
+    const getNotifications = async () => {
+      await setNotificationOrRedirection();
     };
 
-    init();
+    getNotifications();
   }, [tabValue]);
 
   const handleCheckNotificationBtnClick = async () => {
     await checkNotificationSeen();
-    await setNotificationWithRedirection();
+    await setNotificationOrRedirection();
   };
 
   return (
@@ -90,7 +93,9 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
-          <Button onClick={handleCheckNotificationBtnClick}>전체 읽음</Button>
+          <Button onClick={handleCheckNotificationBtnClick}>
+            {CHECK_ALL_NOTIFICATION}
+          </Button>
           <NotificationList type={tabValue} notifications={notifications} />
         </Box>
       </Box>
