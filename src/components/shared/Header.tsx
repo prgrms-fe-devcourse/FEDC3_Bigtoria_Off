@@ -97,6 +97,7 @@ const Container = styled.header`
   background-color: #ffffff;
   z-index: 999;
   border-bottom: 1px solid ${COLORS.STORY_CARD_BORDER};
+  box-shadow: 0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER};
 `;
 
 const ButtonsContainer = styled.div`
