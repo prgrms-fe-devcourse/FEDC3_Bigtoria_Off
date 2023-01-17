@@ -1,17 +1,19 @@
 import { useState } from 'react';
 
-import { getUserList } from '../apis/search';
+import { getUserList, searchUserList } from '../apis/search';
 import { DATA_LIMIT } from '../constants/apiParams';
 import { User } from '../interfaces/user';
 import useIntersectionObserver from './useIntersectionObserver';
 
 const useInfiniteScroll = () => {
   const [data, setData] = useState<User[] | null>(null);
+  const [searchedData, setSearchedData] = useState<User[] | null>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
   const [isAllRendered, setIsAllRendered] = useState(false);
   const [offset, setOffset] = useState(0);
 
-  const getMoreItem = async () => {
+  const getMoreDataWithAPI = async () => {
     setIsLoaded(true);
 
     const result = await getUserList(offset * DATA_LIMIT);
@@ -25,13 +27,44 @@ const useInfiniteScroll = () => {
     setIsLoaded(false);
   };
 
+  const searchDataWithStateInit = async (keyword: string) => {
+    setIsLoaded(true);
+
+    //initialize
+    setIsAllRendered(true);
+    setIsSearched(true);
+    setOffset(1);
+
+    const filteredUsers = await searchUserList(keyword);
+
+    setSearchedData(filteredUsers);
+    setData(filteredUsers.slice(0, DATA_LIMIT));
+
+    if (filteredUsers.length > DATA_LIMIT) setIsAllRendered(false);
+
+    setIsLoaded(false);
+  };
+
+  const getMoreDataWithState = () => {
+    const start = offset * DATA_LIMIT;
+    const bound =
+      searchedData && start + DATA_LIMIT >= searchedData.length
+        ? searchedData.length
+        : start * DATA_LIMIT;
+
+    setData([...(data || []), ...(searchedData?.slice(start, bound) || [])]);
+    setOffset((cur) => cur + 1);
+
+    searchedData && bound === searchedData.length && setIsAllRendered(true);
+  };
+
   const { setTarget } = useIntersectionObserver({
     root: null,
     rootMargin: '0px',
     threshold: 0.5,
     onIntersect: async ([{ isIntersecting }]) => {
       if (isIntersecting && !isLoaded) {
-        await getMoreItem();
+        !isSearched ? await getMoreDataWithAPI() : getMoreDataWithState();
       }
     },
   });
@@ -43,6 +76,7 @@ const useInfiniteScroll = () => {
     isLoaded,
     setIsLoaded,
     isAllRendered,
+    searchDataWithStateInit,
   };
 };
 

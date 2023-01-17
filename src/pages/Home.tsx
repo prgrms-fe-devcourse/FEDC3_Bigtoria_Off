@@ -1,24 +1,17 @@
 import { Box, CircularProgress } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
 
-import { searchUserList } from '../apis/search';
 import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
 import UserList from '../components/Home/UserList';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 const Home = () => {
-  const { setTarget, data, setData, isLoaded, setIsLoaded, isAllRendered } =
+  const { setTarget, data, isLoaded, isAllRendered, searchDataWithStateInit } =
     useInfiniteScroll();
 
   const handleSubmit = async (keyword: string) => {
-    setIsLoaded(true);
-
-    const filteredUser = await searchUserList(keyword);
-
-    setData(filteredUser);
-
-    setIsLoaded(false);
+    await searchDataWithStateInit(keyword);
   };
 
   return (
