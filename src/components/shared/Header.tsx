@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
@@ -95,6 +96,8 @@ const Container = styled.header`
   justify-content: space-between;
   background-color: #ffffff;
   z-index: 999;
+  border-bottom: 1px solid ${COLORS.STORY_CARD_BORDER};
+  box-shadow: 0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER};
 `;
 
 const ButtonsContainer = styled.div`

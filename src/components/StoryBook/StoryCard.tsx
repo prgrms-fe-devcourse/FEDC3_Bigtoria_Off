@@ -1,7 +1,9 @@
+import styled from '@emotion/styled';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import defaultImage from '../../assets/images/defaultImage.png';
+import { COLORS } from '../../constants/colors';
 import useLazyLoadImage from '../../hooks/useLazyLoadImage';
 
 interface Props {
@@ -20,18 +22,21 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
   };
 
   return (
-    <Card
+    <CustomCard
       sx={{
         width: '210px',
         marginRight: '16px',
         cursor: 'pointer',
-        boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.2)',
+        boxShadow: `1px 1px 3px 1px ${COLORS.STORY_CARD_BORDER}`,
       }}
       onClick={handleClick}>
       <CardMedia
         component='img'
         ref={imageRef}
-        sx={{ height: 280 }}
+        sx={{
+          height: 280,
+          borderBottom: `1px solid ${COLORS.STORY_CARD_BORDER}`,
+        }}
         image={loaded ? (image ? image : defaultImage) : defaultImage}
         title={`${title} 사진`}
       />
@@ -47,8 +52,23 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
           {title}
         </Typography>
       </CardContent>
-    </Card>
+    </CustomCard>
   );
 };
 
 export default StoryCard;
+
+const CustomCard = styled(Card)`
+  animation: cardSmoothAppear 0.5s;
+
+  @keyframes cardSmoothAppear {
+    from {
+      opacity: 0;
+      transform: translateY(2.5%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
