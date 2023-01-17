@@ -25,6 +25,8 @@ const Profile = () => {
   const [modalType, setModalType] = useState<ModalType>('');
   const { user, isLoading } = useFetchUser();
 
+  if (isLoading) return <Loading />;
+
   const handleModalType = (e: MouseEvent<HTMLButtonElement>) => {
     if (!(e.target instanceof HTMLButtonElement)) return;
 
@@ -43,7 +45,7 @@ const Profile = () => {
 
   if (isLoading || !user) return <Loading />;
 
-  const { image, fullName, username } = user;
+  const { image, coverImage, fullName, username } = user;
   const job = (username && JSON.parse(username).job) || '';
   const date = (username && JSON.parse(username).date) || '';
 
@@ -96,12 +98,12 @@ const Profile = () => {
         </List>
         <Divider />
         <List component='nav' subheader={<ListSubheader>활동</ListSubheader>}>
-          <ListItem>
+          <ListItem disableGutters>
             <ListItemButton>
               <ListItemText primary='좋아요 표시한 스토리' />
             </ListItemButton>
           </ListItem>
-          <ListItem>
+          <ListItem disableGutters>
             <ListItemButton>
               <ListItemText primary='댓글 단 스토리' />
             </ListItemButton>
@@ -111,6 +113,12 @@ const Profile = () => {
       {modalType && (
         <ProfileModal
           type={modalType}
+          user={{
+            fullName,
+            username,
+            image,
+            coverImage,
+          }}
           open={modalOpen}
           handleOpen={handleModalOpen}></ProfileModal>
       )}

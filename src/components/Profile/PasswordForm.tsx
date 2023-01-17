@@ -81,7 +81,6 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
     }
 
     setIsLoading(false);
-    setErrors(initialErrors);
   };
 
   return (

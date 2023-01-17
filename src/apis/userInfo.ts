@@ -36,19 +36,25 @@ export const postCoverImage = async (formData: FormData) => {
   return user;
 };
 
-export const putUserInfo = async (
-  fullName: string,
-  year: string,
-  job: string
-) => {
+export const putFullName = async (fullName: string) => {
+  const { data: user } = await http.put({
+    url: API_URLS.SETTING.UPDATE_MY_INFO,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      fullName,
+    }),
+  });
+
+  return user;
+};
+
+export const putUsername = async (username: string) => {
   const { data: user } = await http.put({
     url: API_URLS.SETTING.UPDATE_MY_INFO,
     data: JSON.stringify({
-      fullName,
-      username: {
-        year,
-        job,
-      },
+      username,
     }),
   });
 

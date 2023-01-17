@@ -4,10 +4,17 @@ import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 
 import { ModalType } from '../../pages/Profile';
+import NicknameForm from './NicknameForm';
 import PasswordForm from './PasswordForm';
 
 interface Props {
   type: ModalType;
+  user: {
+    fullName?: string;
+    username?: string;
+    image?: string;
+    coverImage?: string;
+  };
   open: boolean;
   handleOpen: () => void;
 }
@@ -17,7 +24,7 @@ interface ModalInfo {
   form: ReactNode;
 }
 
-const ProfileModal = ({ type, open, handleOpen }: Props) => {
+const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
   const modal: { [key: string]: ModalInfo } = {
     password: {
       title: '비밀번호',
@@ -25,7 +32,12 @@ const ProfileModal = ({ type, open, handleOpen }: Props) => {
     },
     nickname: {
       title: '닉네임',
-      form: <div></div>,
+      form: (
+        <NicknameForm
+          oldNickname={user?.fullName || ''}
+          open={open}
+          handleOpen={handleOpen}></NicknameForm>
+      ),
     },
     job: {
       title: '직업',

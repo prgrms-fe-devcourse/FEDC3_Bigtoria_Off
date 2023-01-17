@@ -11,4 +11,5 @@ export const ERROR_MESSAGES = {
   INVOKED_ERROR_GETTING_USER: '유저 정보 조회 중 에러가 발생했습니다.',
   INVOKED_ERROR_POSTING_LIKE: '좋아요 처리 중 에러가 발생했습니다.',
   INVOKED_ERROR_PUTTING_PASSWORD: '비밀번호 변경 중 에러가 발생했습니다.',
+  INVOKED_ERROR_PUTTING_NICKNAME: '닉네임 변경 중 에러가 발생했습니다.',
 };
