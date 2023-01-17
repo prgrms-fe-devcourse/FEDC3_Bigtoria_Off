@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import Empty from '../components/StoryBook/Empty';
 import Loading from '../components/StoryBook/Loading';
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
 import StoryBookTitle from '../components/StoryBook/StoryBookTitle';
@@ -14,9 +15,13 @@ const StoryBook = () => {
     <Container>
       <StoriesContainer>
         {!!fullName && <StoryBookTitle fullName={fullName} />}
-        {storiesByYear.map(({ year, stories }) => (
-          <StoriesByYear key={year} year={year} stories={stories} />
-        ))}
+        {storiesByYear.length !== 0 ? (
+          storiesByYear.map(({ year, stories }) => (
+            <StoriesByYear key={year} year={year} stories={stories} />
+          ))
+        ) : (
+          <Empty>{fullName}님은 게으른가봐요. ㅋ</Empty>
+        )}
       </StoriesContainer>
     </Container>
   );
