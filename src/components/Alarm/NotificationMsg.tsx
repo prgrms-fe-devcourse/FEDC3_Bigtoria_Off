@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
+  Badge,
   IconButton,
   ListItem,
   ListItemAvatar,
@@ -31,11 +32,9 @@ const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
 
 const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 
-//TODO
-//알림 확인할 때, 색상 변화값 주기 or 뱃지 사라지게 하기
-
 const NotificationMsg = ({ notification }: Props) => {
   const {
+    seen,
     author: { fullName, image },
     like,
     post,
@@ -90,7 +89,16 @@ const NotificationMsg = ({ notification }: Props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {generateAvatar()}
+          <Badge
+            variant='dot'
+            color='primary'
+            invisible={seen}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}>
+            {generateAvatar()}
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={generateMsg()}
