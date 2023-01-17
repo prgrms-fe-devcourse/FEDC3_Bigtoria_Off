@@ -17,6 +17,7 @@ const style = css`
   }
   body {
     margin: 0;
+    overflow-y: scroll;
   }
   main {
     display: block;

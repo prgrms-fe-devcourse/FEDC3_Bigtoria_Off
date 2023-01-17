@@ -29,6 +29,15 @@ const Notification = () => {
   };
 
   useEffect(() => {
+    //Thinking : SWR 도입.
+    const timeId = setInterval(() => {
+      setNotificationsOrRedirection();
+    }, 1000);
+
+    return () => clearInterval(timeId);
+  }, []);
+
+  useEffect(() => {
     const getNotifications = async () => {
       await setNotificationsOrRedirection();
     };

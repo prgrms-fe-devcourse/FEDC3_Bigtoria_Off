@@ -1,11 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  deleteStoryComment,
-  getStoryDetail,
-  postStoryComment,
-} from '../apis/story';
+import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
@@ -53,8 +49,9 @@ export const useCommentForm = (storyAuthorId: string) => {
       }
       const { _id, author, post } = await postStoryComment(comment, storyId);
 
+      //게시글 작성자(storyAuthorId)에게 알림 보내기
       if (author._id !== storyAuthorId) {
-        await postNotification('COMMENT', _id, author._id, post);
+        await postNotification('COMMENT', _id, storyAuthorId, post);
       }
     } catch (error) {
       console.error(error);
