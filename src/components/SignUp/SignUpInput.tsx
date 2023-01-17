@@ -21,7 +21,6 @@ const SignUpInput = ({
   return (
     <Box
       sx={{
-        width: '100%',
         alignItems: 'center',
         position: 'relative',
         paddingBottom: '15px',
