@@ -1,30 +1,45 @@
 import AlarmIcon from '@mui/icons-material/Alarm';
-import { Box, IconButton } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getNotificationList } from '../apis/notification';
+import {
+  checkNotificationSeen,
+  getNotificationList,
+} from '../apis/notification';
 import NotificationList from '../components/Alarm/NotificationList';
 import TabContainer from '../components/Alarm/TabContainer';
 import { ROUTES } from '../constants/routes';
 
 const { SIGNIN } = ROUTES;
 
+//TODO: Tab type 값 상수롤 따로 빼기(Notification, NotificationList)
+const MESSAGE = 'message';
+const CHECK_ALL_NOTIFICATION = '전체 읽음';
+
 const Notification = () => {
-  const [tabValue, setTabValue] = useState('message');
+  const [tabValue, setTabValue] = useState(MESSAGE);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const init = async () => {
-      const result = await getNotificationList();
+  const setNotificationsOrRedirection = async () => {
+    const result = await getNotificationList();
 
-      if (!result) navigate(SIGNIN);
-      setNotifications(result);
+    result ? setNotifications(result) : navigate(SIGNIN);
+  };
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      await setNotificationsOrRedirection();
     };
 
-    init();
+    getNotifications();
   }, [tabValue]);
+
+  const handleCheckNotificationBtnClick = async () => {
+    await checkNotificationSeen();
+    await setNotificationsOrRedirection();
+  };
 
   return (
     <Box
@@ -78,6 +93,9 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
+          <Button onClick={handleCheckNotificationBtnClick}>
+            {CHECK_ALL_NOTIFICATION}
+          </Button>
           <NotificationList type={tabValue} notifications={notifications} />
         </Box>
       </Box>

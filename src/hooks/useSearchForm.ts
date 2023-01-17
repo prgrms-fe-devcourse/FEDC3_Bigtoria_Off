@@ -18,6 +18,7 @@ const useSearhForm = ({ onSubmit }: Props) => {
     const newError = validateSearchInput(keyword);
     setError(newError);
 
+    !newError.keyword.length && onSubmit(keyword);
     setValue(keyword.replace(/[\s]/g, ''));
   };
 
@@ -27,13 +28,6 @@ const useSearhForm = ({ onSubmit }: Props) => {
 
   const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const keyword = value;
-
-    const newError = validateSearchInput(keyword);
-    setError(newError);
-
-    !newError.keyword.length && onSubmit(keyword);
   };
 
   return {

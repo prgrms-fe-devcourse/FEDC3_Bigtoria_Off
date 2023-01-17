@@ -11,7 +11,7 @@ import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
 import { postNotification } from './../apis/notification';
 
-export const useCommentForm = () => {
+export const useCommentForm = (storyAuthorId: string) => {
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { storyId } = useParams();
@@ -51,19 +51,11 @@ export const useCommentForm = () => {
         navigate(ROUTES.NOT_FOUND);
         return;
       }
+      const { _id, author, post } = await postStoryComment(comment, storyId);
 
-      /*
-       * postStoryComment의 author -> comment를 작성한 사람(나)
-       * getStoriesDetail -> 게시글을 통해서 게시글 작성자 아이디 얻기
-       * postNotification("COMMENT", _id, 게시글 작성자 아이디, 게시글 아이디);
-       */
-      const {
-        _id,
-        author: curUser,
-        post,
-      } = await postStoryComment(comment, storyId);
-      const { author } = await getStoryDetail(post);
-      await postNotification('COMMENT', _id, author._id, post);
+      if (author._id !== storyAuthorId) {
+        await postNotification('COMMENT', _id, author._id, post);
+      }
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_COMMENT);

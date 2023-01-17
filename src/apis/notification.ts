@@ -34,3 +34,16 @@ export const postNotification = async (
 
   return notification;
 };
+
+export const checkNotificationSeen = async () => {
+  try {
+    const { data } = await http.put({
+      url: NOTIFICATION.UPDATE_NOTIFICATION,
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

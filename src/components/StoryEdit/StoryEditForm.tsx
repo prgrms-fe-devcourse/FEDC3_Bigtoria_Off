@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useStoryForm } from '../../hooks/useStory';
 import { StoryData } from '../../interfaces/story';
 import DatePicker from './DatePicker';
-import ImageInput from './ImageInput';
+import ImageUpload from './ImageUpload';
 import SubmitButton from './SubmitButton';
 import TextInput from './TextInput';
 
@@ -43,43 +43,38 @@ const StoryEditForm = ({ story }: Props) => {
   return (
     <form onSubmit={(e) => handleSubmit(e, story.imagePublicId)}>
       <Section>
-        <Label>날짜</Label>
         <Box sx={{ width: '100%' }}>
           <DatePicker value={date} onChange={handleDateChange} />
         </Box>
       </Section>
       <Section>
-        <Label>제목</Label>
         <InputDiv>
           <TextInput
             name='title'
             value={values.title}
-            placeholder='스토리의 제목을 입력하세요.'
+            placeholder='스토리의 제목을 입력하세요'
             onChange={handleChange}
           />
           <ErrorText>{errors.title}</ErrorText>
         </InputDiv>
       </Section>
       <Section>
-        <Label>사진</Label>
         <InputDiv>
-          <ImageInput
+          <ImageUpload
+            src={image}
             onChange={handleImageChange}
             onDelete={handleImageDelete}
-            isAdded={image !== ''}
           />
-          <div>{image && <ImagePreview src={image} alt='preview image' />}</div>
         </InputDiv>
       </Section>
       <Section>
-        <Label>내용</Label>
         <InputDiv>
           <TextInput
             name='content'
             value={values.content}
             multiline
             rows={10}
-            placeholder='스토리의 내용을 입력하세요.'
+            placeholder='스토리의 내용을 입력하세요'
             onChange={handleChange}
           />
           <ErrorText>{errors.content}</ErrorText>
@@ -97,18 +92,9 @@ const Section = styled(Box)`
   padding-bottom: 20px;
 `;
 
-const Label = styled.label`
-  width: 50px;
-`;
-
 const InputDiv = styled(Box)`
   width: 100%;
-`;
-
-const ImagePreview = styled.img`
-  max-width: 100%;
-  height: 300px;
-  object-fit: contain;
+  text-align: right;
 `;
 
 const ErrorText = styled.small`

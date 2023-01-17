@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { CircularProgress } from '@mui/material';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import Loading from '../components/StoryBook/Loading';
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
 import { ROUTES } from '../constants/routes';
 import useFetchUser from '../hooks/useFetchUser';
@@ -10,8 +10,16 @@ import { useFetchStory } from '../hooks/useStory';
 
 const StoryEdit = () => {
   const { user, isLoading: isUserLoading } = useFetchUser();
-  const { story, isNew, isLoading: isStoryLoading } = useFetchStory();
+  const { story, isLoading: isStoryLoading } = useFetchStory();
+  const [title, setTitle] = useState('');
+  const { storyId } = useParams();
   const navigate = useNavigate();
+
+  const isNew = storyId === 'new';
+
+  useLayoutEffect(() => {
+    setTitle(`스토리 ${isNew ? '추가' : '수정'}`);
+  }, [storyId]);
 
   useEffect(() => {
     if (isNew || isUserLoading || isStoryLoading) return;
@@ -22,11 +30,11 @@ const StoryEdit = () => {
     }
   }, [user, story]);
 
-  if (isUserLoading || isStoryLoading) return <CircularProgress />;
+  if (isUserLoading || isStoryLoading) return <Loading />;
 
   return (
     <Container>
-      <h1>{!isNew || story._id ? '스토리 수정' : '스토리 추가'}</h1>
+      <h1>{title}</h1>
       <StoryEditForm story={story} />
     </Container>
   );

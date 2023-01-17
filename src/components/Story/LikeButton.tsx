@@ -4,15 +4,20 @@ import { IconButton } from '@mui/material';
 
 import useLike from '../../hooks/useLike';
 import { Like } from '../../interfaces/like';
+import { User } from '../../interfaces/user';
 
 interface Props {
-  userId: string;
+  user?: User;
   likes: Like[];
   storyId: string;
 }
 
-const LikeButton = ({ userId, likes, storyId }: Props) => {
-  const { isLike, likeCount, handleClick } = useLike(userId, likes, storyId);
+const LikeButton = ({ user, likes, storyId }: Props) => {
+  const { isLike, likeCount, handleClick } = useLike(
+    user?._id || '',
+    likes,
+    storyId
+  );
 
   return (
     <IconButton onClick={handleClick}>
