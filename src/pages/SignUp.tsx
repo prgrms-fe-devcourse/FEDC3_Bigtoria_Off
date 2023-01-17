@@ -1,7 +1,5 @@
 import { Box, Container } from '@mui/material';
-import dayjs from 'dayjs';
 
-// import SignUpSelector from '../components/SignUp/./SignUpSelector';
 import SignUpInput from '../components/SignUp//SignUpInput';
 import SignUpButton from '../components/SignUp/SignUpButton';
 import DatePicker from '../components/StoryEdit/DatePicker';
@@ -12,6 +10,7 @@ const SignUp = () => {
     values,
     isLoading,
     errors,
+    date,
     handleSubmit,
     handleChange,
     handleDateChange,
@@ -22,6 +21,7 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <SignUpInput
           placeholder='닉네임'
+          innerText='영어, 한글, 숫자 (4-12자리)'
           type='text'
           name='fullName'
           value={values.fullName}
@@ -38,6 +38,7 @@ const SignUp = () => {
         />
         <SignUpInput
           placeholder='비밀번호'
+          innerText='6-15자리'
           type='password'
           name='password'
           value={values.password}
@@ -53,12 +54,7 @@ const SignUp = () => {
           errorMsg={errors.passwordConfirm}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {/* <SignUpSelector
-            onChange={handleChange}
-            name='year'
-            errorMsg={errors.year}
-          /> */}
-          <DatePicker value={dayjs(new Date())} onChange={handleDateChange} />
+          <DatePicker value={date} onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'
             type='text'

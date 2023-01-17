@@ -3,6 +3,7 @@ import { ChangeEventHandler } from 'react';
 
 interface Props {
   placeholder: string;
+  innerText?: string;
   type: string;
   name: string;
   errorMsg?: string;
@@ -12,6 +13,7 @@ interface Props {
 
 const SignUpInput = ({
   placeholder,
+  innerText,
   type,
   name,
   errorMsg,
@@ -21,7 +23,6 @@ const SignUpInput = ({
   return (
     <Box
       sx={{
-        width: '100%',
         alignItems: 'center',
         position: 'relative',
         paddingBottom: '15px',
@@ -29,6 +30,7 @@ const SignUpInput = ({
       <TextField
         fullWidth
         label={placeholder}
+        placeholder={innerText}
         type={type}
         name={name}
         value={value}

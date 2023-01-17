@@ -32,21 +32,22 @@ const initialState = {
   job: '',
 };
 
+const today = dayjs(new Date());
+
 const useSignUpForm = () => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState(error);
+  const [date, setDate] = useState<Dayjs | null>(today);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'fullName') {
-      const newValue = value.replace(/^\s/g, '').replace(/\s{2,}/g, ' ');
-      setValues({ ...values, [name]: newValue });
-    } else setValues({ ...values, [name]: value.replace(/\s/g, '') });
+    setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
+    setDate(newValue);
     if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
   };
 
@@ -62,6 +63,9 @@ const useSignUpForm = () => {
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
         navigate(ROUTES.HOME);
+        setTimeout(function () {
+          alert('가입이 완료되었습니다.');
+        }, 0);
       } catch (error) {
         console.error(error);
       } finally {
@@ -73,6 +77,7 @@ const useSignUpForm = () => {
   return {
     values,
     isLoading,
+    date,
     handleSubmit,
     handleChange,
     handleDateChange,
