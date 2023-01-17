@@ -51,7 +51,7 @@ const useGetFollow = () => {
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     const { currentTarget } = e;
 
-    if (currentTarget.dataset) {
+    if (currentTarget.dataset && currentTarget.firstChild) {
       try {
         setFollowLoading(true);
         const { followid, userid } = currentTarget.dataset;
