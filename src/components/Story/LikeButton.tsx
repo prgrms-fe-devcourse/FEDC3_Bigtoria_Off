@@ -8,13 +8,15 @@ import { User } from '../../interfaces/user';
 
 interface Props {
   user?: User;
+  authorId: string;
   likes: Like[];
   storyId: string;
 }
 
-const LikeButton = ({ user, likes, storyId }: Props) => {
+const LikeButton = ({ user, authorId, likes, storyId }: Props) => {
   const { isLike, likeCount, handleClick } = useLike(
     user?._id || '',
+    authorId,
     likes,
     storyId
   );

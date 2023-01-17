@@ -67,7 +67,12 @@ const StoryInfo = ({ story }: Props) => {
           </StoryContentWrapper>
         )}
         {!isLoading && (
-          <LikeButton user={user} storyId={story._id} likes={story.likes} />
+          <LikeButton
+            user={user}
+            authorId={story.author._id}
+            storyId={story._id}
+            likes={story.likes}
+          />
         )}
       </StoryContainer>
     </>

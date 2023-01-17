@@ -54,7 +54,7 @@ export const useCommentForm = (storyAuthorId: string) => {
       const { _id, author, post } = await postStoryComment(comment, storyId);
 
       if (author._id !== storyAuthorId) {
-        await postNotification('COMMENT', _id, author._id, post);
+        await postNotification('COMMENT', _id, storyAuthorId, post);
       }
     } catch (error) {
       console.error(error);
