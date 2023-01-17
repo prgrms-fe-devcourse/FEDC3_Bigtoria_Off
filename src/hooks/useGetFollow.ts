@@ -5,15 +5,14 @@ import { createFollow, removeFollow } from '../apis/follow';
 import { getFollowingUser } from '../apis/getFollowingUser';
 import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
+import { List } from '../interfaces/followList';
+import { getChangedIndex } from '../utils/getChangedIndex';
 import { ROUTES } from './../constants/routes';
 
-interface List {
-  _id: string;
-  user: string;
-  fullName?: string;
-  image?: string;
-  isOnline?: boolean;
-}
+const BUTTON_MESSAGE = {
+  FOLLOW: 'PersonAddIcon',
+  DELETE: 'PersonRemoveIcon',
+};
 
 const useGetFollow = () => {
   const { userId } = useParams();
@@ -26,20 +25,20 @@ const useGetFollow = () => {
     try {
       setLoading(true);
       const infoList: List[] = [];
-      userId &&
-        (await userInfo(userId).then((res) => {
-          res.following.map(({ _id, user }: List) => {
-            infoList.push({ _id, user });
-          });
-        }));
-      userId &&
-        (await getFollowingUser(infoList.map((data) => data.user)).then((res) =>
-          res.map(({ fullName, image, isOnline }, index) => {
-            infoList[index].fullName = fullName;
-            infoList[index].image = image;
-            infoList[index].isOnline = isOnline;
-          })
-        ));
+      if (userId) {
+        const res = await userInfo(userId);
+        res.following.map(({ _id, user }: List) => {
+          infoList.push({ _id, user });
+        });
+      }
+      if (userId) {
+        const res = await getFollowingUser(infoList.map((data) => data.user));
+        res.map(({ fullName, image, isOnline }, index) => {
+          infoList[index].fullName = fullName;
+          infoList[index].image = image;
+          infoList[index].isOnline = isOnline;
+        });
+      }
       setFollowingIdList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
@@ -50,31 +49,24 @@ const useGetFollow = () => {
   };
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    const { target } = e;
-    if (!(target instanceof HTMLButtonElement)) {
-      return;
-    }
-    if (target.dataset !== undefined) {
+    const { currentTarget } = e;
+
+    if (currentTarget.dataset && currentTarget.firstChild) {
       try {
         setFollowLoading(true);
-        const followId = target.dataset.followid;
-        const userId = target.dataset.userid;
-        if (target.innerText === '삭제') {
-          target.innerText = '팔로우';
-          if (followId && userId) {
-            await removeFollow(followId);
-            await postNotification('FOLLOW', followId, userId, null);
+        const { followid, userid } = currentTarget.dataset;
+        const { testid } = currentTarget.firstChild.dataset;
+        if (testid === BUTTON_MESSAGE.DELETE) {
+          if (followid && userid) {
+            await removeFollow(followid);
+            await postNotification('FOLLOW', followid, userid, null);
           }
-        } else if (target.innerText === '팔로우') {
-          target.innerText = '삭제';
-          if (userId) {
-            const res = await createFollow(userId);
-            const foundIndex = followingIdList.findIndex(
-              (item) => item._id === followId
-            );
+        } else {
+          if (userid) {
+            const res = await createFollow(userid);
+            const changedIndex = getChangedIndex(followingIdList, followid);
             const infoList = [...followingIdList];
-            const foundItem = infoList[foundIndex];
-            foundItem._id = res?.data._id;
+            infoList[changedIndex]._id = res?.data._id;
             setFollowingIdList(infoList);
           }
         }

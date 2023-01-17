@@ -1,6 +1,7 @@
 import {
   Avatar,
   Badge,
+  BadgeProps,
   List,
   ListItem,
   ListItemAvatar,
@@ -12,11 +13,11 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 
 interface Props {
-  src: string | undefined;
+  src?: string;
   size?: string;
   userId: string;
-  fullName: string | undefined;
-  isOnline: boolean | undefined;
+  fullName?: string;
+  isOnline?: boolean;
 }
 
 const FollowingList = ({
@@ -39,31 +40,27 @@ const FollowingList = ({
       }}>
       <ListItem>
         <ListItemAvatar>
-          {isOnline ? (
-            <OnlineBadge
-              overlap='circular'
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              variant='dot'>
-              <Avatar
-                src={src}
-                sx={{ width: size, height: size }}
-                onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
-              />
-            </OnlineBadge>
-          ) : (
-            <OfflineBadge
-              overlap='circular'
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              variant='dot'>
-              <Avatar
-                src={src}
-                sx={{ width: size, height: size }}
-                onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
-              />
-            </OfflineBadge>
-          )}
+          <StateBadge
+            isOnline={isOnline}
+            overlap='circular'
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            variant='dot'>
+            <Avatar
+              src={src}
+              sx={{ width: size, height: size, cursor: 'pointer' }}
+              onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
+            />
+          </StateBadge>
         </ListItemAvatar>
-        <ListItemText primary={fullName} />
+        <ListItemText
+          primary={fullName}
+          sx={{
+            maxWidth: '100px',
+            height: '1rem',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          }}
+        />
       </ListItem>
     </List>
   );
@@ -71,19 +68,28 @@ const FollowingList = ({
 
 export default FollowingList;
 
-const OnlineBadge = styled(Badge)(({ theme }) => ({
+interface StateBadgeProps extends BadgeProps {
+  isOnline?: boolean;
+}
+
+const StateBadge = styled(Badge, {
+  shouldForwardProp: (prop) => prop !== 'isOnline',
+})<StateBadgeProps>(({ theme, isOnline }) => ({
   '& .MuiBadge-badge': {
-    backgroundColor: '#44b700',
-    color: '#44b700',
+    ...(isOnline
+      ? { backgroundColor: '#44b700', color: '#44b700' }
+      : { backgroundColor: '#7b7b7b', color: '#7b7b7b' }),
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     '&::after': {
       position: 'absolute',
       width: '100%',
       height: '100%',
       borderRadius: '50%',
-      animation: 'ripple 1s infinite ease-in-out',
-      border: '1px solid currentColor',
       content: '""',
+      ...(isOnline && {
+        animation: 'ripple 1s infinite ease-in-out',
+        border: '1px solid currentColor',
+      }),
     },
   },
   '@keyframes ripple': {
@@ -94,23 +100,6 @@ const OnlineBadge = styled(Badge)(({ theme }) => ({
     '100%': {
       transform: 'scale(2)',
       opacity: 0,
-    },
-  },
-}));
-
-const OfflineBadge = styled(Badge)(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    backgroundColor: '#7b7b7b',
-    color: '#7b7b7b',
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    '&::after': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      borderRadius: '50%',
-      content: '""',
     },
   },
 }));
