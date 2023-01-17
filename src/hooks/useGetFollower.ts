@@ -21,7 +21,6 @@ const useGetFollower = () => {
         res.followers.map(({ _id, user }: List) => {
           infoList.push({ _id, user });
         });
-        console.log(infoList);
       }
       if (userId) {
         const res = await getFollowerUser(infoList.map((data) => data.user));
@@ -33,7 +32,7 @@ const useGetFollower = () => {
       }
       setFollowerList(infoList);
     } catch (error) {
-      // navigate(ROUTES.NOT_FOUND);
+      navigate(ROUTES.NOT_FOUND);
       console.error(error);
     } finally {
       setLoading(false);
