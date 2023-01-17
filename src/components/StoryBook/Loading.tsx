@@ -12,9 +12,8 @@ const Loading = () => {
 export default Loading;
 
 const LoadingContainer = styled.div`
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 `;

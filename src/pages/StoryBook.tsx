@@ -8,7 +8,7 @@ import useFetchStories from '../hooks/useFetchStories';
 const StoryBook = () => {
   const { storiesByYear, fullName, isLoading } = useFetchStories();
 
-  if (isLoading) return <Loading />;
+  if (!isLoading) return <Loading />;
 
   return (
     <Container>
