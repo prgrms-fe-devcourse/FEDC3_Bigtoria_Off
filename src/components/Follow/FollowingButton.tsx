@@ -1,6 +1,7 @@
-import { Box, Button, CircularProgress } from '@mui/material';
-import { lightBlue } from '@mui/material/colors';
-import { MouseEvent } from 'react';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import { Box, Button } from '@mui/material';
+import { MouseEvent, useState } from 'react';
 
 interface Props {
   isLoading?: boolean;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
+  const [toggle, setToggle] = useState(false);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Box
@@ -19,33 +22,25 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           position: 'relative',
         }}>
         <Button
-          variant='outlined'
+          variant={toggle ? 'contained' : 'outlined'}
           size='small'
           sx={{
             height: '30px',
-            width: '80px',
+            width: '60px',
             marginRight: '0.5rem',
             padding: '0.5rem',
             boxSizing: 'border-box',
+            transition: 'background-color .3s ease-out',
           }}
           data-followid={followId}
           data-userid={userId}
-          onClick={onClick}>
-          삭제
+          disabled={isLoading}
+          onClick={(e) => {
+            onClick(e);
+            setToggle(!toggle);
+          }}>
+          {toggle ? <PersonAddIcon /> : <PersonRemoveIcon />}
         </Button>
-        {isLoading && (
-          <CircularProgress
-            size={20}
-            sx={{
-              color: lightBlue[500],
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              marginTop: '-12px',
-              marginLeft: '-12px',
-            }}
-          />
-        )}
       </Box>
     </Box>
   );
