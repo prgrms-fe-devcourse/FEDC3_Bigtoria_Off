@@ -55,7 +55,7 @@ const useGetFollow = () => {
       try {
         setFollowLoading(true);
         const { followid, userid } = currentTarget.dataset;
-        const { testid } = currentTarget.firstChild.dataset;
+        const { testid } = (currentTarget.firstChild as HTMLElement).dataset;
         if (testid === BUTTON_MESSAGE.DELETE) {
           if (followid && userid) {
             await removeFollow(followid);
