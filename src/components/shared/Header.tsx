@@ -45,7 +45,7 @@ const Header = () => {
     if (token) {
       removeLocalStorage(TOKEN_KEY);
       removeLocalStorage(USER_ID_KEY);
-      navigate(ROUTES.HOME);
+      location.href = ROUTES.HOME;
       return;
     }
 

@@ -3,6 +3,10 @@ export interface args {
   email: string;
   password: string;
   passwordConfirm: string;
-  year: string;
+  date: {
+    year: number;
+    month: number;
+    day: number;
+  };
   job: string;
 }

@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { ChangeEventHandler } from 'react';
 
 interface Props {
@@ -27,34 +26,18 @@ const SignUpInput = ({
         position: 'relative',
         paddingBottom: '15px',
       }}>
-      <Input
-        placeholder={placeholder}
+      <TextField
+        fullWidth
+        label={placeholder}
         type={type}
         name={name}
         value={value}
         onChange={onChange}
+        helperText={errorMsg && errorMsg}
+        error={!!errorMsg}
       />
-      {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
     </Box>
   );
 };
 
 export default SignUpInput;
-
-const Input = styled.input`
-  height: 36px;
-  width: 100%;
-  padding: 6px 16px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  border: 1px solid #b1b7c0;
-  outline: none;
-  &:focus {
-    border: 2px solid royalblue;
-  }
-`;
-
-const ErrorText = styled.span`
-  color: red;
-  font-size: 0.8rem;
-`;

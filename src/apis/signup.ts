@@ -9,7 +9,9 @@ export const postSignUp = async (values: args) => {
       fullName: values.fullName,
       password: values.password,
       username: JSON.stringify({
-        year: values.year,
+        year: values.date.year,
+        month: values.date.month,
+        day: values.date.day,
         job: values.job,
       }),
     },
