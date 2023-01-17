@@ -35,21 +35,22 @@ const FollowButton = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      if (userId && storedUserId) {
-        const { following: followings }: { following: Following[] } =
-          await userInfo(storedUserId);
-        const followingDiscovered = followings.find(
-          (following) => following.user === userId
-        );
-        if (followingDiscovered) {
-          setFollowId(followingDiscovered._id);
-          setIsFollowing(true);
-        }
+    const initializeStatusAboutFollow = async () => {
+      const { following: followings }: { following: Following[] } =
+        await userInfo(storedUserId);
+      const followingDiscovered = followings.find(
+        (following) => following.user === userId
+      );
+
+      if (followingDiscovered) {
+        setFollowId(followingDiscovered._id);
+        setIsFollowing(true);
       }
 
       setCanBeRendered(true);
-    })();
+    };
+
+    userId && storedUserId && initializeStatusAboutFollow();
   }, []);
 
   return (
