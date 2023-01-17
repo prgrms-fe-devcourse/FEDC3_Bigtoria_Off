@@ -18,23 +18,19 @@ const FollowButton = () => {
   const isMyStoryBook = userId === storedUserId;
 
   const handleClick = async () => {
-    if (isFollowing && userId && followId) {
-      const result = await removeFollow(followId);
-      result && setIsFollowing(false);
-      return;
-    }
-
     if (userId) {
-      const result = await createFollow(userId);
+      const result = isFollowing
+        ? await removeFollow(followId)
+        : await createFollow(userId);
+
       if (result) {
         const {
           data: { _id: newFollowId },
         }: { data: { _id: string } } = result;
-        if (newFollowId) {
-          setFollowId(newFollowId);
-          setIsFollowing(true);
-        }
+        setFollowId(newFollowId);
       }
+
+      isFollowing ? setIsFollowing(false) : setIsFollowing(true);
     }
   };
 
