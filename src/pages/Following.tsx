@@ -15,7 +15,7 @@ const Following = () => {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '1rem' }}>
       {loading ? (
         <CircularProgress
           size={60}
