@@ -63,6 +63,9 @@ const useSignUpForm = () => {
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
         navigate(ROUTES.HOME);
+        setTimeout(function () {
+          alert('가입이 완료되었습니다.');
+        }, 0);
       } catch (error) {
         console.error(error);
       } finally {
