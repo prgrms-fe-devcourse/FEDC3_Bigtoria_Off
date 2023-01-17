@@ -2,7 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../apis/follow';
-import { getFollowingUser } from '../apis/getFollowingUser';
+import { getFollowingUser } from '../apis/getFollowUser';
 import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
 import { List } from '../interfaces/followList';

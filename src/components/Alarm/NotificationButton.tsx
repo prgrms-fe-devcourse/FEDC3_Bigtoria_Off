@@ -48,7 +48,7 @@ const NotificationButton = () => {
     //Thinking : SWR 도입.
     const timeId = setInterval(() => {
       getBadgeCount();
-    }, 1000);
+    }, 100000);
 
     return () => clearInterval(timeId);
   }, []);

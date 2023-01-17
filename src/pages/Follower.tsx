@@ -3,13 +3,11 @@ import { CircularProgress, Container } from '@mui/material';
 import { useEffect } from 'react';
 
 import FollowHeader from '../components/Follow/FollowHeader';
-import FollowingButton from '../components/Follow/FollowingButton';
 import FollowList from '../components/Follow/FollowingList';
-import useGetFollow from '../hooks/useGetFollow';
+import useGetFollower from '../hooks/useGetFollower';
 
-const Following = () => {
-  const { followingIdList, loading, followLoading, getUserInfo, handleClick } =
-    useGetFollow();
+const Follower = () => {
+  const { followerList, loading, getUserInfo } = useGetFollower();
 
   useEffect(() => {
     getUserInfo();
@@ -31,19 +29,13 @@ const Following = () => {
           }}
         />
       ) : (
-        followingIdList.map((following) => (
-          <Wrapper key={following._id}>
+        followerList.map((follower) => (
+          <Wrapper key={follower._id}>
             <FollowList
-              src={following.image}
-              fullName={following.fullName}
-              isOnline={following.isOnline}
-              userId={following.user}
-            />
-            <FollowingButton
-              followId={following._id}
-              userId={following.user}
-              isLoading={followLoading}
-              onClick={handleClick}
+              src={follower.image}
+              fullName={follower.fullName}
+              isOnline={follower.isOnline}
+              userId={follower.user}
             />
           </Wrapper>
         ))
@@ -52,7 +44,7 @@ const Following = () => {
   );
 };
 
-export default Following;
+export default Follower;
 
 const Wrapper = styled.div`
   display: flex;
