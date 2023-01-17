@@ -65,14 +65,14 @@ const FollowHeader = () => {
     <Tabs
       value={value}
       onChange={handleChange}
-      sx={{ margin: '1rem 0 1rem 0' }}>
+      sx={{ margin: '1rem 0 1rem 0', justifyContent: 'center' }}>
       <LinkTab
-        icon={<PeopleIcon />}
+        icon={<FavoriteIcon />}
         label='FOLLOWING'
         onClick={handleClickFollowListButton}
       />
       <LinkTab
-        icon={<FavoriteIcon />}
+        icon={<PeopleIcon />}
         label='FOLLOWER'
         onClick={handleClickFollowerListButton}
       />
