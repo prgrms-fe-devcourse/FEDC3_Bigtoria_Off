@@ -1,11 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  deleteStoryComment,
-  getStoryDetail,
-  postStoryComment,
-} from '../apis/story';
+import { deleteStoryComment, postStoryComment } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { ROUTES } from '../constants/routes';
 import { isBlankString } from '../utils/validations';
