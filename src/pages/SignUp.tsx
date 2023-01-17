@@ -21,6 +21,7 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <SignUpInput
           placeholder='닉네임'
+          innerText='영어, 한글, 숫자 (4-12자리)'
           type='text'
           name='fullName'
           value={values.fullName}
@@ -37,6 +38,7 @@ const SignUp = () => {
         />
         <SignUpInput
           placeholder='비밀번호'
+          innerText='6-15자리'
           type='password'
           name='password'
           value={values.password}
