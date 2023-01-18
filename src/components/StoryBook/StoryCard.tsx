@@ -26,6 +26,7 @@ const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
       sx={{
         width: '210px',
         marginRight: '16px',
+        marginTop: '.3rem',
         cursor: 'pointer',
         boxShadow: `1px 1px 3px 1px ${COLORS.STORY_CARD_BORDER}`,
       }}

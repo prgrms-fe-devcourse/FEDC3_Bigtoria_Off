@@ -148,7 +148,7 @@ const Container = styled.header<{ isScrolled: boolean }>`
   background-color: #f5f5f8;
   position: sticky;
   top: 0;
-  padding: 2.5rem 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
