@@ -27,7 +27,6 @@ const useGetFollow = () => {
       const infoList: List[] = [];
       if (userId) {
         const res = await userInfo(userId);
-        console.log(res);
         res.following.map(({ _id, user }: List) => {
           infoList.push({ _id, user });
         });
