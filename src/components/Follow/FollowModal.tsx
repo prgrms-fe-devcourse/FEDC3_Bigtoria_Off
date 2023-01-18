@@ -55,9 +55,7 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
             />
           </ProfileImageWrapper>
         </ImageContainer>
-        <TextContainer>
-          <div>{userInfo.fullName}</div>
-        </TextContainer>
+        <TextContainer>{userInfo.fullName}</TextContainer>
         <Stack
           direction='row'
           spacing={2}
@@ -147,7 +145,6 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: 10px;
+  box-sizing: border-box;
 `;
