@@ -22,7 +22,7 @@ export const calcCreatedToCurrentDate = (createdAt: string) => {
 };
 
 export const isExpiredDate = (createdAt: string) => {
-  if (createdAt === '') return '';
+  if (createdAt === '') return true;
 
   const curTime = new Date();
   const createdTime = new Date(createdAt);
@@ -31,6 +31,6 @@ export const isExpiredDate = (createdAt: string) => {
 
   const eDay = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
 
-  if (eDay >= EXPIRED_LIMIT_DATE) return true;
+  if (eDay > EXPIRED_LIMIT_DATE) return true;
   return false;
 };

@@ -16,30 +16,17 @@ const NotificationList = ({ type, notifications }: Props) => {
   const [msgList, setMsgList] = useState<Notification[]>([]);
   const [postList, setPostList] = useState<Notification[]>([]);
 
-  const filteredPostNotification = (notifications: Notification[]) => {
-    const filteredNoti = notifications?.filter(
-      (n) =>
-        (n.like || n.comment) &&
-        (!n.seen || (n.seen && !isExpiredDate(n.createdAt || '')))
+  const filterNotification = (notifications: Notification[]) => {
+    const filteredNotSeenOrUnexpired = notifications.filter(
+      (n) => !n.seen || (n.seen && !isExpiredDate(n.createdAt || ''))
     );
 
-    setPostList(filteredNoti || []);
+    setPostList(filteredNotSeenOrUnexpired.filter((n) => n.like || n.comment));
+    setMsgList(filteredNotSeenOrUnexpired.filter((n) => n.follow || n.message));
   };
 
-  const filteredMsgNotification = (notifications: Notification[]) => {
-    const filteredNoti = notifications?.filter(
-      (n) =>
-        (n.follow || n.message) &&
-        (!n.seen || (n.seen && !isExpiredDate(n.createdAt || '')))
-    );
-
-    setMsgList(filteredNoti || []);
-  };
-
-  //Thinking: BadgeCount처럼 실시간으로 계속 반영할 지, 사용자에게 탭키를 누르게 강요할지
   useEffect(() => {
-    filteredPostNotification(notifications);
-    filteredMsgNotification(notifications);
+    filterNotification(notifications);
   }, [notifications]);
 
   return (
