@@ -13,12 +13,7 @@ const { STORY_BOOK_BY_USER_ID } = ROUTES;
 
 const UserList = ({ users }: Props) => {
   return (
-    <Box
-      sx={{
-        width: '100%',
-        marginTop: '10px',
-        padding: 0,
-      }}>
+    <>
       {!users || users.length === 0 ? (
         <NoResultBox />
       ) : (
@@ -43,7 +38,7 @@ const UserList = ({ users }: Props) => {
           })}
         </List>
       )}
-    </Box>
+    </>
   );
 };
 
