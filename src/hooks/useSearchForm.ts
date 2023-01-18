@@ -27,6 +27,7 @@ const useSearchForm = ({ onSubmit }: Props) => {
 
   const handleInputClear = () => {
     setValue('');
+    onSubmit('');
   };
 
   const handleFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
