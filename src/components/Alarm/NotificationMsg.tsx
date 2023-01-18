@@ -69,10 +69,6 @@ const NotificationMsg = ({ notification }: Props) => {
     if (message) '';
   };
 
-  const handleDeleteClick = () => {
-    //Todo: remove alarm
-  };
-
   return (
     <ListItem
       sx={{
@@ -103,10 +99,11 @@ const NotificationMsg = ({ notification }: Props) => {
         <ListItemText
           primary={generateMsg()}
           secondary={calcCreatedToCurrentDate(createdAt || '')}
+          sx={{
+            paddingTop: '5px',
+            paddingRight: '10px',
+          }}
         />
-        <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </IconButton>
       </ListItemButton>
     </ListItem>
   );
