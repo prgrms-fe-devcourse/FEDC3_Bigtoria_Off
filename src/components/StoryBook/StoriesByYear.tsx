@@ -14,7 +14,7 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
 
           return (
             <CardContainer key={story._id}>
-              {story.isFirstInSameMonths && month}월
+              {story.isFirstInSameMonths && `${month}월`}
               <StoryCard
                 title={storyTitle}
                 storyId={story._id}
