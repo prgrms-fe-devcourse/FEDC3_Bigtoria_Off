@@ -45,16 +45,14 @@ const Home = () => {
         alignItems: 'center',
         userSelect: 'none',
       }}>
-      <Box component='header'>
-        <FontText
-          title='B.'
-          sx={{
-            display: 'inline-block',
-            marginBottom: '30px',
-            fontSize: '5rem',
-          }}
-        />
-      </Box>
+      <FontText
+        title='B.'
+        sx={{
+          display: 'inline-block',
+          marginBottom: '30px',
+          fontSize: '5rem',
+        }}
+      />
       <Box
         component='main'
         sx={{
