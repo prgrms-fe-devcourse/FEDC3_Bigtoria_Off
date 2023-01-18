@@ -6,7 +6,7 @@ interface Props {
   onSubmit: (keyword: string) => void;
 }
 
-const useSearhForm = ({ onSubmit }: Props) => {
+const useSearchForm = ({ onSubmit }: Props) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState({
     keyword: '',
@@ -42,4 +42,4 @@ const useSearhForm = ({ onSubmit }: Props) => {
   };
 };
 
-export default useSearhForm;
+export default useSearchForm;
