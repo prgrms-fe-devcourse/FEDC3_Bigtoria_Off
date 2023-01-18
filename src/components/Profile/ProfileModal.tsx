@@ -57,7 +57,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
       title: '커버 이미지',
       form: (
         <ImageForm
-          type='프로필'
+          type='커버'
           image={user.coverImage || ''}
           open={open}
           handleOpen={handleOpen}

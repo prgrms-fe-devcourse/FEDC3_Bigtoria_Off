@@ -53,8 +53,10 @@ const Profile = () => {
     <Container>
       <ImageContainer>
         <CoverImageWrapper>
-          <CoverImage src={coverImage || ''}></CoverImage>
+          <CoverImage src={coverImage || ''} alt='cover image' />
           <Button
+            data-type='coverImage'
+            onClick={handleModalType}
             sx={{
               position: 'absolute',
               bottom: '5px',
@@ -157,9 +159,11 @@ const CoverImageWrapper = styled.div`
   position: relative;
 `;
 
-const CoverImage = styled(Box)<{ src: string }>`
-  background: ${(props) => (props.src ? `url(${props.src})` : 'lightgray')};
+const CoverImage = styled.img<{ src: string }>`
+  width: 100%;
   height: 200px;
+  background: ${(props) => (props.src ? `url(${props.src})` : 'lightgray')};
+  object-fit: cover;
 `;
 
 const ProfileImageWrapper = styled.div`
@@ -167,7 +171,7 @@ const ProfileImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  bottom: -72px;
+  bottom: -70px;
   left: 50%;
   margin-left: -40px;
 `;

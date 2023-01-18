@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { FormEvent, useEffect, useState } from 'react';
 
-import { postProfileImage } from '../../apis/userInfo';
+import { postCoverImage, postProfileImage } from '../../apis/userInfo';
 import { ERROR_MESSAGES } from '../../constants/errorMessages';
 import ImageUpload from '../StoryEdit/ImageUpload';
 
@@ -50,7 +50,7 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
 
   const generateFormData = () => {
     const formData = new FormData();
-    formData.append('isCover', 'false');
+    formData.append('isCover', type === 'profileImage' ? 'false' : 'true');
     if (imageFile) formData.append('image', imageFile);
 
     return formData;
@@ -68,8 +68,11 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
 
     try {
       const formData = generateFormData();
-      await postProfileImage(formData);
-      alert(`${type} 사진이 변경되었습니다.`);
+      type === 'profileImage'
+        ? await postProfileImage(formData)
+        : await postCoverImage(formData);
+
+      alert(`${type} 이미지가 변경되었습니다.`);
       handleOpen();
     } catch (error) {
       console.error(error);
@@ -90,7 +93,7 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
         <ErrorText>{error}</ErrorText>
       </InputWrapper>
       <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
-        사진 변경
+        {type} 이미지 변경
       </Button>
     </form>
   );
