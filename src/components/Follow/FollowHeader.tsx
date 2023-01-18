@@ -19,6 +19,7 @@ const LinkTab = (props: LinkTabProps) => {
   return (
     <Tab
       component='button'
+      sx={{ width: '50%' }}
       onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
       }}
