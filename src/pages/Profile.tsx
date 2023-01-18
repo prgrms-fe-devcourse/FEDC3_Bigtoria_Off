@@ -3,18 +3,20 @@ import {
   Avatar,
   Box,
   Button,
-  Divider,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   ListSubheader,
 } from '@mui/material';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ProfileModal from '../components/Profile/ProfileModal';
 import Loading from '../components/StoryBook/Loading';
+import { TOKEN_KEY } from '../constants/auth';
+import { ROUTES } from '../constants/routes';
 import useFetchUser from '../hooks/useFetchUser';
+import { getLocalStorage } from '../utils/storage';
 
 const modalType = ['password', 'nickname', 'job', 'coverImage', 'profileImage'];
 export type ModalType = typeof modalType[number];
@@ -24,11 +26,27 @@ const Profile = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ModalType>('');
   const { user, isLoading } = useFetchUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getLocalStorage(TOKEN_KEY);
+    if (!token) {
+      alert('로그인 후 이용해 주세요.');
+      navigate(ROUTES.SIGNIN);
+      return;
+    }
+  });
 
   if (isLoading) return <Loading />;
 
-  const handleModalType = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!(e.target instanceof HTMLButtonElement)) return;
+  const handleModalType = (e: MouseEvent) => {
+    if (
+      !(
+        e.target instanceof HTMLButtonElement ||
+        e.target instanceof HTMLDivElement
+      )
+    )
+      return;
 
     const { type } = e.target.dataset;
     if (!type) return;
@@ -43,17 +61,28 @@ const Profile = () => {
     setModalOpen(!modalOpen);
   };
 
-  if (isLoading || !user) return <Loading />;
+  if (isLoading || !user?._id) return <Loading />;
 
-  const { image, coverImage, fullName, username } = user;
-  const job = username ? JSON.parse(username).job : '';
-  const date = username ? JSON.parse(username).date : '';
+  const { image, coverImage, fullName, username, email } = user;
+
+  let job, year, month, day;
+  if (username) {
+    const infoObj = JSON.parse(username);
+    job = infoObj?.job || '';
+    year = infoObj?.year || '';
+    month = infoObj?.month || '';
+    day = infoObj?.day || '';
+  }
 
   return (
     <Container>
       <ImageContainer>
         <CoverImageWrapper>
-          <CoverImage image={coverImage || ''} />
+          <CoverImage
+            image={coverImage || ''}
+            data-type='coverImage'
+            onClick={handleModalType}
+          />
           <Button
             data-type='coverImage'
             onClick={handleModalType}
@@ -63,7 +92,7 @@ const Profile = () => {
               left: '83%',
               color: 'gray',
             }}>
-            수정
+            변경
           </Button>
         </CoverImageWrapper>
         <ProfileImageWrapper>
@@ -72,7 +101,7 @@ const Profile = () => {
             alt='profile image'
             sx={{ width: '80px', height: '80px' }}></Avatar>
           <Button data-type='profileImage' onClick={handleModalType}>
-            수정
+            변경
           </Button>
         </ProfileImageWrapper>
       </ImageContainer>
@@ -80,27 +109,37 @@ const Profile = () => {
         <List
           component='nav'
           subheader={<ListSubheader>계정 정보</ListSubheader>}>
-          <InfoListItem sx={{ alignItems: 'baseline', paddingRight: 0 }}>
-            <ListItemText primary='닉네임' />
-            <span>{fullName}</span>
-            <Button data-type='nickname' onClick={handleModalType}>
-              수정
-            </Button>
-          </InfoListItem>
-          <InfoListItem sx={{ alignItems: 'baseline' }}>
-            <ListItemText primary='직업' />
-            <span>{job}</span>
-            <Button data-type='job' onClick={handleModalType}>
-              수정
-            </Button>
-          </InfoListItem>
-          {date?.year && (
-            <InfoListItem sx={{ alignItems: 'baseline' }}>
+          {email && (
+            <ListItem sx={{ alignItems: 'baseline' }}>
+              <ListItemText primary='이메일 주소' />
+              <span>{email}</span>
+            </ListItem>
+          )}
+          {fullName && (
+            <InfoListItem sx={{ alignItems: 'baseline', paddingRight: 0 }}>
+              <ListItemText primary='닉네임' />
+              <span>{fullName}</span>
+              <Button data-type='nickname' onClick={handleModalType}>
+                변경
+              </Button>
+            </InfoListItem>
+          )}
+          {job && (
+            <InfoListItem>
+              <ListItemText primary='직업' />
+              <span>{job}</span>
+              <Button data-type='job' onClick={handleModalType}>
+                변경
+              </Button>
+            </InfoListItem>
+          )}
+          {year && (
+            <ListItem sx={{ alignItems: 'baseline' }}>
               <ListItemText primary='생년월일' />
               <span>
-                {date.year}년 {date.month}월 {date.day}일
+                {year}년 {month}월 {day}일
               </span>
-            </InfoListItem>
+            </ListItem>
           )}
           <ListItem sx={{ paddingLeft: '8px' }}>
             <Button
@@ -110,19 +149,6 @@ const Profile = () => {
               sx={{ justifyContent: 'flex-start' }}>
               비밀번호 변경
             </Button>
-          </ListItem>
-        </List>
-        <Divider />
-        <List component='nav' subheader={<ListSubheader>활동</ListSubheader>}>
-          <ListItem disableGutters>
-            <ListItemButton>
-              <ListItemText primary='좋아요 표시한 스토리' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disableGutters>
-            <ListItemButton>
-              <ListItemText primary='댓글 단 스토리' />
-            </ListItemButton>
           </ListItem>
         </List>
       </Box>
@@ -166,6 +192,7 @@ const CoverImage = styled.div<{ image: string }>`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
+  cursor: pointer;
 `;
 
 const ProfileImageWrapper = styled.div`

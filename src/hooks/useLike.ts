@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { deleteStoryLike } from '../apis/story';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
-import { ROUTES } from '../constants/routes';
 import { Like } from '../interfaces/like';
 import { postNotification } from './../apis/notification';
 import { postStoryLike } from './../apis/story';
@@ -17,7 +15,6 @@ const useLike = (
   const [isLike, setIsLike] = useState(false);
   const [likeId, setLikeId] = useState('');
   const [likeCount, setLikeCount] = useState(storyLikes.length);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const findStoryLike = storyLikes.find((data) => data.user === userId);
@@ -30,7 +27,6 @@ const useLike = (
   const handleClick = async () => {
     if (!userId) {
       alert('로그인 후 이용해 주세요.');
-      navigate(ROUTES.SIGNIN);
       return;
     }
 
