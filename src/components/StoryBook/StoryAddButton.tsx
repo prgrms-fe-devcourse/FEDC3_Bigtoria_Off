@@ -1,4 +1,5 @@
-import { Button } from '@mui/material';
+import styled from '@emotion/styled';
+import { FaPen } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 import { TOKEN_KEY } from '../../constants/auth';
@@ -16,10 +17,18 @@ const StoryAddButton = () => {
   };
 
   return (
-    <Button variant='outlined' onClick={handleClick}>
-      스토리 쓰기
-    </Button>
+    <Container>
+      <FaPen onClick={handleClick} />
+    </Container>
   );
 };
 
 export default StoryAddButton;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  cursor: pointer;
+`;

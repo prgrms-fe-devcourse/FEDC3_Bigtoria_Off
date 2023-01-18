@@ -17,7 +17,12 @@ const SearchForm = ({ onSubmit }: Props) => {
   } = useSearhForm({ onSubmit });
 
   return (
-    <Box>
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        borderRadius: 4,
+        padding: '1rem',
+      }}>
       <Box
         component='form'
         sx={{
@@ -31,15 +36,14 @@ const SearchForm = ({ onSubmit }: Props) => {
             width: '100%',
             '& input': {
               height: '50px',
-              borderBottom: '2px solid black',
               paddingLeft: '11px',
             },
-            //TODO: input focus boder-bottom #f99b0f
           }}
           variant='standard'
           autoFocus
           type='text'
           label='user name'
+          color='warning'
           value={value}
           error={error.keyword !== ''}
           helperText={error.keyword}
@@ -52,7 +56,7 @@ const SearchForm = ({ onSubmit }: Props) => {
             position: 'absolute',
             right: '2px',
             top: '30px',
-            color: '#167fe7',
+            color: '#00000099',
           }}
           onClick={handleInputClear}>
           <HighlightOff />

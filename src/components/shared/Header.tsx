@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { FaArrowRight, FaHamburger } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
@@ -16,6 +17,25 @@ const Header = () => {
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const headerHeight = headerRef?.current?.getBoundingClientRect();
+    const scrollEvent = () => {
+      if (headerHeight && window.scrollY > headerHeight?.height) {
+        setIsScrolled(true);
+        return;
+      }
+
+      setIsScrolled(false);
+    };
+
+    document.addEventListener('scroll', scrollEvent);
+    return () => {
+      document.removeEventListener('scroll', scrollEvent);
+    };
+  }, []);
 
   const handleClickWatchStoriesButton = () => {
     navigate(ROUTES.HOME);
@@ -53,12 +73,12 @@ const Header = () => {
   };
 
   return (
-    <Container>
+    <Container ref={headerRef} isScrolled={isScrolled}>
       <Logo onClick={() => navigate(ROUTES.HOME)}>
         <FontText
-          title='B.'
+          title='Bigtoria'
           sx={{
-            fontSize: '30px',
+            fontSize: '1.25rem',
           }}
         />
       </Logo>
@@ -66,11 +86,7 @@ const Header = () => {
         <StoryAddButton />
         <NotificationButton />
         <HamburgerButton onClick={handleClick}>
-          {click ? (
-            <img src='/icons/close.svg' />
-          ) : (
-            <img src='/icons/hamburger_menu.svg' />
-          )}
+          {click ? <FaArrowRight fontSize={'1.25rem'} /> : <FaHamburger />}
         </HamburgerButton>
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
@@ -92,17 +108,18 @@ const Header = () => {
 
 export default Header;
 
-const Container = styled.header`
+const Container = styled.header<{ isScrolled: boolean }>`
+  background-color: #f5f5f8;
   position: sticky;
   top: 0;
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
   z-index: 999;
-  border-bottom: 1px solid ${COLORS.STORY_CARD_BORDER};
-  box-shadow: 0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER};
+  box-shadow: ${({ isScrolled }) =>
+    isScrolled && `0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER}`};
+  transition: all 0.5s ease-out;
 `;
 
 const ButtonsContainer = styled.div`
@@ -142,6 +159,9 @@ const Hamburger = styled.nav<{ click: boolean }>`
 const HamburgerButton = styled.div`
   width: 1.5rem;
   height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 `;
 

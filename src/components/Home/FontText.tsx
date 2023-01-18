@@ -15,14 +15,14 @@ interface Props {
 
 const theme = createTheme({
   typography: {
-    fontFamily: "'Dancing Script', cursive",
+    fontFamily: "'MaplestoryOTFLight', cursive",
   },
 });
 
 const FontText = ({ title, sx }: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <Typography component='p' sx={sx}>
+      <Typography component='p' sx={{ ...sx, paddingTop: '4px' }}>
         {title}
       </Typography>
     </ThemeProvider>

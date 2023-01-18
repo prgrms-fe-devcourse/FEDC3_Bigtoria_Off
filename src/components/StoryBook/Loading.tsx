@@ -4,7 +4,7 @@ import { CircularProgress } from '@mui/material';
 const Loading = () => {
   return (
     <LoadingContainer>
-      <CircularProgress />
+      <CircularProgress color='warning' />
     </LoadingContainer>
   );
 };

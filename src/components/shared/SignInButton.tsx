@@ -24,6 +24,7 @@ const SignInButton = ({
       disabled={disabled && disabled}
       variant={variant}
       type={type}
+      color='warning'
       onClick={onNavigate && onNavigate}
       fullWidth>
       {children}

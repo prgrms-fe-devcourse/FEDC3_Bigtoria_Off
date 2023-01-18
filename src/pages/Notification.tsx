@@ -62,28 +62,6 @@ const Notification = () => {
         alignItems: 'center',
       }}>
       <Box
-        component='header'
-        sx={{
-          width: '92%',
-          margin: '0 auto',
-        }}>
-        {/* Thinking: 알림을 아이콘 말고, 텍스트로 보여주기 */}
-        <IconButton
-          color='secondary'
-          aria-label='add an alarm'
-          sx={{
-            marginBottom: '15px',
-          }}>
-          <AlarmIcon
-            sx={{
-              width: '50px',
-              height: '50px',
-              color: '#f99b0f',
-            }}
-          />
-        </IconButton>
-      </Box>
-      <Box
         component='main'
         sx={{
           width: '92%',
@@ -102,7 +80,7 @@ const Notification = () => {
           />
         </Box>
         <Box component='section'>
-          <Button onClick={handleCheckNotificationBtnClick}>
+          <Button color='warning' onClick={handleCheckNotificationBtnClick}>
             {CHECK_ALL_NOTIFICATION}
           </Button>
           <NotificationList type={tabValue} notifications={notifications} />

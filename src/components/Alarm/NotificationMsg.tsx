@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
 import { calcCreatedToCurrentDate } from '../../utils/calcCreatedToCurrentTime';
@@ -55,7 +56,16 @@ const NotificationMsg = ({ notification }: Props) => {
   const generateAvatar = () => {
     if (like) return <ThumbUp />;
     if (comment) return <CommentIcon />;
-    if (follow) return <Avatar alt={fullName} src={image ? image : ''} />;
+    if (follow)
+      return (
+        <Avatar
+          sx={{
+            backgroundColor: COLORS.SUB,
+          }}
+          alt={fullName}
+          src={image ? image : ''}
+        />
+      );
     if (message) return <SendIcon />;
   };
 
@@ -91,7 +101,7 @@ const NotificationMsg = ({ notification }: Props) => {
           }}>
           <Badge
             variant='dot'
-            color='primary'
+            color='warning'
             invisible={seen}
             anchorOrigin={{
               vertical: 'top',

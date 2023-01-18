@@ -85,7 +85,11 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
           </ImagePlaceholder>
         )}
       </UploadContainer>
-      {(src || currentImage) && <Button onClick={onDelete}>삭제</Button>}
+      {(src || currentImage) && (
+        <Button color='warning' onClick={onDelete}>
+          삭제
+        </Button>
+      )}
     </>
   );
 };

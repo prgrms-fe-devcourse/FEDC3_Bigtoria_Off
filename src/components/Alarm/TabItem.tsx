@@ -9,6 +9,7 @@ interface Props {
 const TabButtonItem = ({ text, type, curTabValue, onClick }: Props) => {
   return (
     <Button
+      color='warning'
       onClick={onClick}
       variant={`${curTabValue === type ? 'contained' : 'outlined'}`}
       sx={{ flex: 1 }}>

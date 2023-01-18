@@ -1,5 +1,4 @@
 import { Box, CircularProgress } from '@mui/material';
-import { lightBlue } from '@mui/material/colors';
 
 import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
@@ -36,7 +35,7 @@ const Home = () => {
       }}>
       <Box component='header'>
         <FontText
-          title='Bigtoria.'
+          title='B.'
           sx={{
             display: 'inline-block',
             marginBottom: '30px',
@@ -78,9 +77,9 @@ const Home = () => {
           }}>
           {isLoaded && (
             <CircularProgress
+              color='warning'
               size={48}
               sx={{
-                color: lightBlue[500],
                 position: 'absolute',
               }}
             />
