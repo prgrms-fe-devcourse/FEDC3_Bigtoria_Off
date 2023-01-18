@@ -31,6 +31,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const fullNameRegex = /^[A-Za-z0-9가-힣]{4,12}$/;
 
   useEffect(() => {
     setError('');
@@ -44,19 +45,24 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!value || isBlankString(value)) {
-      setError(`${type}을 입력해 주세요`);
-      setIsLoading(false);
-      return;
-    }
+    const validate = () => {
+      let newError = '';
+      if (!value || isBlankString(value)) newError = `${type}을 입력해 주세요`;
+      else if (value === initialValue) newError = `현재 ${type}과 같습니다`;
+      else if (type === '닉네임' && !fullNameRegex.test(value))
+        newError = '영어, 숫자, 한글만 입력가능합니다.(4-12자리)';
 
-    if (value === initialValue) {
-      setError(`현재 ${type}과 같습니다`);
-      setIsLoading(false);
-      return;
-    }
+      return newError;
+    };
 
     try {
+      const newError = validate();
+      if (newError) {
+        setError(newError);
+        setIsLoading(false);
+        return;
+      }
+
       if (type === '닉네임') {
         await putUserInfo(
           value,
@@ -97,9 +103,23 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
         onChange={handleChange}
         sx={{ marginBottom: '20px' }}
       />
-      <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
-        {type} 변경
-      </Button>
+      <ButtonWrapper>
+        <Button
+          type='button'
+          variant='outlined'
+          disabled={isLoading}
+          fullWidth
+          onClick={handleOpen}>
+          취소
+        </Button>
+        <Button
+          type='submit'
+          variant='contained'
+          disabled={isLoading}
+          fullWidth>
+          {type} 변경
+        </Button>
+      </ButtonWrapper>
     </Form>
   );
 };
@@ -108,4 +128,8 @@ export default TextForm;
 
 const Form = styled.form`
   margin: 15px 0;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
 `;
