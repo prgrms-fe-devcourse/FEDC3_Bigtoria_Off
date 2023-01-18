@@ -17,6 +17,10 @@ const Header = () => {
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
 
+  const handleClickHamburgerClose = () => {
+    setClick(false);
+  };
+
   const handleClickWatchStoriesButton = () => {
     navigate(ROUTES.HOME);
   };
@@ -54,7 +58,11 @@ const Header = () => {
 
   return (
     <Container>
-      <Logo onClick={() => navigate(ROUTES.HOME)}>
+      <Logo
+        onClick={() => {
+          handleClickHamburgerClose();
+          navigate(ROUTES.HOME);
+        }}>
         <FontText
           title='B.'
           sx={{
@@ -63,16 +71,8 @@ const Header = () => {
         />
       </Logo>
       <ButtonsContainer>
-        <StoryAddButton
-          onClick={() => {
-            setClick(false);
-          }}
-        />
-        <NotificationButton
-          onClick={() => {
-            setClick(false);
-          }}
-        />
+        <StoryAddButton onClick={handleClickHamburgerClose} />
+        <NotificationButton onClick={handleClickHamburgerClose} />
         <HamburgerButton onClick={handleClick}>
           {click ? (
             <img src='/icons/close.svg' />
