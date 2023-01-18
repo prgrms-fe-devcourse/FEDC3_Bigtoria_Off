@@ -8,19 +8,19 @@ import ImageUpload from '../StoryEdit/ImageUpload';
 
 interface Props {
   type: string;
-  image: string;
+  oldImage: string;
   open: boolean;
   handleOpen: () => void;
 }
 
-const ImageForm = ({ type, image, open, handleOpen }: Props) => {
-  const [imageBase64, setImageBase64] = useState(image);
+const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
+  const [imageBase64, setImageBase64] = useState(oldImage);
   const [imageFile, setImageFile] = useState<File | null>();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setImageBase64(image);
+    setImageBase64(oldImage);
     setError('');
   }, [open]);
 
@@ -93,9 +93,23 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
         />
         <ErrorText>{error}</ErrorText>
       </InputWrapper>
-      <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
-        {type} 이미지 변경
-      </Button>
+      <ButtonWrapper>
+        <Button
+          type='button'
+          variant='outlined'
+          disabled={isLoading}
+          fullWidth
+          onClick={handleOpen}>
+          취소
+        </Button>
+        <Button
+          type='submit'
+          variant='contained'
+          disabled={isLoading}
+          fullWidth>
+          {type} 이미지 변경
+        </Button>
+      </ButtonWrapper>
     </form>
   );
 };
@@ -109,4 +123,8 @@ const InputWrapper = styled.div`
 
 const ErrorText = styled.small`
   color: red;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
 `;
