@@ -1,12 +1,17 @@
 import styled from '@emotion/styled';
 import AutoStoriesTwoToneIcon from '@mui/icons-material/AutoStoriesTwoTone';
 import CakeTwoToneIcon from '@mui/icons-material/CakeTwoTone';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import WorkHistoryTwoToneIcon from '@mui/icons-material/WorkHistoryTwoTone';
-import { Avatar, Chip, Dialog, Stack } from '@mui/material';
+import { Avatar, Chip, Dialog, Divider, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
+
+import { COLORS } from '../../constants/colors';
+import { ROUTES } from '../../constants/routes';
 
 interface Props {
   open: boolean;
@@ -22,13 +27,26 @@ interface Props {
 }
 
 const FollowModal = ({ open, userInfo, onClick }: Props) => {
+  const navigate = useNavigate();
   const { job, year } = userInfo.username && JSON.parse(userInfo.username);
+
+  const handleClickStoryBook = () => {
+    navigate(ROUTES.STORY_BOOK_BY_USER_ID(userInfo.user));
+  };
 
   return (
     <Dialog sx={{ borderRadius: '1rem' }} open={open} onClose={onClick}>
       <Container>
         <ImageContainer>
           <CoverImageWrapper>
+            <IconButton
+              aria-label='delete'
+              color='warning'
+              size='large'
+              sx={{ position: 'absolute' }}
+              onClick={onClick}>
+              <CancelOutlinedIcon fontSize='inherit' />
+            </IconButton>
             <CoverImage src={userInfo.coverImage || undefined} />
           </CoverImageWrapper>
           <ProfileImageWrapper>
@@ -54,15 +72,26 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
           />
           <Chip icon={<CakeTwoToneIcon />} label={year} variant='outlined' />
         </Stack>
+        <Divider />
         <Stack
           direction='row'
           spacing={1}
           justifyContent='center'
-          sx={{ margin: '1rem 0 1rem 0', width: '100%' }}>
-          <Button variant='outlined' startIcon={<AutoStoriesTwoToneIcon />}>
+          sx={{ width: '100%' }}>
+          <Button
+            variant='outlined'
+            startIcon={<AutoStoriesTwoToneIcon />}
+            onClick={handleClickStoryBook}
+            color='warning'
+            sx={{ width: '50%' }}>
             스토리북
           </Button>
-          <Button variant='contained' endIcon={<SendTwoToneIcon />}>
+          <Divider orientation='vertical' flexItem />
+          <Button
+            variant='contained'
+            endIcon={<SendTwoToneIcon />}
+            color='warning'
+            sx={{ width: '50%' }}>
             채팅
           </Button>
         </Stack>
@@ -78,7 +107,7 @@ const Container = styled(Box)`
   flex-direction: column;
   width: 250px;
   height: 100%;
-  border: 2px solid #000;
+  border: 2px solid orange;
   box-shadow: 24;
 `;
 
