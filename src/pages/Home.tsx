@@ -1,11 +1,11 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 
-import FontText from '../components/Home/FontText';
-import SearchForm from '../components/Home/SearchForm';
-import UserList from '../components/Home/UserList';
-import useDebounce from '../hooks/useDebounce';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import FontText from '../components/Home/FontText.js';
+import SearchForm from '../components/Home/SearchForm.js';
+import UserList from '../components/Home/UserList.js';
+import useDebounce from '../hooks/useDebounce.js';
+import useInfiniteScroll from '../hooks/useInfiniteScroll.js';
 
 const Home = () => {
   const {
