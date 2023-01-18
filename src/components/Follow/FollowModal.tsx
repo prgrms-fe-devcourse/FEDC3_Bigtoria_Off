@@ -1,27 +1,18 @@
 import styled from '@emotion/styled';
-import { Avatar, Dialog, DialogContent } from '@mui/material';
+import AutoStoriesTwoToneIcon from '@mui/icons-material/AutoStoriesTwoTone';
+import CakeTwoToneIcon from '@mui/icons-material/CakeTwoTone';
+import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
+import WorkHistoryTwoToneIcon from '@mui/icons-material/WorkHistoryTwoTone';
+import { Avatar, Chip, Dialog, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-};
 
 interface Props {
   open: boolean;
   userInfo: {
     image?: string;
-    user?: string;
+    user: string;
     fullName?: string;
     username?: string;
     coverImage?: string;
@@ -31,8 +22,10 @@ interface Props {
 }
 
 const FollowModal = ({ open, userInfo, onClick }: Props) => {
+  const { job, year } = userInfo.username && JSON.parse(userInfo.username);
+
   return (
-    <Dialog sx={style} open={open} onClose={onClick}>
+    <Dialog sx={{ borderRadius: '1rem' }} open={open} onClose={onClick}>
       <Container>
         <ImageContainer>
           <CoverImageWrapper>
@@ -46,6 +39,33 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
             />
           </ProfileImageWrapper>
         </ImageContainer>
+        <TextContainer>
+          <div>{userInfo.fullName}</div>
+        </TextContainer>
+        <Stack
+          direction='row'
+          spacing={1}
+          justifyContent='center'
+          sx={{ margin: '1rem 0 1rem 0' }}>
+          <Chip
+            icon={<WorkHistoryTwoToneIcon />}
+            label={job}
+            variant='outlined'
+          />
+          <Chip icon={<CakeTwoToneIcon />} label={year} variant='outlined' />
+        </Stack>
+        <Stack
+          direction='row'
+          spacing={1}
+          justifyContent='center'
+          sx={{ margin: '1rem 0 1rem 0', width: '100%' }}>
+          <Button variant='outlined' startIcon={<AutoStoriesTwoToneIcon />}>
+            스토리북
+          </Button>
+          <Button variant='contained' endIcon={<SendTwoToneIcon />}>
+            채팅
+          </Button>
+        </Stack>
       </Container>
     </Dialog>
   );
@@ -56,7 +76,10 @@ export default FollowModal;
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 250px;
+  height: 100%;
+  border: 2px solid #000;
+  box-shadow: 24;
 `;
 
 const ImageContainer = styled.div`
@@ -81,7 +104,16 @@ const ProfileImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: -40px;
   bottom: -40px;
   left: 50%;
-  margin-left: -40px;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

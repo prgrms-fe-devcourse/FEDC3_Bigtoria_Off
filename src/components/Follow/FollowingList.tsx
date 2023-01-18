@@ -15,7 +15,7 @@ import FollowModal from './FollowModal';
 interface Props {
   userInfo: {
     image?: string;
-    user?: string;
+    user: string;
     fullName?: string;
     username?: string;
     coverImage?: string;
