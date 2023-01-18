@@ -63,8 +63,16 @@ const Header = () => {
         />
       </Logo>
       <ButtonsContainer>
-        <StoryAddButton />
-        <NotificationButton />
+        <StoryAddButton
+          onClick={() => {
+            setClick(false);
+          }}
+        />
+        <NotificationButton
+          onClick={() => {
+            setClick(false);
+          }}
+        />
         <HamburgerButton onClick={handleClick}>
           {click ? (
             <img src='/icons/close.svg' />

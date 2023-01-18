@@ -1,11 +1,9 @@
 import CommentIcon from '@mui/icons-material/Comment';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
   Badge,
-  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemButton,
