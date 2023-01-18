@@ -51,40 +51,54 @@ const Profile = () => {
 
   return (
     <Container>
-      <Section>
-        <Avatar
-          src={image}
-          alt='profile image'
-          sx={{ width: '80px', height: '80px' }}></Avatar>
-        <Button data-type='profileImage' onClick={handleModalType}>
-          수정
-        </Button>
-      </Section>
+      <ImageContainer>
+        <CoverImageWrapper>
+          <CoverImage src={coverImage || ''}></CoverImage>
+          <Button
+            sx={{
+              position: 'absolute',
+              bottom: '5px',
+              left: '83%',
+              color: 'gray',
+            }}>
+            수정
+          </Button>
+        </CoverImageWrapper>
+        <ProfileImageWrapper>
+          <Avatar
+            src={image}
+            alt='profile image'
+            sx={{ width: '80px', height: '80px' }}></Avatar>
+          <Button data-type='profileImage' onClick={handleModalType}>
+            수정
+          </Button>
+        </ProfileImageWrapper>
+      </ImageContainer>
       <Box>
         <List
           component='nav'
           subheader={<ListSubheader>계정 정보</ListSubheader>}>
-          <ListItem>
+          <InfoListItem sx={{ alignItems: 'baseline', paddingRight: 0 }}>
             <ListItemText primary='닉네임' />
             <span>{fullName}</span>
             <Button data-type='nickname' onClick={handleModalType}>
               수정
             </Button>
-          </ListItem>
-          <ListItem>
+          </InfoListItem>
+          <InfoListItem sx={{ alignItems: 'baseline' }}>
             <ListItemText primary='직업' />
             <span>{job}</span>
             <Button data-type='job' onClick={handleModalType}>
               수정
             </Button>
-          </ListItem>
+          </InfoListItem>
           {date.year && (
-            <ListItem>
+            <InfoListItem sx={{ alignItems: 'baseline' }}>
               <ListItemText primary='생년월일' />
               <span>
                 {date.year}년 {date.month}월 {date.day}일
               </span>
-            </ListItem>
+            </InfoListItem>
           )}
           <ListItem sx={{ paddingLeft: '8px' }}>
             <Button
@@ -131,11 +145,34 @@ export default Profile;
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  padding: 30px;
 `;
 
-const Section = styled.section`
+const ImageContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  margin-bottom: 60px;
+`;
+
+const CoverImageWrapper = styled.div`
+  position: relative;
+`;
+
+const CoverImage = styled(Box)<{ src: string }>`
+  background: ${(props) => (props.src ? `url(${props.src})` : 'lightgray')};
+  height: 200px;
+`;
+
+const ProfileImageWrapper = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+  bottom: -72px;
+  left: 50%;
+  margin-left: -40px;
+`;
+
+const InfoListItem = styled(ListItem)`
+  align-items: baseline;
+  padding-right: 0;
 `;

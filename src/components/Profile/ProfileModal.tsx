@@ -4,6 +4,7 @@ import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 
 import { ModalType } from '../../pages/Profile';
+import ImageForm from './ImageForm';
 import PasswordForm from './PasswordForm';
 import TextForm from './TextForm';
 
@@ -54,11 +55,25 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
     },
     coverImage: {
       title: '커버 이미지',
-      form: <div></div>,
+      form: (
+        <ImageForm
+          type='프로필'
+          image={user.coverImage || ''}
+          open={open}
+          handleOpen={handleOpen}
+        />
+      ),
     },
     profileImage: {
       title: '프로필 이미지',
-      form: <div></div>,
+      form: (
+        <ImageForm
+          type='프로필'
+          image={user.image || ''}
+          open={open}
+          handleOpen={handleOpen}
+        />
+      ),
     },
   };
 

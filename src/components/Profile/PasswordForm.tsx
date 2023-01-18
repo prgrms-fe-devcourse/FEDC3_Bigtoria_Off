@@ -85,7 +85,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <InputDiv>
+      <InputWrapper>
         <TextField
           type='password'
           name='oldValue'
@@ -96,8 +96,8 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputDiv>
-      <InputDiv>
+      </InputWrapper>
+      <InputWrapper>
         <TextField
           type='password'
           name='newValue'
@@ -108,8 +108,8 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputDiv>
-      <InputDiv>
+      </InputWrapper>
+      <InputWrapper>
         <TextField
           type='password'
           name='newValueCheck'
@@ -120,7 +120,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputDiv>
+      </InputWrapper>
       <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
         비밀번호 변경
       </Button>
@@ -135,7 +135,7 @@ const Form = styled.form`
   padding-top: 15px;
 `;
 
-const InputDiv = styled.div`
+const InputWrapper = styled.div`
   width: 100%;
   padding-bottom: 13px;
 `;

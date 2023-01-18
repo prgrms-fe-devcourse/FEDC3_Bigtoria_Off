@@ -96,7 +96,3 @@ const InputDiv = styled(Box)`
   width: 100%;
   text-align: right;
 `;
-
-const ErrorText = styled.small`
-  color: red;
-`;
