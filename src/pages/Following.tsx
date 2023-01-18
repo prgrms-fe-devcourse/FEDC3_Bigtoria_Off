@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 
 import FollowHeader from '../components/Follow/FollowHeader';
 import FollowingButton from '../components/Follow/FollowingButton';
-import FollowList from '../components/Follow/FollowingList';
+import FollowingList from '../components/Follow/FollowingList';
 import useGetFollow from '../hooks/useGetFollow';
 
 const Following = () => {
-  const { followingIdList, loading, followLoading, getUserInfo, handleClick } =
+  const { followingList, loading, followLoading, getUserInfo, handleClick } =
     useGetFollow();
 
   useEffect(() => {
@@ -31,22 +31,28 @@ const Following = () => {
           }}
         />
       ) : (
-        followingIdList.map((following) => (
-          <Wrapper key={following._id}>
-            <FollowList
-              src={following.image}
-              fullName={following.fullName}
-              isOnline={following.isOnline}
-              userId={following.user}
-            />
-            <FollowingButton
-              followId={following._id}
-              userId={following.user}
-              isLoading={followLoading}
-              onClick={handleClick}
-            />
-          </Wrapper>
-        ))
+        followingList.map(
+          ({ _id, image, fullName, isOnline, user, coverImage, username }) => (
+            <Wrapper key={_id}>
+              <FollowingList
+                userInfo={{
+                  image,
+                  fullName,
+                  isOnline,
+                  user,
+                  coverImage,
+                  username,
+                }}
+              />
+              <FollowingButton
+                followId={_id}
+                userId={user}
+                isLoading={followLoading}
+                onClick={handleClick}
+              />
+            </Wrapper>
+          )
+        )
       )}
     </Container>
   );

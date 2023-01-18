@@ -8,26 +8,24 @@ import {
   ListItemText,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-import { ROUTES } from '../../constants/routes';
+import FollowModal from './FollowModal';
 
 interface Props {
-  src?: string;
-  size?: string;
-  userId: string;
-  fullName?: string;
-  isOnline?: boolean;
+  userInfo: {
+    image?: string;
+    user?: string;
+    fullName?: string;
+    username?: string;
+    coverImage?: string;
+    isOnline?: boolean;
+  };
 }
 
-const FollowingList = ({
-  src,
-  size = '50px',
-  fullName,
-  isOnline,
-  userId,
-}: Props) => {
-  const navigate = useNavigate();
+const FollowingList = ({ userInfo }: Props) => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => setOpen(!open);
 
   return (
     <List
@@ -41,19 +39,23 @@ const FollowingList = ({
       <ListItem>
         <ListItemAvatar>
           <StateBadge
-            isOnline={isOnline}
+            isOnline={userInfo.isOnline}
             overlap='circular'
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             variant='dot'>
             <Avatar
-              src={src}
-              sx={{ width: size, height: size, cursor: 'pointer' }}
-              onClick={() => navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId))}
+              src={userInfo.image}
+              sx={{
+                width: '50px',
+                height: '50px',
+                cursor: 'pointer',
+              }}
+              onClick={handleClick}
             />
           </StateBadge>
         </ListItemAvatar>
         <ListItemText
-          primary={fullName}
+          primary={userInfo.fullName}
           sx={{
             maxWidth: '100px',
             height: '1rem',
@@ -62,6 +64,7 @@ const FollowingList = ({
           }}
         />
       </ListItem>
+      <FollowModal open={open} onClick={handleClick} userInfo={userInfo} />
     </List>
   );
 };

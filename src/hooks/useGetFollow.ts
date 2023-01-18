@@ -18,7 +18,7 @@ const useGetFollow = () => {
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
-  const [followingIdList, setFollowingIdList] = useState<List[]>([]);
+  const [followingList, setFollowingList] = useState<List[]>([]);
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
@@ -33,13 +33,17 @@ const useGetFollow = () => {
       }
       if (userId) {
         const res = await getFollowingUser(infoList.map((data) => data.user));
-        res.map(({ fullName, image, isOnline }, index) => {
-          infoList[index].fullName = fullName;
-          infoList[index].image = image;
-          infoList[index].isOnline = isOnline;
-        });
+        res.map(
+          ({ fullName, image, isOnline, coverImage, username }, index) => {
+            infoList[index].fullName = fullName;
+            infoList[index].image = image;
+            infoList[index].isOnline = isOnline;
+            infoList[index].coverImage = coverImage;
+            infoList[index].username = username;
+          }
+        );
       }
-      setFollowingIdList(infoList);
+      setFollowingList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
       console.error(error);
@@ -64,10 +68,10 @@ const useGetFollow = () => {
         } else {
           if (userid) {
             const res = await createFollow(userid);
-            const changedIndex = getChangedIndex(followingIdList, followid);
-            const infoList = [...followingIdList];
+            const changedIndex = getChangedIndex(followingList, followid);
+            const infoList = [...followingList];
             infoList[changedIndex]._id = res?.data._id;
-            setFollowingIdList(infoList);
+            setFollowingList(infoList);
           }
         }
       } catch (error) {
@@ -79,7 +83,7 @@ const useGetFollow = () => {
   };
 
   return {
-    followingIdList,
+    followingList,
     loading,
     followLoading,
     getUserInfo,

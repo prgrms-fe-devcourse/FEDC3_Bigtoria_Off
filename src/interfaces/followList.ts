@@ -4,6 +4,8 @@ export interface List {
   follower?: string;
   fullName?: string;
   image?: string;
+  coverImage?: string;
+  username?: string;
   isOnline?: boolean;
 }
 
