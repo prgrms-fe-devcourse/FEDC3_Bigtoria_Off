@@ -11,6 +11,7 @@ export const ROUTES = {
   STORY_EDIT: '/story/edit/:storyId',
   STORY_CREATE: '/story/edit/new',
   CHAT: '/chat',
+  PROFILE: '/profile',
   FOLLOW_BY_USER_ID: (userId: string) => `/follow/${userId}`,
   FOLLOWER_BY_USER_ID: (userId: string) => `/follower/${userId}`,
   STORY_BOOK_BY_USER_ID: (userId: string) => `/story-book/${userId}`,

@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ImageUpload = ({ src, onChange, onDelete }: Props) => {
-  const [currentImage, setCurrentImage] = useState<File>();
+  const [currentImage, setCurrentImage] = useState<File | null>();
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +21,12 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
     }
   };
 
-  const handleChooseFile = () => {
+  const handleFileDelete = () => {
+    setCurrentImage(null);
+    onDelete();
+  };
+
+  const handleFileChoose = () => {
     if (inputRef.current) {
       inputRef.current.click();
     }
@@ -62,7 +67,7 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
         sx={{
           borderColor: dragging ? 'black' : 'grey',
         }}
-        onClick={handleChooseFile}
+        onClick={handleFileChoose}
         onDrop={handleFileDrop}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -71,12 +76,12 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
           hidden
           ref={inputRef}
           type='file'
-          name='Story Image'
+          name='image'
           accept='image/jpg, image/jpeg, image/png'
           onChange={handleFileChange}
         />
         {src ? (
-          <ImagePreview src={src} alt='story image' />
+          <ImagePreview src={src} alt='이미지 미리보기' />
         ) : (
           <ImagePlaceholder>
             클릭하여 이미지를 추가하거나
@@ -85,7 +90,9 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
           </ImagePlaceholder>
         )}
       </UploadContainer>
-      {(src || currentImage) && <Button onClick={onDelete}>삭제</Button>}
+      {(src || currentImage) && (
+        <Button onClick={handleFileDelete}>삭제</Button>
+      )}
     </>
   );
 };
