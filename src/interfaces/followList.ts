@@ -7,6 +7,7 @@ export interface List {
   coverImage?: string;
   username?: string;
   isOnline?: boolean;
+  followingId?: string;
 }
 
 export interface FollowerList {
@@ -17,4 +18,5 @@ export interface FollowerList {
   isOnline?: boolean;
   coverImage?: string;
   username?: string;
+  followingId?: string;
 }

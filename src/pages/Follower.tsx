@@ -2,12 +2,14 @@ import styled from '@emotion/styled';
 import { CircularProgress, Container } from '@mui/material';
 import { useEffect } from 'react';
 
+import FollowerButton from '../components/Follow/FollowerButton';
 import FollowHeader from '../components/Follow/FollowHeader';
 import FollowingList from '../components/Follow/FollowingList';
 import useGetFollower from '../hooks/useGetFollower';
 
 const Follower = () => {
-  const { followerList, loading, getUserInfo } = useGetFollower();
+  const { followerList, loading, f4f, getUserInfo, handleClick } =
+    useGetFollower();
 
   useEffect(() => {
     getUserInfo();
@@ -32,6 +34,7 @@ const Follower = () => {
         followerList.map(
           ({
             _id,
+            followingId,
             image,
             fullName,
             isOnline,
@@ -49,6 +52,12 @@ const Follower = () => {
                   coverImage,
                   username,
                 }}
+              />
+              <FollowerButton
+                followId={followingId}
+                userId={follower}
+                f4f={f4f}
+                onClick={handleClick}
               />
             </Wrapper>
           )
