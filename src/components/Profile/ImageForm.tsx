@@ -50,7 +50,7 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
 
   const generateFormData = () => {
     const formData = new FormData();
-    formData.append('isCover', type === 'profileImage' ? 'false' : 'true');
+    formData.append('isCover', type === '커버' ? 'true' : 'false');
     if (imageFile) formData.append('image', imageFile);
 
     return formData;
@@ -68,7 +68,7 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
 
     try {
       const formData = generateFormData();
-      type === 'profileImage'
+      type === '프로필'
         ? await postProfileImage(formData)
         : await postCoverImage(formData);
 
