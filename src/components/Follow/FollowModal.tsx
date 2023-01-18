@@ -8,10 +8,8 @@ import { Avatar, Chip, Dialog, Divider, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { borderColor } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
-import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 
 interface Props {
