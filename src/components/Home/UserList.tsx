@@ -1,4 +1,4 @@
-import { Box, List } from '@mui/material';
+import { List } from '@mui/material';
 
 import { ROUTES } from '../../constants/routes';
 import { User } from '../../interfaces/user';
