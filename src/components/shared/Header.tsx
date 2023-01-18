@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +7,6 @@ import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
-import useFetchUser from '../../hooks/useFetchUser';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
 import FontText from '../Home/FontText';
@@ -14,18 +14,28 @@ import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
   const [click, setClick] = useState(false);
-  const [image, setImage] = useState('');
-  const [name, setName] = useState('');
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
-  const { user, isLoading } = useFetchUser();
+  const [user, setUser] = useState({
+    image: '',
+    fullName: '',
+    _id: '',
+  });
 
   useEffect(() => {
-    if (!isLoading) return;
-    user?.image && setImage(user.image);
-    user?.fullName && setName(user.fullName);
-  }, [isLoading, user?._id]);
+    const fetchUser = async () => {
+      const userInfo = await checkAuth();
+      setUser({
+        image: userInfo.image,
+        fullName: userInfo.fullName,
+        _id: userInfo._id,
+      });
+    };
+
+    fetchUser();
+    console.log(user);
+  }, [token]);
 
   const handleClickProfileButton = () => {
     token ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
@@ -37,8 +47,7 @@ const Header = () => {
 
   const handleClickMyStoryButton = async () => {
     if (token) {
-      const { _id: userId } = await checkAuth();
-      navigate(ROUTES.STORY_BOOK_BY_USER_ID(userId));
+      navigate(ROUTES.STORY_BOOK_BY_USER_ID(user._id));
       return;
     }
 
@@ -47,8 +56,7 @@ const Header = () => {
 
   const handleClickFollowListButton = async () => {
     if (token) {
-      const { _id: userId } = await checkAuth();
-      navigate(ROUTES.FOLLOW_BY_USER_ID(userId));
+      navigate(ROUTES.FOLLOW_BY_USER_ID(user._id));
       return;
     }
 
@@ -89,8 +97,12 @@ const Header = () => {
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <NavLinks onClick={handleClickProfileButton}>
-          <img src={image || '/icons/user_profile.svg'} width={120} />
-          <p>{name}</p>
+          <Avatar
+            src={user.image || ''}
+            alt='profile image'
+            sx={{ width: '120px', height: '120px' }}
+          />
+          {user.fullName && <p>{user.fullName}</p>}
         </NavLinks>
         <NavLinks onClick={handleClickWatchStoriesButton}>
           스토리 구경하기
@@ -169,7 +181,7 @@ const Logo = styled.h1`
 
 const NavLinks = styled.div`
   font-size: 1rem;
-  padding: 2rem;
+  padding: 1.5rem 0;
   font-weight: bold;
   cursor: pointer;
   p {
