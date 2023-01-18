@@ -5,14 +5,36 @@ import {
   koKR,
   LocalizationProvider,
   MobileDatePicker,
+  PickersDay,
+  pickersDayClasses,
+  PickersDayProps,
 } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
+
+import { COLORS } from '../../constants/colors';
 
 interface Props {
   value: Dayjs | null;
   onChange: (newValue: Dayjs | null) => void;
 }
+
+const renderWeekPickerDay = (
+  date: Dayjs,
+  selectedDates: Array<Dayjs | null>,
+  pickersDayProps: PickersDayProps<Dayjs>
+) => {
+  return (
+    <PickersDay
+      {...pickersDayProps}
+      sx={{
+        [`&&.${pickersDayClasses.selected}`]: {
+          backgroundColor: COLORS.SUB,
+        },
+      }}
+    />
+  );
+};
 
 const DatePicker = ({ value, onChange }: Props) => {
   return (
@@ -30,7 +52,8 @@ const DatePicker = ({ value, onChange }: Props) => {
           toolbarFormat='YYYY년 M월 D일'
           onChange={onChange}
           disableMaskedInput
-          renderInput={(params) => <TextField {...params} />}
+          renderDay={renderWeekPickerDay}
+          renderInput={(params) => <TextField {...params} color='warning' />}
           maxDate={dayjs(new Date())}
         />
       </LocalizationProvider>
@@ -46,6 +69,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: '1rem',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: `${COLORS.SUB}`,
         },
       },
     },

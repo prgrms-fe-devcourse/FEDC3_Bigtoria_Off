@@ -63,6 +63,7 @@ const FollowButton = () => {
       {!isMyStoryBook && canBeRendered && (
         <CustomButton
           variant='outlined'
+          color='warning'
           onClick={handleClick}
           isFollowing={isFollowing}>
           {isFollowing ? '팔로잉' : '팔로우'}

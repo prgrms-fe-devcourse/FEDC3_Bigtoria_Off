@@ -58,8 +58,9 @@ const Wrapper = styled.div`
   margin: 0 auto;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid gray;
-  border-radius: 0.5rem;
+  /* border: 2px solid gray; */
+  border-radius: 1rem;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
+  background-color: white;
 `;
