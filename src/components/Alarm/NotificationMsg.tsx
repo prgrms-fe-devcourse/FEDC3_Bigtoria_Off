@@ -1,11 +1,9 @@
 import CommentIcon from '@mui/icons-material/Comment';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
   Badge,
-  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemButton,
@@ -13,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
 import { calcCreatedToCurrentDate } from '../../utils/calcCreatedToCurrentTime';
@@ -55,7 +54,16 @@ const NotificationMsg = ({ notification }: Props) => {
   const generateAvatar = () => {
     if (like) return <ThumbUp />;
     if (comment) return <CommentIcon />;
-    if (follow) return <Avatar alt={fullName} src={image ? image : ''} />;
+    if (follow)
+      return (
+        <Avatar
+          sx={{
+            backgroundColor: COLORS.SUB,
+          }}
+          alt={fullName}
+          src={image ? image : ''}
+        />
+      );
     if (message) return <SendIcon />;
   };
 
@@ -67,10 +75,6 @@ const NotificationMsg = ({ notification }: Props) => {
     if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
     if (message) '';
-  };
-
-  const handleDeleteClick = () => {
-    //Todo: remove alarm
   };
 
   return (
@@ -91,7 +95,7 @@ const NotificationMsg = ({ notification }: Props) => {
           }}>
           <Badge
             variant='dot'
-            color='primary'
+            color='warning'
             invisible={seen}
             anchorOrigin={{
               vertical: 'top',
@@ -103,10 +107,11 @@ const NotificationMsg = ({ notification }: Props) => {
         <ListItemText
           primary={generateMsg()}
           secondary={calcCreatedToCurrentDate(createdAt || '')}
+          sx={{
+            paddingTop: '5px',
+            paddingRight: '10px',
+          }}
         />
-        <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </IconButton>
       </ListItemButton>
     </ListItem>
   );

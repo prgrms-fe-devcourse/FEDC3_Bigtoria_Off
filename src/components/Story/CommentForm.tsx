@@ -24,6 +24,7 @@ const CommentForm = ({
     <Form onSubmit={handleSubmit}>
       <TextField
         fullWidth
+        color='warning'
         multiline
         rows={4}
         placeholder={
@@ -32,7 +33,7 @@ const CommentForm = ({
         value={comment}
         onChange={handleChange}
         disabled={!hasToken}></TextField>
-      <Button type='submit' disabled={!hasToken || isLoading}>
+      <Button color='warning' type='submit' disabled={!hasToken || isLoading}>
         댓글 작성
       </Button>
     </Form>

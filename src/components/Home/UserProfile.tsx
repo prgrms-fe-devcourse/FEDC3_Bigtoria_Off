@@ -9,6 +9,8 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../../constants/colors';
+
 interface Props {
   path: string;
   image: string | undefined;
@@ -23,18 +25,22 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
   return (
     <ListItem
       sx={{
-        border: '1px solid rgba(0, 0, 0, 0.1)',
         boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
-        borderRadius: 2,
+        borderRadius: 4,
         marginBottom: '12px',
         padding: 0,
+        backgroundColor: 'white',
       }}>
       <ListItemButton
         onClick={() => navigate(path)}
-        sx={{ padding: '20px 18px' }}>
+        sx={{ padding: '20px 18px', borderRadius: 4 }}>
         <ListItemAvatar sx={{ marginRight: '20px' }}>
           <Avatar
-            sx={{ width: 42, height: 42 }}
+            sx={{
+              width: 42,
+              height: 42,
+              backgroundColor: COLORS.SUB,
+            }}
             alt={fullName}
             src={image ? image : ''}
           />

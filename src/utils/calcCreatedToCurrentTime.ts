@@ -1,3 +1,5 @@
+const EXPIRED_LIMIT_DATE = 5;
+
 export const calcCreatedToCurrentDate = (createdAt: string) => {
   if (createdAt === '') return '';
 
@@ -17,4 +19,18 @@ export const calcCreatedToCurrentDate = (createdAt: string) => {
     return `${eHour}시간 전`;
   }
   return `${eDay}일 전`;
+};
+
+export const isExpiredDate = (createdAt: string) => {
+  if (createdAt === '') return true;
+
+  const curTime = new Date();
+  const createdTime = new Date(createdAt);
+
+  const elapsedTime = curTime.getTime() - createdTime.getTime();
+
+  const eDay = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+
+  if (eDay > EXPIRED_LIMIT_DATE) return true;
+  return false;
 };

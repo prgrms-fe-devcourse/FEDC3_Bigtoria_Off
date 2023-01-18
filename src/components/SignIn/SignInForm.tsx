@@ -50,6 +50,7 @@ const SignInForm = ({
         error={errors.email !== ''}
         label='이메일'
         name='email'
+        color='warning'
         value={values.email}
         autoFocus
         autoComplete='email'
@@ -62,6 +63,7 @@ const SignInForm = ({
         label='비밀번호'
         name='password'
         type='password'
+        color='warning'
         value={values.password}
         autoComplete='current-password'
         onChange={onChange}
@@ -79,7 +81,11 @@ const SignInForm = ({
           }}>
           <SignInButton disabled={isLoading}>로그인</SignInButton>
           {isLoading && (
-            <CircularProgress size={24} sx={{ position: 'absolute' }} />
+            <CircularProgress
+              color='warning'
+              size={24}
+              sx={{ position: 'absolute' }}
+            />
           )}
         </Grid>
         <Grid
@@ -98,7 +104,11 @@ const SignInForm = ({
             로그인 없이 접속
           </SignInButton>
           {isLoading && (
-            <CircularProgress size={24} sx={{ position: 'absolute' }} />
+            <CircularProgress
+              color='warning'
+              size={24}
+              sx={{ position: 'absolute' }}
+            />
           )}
         </Grid>
       </Grid>

@@ -14,7 +14,7 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
 
           return (
             <CardContainer key={story._id}>
-              {story.isFirstInSameMonths && month}
+              {story.isFirstInSameMonths && month}월
               <StoryCard
                 title={storyTitle}
                 storyId={story._id}
@@ -33,6 +33,8 @@ export default StoriesByYear;
 
 const Container = styled.div`
   margin-bottom: 1rem;
+  border-radius: 1rem;
+  background-color: white;
 
   display: flex;
   align-items: center;
@@ -40,6 +42,7 @@ const Container = styled.div`
 
 const Year = styled.div`
   width: 4rem;
+  text-align: center;
 `;
 
 const CardsContainer = styled.div`
@@ -49,13 +52,14 @@ const CardsContainer = styled.div`
   align-items: flex-end;
   overflow-x: auto;
   padding: 1rem;
+  margin-bottom: 1rem;
 
   &::-webkit-scrollbar {
     height: 0.15rem;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${COLORS.MUI_PRIMARY_LIGHT};
+    background-color: ${COLORS.SUB};
     border-radius: 1rem;
   }
 `;
