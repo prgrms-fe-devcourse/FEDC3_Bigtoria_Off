@@ -1,8 +1,10 @@
 import { Box, CircularProgress } from '@mui/material';
+import { useState } from 'react';
 
 import FontText from '../components/Home/FontText';
 import SearchForm from '../components/Home/SearchForm';
 import UserList from '../components/Home/UserList';
+import useDebounce from '../hooks/useDebounce';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 const Home = () => {
@@ -15,11 +17,21 @@ const Home = () => {
     searchDataWithState,
   } = useInfiniteScroll();
 
+  const [keyword, setKeyword] = useState('');
+
   const handleSubmit = async (keyword: string) => {
-    keyword === ''
-      ? await initAllStateAndGetDataWithAPI()
-      : await searchDataWithState(keyword);
+    setKeyword(keyword);
   };
+
+  useDebounce({
+    fn: async () => {
+      keyword === ''
+        ? await initAllStateAndGetDataWithAPI()
+        : await searchDataWithState(keyword);
+    },
+    ms: 300,
+    deps: [keyword],
+  });
 
   return (
     <Box

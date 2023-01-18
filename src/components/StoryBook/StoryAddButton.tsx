@@ -6,12 +6,17 @@ import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage } from '../../utils/storage';
 
-const StoryAddButton = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const StoryAddButton = ({ onClick }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);
 
+    onClick();
     token && navigate(ROUTES.STORY_CREATE);
     !token && navigate(ROUTES.SIGNIN);
   };

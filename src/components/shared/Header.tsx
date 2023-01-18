@@ -7,6 +7,7 @@ import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
+import useFetchUser from '../../hooks/useFetchUser';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
 import FontText from '../Home/FontText';
@@ -14,11 +15,14 @@ import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
   const headerRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user, isLoading } = useFetchUser();
 
   useEffect(() => {
     const headerHeight = headerRef?.current?.getBoundingClientRect();
@@ -36,6 +40,20 @@ const Header = () => {
       document.removeEventListener('scroll', scrollEvent);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isLoading) return;
+    user?.image && setImage(user.image);
+    user?.fullName && setName(user.fullName);
+  }, [isLoading, user?._id]);
+
+  const handleClickProfileButton = () => {
+    token ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
+  };
+
+  const handleClickHamburgerClose = () => {
+    setClick(false);
+  };
 
   const handleClickWatchStoriesButton = () => {
     navigate(ROUTES.HOME);
@@ -74,7 +92,11 @@ const Header = () => {
 
   return (
     <Container ref={headerRef} isScrolled={isScrolled}>
-      <Logo onClick={() => navigate(ROUTES.HOME)}>
+      <Logo
+        onClick={() => {
+          handleClickHamburgerClose();
+          navigate(ROUTES.HOME);
+        }}>
         <FontText
           title='Bigtoria'
           sx={{
@@ -83,14 +105,17 @@ const Header = () => {
         />
       </Logo>
       <ButtonsContainer>
-        <StoryAddButton />
-        <NotificationButton />
+        <StoryAddButton onClick={handleClickHamburgerClose} />
+        <NotificationButton onClick={handleClickHamburgerClose} />
         <HamburgerButton onClick={handleClick}>
           {click ? <FaArrowRight fontSize={'1.25rem'} /> : <FaHamburger />}
         </HamburgerButton>
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
-        <img src='/icons/user_profile.svg' width={120} />
+        <NavLinks onClick={handleClickProfileButton}>
+          <img src={image || '/icons/user_profile.svg'} width={120} />
+          <p>{name}</p>
+        </NavLinks>
         <NavLinks onClick={handleClickWatchStoriesButton}>
           스토리 구경하기
         </NavLinks>
@@ -175,4 +200,7 @@ const NavLinks = styled.div`
   padding: 2rem;
   font-weight: bold;
   cursor: pointer;
+  p {
+    text-align: center;
+  }
 `;

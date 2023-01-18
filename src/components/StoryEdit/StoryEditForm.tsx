@@ -52,10 +52,10 @@ const StoryEditForm = ({ story }: Props) => {
           <TextInput
             name='title'
             value={values.title}
-            placeholder='스토리의 제목을 입력하세요'
+            label='제목'
+            error={!!errors.content}
             onChange={handleChange}
           />
-          <ErrorText>{errors.title}</ErrorText>
         </InputDiv>
       </Section>
       <Section>
@@ -74,10 +74,10 @@ const StoryEditForm = ({ story }: Props) => {
             value={values.content}
             multiline
             rows={10}
-            placeholder='스토리의 내용을 입력하세요'
+            label='설명'
+            error={!!errors.content}
             onChange={handleChange}
           />
-          <ErrorText>{errors.content}</ErrorText>
         </InputDiv>
       </Section>
       <SubmitButton isLoading={isLoading} />
@@ -95,8 +95,4 @@ const Section = styled(Box)`
 const InputDiv = styled(Box)`
   width: 100%;
   text-align: right;
-`;
-
-const ErrorText = styled.small`
-  color: red;
 `;

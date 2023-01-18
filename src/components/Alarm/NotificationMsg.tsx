@@ -1,11 +1,9 @@
 import CommentIcon from '@mui/icons-material/Comment';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
   Badge,
-  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemButton,
@@ -79,10 +77,6 @@ const NotificationMsg = ({ notification }: Props) => {
     if (message) '';
   };
 
-  const handleDeleteClick = () => {
-    //Todo: remove alarm
-  };
-
   return (
     <ListItem
       sx={{
@@ -113,10 +107,11 @@ const NotificationMsg = ({ notification }: Props) => {
         <ListItemText
           primary={generateMsg()}
           secondary={calcCreatedToCurrentDate(createdAt || '')}
+          sx={{
+            paddingTop: '5px',
+            paddingRight: '10px',
+          }}
         />
-        <IconButton edge='end' aria-label='delete' onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </IconButton>
       </ListItemButton>
     </ListItem>
   );
