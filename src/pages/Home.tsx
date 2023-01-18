@@ -61,7 +61,7 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <Box sx={{ userSelect: 'none', paddingTop: '20px' }}>
+        <Box>
           <FontText
             title='profiles..'
             sx={{
@@ -71,8 +71,8 @@ const Home = () => {
               marginTop: '20px',
             }}
           />
+          {data && <UserList users={data} />}
         </Box>
-        <Box>{data && <UserList users={data} />}</Box>
       </Box>
       {!isAllRendered && (
         <Box
