@@ -31,21 +31,17 @@ const style = css`
     font-style: normal;
   }
 
-  html {
-    line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
+  body {
+    font-family: 'MaplestoryOTFLight', cursive;
+    background-color: ${COLORS.MAIN};
+    margin: 0;
+    overflow-y: scroll;
     @media all and (min-width: 768px) {
       width: 412px;
       margin: 0 auto;
     }
   }
-  body {
-    font-family: 'MaplestoryOTFLight', cursive;
 
-    background-color: ${COLORS.MAIN};
-    margin: 0;
-    overflow-y: scroll;
-  }
   main {
     display: block;
   }
