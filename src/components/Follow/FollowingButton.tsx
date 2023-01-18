@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 interface Props {
-  isLoading?: boolean;
+  isLoading: boolean;
   followId: string;
   userId: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
