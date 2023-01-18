@@ -74,6 +74,7 @@ const ImageForm = ({ type, image, open, handleOpen }: Props) => {
 
       alert(`${type} 이미지가 변경되었습니다.`);
       handleOpen();
+      location.reload();
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);

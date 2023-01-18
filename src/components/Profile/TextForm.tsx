@@ -76,6 +76,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
       }
       alert(`${type}이 변경되었습니다.`);
       handleOpen();
+      location.reload();
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_PUTTING_NICKNAME);

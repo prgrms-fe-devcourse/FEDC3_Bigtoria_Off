@@ -75,6 +75,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
       await putPassword(values.newValue);
       alert('비밀번호가 변경되었습니다.');
       handleOpen();
+      location.reload();
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_PUTTING_PASSWORD);
