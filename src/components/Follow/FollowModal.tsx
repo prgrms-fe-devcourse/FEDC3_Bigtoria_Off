@@ -51,7 +51,7 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
             <Avatar
               src={userInfo.image}
               alt='profile image'
-              sx={{ width: '80px', height: '80px' }}
+              sx={{ width: '100px', height: '100px' }}
             />
           </ProfileImageWrapper>
         </ImageContainer>
@@ -60,9 +60,9 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
         </TextContainer>
         <Stack
           direction='row'
-          spacing={1}
+          spacing={2}
           justifyContent='center'
-          sx={{ margin: '1rem 0 1rem 0' }}>
+          sx={{ margin: '1rem 0 1rem 0', height: '80px' }}>
           <Chip
             icon={<WorkHistoryTwoToneIcon />}
             color='success'
@@ -79,20 +79,20 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
         <Divider />
         <Stack
           direction='row'
-          spacing={1}
+          spacing={0}
           justifyContent='center'
           sx={{ width: '100%' }}>
           <Button
             variant='outlined'
             startIcon={<AutoStoriesTwoToneIcon />}
             color='warning'
+            size='large'
             onClick={handleClickStoryBook}
             sx={{
               width: '50%',
             }}>
             스토리북
           </Button>
-          <Divider orientation='vertical' flexItem />
           <Button
             variant='contained'
             endIcon={<SendTwoToneIcon />}
@@ -111,8 +111,7 @@ export default FollowModal;
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  width: 250px;
-  height: 100%;
+  width: 300px;
   border: 2px solid orange;
   box-shadow: 24;
 `;
@@ -120,7 +119,7 @@ const Container = styled(Box)`
 const ImageContainer = styled.div`
   position: relative;
   z-index: 2;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 `;
 
 const CoverImageWrapper = styled.div`
@@ -139,8 +138,8 @@ const ProfileImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: -40px;
-  bottom: -40px;
+  margin-left: -50px;
+  bottom: -50px;
   left: 50%;
 `;
 

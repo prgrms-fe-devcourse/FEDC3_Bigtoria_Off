@@ -46,8 +46,8 @@ const FollowingList = ({ userInfo }: Props) => {
             <Avatar
               src={userInfo.image}
               sx={{
-                width: '50px',
-                height: '50px',
+                width: '60px',
+                height: '60px',
                 cursor: 'pointer',
               }}
               onClick={handleClick}
@@ -57,10 +57,8 @@ const FollowingList = ({ userInfo }: Props) => {
         <ListItemText
           primary={userInfo.fullName}
           sx={{
-            maxWidth: '100px',
-            height: '1rem',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
+            display: 'block',
+            marginLeft: '1rem',
           }}
         />
       </ListItem>
