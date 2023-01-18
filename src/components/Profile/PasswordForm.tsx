@@ -27,6 +27,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const [isLoading, setIsLoading] = useState(false);
+  const passwordRegex = /^.{6,15}$/;
 
   useEffect(() => {
     setValues(initialValues);
@@ -48,7 +49,10 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
       errors.newValue = '새 비밀번호를 입력해 주세요.';
     else if (oldValue === newValue) {
       errors.newValue = '현재 비밀번호와 일치합니다.';
+    } else if (!passwordRegex.test(newValue)) {
+      errors.newValue = '비밀번호는 6자리 이상, 15자리 이하로 입력해주세요';
     }
+
     if (isBlankString(newValueCheck))
       errors.newValueCheck = '새 비밀번호 확인을 입력해 주세요.';
     else if (newValue !== newValueCheck)
@@ -103,6 +107,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           type='password'
           name='newValue'
           label='새 비밀번호'
+          placeholder='6-15자리'
           size='small'
           error={!!errors.newValue}
           helperText={errors.newValue}
@@ -122,9 +127,23 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           onChange={handleChange}
         />
       </InputWrapper>
-      <Button type='submit' variant='contained' disabled={isLoading} fullWidth>
-        비밀번호 변경
-      </Button>
+      <ButtonWrapper>
+        <Button
+          type='button'
+          variant='outlined'
+          disabled={isLoading}
+          fullWidth
+          onClick={handleOpen}>
+          취소
+        </Button>
+        <Button
+          type='submit'
+          variant='contained'
+          disabled={isLoading}
+          fullWidth>
+          비밀번호 변경
+        </Button>
+      </ButtonWrapper>
     </Form>
   );
 };
@@ -139,4 +158,8 @@ const Form = styled.form`
 const InputWrapper = styled.div`
   width: 100%;
   padding-bottom: 13px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
 `;
