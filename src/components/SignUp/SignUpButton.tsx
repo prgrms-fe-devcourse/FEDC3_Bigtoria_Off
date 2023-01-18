@@ -18,14 +18,15 @@ const SignUpButton = ({ isLoading }: Props) => {
           fullWidth={true}
           variant='contained'
           type='submit'
+          color='warning'
           disabled={isLoading}>
           회원가입
         </Button>
         {isLoading && (
           <CircularProgress
+            color='warning'
             size={24}
             sx={{
-              color: lightBlue[500],
               position: 'absolute',
               top: '50%',
               left: '50%',

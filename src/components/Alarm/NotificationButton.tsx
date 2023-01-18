@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getNotificationList } from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
 import { getLocalStorage } from '../../utils/storage';
@@ -16,7 +17,11 @@ const { NOTIFICATION, SIGNIN } = ROUTES;
  *  1. 주기적으로 알림 체크하기 -> setInterval || SWR
  */
 
-const NotificationButton = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const NotificationButton = ({ onClick }: Props) => {
   const [badgeCount, setBadgeCount] = useState(0);
   const [invisible, setInvisible] = useState(false);
   const navigate = useNavigate();
@@ -56,12 +61,13 @@ const NotificationButton = () => {
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);
 
+    onClick();
     !token ? navigate(SIGNIN) : navigate(NOTIFICATION);
   };
 
   return (
     <Box sx={{ cursor: 'pointer' }}>
-      <Badge badgeContent={badgeCount} color='primary' invisible={invisible}>
+      <Badge badgeContent={badgeCount} invisible={invisible} color='warning'>
         <Notifications onClick={handleClick} />
       </Badge>
     </Box>

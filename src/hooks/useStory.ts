@@ -42,6 +42,7 @@ export const useFetchStory = () => {
         if (!stories.find((story: Story) => story._id === storyId)) {
           alert('존재하지 않는 스토리입니다.');
           navigate(ROUTES.HOME);
+          return;
         }
 
         const storyDetail = await getStoryDetail(storyId);

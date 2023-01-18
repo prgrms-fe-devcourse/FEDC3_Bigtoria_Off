@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../../apis/follow';
+import { postNotification } from '../../apis/notification';
 import { userInfo } from '../../apis/userInfo';
 import { USER_ID_KEY } from '../../constants/auth';
 import { Follow as Following } from '../../interfaces/user';
@@ -25,9 +26,13 @@ const FollowButton = () => {
 
       if (result) {
         const {
-          data: { _id: newFollowId },
-        }: { data: { _id: string } } = result;
+          data: { _id: newFollowId, user: userId },
+        }: { data: { _id: string; user: string } } = result;
         setFollowId(newFollowId);
+
+        //follow notification 보내기
+        !isFollowing &&
+          (await postNotification('FOLLOW', newFollowId, userId, null));
       }
 
       isFollowing ? setIsFollowing(false) : setIsFollowing(true);
@@ -58,6 +63,7 @@ const FollowButton = () => {
       {!isMyStoryBook && canBeRendered && (
         <CustomButton
           variant='outlined'
+          color='warning'
           onClick={handleClick}
           isFollowing={isFollowing}>
           {isFollowing ? '팔로잉' : '팔로우'}
