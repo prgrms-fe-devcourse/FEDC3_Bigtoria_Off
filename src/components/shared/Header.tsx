@@ -34,7 +34,6 @@ const Header = () => {
     };
 
     fetchUser();
-    console.log(user);
   }, [token]);
 
   const handleClickProfileButton = () => {
