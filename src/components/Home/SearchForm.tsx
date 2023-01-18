@@ -48,18 +48,20 @@ const SearchForm = ({ onSubmit }: Props) => {
           helperText={error.keyword}
           onChange={handleInputChange}
         />
-        <IconButton
-          color='primary'
-          component='label'
-          sx={{
-            position: 'absolute',
-            right: '2px',
-            top: '30px',
-            color: '#00000099',
-          }}
-          onClick={handleInputClear}>
-          <HighlightOff />
-        </IconButton>
+        {value && (
+          <IconButton
+            color='primary'
+            component='label'
+            sx={{
+              position: 'absolute',
+              right: '2px',
+              top: '30px',
+              color: '#00000099',
+            }}
+            onClick={handleInputClear}>
+            <HighlightOff />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );
