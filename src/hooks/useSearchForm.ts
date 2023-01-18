@@ -14,11 +14,14 @@ const useSearhForm = ({ onSubmit }: Props) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
+    const fullNameRegex = /^[A-Za-z0-9가-힣]{1,12}$/;
 
     const newError = validateSearchInput(keyword);
     setError(newError);
 
-    !newError.keyword.length && onSubmit(keyword);
+    !newError.keyword.length &&
+      fullNameRegex.test(keyword) &&
+      onSubmit(keyword);
     setValue(keyword.replace(/[\s]/g, ''));
   };
 
