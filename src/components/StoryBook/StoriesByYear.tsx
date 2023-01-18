@@ -32,6 +32,7 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
 export default StoriesByYear;
 
 const Container = styled.div`
+  margin-top: 0.3rem;
   margin-bottom: 1rem;
   border-radius: 1rem;
   background-color: ${COLORS.SUB};

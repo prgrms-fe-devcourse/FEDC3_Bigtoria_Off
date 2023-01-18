@@ -63,12 +63,12 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <Box sx={{ userSelect: 'none' }}>
+        <Box sx={{ userSelect: 'none', paddingTop: '20px' }}>
           <FontText
             title='profiles..'
             sx={{
               display: 'inline-block',
-              fontSize: '28px',
+              fontSize: '24px',
               paddingLeft: '5px',
               marginTop: '20px',
             }}

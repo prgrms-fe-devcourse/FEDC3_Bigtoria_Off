@@ -40,7 +40,6 @@ const SearchForm = ({ onSubmit }: Props) => {
             },
           }}
           variant='standard'
-          autoFocus
           type='text'
           label='user name'
           color='warning'
