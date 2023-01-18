@@ -8,6 +8,7 @@ import { Avatar, Chip, Dialog, Divider, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { borderColor } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
 import { COLORS } from '../../constants/colors';
@@ -41,7 +42,6 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
           <CoverImageWrapper>
             <IconButton
               aria-label='delete'
-              color='warning'
               size='large'
               sx={{ position: 'absolute' }}
               onClick={onClick}>
@@ -67,10 +67,16 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
           sx={{ margin: '1rem 0 1rem 0' }}>
           <Chip
             icon={<WorkHistoryTwoToneIcon />}
+            color='success'
             label={job}
             variant='outlined'
           />
-          <Chip icon={<CakeTwoToneIcon />} label={year} variant='outlined' />
+          <Chip
+            icon={<CakeTwoToneIcon />}
+            color='secondary'
+            label={year}
+            variant='outlined'
+          />
         </Stack>
         <Divider />
         <Stack
@@ -81,9 +87,11 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
           <Button
             variant='outlined'
             startIcon={<AutoStoriesTwoToneIcon />}
-            onClick={handleClickStoryBook}
             color='warning'
-            sx={{ width: '50%' }}>
+            onClick={handleClickStoryBook}
+            sx={{
+              width: '50%',
+            }}>
             스토리북
           </Button>
           <Divider orientation='vertical' flexItem />
