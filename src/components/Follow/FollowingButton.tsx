@@ -23,6 +23,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
         }}>
         <Button
           variant={toggle ? 'contained' : 'outlined'}
+          color='warning'
           size='small'
           sx={{
             height: '30px',

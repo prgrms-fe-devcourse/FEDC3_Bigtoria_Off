@@ -49,7 +49,10 @@ const CommentList = ({ comments, handleDelete }: Props) => {
             <ContentWrapper>{comment.comment}</ContentWrapper>
           </ListItemText>
           {!isLoading && user && user._id === comment.author._id && (
-            <Button variant='text' onClick={() => handleDelete(comment._id)}>
+            <Button
+              color='warning'
+              variant='text'
+              onClick={() => handleDelete(comment._id)}>
               삭제
             </Button>
           )}

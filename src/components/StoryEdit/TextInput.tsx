@@ -23,6 +23,7 @@ const TextInput = ({
   return (
     <TextField
       fullWidth
+      color='warning'
       variant='outlined'
       label={label}
       multiline={multiline}

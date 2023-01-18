@@ -34,6 +34,7 @@ const SignUpInput = ({
         type={type}
         name={name}
         value={value}
+        color='warning'
         onChange={onChange}
         helperText={errorMsg && errorMsg}
         error={!!errorMsg}

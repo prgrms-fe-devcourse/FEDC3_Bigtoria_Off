@@ -32,6 +32,7 @@ const StoryInfo = ({ story }: Props) => {
             <Box>
               <Button
                 variant='text'
+                color='warning'
                 onClick={() =>
                   navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id))
                 }>
@@ -39,6 +40,7 @@ const StoryInfo = ({ story }: Props) => {
               </Button>
               <Button
                 variant='text'
+                color='warning'
                 onClick={() => handleDelete(story._id, story.author._id)}>
                 삭제
               </Button>

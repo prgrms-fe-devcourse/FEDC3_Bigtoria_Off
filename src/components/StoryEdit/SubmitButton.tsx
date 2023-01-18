@@ -7,6 +7,7 @@ interface Props {
 const SubmitButton = ({ isLoading = false }: Props) => {
   return (
     <Button
+      color='warning'
       type='submit'
       variant='contained'
       size='large'

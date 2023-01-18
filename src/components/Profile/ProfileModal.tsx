@@ -58,7 +58,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
       form: (
         <ImageForm
           type='커버'
-          image={user.coverImage || ''}
+          oldImage={user.coverImage || ''}
           open={open}
           handleOpen={handleOpen}
         />
@@ -69,7 +69,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
       form: (
         <ImageForm
           type='프로필'
-          image={user.image || ''}
+          oldImage={user.image || ''}
           open={open}
           handleOpen={handleOpen}
         />
@@ -97,6 +97,7 @@ const ContentWrapper = styled(Box)`
   position: absolute;
   width: 50%;
   min-width: 300px;
+  max-width: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

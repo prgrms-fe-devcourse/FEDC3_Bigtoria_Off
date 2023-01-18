@@ -20,7 +20,7 @@ const StoryBook = () => {
             <StoriesByYear key={year} year={year} stories={stories} />
           ))
         ) : (
-          <Empty>{fullName}님은 게으른가봐요. ㅋ</Empty>
+          <>{!!fullName && <Empty>{fullName}님은 게으른가봐요. ㅋ</Empty>}</>
         )}
       </StoriesContainer>
     </Container>
