@@ -53,7 +53,7 @@ const Profile = () => {
     <Container>
       <ImageContainer>
         <CoverImageWrapper>
-          <CoverImage src={coverImage || ''} alt='cover image' />
+          <CoverImage image={coverImage || ''} />
           <Button
             data-type='coverImage'
             onClick={handleModalType}
@@ -94,7 +94,7 @@ const Profile = () => {
               수정
             </Button>
           </InfoListItem>
-          {date.year && (
+          {date?.year && (
             <InfoListItem sx={{ alignItems: 'baseline' }}>
               <ListItemText primary='생년월일' />
               <span>
@@ -159,11 +159,13 @@ const CoverImageWrapper = styled.div`
   position: relative;
 `;
 
-const CoverImage = styled.img<{ src: string }>`
+const CoverImage = styled.div<{ image: string }>`
   width: 100%;
   height: 200px;
-  background: ${(props) => (props.src ? `url(${props.src})` : 'lightgray')};
-  object-fit: cover;
+  background: ${(props) => (props.image ? `url(${props.image})` : 'lightgray')};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
 `;
 
 const ProfileImageWrapper = styled.div`
