@@ -15,4 +15,6 @@ export interface FollowerList {
   fullName?: string;
   image?: string;
   isOnline?: boolean;
+  coverImage?: string;
+  username?: string;
 }

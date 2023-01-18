@@ -26,11 +26,15 @@ const useGetFollower = () => {
         const res = await getFollowerUser(
           infoList.map((data) => data.follower)
         );
-        res.map(({ fullName, image, isOnline }, index) => {
-          infoList[index].fullName = fullName;
-          infoList[index].image = image;
-          infoList[index].isOnline = isOnline;
-        });
+        res.map(
+          ({ fullName, image, isOnline, coverImage, username }, index) => {
+            infoList[index].fullName = fullName;
+            infoList[index].image = image;
+            infoList[index].isOnline = isOnline;
+            infoList[index].coverImage = coverImage;
+            infoList[index].username = username;
+          }
+        );
       }
       setFollowerList(infoList);
     } catch (error) {

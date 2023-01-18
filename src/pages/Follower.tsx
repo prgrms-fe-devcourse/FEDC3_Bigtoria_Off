@@ -3,7 +3,7 @@ import { CircularProgress, Container } from '@mui/material';
 import { useEffect } from 'react';
 
 import FollowHeader from '../components/Follow/FollowHeader';
-import FollowList from '../components/Follow/FollowingList';
+import FollowingList from '../components/Follow/FollowingList';
 import useGetFollower from '../hooks/useGetFollower';
 
 const Follower = () => {
@@ -29,16 +29,30 @@ const Follower = () => {
           }}
         />
       ) : (
-        followerList.map((follower) => (
-          <Wrapper key={follower._id}>
-            <FollowList
-              src={follower.image}
-              fullName={follower.fullName}
-              isOnline={follower.isOnline}
-              userId={follower.follower}
-            />
-          </Wrapper>
-        ))
+        followerList.map(
+          ({
+            _id,
+            image,
+            fullName,
+            isOnline,
+            follower,
+            coverImage,
+            username,
+          }) => (
+            <Wrapper key={_id}>
+              <FollowingList
+                userInfo={{
+                  image,
+                  fullName,
+                  isOnline,
+                  user: follower,
+                  coverImage,
+                  username,
+                }}
+              />
+            </Wrapper>
+          )
+        )
       )}
     </Container>
   );
