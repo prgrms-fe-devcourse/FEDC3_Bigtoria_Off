@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { Container } from '@mui/material';
 import { useEffect } from 'react';
 
-import FollowingButton from '../components/Follow/FollowingButton';
-import FollowList from '../components/Follow/FollowingList';
-import Loading from '../components/StoryBook/Loading';
-import useGetFollow from '../hooks/useGetFollow';
+import FollowingButton from '../components/Follow/FollowingButton.js';
+import FollowList from '../components/Follow/FollowingList.js';
+import Loading from '../components/StoryBook/Loading.js';
+import useGetFollow from '../hooks/useGetFollow.js';
 
 const Following = () => {
   const { followingIdList, loading, followLoading, getUserInfo, handleClick } =
