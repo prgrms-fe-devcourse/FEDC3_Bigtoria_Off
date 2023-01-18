@@ -70,7 +70,6 @@ const useGetFollow = () => {
             res &&
               (await postNotification('FOLLOW', res.data._id, userid, null));
             const changedIndex = getChangedIndex(followingList, followid);
-            console.log(changedIndex);
             const infoList = [...followingList];
             infoList[changedIndex]._id = res?.data._id;
             setFollowingList(infoList);
