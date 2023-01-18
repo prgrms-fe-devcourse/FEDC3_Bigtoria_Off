@@ -59,6 +59,7 @@ const FollowingList = ({
             height: '1rem',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
+            cursor: 'default',
           }}
         />
       </ListItem>
