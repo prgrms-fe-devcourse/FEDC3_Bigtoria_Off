@@ -97,6 +97,7 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
         <Button
           type='button'
           variant='outlined'
+          color='warning'
           disabled={isLoading}
           fullWidth
           onClick={handleOpen}>
@@ -105,6 +106,7 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
         <Button
           type='submit'
           variant='contained'
+          color='warning'
           disabled={isLoading}
           fullWidth>
           {type} 이미지 변경

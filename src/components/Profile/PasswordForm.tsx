@@ -96,6 +96,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           name='oldValue'
           label='현재 비밀번호'
           size='small'
+          color='warning'
           error={!!errors.oldValue}
           helperText={errors.oldValue}
           fullWidth
@@ -109,6 +110,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           label='새 비밀번호'
           placeholder='6-15자리'
           size='small'
+          color='warning'
           error={!!errors.newValue}
           helperText={errors.newValue}
           fullWidth
@@ -121,6 +123,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           name='newValueCheck'
           label='새 비밀번호 확인'
           size='small'
+          color='warning'
           error={!!errors.newValueCheck}
           helperText={errors.newValueCheck}
           fullWidth
@@ -131,6 +134,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
         <Button
           type='button'
           variant='outlined'
+          color='warning'
           disabled={isLoading}
           fullWidth
           onClick={handleOpen}>
@@ -139,6 +143,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
         <Button
           type='submit'
           variant='contained'
+          color='warning'
           disabled={isLoading}
           fullWidth>
           비밀번호 변경
