@@ -1,5 +1,11 @@
 import { styled, Switch } from '@mui/material';
 
+import { DisplayMode } from '../../interfaces/displayMode';
+
+interface Props extends DisplayMode {
+  onClick: () => void;
+}
+
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -47,8 +53,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const DarkModeSwitch = () => {
-  return <MaterialUISwitch />;
+const DarkModeSwitch = ({ displayMode, onClick }: Props) => {
+  const checked = displayMode === 'dark';
+
+  return <MaterialUISwitch checked={checked} onClick={onClick} />;
 };
 
 export default DarkModeSwitch;

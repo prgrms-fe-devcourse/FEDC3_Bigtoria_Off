@@ -8,6 +8,7 @@ import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
@@ -25,6 +26,7 @@ const Header = () => {
     fullName: '',
     _id: '',
   });
+  const { displayMode, toggleDisplayMode } = useDisplayModeContext();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,6 +57,10 @@ const Header = () => {
       document.removeEventListener('scroll', scrollEvent);
     };
   }, []);
+
+  const handleClickDarkModeSwitch = () => {
+    toggleDisplayMode();
+  };
 
   const handleClickProfileButton = () => {
     token ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
@@ -112,7 +118,10 @@ const Header = () => {
         </HamburgerButton>
         <NotificationButton onClick={handleClickHamburgerClose} />
         <StoryAddButton onClick={handleClickHamburgerClose} />
-        <DarkModeSwitch />
+        <DarkModeSwitch
+          displayMode={displayMode}
+          onClick={handleClickDarkModeSwitch}
+        />
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <NavLinks onClick={handleClickProfileButton}>

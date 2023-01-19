@@ -2,10 +2,10 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import { DISPLAY_MODE } from '../constants/auth';
+import { DisplayMode } from '../interfaces/displayMode';
 import { getLocalStorage } from '../utils/storage';
 
-interface DisplayModeContextProps {
-  displayMode: 'dark' | 'light';
+interface DisplayModeContextProps extends DisplayMode {
   toggleDisplayMode: () => void;
 }
 
