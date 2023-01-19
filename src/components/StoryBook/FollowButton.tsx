@@ -19,24 +19,24 @@ const FollowButton = () => {
   const isMyStoryBook = userId === storedUserId;
 
   const handleClick = async () => {
-    if (userId) {
-      const result = isFollowing
-        ? await removeFollow(followId)
-        : await createFollow(userId);
+    if (!userId) return;
 
-      if (result) {
-        const {
-          data: { _id: newFollowId, user: userId },
-        }: { data: { _id: string; user: string } } = result;
-        setFollowId(newFollowId);
+    const result = isFollowing
+      ? await removeFollow(followId)
+      : await createFollow(userId);
 
-        //follow notification 보내기
-        !isFollowing &&
-          (await postNotification('FOLLOW', newFollowId, userId, null));
-      }
+    if (result) {
+      const {
+        data: { _id: newFollowId, user: userId },
+      }: { data: { _id: string; user: string } } = result;
+      setFollowId(newFollowId);
 
-      isFollowing ? setIsFollowing(false) : setIsFollowing(true);
+      //follow notification 보내기
+      !isFollowing &&
+        (await postNotification('FOLLOW', newFollowId, userId, null));
     }
+
+    isFollowing ? setIsFollowing(false) : setIsFollowing(true);
   };
 
   useEffect(() => {

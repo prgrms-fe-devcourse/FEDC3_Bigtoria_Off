@@ -4,14 +4,14 @@ import { Box, Button } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 interface Props {
-  isLoading?: boolean;
+  isLoading: boolean;
   followId: string;
   userId: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
 }
 
 const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
-  const [toggle, setToggle] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -22,7 +22,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           position: 'relative',
         }}>
         <Button
-          variant={toggle ? 'contained' : 'outlined'}
+          variant={isFollowing ? 'contained' : 'outlined'}
           color='warning'
           size='small'
           sx={{
@@ -38,9 +38,9 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           disabled={isLoading}
           onClick={(e) => {
             onClick(e);
-            setToggle(!toggle);
+            setIsFollowing(!isFollowing);
           }}>
-          {toggle ? <PersonAddIcon /> : <PersonRemoveIcon />}
+          {isFollowing ? <PersonAddIcon /> : <PersonRemoveIcon />}
         </Button>
       </Box>
     </Box>

@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import { CircularProgress, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useEffect } from 'react';
 
-import FollowingButton from '../components/Follow/FollowingButton';
-import FollowList from '../components/Follow/FollowingList';
-import useGetFollow from '../hooks/useGetFollow';
+import FollowingButton from '../components/Follow/FollowingButton.js';
+import FollowList from '../components/Follow/FollowingList.js';
+import Loading from '../components/StoryBook/Loading.js';
+import useGetFollow from '../hooks/useGetFollow.js';
 
 const Following = () => {
   const { followingIdList, loading, followLoading, getUserInfo, handleClick } =
@@ -17,17 +18,7 @@ const Following = () => {
   return (
     <Container>
       {loading ? (
-        <CircularProgress
-          size={60}
-          sx={{
-            color: 'royalblue',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: '-30px',
-            marginLeft: '-30px',
-          }}
-        />
+        <Loading />
       ) : (
         followingIdList.map((following) => (
           <Wrapper key={following._id}>
@@ -58,7 +49,6 @@ const Wrapper = styled.div`
   margin: 0 auto;
   justify-content: space-between;
   align-items: center;
-  /* border: 2px solid gray; */
   border-radius: 1rem;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
