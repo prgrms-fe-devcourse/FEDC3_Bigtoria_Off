@@ -9,16 +9,18 @@ import {
 import NotificationList from '../components/Notification/NotificationList';
 import TabContainer from '../components/Notification/TabContainer';
 import { ROUTES } from '../constants/routes';
+import { useNotificationsContext } from '../contexts/NotificationContext';
+import { Notification as NotificationType } from '../interfaces/notification';
 
 const { SIGNIN } = ROUTES;
 
-//TODO: Tab type 값 상수롤 따로 빼기(Notification, NotificationList)
-const MESSAGE = 'message';
+const DEFAULT_TAB_VALUE = 'message';
 const CHECK_ALL_NOTIFICATION = '전체 읽음';
 
 const Notification = () => {
-  const [tabValue, setTabValue] = useState(MESSAGE);
-  const [notifications, setNotifications] = useState([]);
+  const [tabValue, setTabValue] = useState(DEFAULT_TAB_VALUE);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  const { notifications: notificationsFromContext } = useNotificationsContext();
   const navigate = useNavigate();
 
   const setNotificationsOrRedirection = async () => {
@@ -27,14 +29,14 @@ const Notification = () => {
     result ? setNotifications(result) : navigate(SIGNIN);
   };
 
-  useEffect(() => {
-    //Thinking : SWR 도입.
-    const timeId = setInterval(() => {
-      setNotificationsOrRedirection();
-    }, 1000);
+  const handleCheckNotificationBtnClick = async () => {
+    await checkNotificationSeen();
+    await setNotificationsOrRedirection();
+  };
 
-    return () => clearInterval(timeId);
-  }, []);
+  useEffect(() => {
+    notificationsFromContext && setNotifications(notificationsFromContext);
+  }, [notificationsFromContext]);
 
   useEffect(() => {
     const getNotifications = async () => {
@@ -43,11 +45,6 @@ const Notification = () => {
 
     getNotifications();
   }, [tabValue]);
-
-  const handleCheckNotificationBtnClick = async () => {
-    await checkNotificationSeen();
-    await setNotificationsOrRedirection();
-  };
 
   return (
     <Box
