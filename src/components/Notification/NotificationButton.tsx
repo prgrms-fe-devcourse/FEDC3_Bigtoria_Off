@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import { getNotificationList } from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
+import { INTERVAL_TIME } from '../../constants/swr';
 import { Notification } from '../../interfaces/notification';
 import { getLocalStorage } from '../../utils/storage';
 
@@ -45,7 +46,7 @@ const NotificationButton = ({ onClick }: Props) => {
   };
 
   useSWR(`badgeNotification`, getBadgeCount, {
-    refreshInterval: 1000,
+    refreshInterval: INTERVAL_TIME,
   });
 
   const handleClick = async () => {

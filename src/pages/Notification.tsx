@@ -10,13 +10,12 @@ import {
 import NotificationList from '../components/Notification/NotificationList';
 import TabContainer from '../components/Notification/TabContainer';
 import { ROUTES } from '../constants/routes';
+import { INTERVAL_TIME } from '../constants/swr';
 
 const { SIGNIN } = ROUTES;
 
-//TODO: Tab type 값 상수롤 따로 빼기(Notification, NotificationList)
 const MAIN_TAB_VALUE = 'message';
 const CHECK_ALL_NOTIFICATION = '전체 읽음';
-const INTERVAL_TIME = 1000;
 
 const Notification = () => {
   const [tabValue, setTabValue] = useState(MAIN_TAB_VALUE);
