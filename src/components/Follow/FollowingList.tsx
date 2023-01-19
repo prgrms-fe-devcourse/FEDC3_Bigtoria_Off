@@ -73,7 +73,7 @@ interface StateBadgeProps extends BadgeProps {
   isOnline?: boolean;
 }
 
-export const StateBadge = styled(Badge, {
+const StateBadge = styled(Badge, {
   shouldForwardProp: (prop) => prop !== 'isOnline',
 })<StateBadgeProps>(({ theme, isOnline }) => ({
   '& .MuiBadge-badge': {
