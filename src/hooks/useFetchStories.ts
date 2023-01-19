@@ -27,6 +27,7 @@ const useFetchStories = () => {
 
     stories.forEach((story: Story) => {
       const { year }: StoryYear = JSON.parse(story.title);
+      if (!year) return;
       yearsSet.add(year);
     });
 
