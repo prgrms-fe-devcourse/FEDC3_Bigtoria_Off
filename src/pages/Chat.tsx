@@ -9,6 +9,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import useSWR from 'swr';
 
 import http from '../apis/instance';
 import MessageInputForm from '../components/Message/MessageInputForm';
@@ -21,15 +23,13 @@ const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
 
 const Chat = () => {
   const [conversationPartner, setConversationPartner] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(conversationPartner);
   const [messages, setMessages] = useState<Message[]>([]);
   const [specificUsers, setSpecificUser] = useState<Message[]>([]);
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: string
-  ) => {
-    setSelectedIndex(index);
+  const { state: userInfo } = useLocation();
+
+  const handleListItemClick = (index: string) => {
+    setConversationPartner(index);
   };
 
   useEffect(() => {
@@ -39,12 +39,42 @@ const Chat = () => {
           url: API_URLS.MESSAGE.GET_MY_MESSAGES,
         })
         .then((data) => {
-          setMessages(data.data);
-          setConversationPartner(data.data[0].receiver._id);
-          setSelectedIndex(data.data[0].receiver._id);
+          setMessages(
+            userInfo?.fullName === undefined
+              ? data.data
+              : data.data.find(
+                  (user: Message) => user.receiver._id === userInfo.user
+                )
+              ? data.data
+              : [
+                  {
+                    _id: [userInfo.user],
+                    message: '',
+                    sender: {
+                      createdAt: '',
+                      fullName: '나',
+                    },
+                    receiver: {
+                      createdAt: '',
+                      fullName: userInfo.fullName,
+                      _id: userInfo.user,
+                    },
+                    seen: false,
+                    createdAt: '',
+                    updatedAt: '',
+                  },
+                  ...data.data,
+                ]
+          );
         });
     })();
   }, []);
+
+  useEffect(() => {
+    if (!messages.length) return;
+
+    setConversationPartner(messages[0].receiver._id);
+  }, [messages]);
 
   useEffect(() => {
     if (conversationPartner !== '') updateConversationPartner();
@@ -75,10 +105,8 @@ const Chat = () => {
                 updateConversationPartner();
               }}>
               <ListItemButton
-                onClick={(event) =>
-                  handleListItemClick(event, message.receiver._id)
-                }
-                selected={selectedIndex === conversationPartner}>
+                onClick={() => handleListItemClick(message.receiver._id)}
+                selected={message.receiver._id === conversationPartner}>
                 <ListItemAvatar>
                   <Avatar alt={message.receiver.fullName} src={''} />
                 </ListItemAvatar>

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
+import FormControl from '@mui/material/FormControl';
 import { useEffect, useRef } from 'react';
 
 import http from '../../apis/instance';
@@ -19,7 +20,15 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
     e.preventDefault();
   };
 
+  const handleKeyboardEvent = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   const sendMessage = async () => {
+    if (!messageInputRef.current) return;
+
     await http.post({
       url: '/messages/create',
       data: {
@@ -27,6 +36,8 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
         receiver: conversationPartner,
       },
     });
+
+    messageInputRef.current.value = '';
   };
 
   useEffect(() => {
@@ -48,6 +59,7 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
       </ChatList>
       <MessageInputFormWrap onSubmit={handleSubmit}>
         <MessageInput
+          onKeyDown={handleKeyboardEvent}
           autoFocus
           ref={messageInputRef}
           data-testid='textarea'
