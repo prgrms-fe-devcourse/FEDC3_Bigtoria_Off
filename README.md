@@ -1,4 +1,6 @@
-# Bigtoria
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/77133565/213366004-458a84a3-8e36-4ac6-81a5-0ad36944bd83.png" />
+</div>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/383b598e-c07f-427a-84f3-f052918e8974/deploy-status)](https://app.netlify.com/sites/sensational-concha-6acb55/deploys)
 
