@@ -39,7 +39,7 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
             sx={{
               width: 42,
               height: 42,
-              backgroundColor: COLORS.SUB,
+              backgroundColor: `${!image ? COLORS.SUB : ''}`,
             }}
             alt={fullName}
             src={image ? image : ''}

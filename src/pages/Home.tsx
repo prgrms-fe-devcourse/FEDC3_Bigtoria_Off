@@ -1,11 +1,10 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import FontText from '../components/Home/FontText';
-import SearchForm from '../components/Home/SearchForm';
-import UserList from '../components/Home/UserList';
-import useDebounce from '../hooks/useDebounce';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import SearchForm from '../components/Home/SearchForm.js';
+import UserList from '../components/Home/UserList.js';
+import useDebounce from '../hooks/useDebounce.js';
+import useInfiniteScroll from '../hooks/useInfiniteScroll.js';
 
 const Home = () => {
   const {
@@ -45,16 +44,16 @@ const Home = () => {
         alignItems: 'center',
         userSelect: 'none',
       }}>
-      <Box component='header'>
-        <FontText
-          title='B.'
-          sx={{
-            display: 'inline-block',
-            marginBottom: '30px',
-            fontSize: '5rem',
-          }}
-        />
-      </Box>
+      <Typography
+        component='span'
+        sx={{
+          display: 'inline-block',
+          margin: '45px 0 30px 0',
+          paddingTop: '4px',
+          fontSize: '5rem',
+        }}>
+        B.
+      </Typography>
       <Box
         component='main'
         sx={{
@@ -63,18 +62,18 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <Box sx={{ userSelect: 'none' }}>
-          <FontText
-            title='profiles..'
+        <Box sx={{ marginTop: '30px' }}>
+          <Typography
+            component='span'
             sx={{
               display: 'inline-block',
-              fontSize: '28px',
-              paddingLeft: '5px',
-              marginTop: '20px',
-            }}
-          />
+              fontSize: '22px',
+              padding: '4px 0 0 5px',
+            }}>
+            This is...
+          </Typography>
+          {data && <UserList users={data} />}
         </Box>
-        <Box>{data && <UserList users={data} />}</Box>
       </Box>
       {!isAllRendered && (
         <Box

@@ -34,7 +34,9 @@ const StoryInfo = ({ story }: Props) => {
                 variant='text'
                 color='warning'
                 onClick={() =>
-                  navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id))
+                  navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id), {
+                    state: story,
+                  })
                 }>
                 수정
               </Button>

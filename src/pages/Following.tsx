@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { CircularProgress, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useEffect } from 'react';
-
 import FollowHeader from '../components/Follow/FollowHeader';
 import FollowingButton from '../components/Follow/FollowingButton';
 import FollowingList from '../components/Follow/FollowingList';
@@ -19,17 +18,7 @@ const Following = () => {
     <Container sx={{ marginTop: '1rem' }}>
       <FollowHeader />
       {loading ? (
-        <CircularProgress
-          size={60}
-          sx={{
-            color: 'royalblue',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: '-30px',
-            marginLeft: '-30px',
-          }}
-        />
+        <Loading />
       ) : (
         followingList.map(
           ({ _id, image, fullName, isOnline, user, coverImage, username }) => (

@@ -1,7 +1,7 @@
 import { HighlightOff } from '@mui/icons-material';
 import { Box, IconButton, TextField } from '@mui/material';
 
-import useSearhForm from '../../hooks/useSearchForm';
+import useSearchForm from '../../hooks/useSearchForm';
 
 interface Props {
   onSubmit: (keyword: string) => void;
@@ -14,7 +14,7 @@ const SearchForm = ({ onSubmit }: Props) => {
     handleInputChange,
     handleInputClear,
     handleFormSubmit,
-  } = useSearhForm({ onSubmit });
+  } = useSearchForm({ onSubmit });
 
   return (
     <Box
@@ -40,27 +40,28 @@ const SearchForm = ({ onSubmit }: Props) => {
             },
           }}
           variant='standard'
-          autoFocus
           type='text'
-          label='user name'
+          label='닉네임'
           color='warning'
           value={value}
           error={error.keyword !== ''}
           helperText={error.keyword}
           onChange={handleInputChange}
         />
-        <IconButton
-          color='primary'
-          component='label'
-          sx={{
-            position: 'absolute',
-            right: '2px',
-            top: '30px',
-            color: '#00000099',
-          }}
-          onClick={handleInputClear}>
-          <HighlightOff />
-        </IconButton>
+        {value && (
+          <IconButton
+            color='primary'
+            component='label'
+            sx={{
+              position: 'absolute',
+              right: '2px',
+              top: '30px',
+              color: '#00000099',
+            }}
+            onClick={handleInputClear}>
+            <HighlightOff />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );

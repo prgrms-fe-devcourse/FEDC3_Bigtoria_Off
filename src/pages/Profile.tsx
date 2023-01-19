@@ -84,6 +84,7 @@ const Profile = () => {
             onClick={handleModalType}
           />
           <Button
+            color='warning'
             data-type='coverImage'
             onClick={handleModalType}
             sx={{
@@ -96,11 +97,15 @@ const Profile = () => {
           </Button>
         </CoverImageWrapper>
         <ProfileImageWrapper>
-          <Avatar
+          <ProfileImage
             src={image}
             alt='profile image'
-            sx={{ width: '80px', height: '80px' }}></Avatar>
-          <Button data-type='profileImage' onClick={handleModalType}>
+            data-type='profileImage'
+            onClick={handleModalType}></ProfileImage>
+          <Button
+            color='warning'
+            data-type='profileImage'
+            onClick={handleModalType}>
             변경
           </Button>
         </ProfileImageWrapper>
@@ -108,7 +113,11 @@ const Profile = () => {
       <Box>
         <List
           component='nav'
-          subheader={<ListSubheader>계정 정보</ListSubheader>}>
+          subheader={
+            <ListSubheader sx={{ backgroundColor: 'inherit' }}>
+              계정 정보
+            </ListSubheader>
+          }>
           {email && (
             <ListItem sx={{ alignItems: 'baseline' }}>
               <ListItemText primary='이메일 주소' />
@@ -119,7 +128,10 @@ const Profile = () => {
             <InfoListItem sx={{ alignItems: 'baseline', paddingRight: 0 }}>
               <ListItemText primary='닉네임' />
               <span>{fullName}</span>
-              <Button data-type='nickname' onClick={handleModalType}>
+              <Button
+                color='warning'
+                data-type='nickname'
+                onClick={handleModalType}>
                 변경
               </Button>
             </InfoListItem>
@@ -128,7 +140,7 @@ const Profile = () => {
             <InfoListItem>
               <ListItemText primary='직업' />
               <span>{job}</span>
-              <Button data-type='job' onClick={handleModalType}>
+              <Button color='warning' data-type='job' onClick={handleModalType}>
                 변경
               </Button>
             </InfoListItem>
@@ -143,6 +155,7 @@ const Profile = () => {
           )}
           <ListItem sx={{ paddingLeft: '8px' }}>
             <Button
+              color='warning'
               data-type='password'
               onClick={handleModalType}
               fullWidth
@@ -178,7 +191,7 @@ const Container = styled(Box)`
 const ImageContainer = styled.div`
   position: relative;
   z-index: 2;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 `;
 
 const CoverImageWrapper = styled.div`
@@ -203,6 +216,12 @@ const ProfileImageWrapper = styled.div`
   bottom: -70px;
   left: 50%;
   margin-left: -40px;
+`;
+
+const ProfileImage = styled(Avatar)`
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
 `;
 
 const InfoListItem = styled(ListItem)`

@@ -3,13 +3,12 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
+import { CHANNEL_ID } from '../constants/apiParams';
 import { ROUTES } from '../constants/routes';
 import { Story } from '../interfaces/story';
 import { isBlankString } from '../utils/validations';
 import { getStoriesOfChannel, putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
-
-const channelId = '63b6822ade9d2a22cc1d45c3';
 
 export const useFetchStory = () => {
   const [story, setStory] = useState({
@@ -38,7 +37,7 @@ export const useFetchStory = () => {
         }
         if (storyId === 'new') return;
 
-        const stories = await getStoriesOfChannel(channelId);
+        const stories = await getStoriesOfChannel(CHANNEL_ID);
         if (!stories.find((story: Story) => story._id === storyId)) {
           alert('존재하지 않는 스토리입니다.');
           navigate(ROUTES.HOME);
@@ -170,7 +169,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
         content: values.content,
       })
     );
-    formData.append('channelId', channelId);
+    formData.append('channelId', CHANNEL_ID);
     initialValues && storyId && formData.append('postId', storyId);
 
     if (values.imageURL) return formData;

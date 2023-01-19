@@ -9,8 +9,7 @@ import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
-import NotificationButton from '../Alarm/NotificationButton';
-import FontText from '../Home/FontText';
+import NotificationButton from '../Notification/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
@@ -104,19 +103,14 @@ const Header = () => {
           handleClickHamburgerClose();
           navigate(ROUTES.HOME);
         }}>
-        <FontText
-          title='Bigtoria'
-          sx={{
-            fontSize: '1.25rem',
-          }}
-        />
+        Bigtoria
       </Logo>
       <ButtonsContainer>
-        <StoryAddButton onClick={handleClickHamburgerClose} />
-        <NotificationButton onClick={handleClickHamburgerClose} />
         <HamburgerButton onClick={handleClick}>
           {click ? <FaArrowRight fontSize={'1.25rem'} /> : <FaHamburger />}
         </HamburgerButton>
+        <NotificationButton onClick={handleClickHamburgerClose} />
+        <StoryAddButton onClick={handleClickHamburgerClose} />
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <NavLinks onClick={handleClickProfileButton}>
@@ -148,8 +142,9 @@ const Container = styled.header<{ isScrolled: boolean }>`
   background-color: #f5f5f8;
   position: sticky;
   top: 0;
-  padding: 1rem;
+  padding: 1.2rem 1rem;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   z-index: 999;
@@ -166,14 +161,14 @@ const ButtonsContainer = styled.div`
 
 const Hamburger = styled.nav<{ click: boolean }>`
   width: 100%;
-  display: ${({ click }) => (click ? 'flex' : 'none')};
+  display: flex;
   gap: 1rem;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   position: absolute;
   top: 3.6rem;
-  right: ${({ click }) => (click ? 0 : '-100%')};
+  left: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
   animation-name: slide;
   animation-duration: 0.5s;
@@ -181,21 +176,13 @@ const Hamburger = styled.nav<{ click: boolean }>`
   background: #ffffff;
   z-index: 999;
   padding-top: 4rem;
-
-  @keyframes slide {
-    from {
-      right: -100%;
-    }
-    to {
-      right: 0;
-    }
-  }
 `;
 
 const HamburgerButton = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
+  transform: scaleX(-1);
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -203,6 +190,8 @@ const HamburgerButton = styled.div`
 
 const Logo = styled.h1`
   margin: 0;
+  font-display: fallback;
+  font-size: 1.25rem;
   cursor: pointer;
 `;
 
