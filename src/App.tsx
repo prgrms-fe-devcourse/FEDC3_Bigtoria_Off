@@ -15,7 +15,6 @@ import SignUp from './pages/SignUp';
 import Story from './pages/Story';
 import StoryBook from './pages/StoryBook';
 import StoryEdit from './pages/StoryEdit';
-import Temp from './pages/Temp';
 
 const App = () => {
   return (
