@@ -77,6 +77,13 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
               },
             },
           },
+          MuiButton: {
+            styleOverrides: {
+              text: {
+                color: COLORS.SUB,
+              },
+            },
+          },
         },
       }),
     [displayMode]
