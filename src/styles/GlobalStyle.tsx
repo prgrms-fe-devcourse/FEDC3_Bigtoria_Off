@@ -9,6 +9,14 @@ const GlobalStyle = () => {
 export default GlobalStyle;
 
 const style = css`
+  :root[color-theme='light'] {
+    --backgroundColor: ${COLORS.MAIN};
+  }
+
+  :root[color-theme='dark'] {
+    --backgroundColor: black;
+  }
+
   @font-face {
     font-family: 'MaplestoryOTFLight';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff%27')
@@ -33,9 +41,11 @@ const style = css`
 
   body {
     font-family: 'MaplestoryOTFLight', cursive;
-    background-color: ${COLORS.MAIN};
+    background-color: var(--backgroundColor);
     margin: 0;
     overflow-y: scroll;
+    transition: background-color 0.25s ease-out;
+
     @media all and (min-width: 768px) {
       width: 412px;
       margin: 0 auto;
