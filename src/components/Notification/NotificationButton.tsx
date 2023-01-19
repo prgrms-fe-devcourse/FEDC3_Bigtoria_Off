@@ -16,8 +16,8 @@ interface Props {
 
 const NotificationButton = ({ onClick }: Props) => {
   const [invisible, setInvisible] = useState(false);
-  const navigate = useNavigate();
   const { badgeCount } = useNotificationsContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     !badgeCount ? setInvisible(true) : setInvisible(false);

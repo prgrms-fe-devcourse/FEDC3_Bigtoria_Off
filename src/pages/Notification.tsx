@@ -14,15 +14,14 @@ import { Notification as NotificationType } from '../interfaces/notification';
 
 const { SIGNIN } = ROUTES;
 
-const MAIN_TAB_VALUE = 'message';
+const DEFAULT_TAB_VALUE = 'message';
 const CHECK_ALL_NOTIFICATION = '전체 읽음';
 
 const Notification = () => {
-  const [tabValue, setTabValue] = useState(MAIN_TAB_VALUE);
+  const [tabValue, setTabValue] = useState(DEFAULT_TAB_VALUE);
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
-  const navigate = useNavigate();
-
   const { notifications: notificationsFromContext } = useNotificationsContext();
+  const navigate = useNavigate();
 
   const setNotificationsOrRedirection = async () => {
     const result = await getNotificationList();

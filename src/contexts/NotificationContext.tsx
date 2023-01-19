@@ -26,6 +26,8 @@ const initialState = {
   notifications: [],
 };
 
+export const INTERVAL_TIME = 1000;
+
 const NotificationsContext = createContext<State>(initialState);
 
 export const useNotificationsContext = () => useContext(NotificationsContext);
@@ -56,7 +58,7 @@ const NotificationsProvider = ({ children }: Props) => {
     'notification',
     getNotificationList,
     {
-      refreshInterval: 500,
+      refreshInterval: INTERVAL_TIME,
     }
   );
 
