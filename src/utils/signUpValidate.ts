@@ -28,7 +28,7 @@ export const signUpValidate = (values: args) => {
 
   if (!values.password) newError.password = '비밀번호를 입력해 주세요.';
   else if (!passwordRegex.test(values.password))
-    newError.password = '비밀번호는 6자리 이상, 15자리 이하로 입력해주세요';
+    newError.password = '비밀번호는 6자리 이상, 15자리 이하로 입력해주세요.';
   else newError.password = '';
 
   if (!values.passwordConfirm)
@@ -41,7 +41,7 @@ export const signUpValidate = (values: args) => {
   else newError.date = '';
 
   if (!values.job) newError.job = '직업을 입력해 주세요.';
-  else if (!jobRegex.test(values.job)) newError.job = '한글로 입력해주세요';
+  else if (!jobRegex.test(values.job)) newError.job = '한글만 입력가능합니다.';
   else newError.job = '';
 
   return newError;
