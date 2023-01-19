@@ -43,7 +43,7 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Dialog open={open} onClose={onClick}>
+      <Dialog open={open} onClose={onClick} disableScrollLock={true}>
         <Container>
           <ImageContainer>
             <CoverImageWrapper>
@@ -120,6 +120,7 @@ const Container = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 300px;
+  overflow: hidden;
 `;
 
 const ImageContainer = styled.div`
