@@ -5,3 +5,9 @@ export const getFollowingUser = async (followingIdList: string[]) => {
     followingIdList.map((followingId) => userInfo(followingId))
   );
 };
+
+export const getFollowerUser = async (followerList: string[]) => {
+  return await Promise.all(
+    followerList.map((followerId) => userInfo(followerId))
+  );
+};

@@ -59,8 +59,8 @@ const Notification = () => {
     <Box
       sx={{
         minWidth: '320px',
-        maxWidth: '480px',
-        margin: '0 auto',
+        maxWidth: '412px',
+        margin: '2rem auto 0 auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -76,7 +76,7 @@ const Notification = () => {
         <Box
           component='section'
           sx={{
-            marginBottom: '15px',
+            marginBottom: '25px',
           }}>
           <TabContainer
             onClick={(type) => {
