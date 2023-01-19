@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import { DISPLAY_MODE } from '../constants/auth';
 import { DisplayMode } from '../interfaces/displayMode';
-import { getLocalStorage } from '../utils/storage';
+import { getLocalStorage, setLocalStorage } from '../utils/storage';
 
 interface DisplayModeContextProps extends DisplayMode {
   toggleDisplayMode: () => void;
@@ -28,13 +28,19 @@ const DisplayModeContext = createContext<DisplayModeContextProps>(initialState);
 const useDisplayModeContext = () => useContext(DisplayModeContext);
 
 export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
-  const [displayMode, setDisplayMode] = useState<'light' | 'dark'>('light');
+  const [displayMode, setDisplayMode] = useState<'light' | 'dark'>(
+    initialState.displayMode
+  );
   const context = useMemo(
     () => ({
       toggleDisplayMode: () => {
-        setDisplayMode((previousDisplayMode) =>
-          previousDisplayMode === 'light' ? 'dark' : 'light'
-        );
+        setDisplayMode((previousDisplayMode) => {
+          const nextDisplayMode =
+            previousDisplayMode === 'light' ? 'dark' : 'light';
+          setLocalStorage(DISPLAY_MODE, nextDisplayMode);
+
+          return nextDisplayMode;
+        });
       },
       displayMode,
     }),
