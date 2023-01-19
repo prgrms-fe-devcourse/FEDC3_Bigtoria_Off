@@ -1,13 +1,6 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
-import {
-  createTheme,
-  styled,
-  Tab,
-  Tabs,
-  TabsProps,
-  ThemeProvider,
-} from '@mui/material';
+import { createTheme, Tab, Tabs, ThemeProvider } from '@mui/material';
 import { SyntheticEvent, useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

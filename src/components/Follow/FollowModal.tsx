@@ -4,7 +4,15 @@ import CakeTwoToneIcon from '@mui/icons-material/CakeTwoTone';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 import WorkHistoryTwoToneIcon from '@mui/icons-material/WorkHistoryTwoTone';
-import { Avatar, Chip, Dialog, Divider, Stack } from '@mui/material';
+import {
+  Avatar,
+  Chip,
+  createTheme,
+  Dialog,
+  Divider,
+  Stack,
+  ThemeProvider,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -34,73 +42,75 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
   };
 
   return (
-    <Dialog sx={{ borderRadius: '1rem' }} open={open} onClose={onClick}>
-      <Container>
-        <ImageContainer>
-          <CoverImageWrapper>
-            <IconButton
-              aria-label='delete'
-              size='large'
-              sx={{ position: 'absolute' }}
-              onClick={onClick}>
-              <CancelOutlinedIcon fontSize='inherit' />
-            </IconButton>
-            <CoverImage src={userInfo.coverImage || undefined} />
-          </CoverImageWrapper>
-          <ProfileImageWrapper>
-            <Avatar
-              src={userInfo.image}
-              alt='profile image'
-              sx={{ width: '100px', height: '100px' }}
+    <ThemeProvider theme={theme}>
+      <Dialog open={open} onClose={onClick}>
+        <Container>
+          <ImageContainer>
+            <CoverImageWrapper>
+              <IconButton
+                aria-label='delete'
+                size='large'
+                sx={{ position: 'absolute' }}
+                onClick={onClick}>
+                <CancelOutlinedIcon fontSize='inherit' />
+              </IconButton>
+              <CoverImage src={userInfo.coverImage || undefined} />
+            </CoverImageWrapper>
+            <ProfileImageWrapper>
+              <Avatar
+                src={userInfo.image}
+                alt='profile image'
+                sx={{ width: '100px', height: '100px' }}
+              />
+            </ProfileImageWrapper>
+          </ImageContainer>
+          <TextContainer>{userInfo.fullName}</TextContainer>
+          <Stack
+            direction='row'
+            spacing={2}
+            justifyContent='center'
+            sx={{ margin: '1rem 0 1rem 0', height: '80px' }}>
+            <Chip
+              icon={<WorkHistoryTwoToneIcon />}
+              color='success'
+              label={job}
+              variant='outlined'
             />
-          </ProfileImageWrapper>
-        </ImageContainer>
-        <TextContainer>{userInfo.fullName}</TextContainer>
-        <Stack
-          direction='row'
-          spacing={2}
-          justifyContent='center'
-          sx={{ margin: '1rem 0 1rem 0', height: '80px' }}>
-          <Chip
-            icon={<WorkHistoryTwoToneIcon />}
-            color='success'
-            label={job}
-            variant='outlined'
-          />
-          <Chip
-            icon={<CakeTwoToneIcon />}
-            color='secondary'
-            label={year}
-            variant='outlined'
-          />
-        </Stack>
-        <Divider />
-        <Stack
-          direction='row'
-          spacing={0}
-          justifyContent='center'
-          sx={{ width: '100%' }}>
-          <Button
-            variant='outlined'
-            startIcon={<AutoStoriesTwoToneIcon />}
-            color='warning'
-            size='large'
-            onClick={handleClickStoryBook}
-            sx={{
-              width: '50%',
-            }}>
-            스토리북
-          </Button>
-          <Button
-            variant='contained'
-            endIcon={<SendTwoToneIcon />}
-            color='warning'
-            sx={{ width: '50%' }}>
-            채팅
-          </Button>
-        </Stack>
-      </Container>
-    </Dialog>
+            <Chip
+              icon={<CakeTwoToneIcon />}
+              color='secondary'
+              label={year}
+              variant='outlined'
+            />
+          </Stack>
+          <Divider />
+          <Stack
+            direction='row'
+            spacing={0}
+            justifyContent='center'
+            sx={{ width: '100%' }}>
+            <Button
+              variant='outlined'
+              startIcon={<AutoStoriesTwoToneIcon />}
+              color='warning'
+              size='large'
+              onClick={handleClickStoryBook}
+              sx={{
+                width: '50%',
+              }}>
+              스토리북
+            </Button>
+            <Button
+              variant='contained'
+              endIcon={<SendTwoToneIcon />}
+              color='warning'
+              sx={{ width: '50%' }}>
+              채팅
+            </Button>
+          </Stack>
+        </Container>
+      </Dialog>
+    </ThemeProvider>
   );
 };
 
@@ -110,8 +120,6 @@ const Container = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 300px;
-  border: 2px solid orange;
-  box-shadow: 24;
 `;
 
 const ImageContainer = styled.div`
@@ -148,3 +156,24 @@ const TextContainer = styled.div`
   padding: 10px;
   box-sizing: border-box;
 `;
+
+const theme = createTheme({
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: '5%',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '0',
+          border: '0',
+          borderTop: '1px solid rgba(237, 108, 2, 0.5)',
+        },
+      },
+    },
+  },
+});
