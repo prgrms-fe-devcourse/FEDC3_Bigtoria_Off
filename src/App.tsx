@@ -18,25 +18,23 @@ import StoryEdit from './pages/StoryEdit';
 
 const App = () => {
   return (
-    <DisplayModeProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Header />
-        <Routes>
-          <Route path={ROUTES.HOME} element={<Home />} />
-          <Route path={ROUTES.STORY_BOOK} element={<StoryBook />} />
-          <Route path={ROUTES.NOTIFICATION} element={<Notification />} />
-          <Route path={ROUTES.SIGNUP} element={<SignUp />} />
-          <Route path={ROUTES.FOLLOW} element={<Following />} />
-          <Route path={ROUTES.SIGNIN} element={<SignIn />} />
-          <Route path={ROUTES.STORY} element={<Story />} />
-          <Route path={ROUTES.STORY_EDIT} element={<StoryEdit />} />
-          <Route path={ROUTES.CHAT} element={<Chat />} />
-          <Route path={ROUTES.PROFILE} element={<Profile />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </DisplayModeProvider>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Header />
+      <Routes>
+        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.STORY_BOOK} element={<StoryBook />} />
+        <Route path={ROUTES.NOTIFICATION} element={<Notification />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+        <Route path={ROUTES.FOLLOW} element={<Following />} />
+        <Route path={ROUTES.SIGNIN} element={<SignIn />} />
+        <Route path={ROUTES.STORY} element={<Story />} />
+        <Route path={ROUTES.STORY_EDIT} element={<StoryEdit />} />
+        <Route path={ROUTES.CHAT} element={<Chat />} />
+        <Route path={ROUTES.PROFILE} element={<Profile />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
