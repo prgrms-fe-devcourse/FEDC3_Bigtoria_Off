@@ -188,6 +188,7 @@ const HamburgerButton = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
+  transform: scaleX(-1);
   justify-content: center;
   align-items: center;
   cursor: pointer;
