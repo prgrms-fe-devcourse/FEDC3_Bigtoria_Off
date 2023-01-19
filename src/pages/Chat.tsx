@@ -101,7 +101,10 @@ const Chat = () => {
                 onClick={() => handleListItemClick(message.receiver._id)}
                 selected={message.receiver._id === conversationPartner}>
                 <ListItemAvatar>
-                  <Avatar alt={message.receiver.fullName} src={''} />
+                  <Avatar
+                    alt={message.receiver.fullName}
+                    src={message.receiver.image}
+                  />
                 </ListItemAvatar>
                 <ListItemText
                   id={message.receiver.createdAt}
