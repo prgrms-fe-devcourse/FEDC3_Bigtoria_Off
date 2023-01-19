@@ -38,7 +38,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
             onClick(e);
             setIsFollowing(!isFollowing);
           }}>
-          {toggle ? '팔로우' : '언팔'}
+          {isFollowing ? '팔로우' : '언팔'}
         </Button>
       </Box>
     </Box>
