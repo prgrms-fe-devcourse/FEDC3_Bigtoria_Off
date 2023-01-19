@@ -39,12 +39,6 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Props) => {
     messageInputRef.current.value = '';
   };
 
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current?.scrollHeight,
-    });
-  }, [specificUsers]);
-
   return (
     <ChatWrapper>
       <ChatList ref={scrollRef}>
