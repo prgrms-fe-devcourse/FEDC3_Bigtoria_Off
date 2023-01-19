@@ -6,11 +6,10 @@ import {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
-  Typography,
+  Typography
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useSWR from 'swr';
 
 import http from '../apis/instance';
 import MessageInputForm from '../components/Message/MessageInputForm';
