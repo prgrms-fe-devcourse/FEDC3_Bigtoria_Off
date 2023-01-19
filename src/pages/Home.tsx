@@ -1,11 +1,11 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 
-import FontText from '../components/Home/FontText';
-import SearchForm from '../components/Home/SearchForm';
-import UserList from '../components/Home/UserList';
-import useDebounce from '../hooks/useDebounce';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import FontText from '../components/Home/FontText.js';
+import SearchForm from '../components/Home/SearchForm.js';
+import UserList from '../components/Home/UserList.js';
+import useDebounce from '../hooks/useDebounce.js';
+import useInfiniteScroll from '../hooks/useInfiniteScroll.js';
 
 const Home = () => {
   const {
@@ -45,16 +45,14 @@ const Home = () => {
         alignItems: 'center',
         userSelect: 'none',
       }}>
-      <Box component='header'>
-        <FontText
-          title='B.'
-          sx={{
-            display: 'inline-block',
-            marginBottom: '30px',
-            fontSize: '5rem',
-          }}
-        />
-      </Box>
+      <FontText
+        title='B.'
+        sx={{
+          display: 'inline-block',
+          marginBottom: '30px',
+          fontSize: '5rem',
+        }}
+      />
       <Box
         component='main'
         sx={{
@@ -63,7 +61,7 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <Box sx={{ userSelect: 'none', paddingTop: '20px' }}>
+        <Box>
           <FontText
             title='profiles..'
             sx={{
@@ -73,8 +71,8 @@ const Home = () => {
               marginTop: '20px',
             }}
           />
+          {data && <UserList users={data} />}
         </Box>
-        <Box>{data && <UserList users={data} />}</Box>
       </Box>
       {!isAllRendered && (
         <Box
