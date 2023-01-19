@@ -1,11 +1,19 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
-import { Tab, Tabs } from '@mui/material';
+import {
+  createTheme,
+  styled,
+  Tab,
+  Tabs,
+  TabsProps,
+  ThemeProvider,
+} from '@mui/material';
 import { SyntheticEvent, useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY } from '../../constants/auth';
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage } from '../../utils/storage';
 
@@ -18,9 +26,9 @@ interface LinkTabProps {
 const LinkTab = (props: LinkTabProps) => {
   return (
     <Tab
-      component='button'
+      component='div'
       sx={{ width: '50%' }}
-      onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
       }}
       {...props}
@@ -63,22 +71,36 @@ const FollowHeader = () => {
   };
 
   return (
-    <Tabs
-      value={value}
-      onChange={handleChange}
-      sx={{ margin: '1rem 0 1rem 0', justifyContent: 'center' }}>
-      <LinkTab
-        icon={<FavoriteIcon />}
-        label='FOLLOWING'
-        onClick={handleClickFollowListButton}
-      />
-      <LinkTab
-        icon={<PeopleIcon />}
-        label='FOLLOWER'
-        onClick={handleClickFollowerListButton}
-      />
-    </Tabs>
+    <ThemeProvider theme={tabsColor}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor='primary'
+        sx={{ margin: '1rem 0 1rem 0', justifyContent: 'center' }}>
+        <LinkTab
+          icon={<FavoriteIcon />}
+          label='FOLLOWING'
+          onClick={handleClickFollowListButton}
+        />
+        <LinkTab
+          icon={<PeopleIcon />}
+          label='FOLLOWER'
+          onClick={handleClickFollowerListButton}
+        />
+      </Tabs>
+    </ThemeProvider>
   );
 };
 
 export default FollowHeader;
+
+const tabsColor = createTheme({
+  palette: {
+    primary: {
+      main: COLORS.SUB,
+    },
+  },
+  typography: {
+    fontFamily: "'MaplestoryOTFLight', cursive",
+  },
+});

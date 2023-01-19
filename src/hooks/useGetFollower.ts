@@ -11,7 +11,7 @@ const useGetFollower = () => {
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [followerList, setFollowerList] = useState<FollowerList[]>([]);
-  const [f4f, setF4f] = useState<string[][]>([]);
+  const [f4f, setF4f] = useState<string[][]>([]); // 맞팔인지 확인
   const navigate = useNavigate();
 
   const getUserInfo = async () => {

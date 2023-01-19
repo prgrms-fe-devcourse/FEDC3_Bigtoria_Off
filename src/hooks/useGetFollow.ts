@@ -10,8 +10,8 @@ import { getChangedIndex } from '../utils/getChangedIndex';
 import { ROUTES } from './../constants/routes';
 
 const BUTTON_MESSAGE = {
-  FOLLOW: 'PersonAddIcon',
-  DELETE: 'PersonRemoveIcon',
+  FOLLOW: '팔로우',
+  DELETE: '언팔',
 };
 
 const useGetFollow = () => {
@@ -59,8 +59,8 @@ const useGetFollow = () => {
       try {
         setFollowLoading(true);
         const { followid, userid } = currentTarget.dataset;
-        const { testid } = (currentTarget.firstChild as HTMLElement).dataset;
-        if (testid === BUTTON_MESSAGE.DELETE) {
+        const text = currentTarget.textContent;
+        if (text === BUTTON_MESSAGE.DELETE) {
           if (followid && userid) {
             await removeFollow(followid);
           }

@@ -1,5 +1,7 @@
-import { Box, Button } from '@mui/material';
-import { MouseEvent } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Box, Button, Chip, createTheme, ThemeProvider } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import { MouseEvent, useLayoutEffect, useState } from 'react';
 
 import { getF4FId } from '../../utils/getF4FId';
 
@@ -12,6 +14,11 @@ interface Props {
 
 const FollowerButton = ({ followId, userId, f4f, onClick }: Props) => {
   const isF4f = getF4FId(f4f).includes(userId); //맞팔중인 아이디 확인
+  const [isFollower, setIsFollower] = useState(false);
+
+  useLayoutEffect(() => {
+    if (isF4f) setIsFollower(true);
+  }, []);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -20,28 +27,53 @@ const FollowerButton = ({ followId, userId, f4f, onClick }: Props) => {
           width: '100%',
           alignItems: 'center',
           position: 'relative',
+          marginRight: '10px',
         }}>
-        <Button
-          variant='outlined'
-          color='warning'
-          size='small'
-          sx={{
-            height: '30px',
-            width: '60px',
-            marginRight: '0.5rem',
-            padding: '0.5rem',
-            boxSizing: 'border-box',
-            transition: 'background-color .3s ease-out',
-          }}
-          data-followid={followId}
-          data-userid={userId}
-          disabled={isF4f}
-          onClick={onClick}>
-          {isF4f ? '맞팔중' : '맞팔하기'}
-        </Button>
+        {isFollower ? (
+          <ThemeProvider theme={chipTheme}>
+            <Chip
+              icon={<FavoriteIcon />}
+              label='맞팔중'
+              variant='outlined'
+              color='primary'
+            />
+          </ThemeProvider>
+        ) : (
+          <Button
+            variant='outlined'
+            color='warning'
+            size='small'
+            sx={{
+              height: '30px',
+              width: '60px',
+              marginRight: '0.5rem',
+              padding: '0.5rem',
+              boxSizing: 'border-box',
+              transition: 'background-color .3s ease-out',
+            }}
+            data-followid={followId}
+            data-userid={userId}
+            onClick={(e) => {
+              onClick(e);
+              setIsFollower(!isFollower);
+            }}>
+            맞팔하기
+          </Button>
+        )}
       </Box>
     </Box>
   );
 };
 
 export default FollowerButton;
+
+const chipTheme = createTheme({
+  palette: {
+    primary: {
+      main: pink[500],
+    },
+  },
+  typography: {
+    fontFamily: "'MaplestoryOTFLight', cursive",
+  },
+});
