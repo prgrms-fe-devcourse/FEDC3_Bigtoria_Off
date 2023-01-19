@@ -11,13 +11,12 @@ interface Prop {
 
 const MessageBubble = ({ specificUser }: Prop) => {
   const loginID = getLocalStorage(USER_ID_KEY);
-  const isReceiver = specificUser.receiver._id === loginID;
-  console.log(specificUser);
+  const isReceiver = specificUser.sender._id !== loginID;
   return (
     <BubbleWrap>
-      {isReceiver && <Avatar src={specificUser.receiver.image} />}
+      {isReceiver && <Avatar src={specificUser.sender.image} />}
       <ContentsWrap>
-        {isReceiver && <UserName>{specificUser.receiver.fullName}</UserName>}
+        {isReceiver && <UserName>{specificUser.sender.fullName}</UserName>}
         <MessageAtom fromUser={isReceiver}>{specificUser.message}</MessageAtom>
       </ContentsWrap>
     </BubbleWrap>

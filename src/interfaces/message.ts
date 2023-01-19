@@ -2,8 +2,10 @@ export interface Message {
   _id: string[];
   message: string;
   sender: {
+    _id: string;
     createdAt: string;
     fullName: string;
+    image?: string;
   };
   receiver: {
     createdAt: string;
