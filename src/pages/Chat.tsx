@@ -19,13 +19,13 @@ import { Message } from '../interfaces/message';
 import { getLocalStorage } from '../utils/storage';
 
 const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
-
 const Chat = () => {
-  const [conversationPartner, setConversationPartner] = useState('');
+  const { state: userInfo } = useLocation();
+  const [conversationPartner, setConversationPartner] = useState(
+    userInfo.user ?? ''
+  );
   const [messages, setMessages] = useState<Message[]>([]);
   const [specificUsers, setSpecificUser] = useState<Message[]>([]);
-
-  const { state: userInfo } = useLocation();
 
   const handleListItemClick = (index: string) => {
     setConversationPartner(index);
@@ -68,12 +68,6 @@ const Chat = () => {
         });
     })();
   }, []);
-
-  useEffect(() => {
-    if (!messages.length) return;
-
-    setConversationPartner(messages[0].receiver._id);
-  }, [messages]);
 
   useEffect(() => {
     if (conversationPartner !== '') updateConversationPartner();
