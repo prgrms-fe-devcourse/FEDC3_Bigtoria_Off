@@ -1,7 +1,8 @@
 import { Notifications } from '@mui/icons-material';
 import { Badge, Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
 
 import { getNotificationList } from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
@@ -10,11 +11,6 @@ import { Notification } from '../../interfaces/notification';
 import { getLocalStorage } from '../../utils/storage';
 
 const { NOTIFICATION, SIGNIN } = ROUTES;
-
-/*
- * TODO: 알림 확인하는 방법
- *  1. 주기적으로 알림 체크하기 -> setInterval || SWR
- */
 
 interface Props {
   onClick: () => void;
@@ -48,14 +44,9 @@ const NotificationButton = ({ onClick }: Props) => {
     unSeenNotificationCount === 0 ? setInvisible(true) : setInvisible(false);
   };
 
-  useEffect(() => {
-    //Thinking : SWR 도입.
-    const timeId = setInterval(() => {
-      getBadgeCount();
-    }, 1000);
-
-    return () => clearInterval(timeId);
-  }, []);
+  useSWR(`badgeNotification`, getBadgeCount, {
+    refreshInterval: 1000,
+  });
 
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);

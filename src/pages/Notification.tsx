@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
 
 import {
   checkNotificationSeen,
@@ -13,11 +14,12 @@ import { ROUTES } from '../constants/routes';
 const { SIGNIN } = ROUTES;
 
 //TODO: Tab type 값 상수롤 따로 빼기(Notification, NotificationList)
-const MESSAGE = 'message';
+const MAIN_TAB_VALUE = 'message';
 const CHECK_ALL_NOTIFICATION = '전체 읽음';
+const INTERVAL_TIME = 1000;
 
 const Notification = () => {
-  const [tabValue, setTabValue] = useState(MESSAGE);
+  const [tabValue, setTabValue] = useState(MAIN_TAB_VALUE);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
@@ -27,14 +29,18 @@ const Notification = () => {
     result ? setNotifications(result) : navigate(SIGNIN);
   };
 
-  useEffect(() => {
-    //Thinking : SWR 도입.
-    const timeId = setInterval(() => {
-      setNotificationsOrRedirection();
-    }, 1000);
+  useSWR(`postNotification`, setNotificationsOrRedirection, {
+    refreshInterval: INTERVAL_TIME,
+  });
 
-    return () => clearInterval(timeId);
-  }, []);
+  // useEffect(() => {
+  //   //Thinking : SWR 도입.
+  //   const timeId = setInterval(() => {
+  //     setNotificationsOrRedirection();
+  //   }, 1000);
+
+  //   return () => clearInterval(timeId);
+  // }, []);
 
   useEffect(() => {
     const getNotifications = async () => {
