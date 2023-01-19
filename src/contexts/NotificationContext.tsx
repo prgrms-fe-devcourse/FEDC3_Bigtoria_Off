@@ -1,0 +1,76 @@
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import useSWR from 'swr';
+
+import { getNotificationList } from '../apis/notification';
+import { TOKEN_KEY } from '../constants/auth';
+import { Notification } from '../interfaces/notification';
+import { getLocalStorage } from '../utils/storage';
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  badgeCount: number;
+  notifications: Notification[];
+}
+
+const initialState = {
+  badgeCount: 0,
+  notifications: [],
+};
+
+const NotificationsContext = createContext<State>(initialState);
+
+export const useNotificationsContext = () => useContext(NotificationsContext);
+
+const NotificationsProvider = ({ children }: Props) => {
+  const [badgeCount, setBadgeCount] = useState(0);
+
+  const changeBadgeCount = () => {
+    const token = getLocalStorage(TOKEN_KEY);
+    if (!token || !notifications) {
+      setBadgeCount(0);
+      return;
+    }
+
+    const unSeenNotificationCount = notifications.filter(
+      (notification: Notification) => {
+        const { seen, like, follow, comment, message } = notification;
+
+        if (!seen && (like || follow || comment || message)) return true;
+        return false;
+      }
+    ).length;
+
+    setBadgeCount(unSeenNotificationCount);
+  };
+
+  const { data: notifications, isLoading } = useSWR(
+    'notification',
+    getNotificationList,
+    {
+      refreshInterval: 500,
+    }
+  );
+
+  useEffect(() => {
+    if (!isLoading && notifications) {
+      changeBadgeCount();
+    }
+  }, [notifications]);
+
+  return (
+    <NotificationsContext.Provider value={{ badgeCount, notifications }}>
+      {children}
+    </NotificationsContext.Provider>
+  );
+};
+
+export default NotificationsProvider;
