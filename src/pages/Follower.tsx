@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import { useEffect } from 'react';
-import FollowHeader from '../components/Follow/FollowHeader';
-import FollowingButton from '../components/Follow/FollowingButton';
-import FollowingList from '../components/Follow/FollowingList';
-import useGetFollow from '../hooks/useGetFollow';
 
-const Following = () => {
-  const { followingList, loading, followLoading, getUserInfo, handleClick } =
-    useGetFollow();
+import FollowerButton from '../components/Follow/FollowerButton';
+import FollowHeader from '../components/Follow/FollowHeader';
+import FollowingList from '../components/Follow/FollowingList';
+import useGetFollower from '../hooks/useGetFollower';
+
+const Follower = () => {
+  const { followerList, loading, f4f, getUserInfo, handleClick } =
+    useGetFollower();
 
   useEffect(() => {
     getUserInfo();
@@ -18,25 +19,44 @@ const Following = () => {
     <Container sx={{ marginTop: '1rem' }}>
       <FollowHeader />
       {loading ? (
-        <Loading />
+        <CircularProgress
+          size={60}
+          sx={{
+            color: 'royalblue',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: '-30px',
+            marginLeft: '-30px',
+          }}
+        />
       ) : (
-        followingList.map(
-          ({ _id, image, fullName, isOnline, user, coverImage, username }) => (
+        followerList.map(
+          ({
+            _id,
+            followingId,
+            image,
+            fullName,
+            isOnline,
+            follower,
+            coverImage,
+            username,
+          }) => (
             <Wrapper key={_id}>
               <FollowingList
                 userInfo={{
                   image,
                   fullName,
                   isOnline,
-                  user,
+                  user: follower,
                   coverImage,
                   username,
                 }}
               />
-              <FollowingButton
-                followId={_id}
-                userId={user}
-                isLoading={followLoading}
+              <FollowerButton
+                followId={followingId}
+                userId={follower}
+                f4f={f4f}
                 onClick={handleClick}
               />
             </Wrapper>
@@ -47,7 +67,7 @@ const Following = () => {
   );
 };
 
-export default Following;
+export default Follower;
 
 const Wrapper = styled.div`
   display: flex;

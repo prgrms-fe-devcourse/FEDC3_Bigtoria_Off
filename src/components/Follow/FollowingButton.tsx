@@ -1,5 +1,3 @@
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { Box, Button } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
@@ -40,7 +38,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
             onClick(e);
             setIsFollowing(!isFollowing);
           }}>
-          {isFollowing ? <PersonAddIcon /> : <PersonRemoveIcon />}
+          {toggle ? '팔로우' : '언팔'}
         </Button>
       </Box>
     </Box>
