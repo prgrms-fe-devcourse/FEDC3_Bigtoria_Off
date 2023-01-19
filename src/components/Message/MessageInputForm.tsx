@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
-import FormControl from '@mui/material/FormControl';
 import { useEffect, useRef } from 'react';
 
 import http from '../../apis/instance';

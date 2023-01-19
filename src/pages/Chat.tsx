@@ -6,7 +6,7 @@ import {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
-  Typography
+  Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
