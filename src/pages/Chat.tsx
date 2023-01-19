@@ -67,7 +67,7 @@ const Chat = () => {
           );
         });
     })();
-  }, []);
+  }, [specificUsers]);
 
   useEffect(() => {
     if (conversationPartner !== '') updateConversationPartner();
