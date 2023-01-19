@@ -37,7 +37,7 @@ const NotificationsProvider = ({ children }: Props) => {
 
   const changeBadgeCount = () => {
     const token = getLocalStorage(TOKEN_KEY);
-    if (!token || !notifications) {
+    if (!token) {
       setBadgeCount(0);
       return;
     }
