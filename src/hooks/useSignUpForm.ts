@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { signin } from '../apis/auth';
 import { postSignUp } from '../apis/signup';
+import { CHANNEL_ID } from '../constants/apiParams';
 import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
+import { postStory } from './../apis/story';
 import { ROUTES } from './../constants/routes';
 
 const getDateInfo = (date: Dayjs) => ({
@@ -51,6 +53,22 @@ const useSignUpForm = () => {
     if (newValue) setValues({ ...values, date: getDateInfo(newValue) });
   };
 
+  const generateFormData = () => {
+    const formData = new FormData();
+    formData.append(
+      'title',
+      JSON.stringify({
+        storyTitle: '님 태어난 날',
+        year: values.date.year,
+        month: values.date.month,
+        day: values.date.day,
+        content: '🥳 해삐 바쓰데이 🎉',
+      })
+    );
+    formData.append('channelId', CHANNEL_ID);
+    return formData;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -62,6 +80,8 @@ const useSignUpForm = () => {
       try {
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
+        const formData = generateFormData();
+        await postStory(formData);
         navigate(ROUTES.HOME);
         setTimeout(function () {
           alert('가입이 완료되었습니다.');
