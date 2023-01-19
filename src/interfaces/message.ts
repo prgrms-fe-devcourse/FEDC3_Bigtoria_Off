@@ -9,6 +9,7 @@ export interface Message {
     createdAt: string;
     fullName: string;
     _id: string;
+    image?: string;
   };
   seen: boolean;
   createdAt: string;
