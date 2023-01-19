@@ -8,6 +8,7 @@ import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
   const { storiesByYear, fullName, isLoading } = useFetchStories();
+  console.log(storiesByYear);
 
   if (isLoading) return <Loading />;
 
@@ -16,8 +17,8 @@ const StoryBook = () => {
       <StoriesContainer>
         {!!fullName && <StoryBookTitle fullName={fullName} />}
         {storiesByYear.length !== 0 ? (
-          storiesByYear.map(({ year, stories }, i) => (
-            <StoriesByYear key={stories[i]._id} year={year} stories={stories} />
+          storiesByYear.map(({ year, stories }) => (
+            <StoriesByYear key={year} year={year} stories={stories} />
           ))
         ) : (
           <>{!!fullName && <Empty>{fullName}님은 게으른가봐요. ㅋ</Empty>}</>
