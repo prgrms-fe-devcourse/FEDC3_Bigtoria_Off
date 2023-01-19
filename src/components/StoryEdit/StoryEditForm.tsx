@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 import { useStoryForm } from '../../hooks/useStory';
 import { StoryData } from '../../interfaces/story';
@@ -10,20 +11,26 @@ import TextInput from './TextInput';
 
 interface Props {
   story: StoryData;
+  isNew: boolean;
 }
 
-const StoryEditForm = ({ story }: Props) => {
-  let initialValues;
+const setInitialValues = (story: StoryData) => {
   if (story._id) {
     const { storyTitle, year, month, day, content } = JSON.parse(story.title);
 
-    initialValues = {
+    return {
       title: storyTitle,
       date: { year: Number(year), month: Number(month), date: Number(day) },
       imageURL: story.image,
       content,
     };
   }
+};
+
+const StoryEditForm = ({ story, isNew }: Props) => {
+  const { state } = useLocation();
+
+  const initialValues = setInitialValues(isNew ? story : state);
 
   const {
     values,
