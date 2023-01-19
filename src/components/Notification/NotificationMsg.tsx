@@ -8,6 +8,7 @@ import {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,14 +21,43 @@ interface Props {
   notification: Notification;
 }
 
-const NOTI_MESSAGE = {
-  LIKE: `님이 회원님께 좋아요를 보냈습니다.`,
-  FOLLOW: `님이 회원님을 팔로우합니다. `,
-  MESSAGE: `님이 회원님께 메세지를 보냈습니다.`,
-  COMMENT: `님이 회원님 게시글에 댓글을 남겼습니다.`,
+interface NOTI_TYPE {
+  [keyword: string]: {
+    FRONT: string;
+    MIDDLE: string;
+    REAR: string;
+  };
+}
+
+const NOTI_TYPE = {
+  LIKE: 'LIKE',
+  COMMENT: 'COMMENT',
+  FOLLOW: 'FOLLOW',
+  MESSAGE: 'MESSAGE',
 };
 
-const { LIKE, COMMENT, FOLLOW, MESSAGE } = NOTI_MESSAGE;
+const NOTI_MESSAGE: NOTI_TYPE = {
+  LIKE: {
+    FRONT: '님이 회원님께 ',
+    MIDDLE: '좋아요',
+    REAR: '를 보냈습니다',
+  },
+  COMMENT: {
+    FRONT: '님이 회원님 게시글에 ',
+    MIDDLE: '댓글',
+    REAR: '을 보냈습니다',
+  },
+  FOLLOW: {
+    FRONT: '님이 회원님을 ',
+    MIDDLE: '팔로우',
+    REAR: '합니다',
+  },
+  MESSAGE: {
+    FRONT: '님이 회원님께 ',
+    MIDDLE: '메세지',
+    REAR: '를 보냈습니다',
+  },
+};
 
 const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 
@@ -44,11 +74,34 @@ const NotificationMsg = ({ notification }: Props) => {
   } = notification;
   const navigate = useNavigate();
 
+  const getTotalMsg = (front: string, middle: string, rear: string) => {
+    return (
+      <Typography component='span'>
+        {fullName}
+        {front}
+        <Typography component='span' color={COLORS.SUB}>
+          {middle}
+        </Typography>
+        {rear}
+      </Typography>
+    );
+  };
+
+  const getMsgType = () => {
+    if (like) return NOTI_TYPE.LIKE;
+    else if (comment) return NOTI_TYPE.COMMENT;
+    else if (follow) return NOTI_TYPE.FOLLOW;
+    else return NOTI_TYPE.MESSAGE;
+  };
+
   const generateMsg = () => {
-    if (like) return `${fullName}${LIKE}`;
-    if (comment) return `${fullName}${COMMENT}`;
-    if (follow) return `${fullName}${FOLLOW}`;
-    if (message) return `${fullName}${MESSAGE}`;
+    const msgType = getMsgType();
+
+    return getTotalMsg(
+      NOTI_MESSAGE[msgType].FRONT,
+      NOTI_MESSAGE[msgType].MIDDLE,
+      NOTI_MESSAGE[msgType].REAR
+    );
   };
 
   const generateAvatar = () => {
@@ -58,7 +111,7 @@ const NotificationMsg = ({ notification }: Props) => {
       return (
         <Avatar
           sx={{
-            backgroundColor: COLORS.SUB,
+            backgroundColor: `${!image ? COLORS.SUB : ''}`,
           }}
           alt={fullName}
           src={image ? image : ''}
@@ -85,6 +138,7 @@ const NotificationMsg = ({ notification }: Props) => {
         borderRadius: 2,
         marginBottom: '12px',
         padding: 0,
+        backgroundColor: 'white',
       }}>
       <ListItemButton onClick={handleListItemClick}>
         <ListItemAvatar
@@ -92,6 +146,7 @@ const NotificationMsg = ({ notification }: Props) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginRight: '5px',
           }}>
           <Badge
             variant='dot'
