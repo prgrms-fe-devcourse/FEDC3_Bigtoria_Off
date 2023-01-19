@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
-import { CircularProgress, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useEffect } from 'react';
 
+import FollowEmpty from '../components/Follow/FollowEmpty';
 import FollowerButton from '../components/Follow/FollowerButton';
 import FollowHeader from '../components/Follow/FollowHeader';
 import FollowingList from '../components/Follow/FollowingList';
+import Loading from '../components/StoryBook/Loading';
 import useGetFollower from '../hooks/useGetFollower';
 
 const Follower = () => {
@@ -19,18 +21,8 @@ const Follower = () => {
     <Container sx={{ marginTop: '1rem' }}>
       <FollowHeader />
       {loading ? (
-        <CircularProgress
-          size={60}
-          sx={{
-            color: 'royalblue',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: '-30px',
-            marginLeft: '-30px',
-          }}
-        />
-      ) : (
+        <Loading />
+      ) : followerList.length > 0 ? (
         followerList.map(
           ({
             _id,
@@ -62,6 +54,8 @@ const Follower = () => {
             </Wrapper>
           )
         )
+      ) : (
+        <FollowEmpty type='follower' />
       )}
     </Container>
   );

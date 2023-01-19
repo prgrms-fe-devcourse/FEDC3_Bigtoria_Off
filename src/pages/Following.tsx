@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
 import { Container } from '@mui/material';
 import { useEffect } from 'react';
+
+import FollowEmpty from '../components/Follow/FollowEmpty';
 import FollowHeader from '../components/Follow/FollowHeader';
 import FollowingButton from '../components/Follow/FollowingButton';
 import FollowingList from '../components/Follow/FollowingList';
+import Loading from '../components/StoryBook/Loading';
 import useGetFollow from '../hooks/useGetFollow';
 
 const Following = () => {
@@ -19,7 +22,7 @@ const Following = () => {
       <FollowHeader />
       {loading ? (
         <Loading />
-      ) : (
+      ) : followingList.length > 0 ? (
         followingList.map(
           ({ _id, image, fullName, isOnline, user, coverImage, username }) => (
             <Wrapper key={_id}>
@@ -42,6 +45,8 @@ const Following = () => {
             </Wrapper>
           )
         )
+      ) : (
+        <FollowEmpty type='following' />
       )}
     </Container>
   );
