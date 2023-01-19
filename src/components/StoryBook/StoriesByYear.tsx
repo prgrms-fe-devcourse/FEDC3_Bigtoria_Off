@@ -1,14 +1,17 @@
 import styled from '@emotion/styled';
 
 import { COLORS } from '../../constants/colors';
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import { StoriesWithYear } from '../../interfaces/story';
 import StoryCard from './StoryCard';
 
 const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
+  const { displayMode } = useDisplayModeContext();
+
   return (
     <Container>
       <Year>{year}</Year>
-      <CardsContainer>
+      <CardsContainer displayMode={displayMode}>
         {stories.map((story) => {
           const { storyTitle, month } = JSON.parse(story.title);
 
@@ -49,14 +52,16 @@ const Year = styled.div`
   color: white;
 `;
 
-const CardsContainer = styled.div`
+const CardsContainer = styled.div<{ displayMode: string }>`
   flex: 1;
   display: flex;
   flex-wrap: nowrap;
   align-items: flex-end;
   overflow-x: auto;
   padding: 1rem;
-  background-color: white;
+  background-color: ${({ displayMode }) =>
+    displayMode === 'dark' ? 'black' : 'white'};
+  transition: background-color 0.2s ease-out;
 
   &::-webkit-scrollbar {
     height: 0.15rem;

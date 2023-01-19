@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
+import { DisplayModeProvider } from './contexts/DisplayModeContext';
 import FontStyle from './styles/FontStyle';
 import GlobalStyle from './styles/GlobalStyle';
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <GlobalStyle />
     <FontStyle />
     <ThemeProvider theme={theme}>
-      <App />
+      <DisplayModeProvider>
+        <App />
+      </DisplayModeProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

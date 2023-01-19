@@ -8,9 +8,11 @@ import { checkAuth } from '../../apis/auth';
 import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
-import NotificationButton from '../Notification/NotificationButton';
+import NotificationButton from '../Alarm/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
+import DarkModeSwitch from './DarkModeSwitch';
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -24,6 +26,7 @@ const Header = () => {
     fullName: '',
     _id: '',
   });
+  const { displayMode, toggleDisplayMode } = useDisplayModeContext();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -54,6 +57,10 @@ const Header = () => {
       document.removeEventListener('scroll', scrollEvent);
     };
   }, []);
+
+  const handleClickDarkModeSwitch = () => {
+    toggleDisplayMode();
+  };
 
   const handleClickProfileButton = () => {
     token ? navigate(ROUTES.PROFILE) : navigate(ROUTES.SIGNIN);
@@ -97,7 +104,10 @@ const Header = () => {
   };
 
   return (
-    <Container ref={headerRef} isScrolled={isScrolled}>
+    <Container
+      ref={headerRef}
+      isScrolled={isScrolled}
+      displayMode={displayMode}>
       <Logo
         onClick={() => {
           handleClickHamburgerClose();
@@ -111,8 +121,12 @@ const Header = () => {
         </HamburgerButton>
         <NotificationButton onClick={handleClickHamburgerClose} />
         <StoryAddButton onClick={handleClickHamburgerClose} />
+        <DarkModeSwitch
+          displayMode={displayMode}
+          onClick={handleClickDarkModeSwitch}
+        />
       </ButtonsContainer>
-      <Hamburger onClick={handleClick} click={click}>
+      <Hamburger onClick={handleClick} click={click} displayMode={displayMode}>
         <NavLinks onClick={handleClickProfileButton}>
           <Avatar
             src={user.image || ''}
@@ -138,8 +152,11 @@ const Header = () => {
 
 export default Header;
 
-const Container = styled.header<{ isScrolled: boolean }>`
-  background-color: #f5f5f8;
+const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
+  background-color: ${({ displayMode }) =>
+    displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
+  /* color: ${({ displayMode }) =>
+    displayMode === 'dark' ? `white` : `black`}; */
   position: sticky;
   top: 0;
   padding: 1.2rem 1rem;
@@ -159,7 +176,7 @@ const ButtonsContainer = styled.div`
   gap: 1rem;
 `;
 
-const Hamburger = styled.nav<{ click: boolean }>`
+const Hamburger = styled.nav<{ click: boolean; displayMode: string }>`
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -173,7 +190,8 @@ const Hamburger = styled.nav<{ click: boolean }>`
   animation-name: slide;
   animation-duration: 0.5s;
   transition: all 0.5s ease;
-  background: #ffffff;
+  background: ${({ displayMode }) =>
+    displayMode === 'dark' ? 'black' : 'white'};
   z-index: 999;
   padding-top: 4rem;
 `;
