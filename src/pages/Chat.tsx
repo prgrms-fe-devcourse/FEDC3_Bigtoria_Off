@@ -18,14 +18,14 @@ import { TOKEN_KEY } from '../constants/auth';
 import { Message } from '../interfaces/message';
 import { getLocalStorage } from '../utils/storage';
 
-const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
-
 const Chat = () => {
-  const [conversationPartner, setConversationPartner] = useState('');
+  const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
+  const { state: userInfo } = useLocation();
+  const [conversationPartner, setConversationPartner] = useState(
+    userInfo.user ?? ''
+  );
   const [messages, setMessages] = useState<Message[]>([]);
   const [specificUsers, setSpecificUser] = useState<Message[]>([]);
-
-  const { state: userInfo } = useLocation();
 
   const handleListItemClick = (index: string) => {
     setConversationPartner(index);
@@ -67,17 +67,11 @@ const Chat = () => {
           );
         });
     })();
-  }, []);
-
-  useEffect(() => {
-    if (!messages.length) return;
-
-    setConversationPartner(messages[0].receiver._id);
-  }, [messages]);
+  }, [specificUsers]);
 
   useEffect(() => {
     if (conversationPartner !== '') updateConversationPartner();
-  }, [conversationPartner]);
+  }, [conversationPartner, specificUsers]);
 
   const updateConversationPartner = async () => {
     await http
@@ -107,7 +101,10 @@ const Chat = () => {
                 onClick={() => handleListItemClick(message.receiver._id)}
                 selected={message.receiver._id === conversationPartner}>
                 <ListItemAvatar>
-                  <Avatar alt={message.receiver.fullName} src={''} />
+                  <Avatar
+                    alt={message.receiver.fullName}
+                    src={message.receiver.image}
+                  />
                 </ListItemAvatar>
                 <ListItemText
                   id={message.receiver.createdAt}
