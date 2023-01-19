@@ -33,7 +33,7 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
       }}>
       <ListItemButton
         onClick={() => navigate(path)}
-        sx={{ padding: '18px 20px', borderRadius: 4 }}>
+        sx={{ padding: '18px 20px', borderRadius: 3.5 }}>
         <ListItemAvatar sx={{ marginRight: '10px' }}>
           <Avatar
             sx={{
