@@ -108,6 +108,7 @@ const UploadContainer = styled(Box)`
   width: 100%;
   height: 300px;
   border: 1px dashed grey;
+  cursor: pointer;
 `;
 
 const ImagePlaceholder = styled.div`

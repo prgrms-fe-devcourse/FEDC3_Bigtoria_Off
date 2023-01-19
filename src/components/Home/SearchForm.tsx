@@ -1,6 +1,7 @@
 import { HighlightOff } from '@mui/icons-material';
 import { Box, IconButton, TextField } from '@mui/material';
 
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import useSearchForm from '../../hooks/useSearchForm';
 
 interface Props {
@@ -15,11 +16,13 @@ const SearchForm = ({ onSubmit }: Props) => {
     handleInputClear,
     handleFormSubmit,
   } = useSearchForm({ onSubmit });
+  const { displayMode } = useDisplayModeContext();
 
   return (
     <Box
       sx={{
-        backgroundColor: 'white',
+        backgroundColor: displayMode === 'dark' ? 'black' : 'white',
+        transition: 'background-color 0.2s ease-out',
         borderRadius: 4,
         padding: '1rem',
       }}>

@@ -9,6 +9,16 @@ const GlobalStyle = () => {
 export default GlobalStyle;
 
 const style = css`
+  :root[color-theme='light'] {
+    --backgroundColor: ${COLORS.MAIN};
+    --color: black;
+  }
+
+  :root[color-theme='dark'] {
+    --backgroundColor: black;
+    --color: white;
+  }
+
   @font-face {
     font-family: 'MaplestoryOTFLight';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff%27')
@@ -33,9 +43,12 @@ const style = css`
 
   body {
     font-family: 'MaplestoryOTFLight', cursive;
-    background-color: ${COLORS.MAIN};
+    background-color: var(--backgroundColor);
+    color: var(--color);
     margin: 0;
     overflow-y: scroll;
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+
     @media all and (min-width: 768px) {
       width: 412px;
       margin: 0 auto;
@@ -182,9 +195,5 @@ const style = css`
   }
   [hidden] {
     display: none;
-  }
-
-  button.Mui-selected {
-    background-color: ${COLORS.SUB} !important;
   }
 `;
