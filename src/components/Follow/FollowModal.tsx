@@ -19,7 +19,6 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
-import { StateBadge } from './FollowingList';
 
 interface Props {
   open: boolean;
@@ -41,8 +40,6 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
   const handleClickStoryBook = () => {
     navigate(ROUTES.STORY_BOOK_BY_USER_ID(userInfo.user));
   };
-
-  const isStar = false;
 
   return (
     <ThemeProvider theme={theme}>
