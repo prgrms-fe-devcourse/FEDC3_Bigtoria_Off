@@ -1,10 +1,9 @@
-import { createTheme, ThemeProvider, useMediaQuery } from '@mui/material';
-import { useMemo } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './components/shared/Header';
 import ScrollToTop from './components/shared/ScrollToTop';
 import { ROUTES } from './constants/routes';
+import { DisplayModeProvider } from './contexts/DisplayModeContext';
 import NotFound from './pages/404';
 import Chat from './pages/Chat';
 import Following from './pages/Following';
@@ -16,25 +15,11 @@ import SignUp from './pages/SignUp';
 import Story from './pages/Story';
 import StoryBook from './pages/StoryBook';
 import StoryEdit from './pages/StoryEdit';
+import Temp from './pages/Temp';
 
 const App = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode]
-  );
-
-  console.log(prefersDarkMode);
-  console.log(theme);
-
   return (
-    <ThemeProvider theme={theme}>
+    <DisplayModeProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Header />
@@ -52,7 +37,7 @@ const App = () => {
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </ThemeProvider>
+    </DisplayModeProvider>
   );
 };
 

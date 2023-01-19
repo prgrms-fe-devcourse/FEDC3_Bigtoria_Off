@@ -10,8 +10,8 @@ import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Alarm/NotificationButton';
-import FontText from '../Home/FontText';
 import StoryAddButton from '../StoryBook/StoryAddButton';
+import DarkModeSwitch from './DarkModeSwitch';
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -112,6 +112,7 @@ const Header = () => {
         </HamburgerButton>
         <NotificationButton onClick={handleClickHamburgerClose} />
         <StoryAddButton onClick={handleClickHamburgerClose} />
+        <DarkModeSwitch />
       </ButtonsContainer>
       <Hamburger onClick={handleClick} click={click}>
         <NavLinks onClick={handleClickProfileButton}>
