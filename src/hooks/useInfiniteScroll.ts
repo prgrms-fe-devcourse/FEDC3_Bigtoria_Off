@@ -38,6 +38,12 @@ const useInfiniteScroll = () => {
 
     const filteredUsers = await searchUserList(keyword);
 
+    if (!filteredUsers) {
+      setData([]);
+      setIsLoaded(false);
+      return;
+    }
+
     setSearchedData(filteredUsers);
     setData(filteredUsers.slice(0, DATA_LIMIT));
 
