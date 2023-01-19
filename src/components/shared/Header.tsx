@@ -126,7 +126,7 @@ const Header = () => {
           onClick={handleClickDarkModeSwitch}
         />
       </ButtonsContainer>
-      <Hamburger onClick={handleClick} click={click}>
+      <Hamburger onClick={handleClick} click={click} displayMode={displayMode}>
         <NavLinks onClick={handleClickProfileButton}>
           <Avatar
             src={user.image || ''}
@@ -155,6 +155,8 @@ export default Header;
 const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
   background-color: ${({ displayMode }) =>
     displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
+  /* color: ${({ displayMode }) =>
+    displayMode === 'dark' ? `white` : `black`}; */
   position: sticky;
   top: 0;
   padding: 1.2rem 1rem;
@@ -174,7 +176,7 @@ const ButtonsContainer = styled.div`
   gap: 1rem;
 `;
 
-const Hamburger = styled.nav<{ click: boolean }>`
+const Hamburger = styled.nav<{ click: boolean; displayMode: string }>`
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -188,7 +190,8 @@ const Hamburger = styled.nav<{ click: boolean }>`
   animation-name: slide;
   animation-duration: 0.5s;
   transition: all 0.5s ease;
-  background: #ffffff;
+  background: ${({ displayMode }) =>
+    displayMode === 'dark' ? 'black' : 'white'};
   z-index: 999;
   padding-top: 4rem;
 `;

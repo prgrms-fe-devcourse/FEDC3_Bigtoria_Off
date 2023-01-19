@@ -1,6 +1,6 @@
 import 'dayjs/locale/ko';
 
-import { createTheme, TextField, ThemeProvider } from '@mui/material';
+import { TextField } from '@mui/material';
 import {
   koKR,
   LocalizationProvider,
@@ -38,46 +38,37 @@ const renderWeekPickerDay = (
 
 const DatePicker = ({ value, onChange }: Props) => {
   return (
-    <ThemeProvider theme={theme}>
-      <LocalizationProvider
-        dateAdapter={AdapterDayjs}
-        adapterLocale='ko'
-        localeText={
-          koKR.components.MuiLocalizationProvider.defaultProps.localeText
-        }>
-        <MobileDatePicker
-          inputFormat='YYYY년 M월 D일'
-          label='날짜'
-          value={value}
-          toolbarFormat='YYYY년 M월 D일'
-          onChange={onChange}
-          disableMaskedInput
-          renderDay={renderWeekPickerDay}
-          renderInput={(params) => <TextField {...params} color='warning' />}
-          maxDate={dayjs(new Date())}
-        />
-      </LocalizationProvider>
-    </ThemeProvider>
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      adapterLocale='ko'
+      localeText={
+        koKR.components.MuiLocalizationProvider.defaultProps.localeText
+      }>
+      <MobileDatePicker
+        inputFormat='YYYY년 M월 D일'
+        label='날짜'
+        value={value}
+        toolbarFormat='YYYY년 M월 D일'
+        onChange={onChange}
+        disableMaskedInput
+        renderDay={renderWeekPickerDay}
+        renderInput={(params) => <TextField {...params} color='warning' />}
+        maxDate={dayjs(new Date())}
+      />
+    </LocalizationProvider>
   );
 };
 
 export default DatePicker;
 
-const theme = createTheme({
-  components: {
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontSize: '1rem',
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          color: `${COLORS.SUB}`,
-        },
-      },
-    },
-  },
-});
+// const theme = createTheme({
+//   components: {
+//     MuiButton: {
+//       styleOverrides: {
+//         root: {
+//           color: `${COLORS.SUB}`,
+//         },
+//       },
+//     },
+//   },
+// });

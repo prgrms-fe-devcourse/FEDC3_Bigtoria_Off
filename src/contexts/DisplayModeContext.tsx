@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import { DISPLAY_MODE } from '../constants/auth';
+import { COLORS } from '../constants/colors';
 import { DisplayMode } from '../interfaces/displayMode';
 import { changeColorTheme } from '../utils/helpers';
 import { getLocalStorage, setLocalStorage } from '../utils/storage';
@@ -53,11 +54,30 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
   const themeByDisplayMode = useMemo(
     () =>
       createTheme({
-        // typography: {
-        // },
-        // palette: {
-        //   mode: displayMode === 'dark' ? 'dark' : 'light',
-        // },
+        palette: { mode: displayMode === 'dark' ? 'dark' : 'light' },
+        components: {
+          MuiListItemButton: {
+            styleOverrides: {
+              root: {
+                backgroundColor:
+                  displayMode === 'dark' ? COLORS.DARK_MODE_HEADER : 'white',
+                '&:hover': {
+                  backgroundColor:
+                    displayMode === 'dark' ? 'black' : COLORS.MUI_LIGHT_HOVER,
+                },
+              },
+            },
+          },
+          MuiTextField: {
+            styleOverrides: {
+              root: {
+                '& label': {
+                  color: COLORS.MUI_LABEL,
+                },
+              },
+            },
+          },
+        },
       }),
     [displayMode]
   );
