@@ -98,6 +98,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
         value={value}
         label={`새 ${type}`}
         error={!!error}
+        color='warning'
         helperText={error}
         fullWidth
         onChange={handleChange}
@@ -107,6 +108,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
         <Button
           type='button'
           variant='outlined'
+          color='warning'
           disabled={isLoading}
           fullWidth
           onClick={handleOpen}>
@@ -115,6 +117,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
         <Button
           type='submit'
           variant='contained'
+          color='warning'
           disabled={isLoading}
           fullWidth>
           {type} 변경
