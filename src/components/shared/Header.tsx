@@ -104,7 +104,10 @@ const Header = () => {
   };
 
   return (
-    <Container ref={headerRef} isScrolled={isScrolled}>
+    <Container
+      ref={headerRef}
+      isScrolled={isScrolled}
+      displayMode={displayMode}>
       <Logo
         onClick={() => {
           handleClickHamburgerClose();
@@ -149,8 +152,9 @@ const Header = () => {
 
 export default Header;
 
-const Container = styled.header<{ isScrolled: boolean }>`
-  background-color: #f5f5f8;
+const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
+  background-color: ${({ displayMode }) =>
+    displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
   position: sticky;
   top: 0;
   padding: 1.2rem 1rem;

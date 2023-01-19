@@ -11,10 +11,12 @@ export default GlobalStyle;
 const style = css`
   :root[color-theme='light'] {
     --backgroundColor: ${COLORS.MAIN};
+    --color: black;
   }
 
   :root[color-theme='dark'] {
     --backgroundColor: black;
+    --color: white;
   }
 
   @font-face {
@@ -42,9 +44,10 @@ const style = css`
   body {
     font-family: 'MaplestoryOTFLight', cursive;
     background-color: var(--backgroundColor);
+    color: var(--color);
     margin: 0;
     overflow-y: scroll;
-    transition: background-color 0.25s ease-out;
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
 
     @media all and (min-width: 768px) {
       width: 412px;

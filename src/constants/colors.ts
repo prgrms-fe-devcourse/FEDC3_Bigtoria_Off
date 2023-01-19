@@ -6,4 +6,5 @@ export const COLORS = {
   STORY_CARD_BORDER: 'rgba(0, 0, 0, 0.2)',
   HEADER_BORDER: 'rgba(0, 0, 0, 0.06)',
   ERROR: '#D32F2F',
+  DARK_MODE_HEADER: '#1e1e1e',
 };
