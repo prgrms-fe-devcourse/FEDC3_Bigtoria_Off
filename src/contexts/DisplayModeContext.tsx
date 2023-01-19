@@ -55,6 +55,9 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
     () =>
       createTheme({
         palette: { mode: displayMode === 'dark' ? 'dark' : 'light' },
+        typography: {
+          fontFamily: "'MaplestoryOTFLight', cursive",
+        },
         components: {
           MuiListItemButton: {
             styleOverrides: {
