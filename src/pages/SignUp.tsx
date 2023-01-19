@@ -62,10 +62,10 @@ const SignUp = () => {
           <DatePicker value={date} text='birth' onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'
-            innerText='한글 (1-8자리)'
+            innerText='한글 (2-6자리)'
             type='text'
             name='job'
-            maxLength='8'
+            maxLength='6'
             value={values.job}
             onChange={handleChange}
             errorMsg={errors.job}
