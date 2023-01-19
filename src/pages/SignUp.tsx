@@ -54,7 +54,7 @@ const SignUp = () => {
           errorMsg={errors.passwordConfirm}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <DatePicker value={date} onChange={handleDateChange} />
+          <DatePicker value={date} text='birth' onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'
             type='text'

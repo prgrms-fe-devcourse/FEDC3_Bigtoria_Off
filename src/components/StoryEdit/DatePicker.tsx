@@ -15,6 +15,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { COLORS } from '../../constants/colors';
 
 interface Props {
+  text?: string;
   value: Dayjs | null;
   onChange: (newValue: Dayjs | null) => void;
 }
@@ -36,7 +37,7 @@ const renderWeekPickerDay = (
   );
 };
 
-const DatePicker = ({ value, onChange }: Props) => {
+const DatePicker = ({ value, text = 'date', onChange }: Props) => {
   return (
     <LocalizationProvider
       dateAdapter={AdapterDayjs}
@@ -46,7 +47,7 @@ const DatePicker = ({ value, onChange }: Props) => {
       }>
       <MobileDatePicker
         inputFormat='YYYY년 M월 D일'
-        label='생년월일'
+        label={text === 'birth' ? '생년월일' : '날짜'}
         value={value}
         toolbarFormat='YYYY년 M월 D일'
         onChange={onChange}
