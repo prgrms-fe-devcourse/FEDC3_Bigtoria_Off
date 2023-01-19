@@ -1,12 +1,7 @@
-import { Divider, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useState } from 'react';
 
 import TabButtonItem from './TabItem';
-
-/*
- * TODO
- * 1. TabItem 컴포넌트 분리 및 최적화
- */
 
 interface Props {
   onClick: (type: string) => void;
@@ -23,10 +18,7 @@ const TabContainer = ({ onClick }: Props) => {
   const [tabValue, setTabValue] = useState('message');
 
   return (
-    <Stack
-      direction='row'
-      spacing={2}
-      divider={<Divider orientation='vertical' flexItem />}>
+    <Stack direction='row' spacing={2}>
       <TabButtonItem
         text='메세지'
         type={MESSAGE}

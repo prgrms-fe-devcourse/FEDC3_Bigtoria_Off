@@ -10,7 +10,7 @@ import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
-import NotificationButton from '../Alarm/NotificationButton';
+import NotificationButton from '../Notification/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 import DarkModeSwitch from './DarkModeSwitch';
 
