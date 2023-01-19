@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useFetchUser from '../../hooks/useFetchUser';
 import { Comment } from '../../interfaces/comment';
@@ -52,7 +53,8 @@ const CommentList = ({ comments, handleDelete }: Props) => {
             <Button
               color='warning'
               variant='text'
-              onClick={() => handleDelete(comment._id)}>
+              onClick={() => handleDelete(comment._id)}
+              sx={{ color: COLORS.SUB }}>
               삭제
             </Button>
           )}

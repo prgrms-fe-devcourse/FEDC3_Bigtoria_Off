@@ -3,6 +3,7 @@ import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useFetchUser from '../../hooks/useFetchUser';
 import { useDeleteStory } from '../../hooks/useStory';
@@ -32,7 +33,7 @@ const StoryInfo = ({ story }: Props) => {
             <Box>
               <Button
                 variant='text'
-                color='warning'
+                sx={{ color: COLORS.SUB }}
                 onClick={() =>
                   navigate(ROUTES.STORY_EDIT_BY_STORY_ID(story._id), {
                     state: story,
@@ -42,6 +43,7 @@ const StoryInfo = ({ story }: Props) => {
               </Button>
               <Button
                 variant='text'
+                sx={{ color: COLORS.SUB }}
                 color='warning'
                 onClick={() => handleDelete(story._id, story.author._id)}>
                 삭제
