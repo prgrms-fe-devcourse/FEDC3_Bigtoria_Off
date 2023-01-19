@@ -183,8 +183,4 @@ const style = css`
   [hidden] {
     display: none;
   }
-
-  button.Mui-selected {
-    background-color: ${COLORS.SUB} !important;
-  }
 `;
