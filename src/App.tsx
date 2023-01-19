@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/shared/Header';
 import ScrollToTop from './components/shared/ScrollToTop';
 import { ROUTES } from './constants/routes';
-import { DisplayModeProvider } from './contexts/DisplayModeContext';
 import NotFound from './pages/404';
 import Chat from './pages/Chat';
 import Follower from './pages/Follower';
