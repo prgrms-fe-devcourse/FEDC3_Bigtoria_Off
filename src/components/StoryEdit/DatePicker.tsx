@@ -46,7 +46,7 @@ const DatePicker = ({ value, onChange }: Props) => {
       }>
       <MobileDatePicker
         inputFormat='YYYY년 M월 D일'
-        label='날짜'
+        label='생년월일'
         value={value}
         toolbarFormat='YYYY년 M월 D일'
         onChange={onChange}
