@@ -19,6 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
+import { StateBadge } from './FollowingList';
 
 interface Props {
   open: boolean;
@@ -40,6 +41,8 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
   const handleClickStoryBook = () => {
     navigate(ROUTES.STORY_BOOK_BY_USER_ID(userInfo.user));
   };
+
+  const isStar = false;
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,12 +70,12 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
           <TextContainer>{userInfo.fullName}</TextContainer>
           <Stack
             direction='row'
-            spacing={2}
+            spacing={1}
             justifyContent='center'
-            sx={{ margin: '1rem 0 1rem 0', height: '80px' }}>
+            sx={{ margin: '1rem 0 1rem 0', height: '80px', flexWrap: 'wrap' }}>
             <Chip
               icon={<WorkHistoryTwoToneIcon />}
-              color='success'
+              color='info'
               label={job}
               variant='outlined'
             />
@@ -82,6 +85,16 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
               label={year}
               variant='outlined'
             />
+            {userInfo.isOnline ? (
+              <Chip
+                icon={<CakeTwoToneIcon />}
+                color='success'
+                label='온라인'
+                variant='outlined'
+              />
+            ) : (
+              <Chip color='default' label='오프라인' variant='outlined' />
+            )}
           </Stack>
           <Divider />
           <Stack
@@ -159,6 +172,9 @@ const TextContainer = styled.div`
 `;
 
 const theme = createTheme({
+  typography: {
+    fontFamily: "'MaplestoryOTFLight', cursive",
+  },
   components: {
     MuiPaper: {
       styleOverrides: {
