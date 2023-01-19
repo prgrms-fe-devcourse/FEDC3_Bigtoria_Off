@@ -2,7 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../apis/follow';
-import { getFollowingUser } from '../apis/getFollowingUser';
+import { getFollowingUser } from '../apis/getFollowUser';
 import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
 import { List } from '../interfaces/followList';
@@ -10,15 +10,15 @@ import { getChangedIndex } from '../utils/getChangedIndex';
 import { ROUTES } from './../constants/routes';
 
 const BUTTON_MESSAGE = {
-  FOLLOW: 'PersonAddIcon',
-  DELETE: 'PersonRemoveIcon',
+  FOLLOW: '팔로우',
+  DELETE: '언팔',
 };
 
 const useGetFollow = () => {
   const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
-  const [followingIdList, setFollowingIdList] = useState<List[]>([]);
+  const [followingList, setFollowingList] = useState<List[]>([]);
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
@@ -33,13 +33,17 @@ const useGetFollow = () => {
       }
       if (userId) {
         const res = await getFollowingUser(infoList.map((data) => data.user));
-        res.map(({ fullName, image, isOnline }, index) => {
-          infoList[index].fullName = fullName;
-          infoList[index].image = image;
-          infoList[index].isOnline = isOnline;
-        });
+        res.map(
+          ({ fullName, image, isOnline, coverImage, username }, index) => {
+            infoList[index].fullName = fullName;
+            infoList[index].image = image;
+            infoList[index].isOnline = isOnline;
+            infoList[index].coverImage = coverImage;
+            infoList[index].username = username;
+          }
+        );
       }
-      setFollowingIdList(infoList);
+      setFollowingList(infoList);
     } catch (error) {
       navigate(ROUTES.NOT_FOUND);
       console.error(error);
@@ -55,8 +59,8 @@ const useGetFollow = () => {
       try {
         setFollowLoading(true);
         const { followid, userid } = currentTarget.dataset;
-        const { testid } = (currentTarget.firstChild as HTMLElement).dataset;
-        if (testid === BUTTON_MESSAGE.DELETE) {
+        const text = currentTarget.textContent;
+        if (text === BUTTON_MESSAGE.DELETE) {
           if (followid && userid) {
             await removeFollow(followid);
           }
@@ -65,10 +69,10 @@ const useGetFollow = () => {
             const res = await createFollow(userid);
             res &&
               (await postNotification('FOLLOW', res.data._id, userid, null));
-            const changedIndex = getChangedIndex(followingIdList, followid);
-            const infoList = [...followingIdList];
+            const changedIndex = getChangedIndex(followingList, followid);
+            const infoList = [...followingList];
             infoList[changedIndex]._id = res?.data._id;
-            setFollowingIdList(infoList);
+            setFollowingList(infoList);
           }
         }
       } catch (error) {
@@ -80,7 +84,7 @@ const useGetFollow = () => {
   };
 
   return {
-    followingIdList,
+    followingList,
     loading,
     followLoading,
     getUserInfo,

@@ -1,7 +1,6 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import FontText from '../components/Home/FontText.js';
 import SearchForm from '../components/Home/SearchForm.js';
 import UserList from '../components/Home/UserList.js';
 import useDebounce from '../hooks/useDebounce.js';
@@ -45,14 +44,16 @@ const Home = () => {
         alignItems: 'center',
         userSelect: 'none',
       }}>
-      <FontText
-        title='B.'
+      <Typography
+        component='span'
         sx={{
           display: 'inline-block',
-          marginBottom: '30px',
+          margin: '45px 0 30px 0',
+          paddingTop: '4px',
           fontSize: '5rem',
-        }}
-      />
+        }}>
+        B.
+      </Typography>
       <Box
         component='main'
         sx={{
@@ -61,16 +62,16 @@ const Home = () => {
           margin: '0 auto',
         }}>
         <SearchForm onSubmit={handleSubmit} />
-        <Box>
-          <FontText
-            title='profiles..'
+        <Box sx={{ marginTop: '30px' }}>
+          <Typography
+            component='span'
             sx={{
               display: 'inline-block',
-              fontSize: '24px',
-              paddingLeft: '5px',
-              marginTop: '20px',
-            }}
-          />
+              fontSize: '22px',
+              padding: '4px 0 0 5px',
+            }}>
+            This is...
+          </Typography>
           {data && <UserList users={data} />}
         </Box>
       </Box>

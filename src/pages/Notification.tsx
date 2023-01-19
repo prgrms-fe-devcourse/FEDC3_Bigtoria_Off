@@ -1,5 +1,4 @@
-import AlarmIcon from '@mui/icons-material/Alarm';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,8 +6,8 @@ import {
   checkNotificationSeen,
   getNotificationList,
 } from '../apis/notification';
-import NotificationList from '../components/Alarm/NotificationList';
-import TabContainer from '../components/Alarm/TabContainer';
+import NotificationList from '../components/Notification/NotificationList';
+import TabContainer from '../components/Notification/TabContainer';
 import { ROUTES } from '../constants/routes';
 
 const { SIGNIN } = ROUTES;
@@ -54,8 +53,8 @@ const Notification = () => {
     <Box
       sx={{
         minWidth: '320px',
-        maxWidth: '480px',
-        margin: '0 auto',
+        maxWidth: '412px',
+        margin: '2rem auto 0 auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -71,7 +70,7 @@ const Notification = () => {
         <Box
           component='section'
           sx={{
-            marginBottom: '15px',
+            marginBottom: '25px',
           }}>
           <TabContainer
             onClick={(type) => {
