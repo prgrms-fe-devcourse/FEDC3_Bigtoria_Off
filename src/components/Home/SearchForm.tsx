@@ -41,7 +41,7 @@ const SearchForm = ({ onSubmit }: Props) => {
           }}
           variant='standard'
           type='text'
-          label='user name'
+          label='닉네임'
           color='warning'
           value={value}
           error={error.keyword !== ''}
