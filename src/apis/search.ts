@@ -1,6 +1,7 @@
 import { DATA_LIMIT } from '../constants/apiParams';
 import { API_URLS } from '../constants/apiUrls';
 import { User } from '../interfaces/user';
+import { setUserListImageFirst } from '../utils/setUserListImageFirst';
 import http from './instance';
 
 const { USER, SEARCH } = API_URLS;
@@ -27,14 +28,17 @@ export const searchUserList = async (keyword: string) => {
       url: SEARCH.GET_USERS_BY_QUERY(keyword),
     });
 
-    const filteredUser = userList.filter((u: User) => {
+    const filteredFullNameMatchUsers = userList.filter((u: User) => {
       const { fullName } = u;
 
       if (fullName.toLowerCase().match(keyword.toLowerCase())) return true;
       return false;
     });
 
-    return filteredUser;
+    const imageFirstUsers = setUserListImageFirst(filteredFullNameMatchUsers);
+
+    return imageFirstUsers;
+    // return filteredFullNameMatchUsers;
   } catch (error) {
     console.error(error);
   }
