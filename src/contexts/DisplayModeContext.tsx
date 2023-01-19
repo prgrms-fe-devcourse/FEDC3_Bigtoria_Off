@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import { DISPLAY_MODE } from '../constants/auth';
 import { DisplayMode } from '../interfaces/displayMode';
+import { changeColorTheme } from '../utils/helpers';
 import { getLocalStorage, setLocalStorage } from '../utils/storage';
 
 interface DisplayModeContextProps extends DisplayMode {
@@ -16,6 +17,7 @@ const osDisplayMode = window.matchMedia('(prefers-color-scheme: dark)').matches
 const initialDisplayMode = storedDisplayMode
   ? storedDisplayMode
   : osDisplayMode;
+changeColorTheme(initialDisplayMode);
 
 const initialState = {
   displayMode: initialDisplayMode,
@@ -37,6 +39,7 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
         setDisplayMode((previousDisplayMode) => {
           const nextDisplayMode =
             previousDisplayMode === 'light' ? 'dark' : 'light';
+          changeColorTheme(nextDisplayMode);
           setLocalStorage(DISPLAY_MODE, nextDisplayMode);
 
           return nextDisplayMode;
@@ -47,7 +50,17 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
     [displayMode]
   );
 
-  const themeByDisplayMode = useMemo(() => createTheme(), [displayMode]);
+  const themeByDisplayMode = useMemo(
+    () =>
+      createTheme({
+        // typography: {
+        // },
+        // palette: {
+        //   mode: displayMode === 'dark' ? 'dark' : 'light',
+        // },
+      }),
+    [displayMode]
+  );
 
   return (
     <DisplayModeContext.Provider value={context}>
