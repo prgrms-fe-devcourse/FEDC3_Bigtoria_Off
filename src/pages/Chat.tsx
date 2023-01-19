@@ -18,8 +18,8 @@ import { TOKEN_KEY } from '../constants/auth';
 import { Message } from '../interfaces/message';
 import { getLocalStorage } from '../utils/storage';
 
-const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
 const Chat = () => {
+  const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
   const { state: userInfo } = useLocation();
   const [conversationPartner, setConversationPartner] = useState(
     userInfo.user ?? ''
