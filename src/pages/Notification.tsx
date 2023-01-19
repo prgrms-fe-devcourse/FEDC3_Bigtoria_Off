@@ -1,7 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useSWR from 'swr';
 
 import {
   checkNotificationSeen,
@@ -10,7 +9,8 @@ import {
 import NotificationList from '../components/Notification/NotificationList';
 import TabContainer from '../components/Notification/TabContainer';
 import { ROUTES } from '../constants/routes';
-import { INTERVAL_TIME } from '../constants/swr';
+import { useNotificationsContext } from '../contexts/NotificationContext';
+import { Notification as NotificationType } from '../interfaces/notification';
 
 const { SIGNIN } = ROUTES;
 
@@ -19,8 +19,10 @@ const CHECK_ALL_NOTIFICATION = '전체 읽음';
 
 const Notification = () => {
   const [tabValue, setTabValue] = useState(MAIN_TAB_VALUE);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const navigate = useNavigate();
+
+  const { notifications: notificationsFromContext } = useNotificationsContext();
 
   const setNotificationsOrRedirection = async () => {
     const result = await getNotificationList();
@@ -28,18 +30,14 @@ const Notification = () => {
     result ? setNotifications(result) : navigate(SIGNIN);
   };
 
-  useSWR(`postNotification`, setNotificationsOrRedirection, {
-    refreshInterval: INTERVAL_TIME,
-  });
+  const handleCheckNotificationBtnClick = async () => {
+    await checkNotificationSeen();
+    await setNotificationsOrRedirection();
+  };
 
-  // useEffect(() => {
-  //   //Thinking : SWR 도입.
-  //   const timeId = setInterval(() => {
-  //     setNotificationsOrRedirection();
-  //   }, 1000);
-
-  //   return () => clearInterval(timeId);
-  // }, []);
+  useEffect(() => {
+    notificationsFromContext && setNotifications(notificationsFromContext);
+  }, [notificationsFromContext]);
 
   useEffect(() => {
     const getNotifications = async () => {
@@ -48,11 +46,6 @@ const Notification = () => {
 
     getNotifications();
   }, [tabValue]);
-
-  const handleCheckNotificationBtnClick = async () => {
-    await checkNotificationSeen();
-    await setNotificationsOrRedirection();
-  };
 
   return (
     <Box
