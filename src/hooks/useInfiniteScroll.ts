@@ -65,7 +65,7 @@ const useInfiniteScroll = () => {
     const bound =
       searchedData && start + DATA_LIMIT >= searchedData.length
         ? searchedData.length
-        : start * DATA_LIMIT;
+        : start + DATA_LIMIT;
 
     setData([...(data || []), ...(searchedData?.slice(start, bound) || [])]);
 
