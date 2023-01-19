@@ -71,7 +71,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (conversationPartner !== '') updateConversationPartner();
-  }, [conversationPartner]);
+  }, [conversationPartner, specificUsers]);
 
   const updateConversationPartner = async () => {
     await http
