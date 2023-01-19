@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Loading from '../components/StoryBook/Loading';
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
 import { ROUTES } from '../constants/routes';
 import useFetchUser from '../hooks/useFetchUser';
@@ -11,15 +10,10 @@ import { useFetchStory } from '../hooks/useStory';
 const StoryEdit = () => {
   const { user, isLoading: isUserLoading } = useFetchUser();
   const { story, isLoading: isStoryLoading } = useFetchStory();
-  const [title, setTitle] = useState('');
   const { storyId } = useParams();
   const navigate = useNavigate();
 
   const isNew = storyId === 'new';
-
-  useLayoutEffect(() => {
-    setTitle(`스토리 ${isNew ? '추가' : '수정'}`);
-  }, [storyId]);
 
   useEffect(() => {
     if (isNew || isUserLoading || isStoryLoading) return;
@@ -30,11 +24,9 @@ const StoryEdit = () => {
     }
   }, [user, story]);
 
-  if (isUserLoading || isStoryLoading) return <Loading />;
-
   return (
     <Container>
-      <h1>{title}</h1>
+      <h1>스토리 {isNew ? '추가' : '수정'}</h1>
       <StoryEditForm story={story} />
     </Container>
   );

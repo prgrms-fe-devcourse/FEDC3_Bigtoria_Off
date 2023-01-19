@@ -104,12 +104,7 @@ const Header = () => {
           handleClickHamburgerClose();
           navigate(ROUTES.HOME);
         }}>
-        <FontText
-          title='Bigtoria'
-          sx={{
-            fontSize: '1.25rem',
-          }}
-        />
+        Bigtoria
       </Logo>
       <ButtonsContainer>
         <HamburgerButton onClick={handleClick}>
@@ -196,6 +191,8 @@ const HamburgerButton = styled.div`
 
 const Logo = styled.h1`
   margin: 0;
+  font-display: fallback;
+  font-size: 1.25rem;
   cursor: pointer;
 `;
 
