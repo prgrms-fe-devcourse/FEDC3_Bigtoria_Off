@@ -3,8 +3,9 @@ import { args } from '../interfaces/signUp';
 export const signUpValidate = (values: args) => {
   const emailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-  const fullNameRegex = /^[A-Za-z0-9가-힣]{4,12}$/;
+  const fullNameRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
   const passwordRegex = /^.{6,15}$/;
+  const jobRegex = /^[가-힣]{1,6}$/;
 
   const newError = {
     fullName: '',
@@ -17,7 +18,7 @@ export const signUpValidate = (values: args) => {
 
   if (!values.fullName) newError.fullName = '닉네임을 입력해 주세요.';
   else if (!fullNameRegex.test(values.fullName))
-    newError.fullName = '영어, 숫자, 한글만 입력가능합니다.(4-12자리)';
+    newError.fullName = '영어, 숫자, 한글만 입력가능합니다.(2-8자리)';
   else newError.fullName = '';
 
   if (!values.email) newError.email = '이메일을 입력해 주세요.';
@@ -40,6 +41,7 @@ export const signUpValidate = (values: args) => {
   else newError.date = '';
 
   if (!values.job) newError.job = '직업을 입력해 주세요.';
+  else if (!jobRegex.test(values.job)) newError.job = '한글로 입력해주세요';
   else newError.job = '';
 
   return newError;

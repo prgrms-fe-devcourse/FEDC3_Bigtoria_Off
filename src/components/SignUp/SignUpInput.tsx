@@ -8,6 +8,7 @@ interface Props {
   name: string;
   errorMsg?: string;
   value: string;
+  maxLength: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -18,6 +19,7 @@ const SignUpInput = ({
   name,
   errorMsg,
   value,
+  maxLength,
   onChange,
 }: Props) => {
   return (
@@ -36,6 +38,7 @@ const SignUpInput = ({
         value={value}
         color='warning'
         onChange={onChange}
+        inputProps={{ maxLength }}
         helperText={errorMsg && errorMsg}
         error={!!errorMsg}
       />

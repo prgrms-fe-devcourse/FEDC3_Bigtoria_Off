@@ -21,17 +21,20 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <SignUpInput
           placeholder='닉네임'
-          innerText='영어, 한글, 숫자 (4-12자리)'
+          innerText='영어, 한글, 숫자 (2-8자리)'
           type='text'
           name='fullName'
+          maxLength='8'
           value={values.fullName}
           onChange={handleChange}
           errorMsg={errors.fullName}
         />
         <SignUpInput
           placeholder='이메일 주소'
+          innerText='front@naver.com'
           type='text'
           name='email'
+          maxLength=''
           value={values.email}
           onChange={handleChange}
           errorMsg={errors.email}
@@ -41,6 +44,7 @@ const SignUp = () => {
           innerText='6-15자리'
           type='password'
           name='password'
+          maxLength='15'
           value={values.password}
           onChange={handleChange}
           errorMsg={errors.password}
@@ -49,6 +53,7 @@ const SignUp = () => {
           placeholder='비밀번호 확인'
           type='password'
           name='passwordConfirm'
+          maxLength='15'
           value={values.passwordConfirm}
           onChange={handleChange}
           errorMsg={errors.passwordConfirm}
@@ -57,8 +62,10 @@ const SignUp = () => {
           <DatePicker value={date} text='birth' onChange={handleDateChange} />
           <SignUpInput
             placeholder='직업'
+            innerText='한글 (1-8자리)'
             type='text'
             name='job'
+            maxLength='8'
             value={values.job}
             onChange={handleChange}
             errorMsg={errors.job}
