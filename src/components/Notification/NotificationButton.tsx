@@ -1,14 +1,11 @@
 import { Notifications } from '@mui/icons-material';
 import { Badge, Box } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useSWR from 'swr';
 
-import { getNotificationList } from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
 import { ROUTES } from '../../constants/routes';
-import { INTERVAL_TIME } from '../../constants/swr';
-import { Notification } from '../../interfaces/notification';
+import { useNotificationsContext } from '../../contexts/NotificationContext';
 import { getLocalStorage } from '../../utils/storage';
 
 const { NOTIFICATION, SIGNIN } = ROUTES;
@@ -18,36 +15,13 @@ interface Props {
 }
 
 const NotificationButton = ({ onClick }: Props) => {
-  const [badgeCount, setBadgeCount] = useState(0);
   const [invisible, setInvisible] = useState(false);
   const navigate = useNavigate();
+  const { badgeCount } = useNotificationsContext();
 
-  const getBadgeCount = async () => {
-    const token = getLocalStorage(TOKEN_KEY);
-    if (!token) {
-      setBadgeCount(0);
-      setInvisible(true);
-      return;
-    }
-
-    const result = await getNotificationList();
-
-    const unSeenNotificationCount = result?.filter(
-      (notification: Notification) => {
-        const { seen, like, follow, comment, message } = notification;
-
-        if (!seen && (like || follow || comment || message)) return true;
-        return false;
-      }
-    ).length;
-
-    setBadgeCount(unSeenNotificationCount || 0);
-    unSeenNotificationCount === 0 ? setInvisible(true) : setInvisible(false);
-  };
-
-  useSWR(`badgeNotification`, getBadgeCount, {
-    refreshInterval: INTERVAL_TIME,
-  });
+  useEffect(() => {
+    !badgeCount ? setInvisible(true) : setInvisible(false);
+  }, [badgeCount]);
 
   const handleClick = async () => {
     const token = getLocalStorage(TOKEN_KEY);
