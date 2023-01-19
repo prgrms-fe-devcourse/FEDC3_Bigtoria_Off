@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { getNotificationList } from '../../apis/notification';
 import { TOKEN_KEY } from '../../constants/auth';
-import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
 import { getLocalStorage } from '../../utils/storage';

@@ -9,8 +9,7 @@ import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
-import NotificationButton from '../Alarm/NotificationButton';
-import FontText from '../Home/FontText';
+import NotificationButton from '../Notification/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
 
 const Header = () => {
