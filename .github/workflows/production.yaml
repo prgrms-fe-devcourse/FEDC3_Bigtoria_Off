@@ -25,7 +25,6 @@ jobs:
                 "destination": "${{ secrets.API_BASE_URL }}/:url*"
               }
             ],
-            "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
           }
           ' >> vercel.json
       - name: Install Vercel CLI
