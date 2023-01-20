@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from '@mui/material';
+import { Button, Divider, Stack } from '@mui/material';
 import { FormEvent, useEffect, useState } from 'react';
 
 import { postCoverImage, postProfileImage } from '../../apis/userInfo';
@@ -56,12 +56,18 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
     return formData;
   };
 
+  const validate = () => {
+    if (oldImage === imageBase64) return '현재 이미지와 일치합니다.';
+    if (!imageFile) return '이미지를 추가해 주세요.';
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!imageFile) {
-      setError('이미지를 추가해 주세요');
+    const error = validate();
+    if (error) {
+      setError(error);
       setIsLoading(false);
       return;
     }
@@ -93,14 +99,22 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
         />
         <ErrorText>{error}</ErrorText>
       </InputWrapper>
-      <ButtonWrapper>
+      <Divider />
+      <Stack
+        direction='row'
+        spacing={0}
+        justifyContent='center'
+        sx={{ width: '100%' }}>
         <Button
           type='button'
           variant='outlined'
           color='warning'
           disabled={isLoading}
-          fullWidth
-          onClick={handleOpen}>
+          size='large'
+          onClick={handleOpen}
+          sx={{
+            width: '50%',
+          }}>
           취소
         </Button>
         <Button
@@ -108,10 +122,10 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
           variant='contained'
           color='warning'
           disabled={isLoading}
-          fullWidth>
+          sx={{ width: '50%' }}>
           {type} 이미지 변경
         </Button>
-      </ButtonWrapper>
+      </Stack>
     </form>
   );
 };
@@ -119,14 +133,9 @@ const ImageForm = ({ type, oldImage, open, handleOpen }: Props) => {
 export default ImageForm;
 
 const InputWrapper = styled.div`
-  margin-top: 10px;
-  margin-bottom: 20px;
+  padding: 5px 18px 12px 18px;
 `;
 
 const ErrorText = styled.small`
   color: red;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
 `;
