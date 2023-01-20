@@ -146,7 +146,7 @@ const NotificationMsg = ({ notification }: Props) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: '5px',
+            marginRight: '8px',
           }}>
           <Badge
             variant='dot'
