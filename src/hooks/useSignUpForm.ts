@@ -57,7 +57,9 @@ const useSignUpForm = () => {
     if (nameList.includes(values.fullName)) {
       alert('중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.');
       setIsChecked(false);
-    } else {
+    } else if (values.fullName.length < 1)
+      alert('두글자 이상으로 입력해주세요');
+    else {
       alert('사용가능한 닉네임입니다.');
       setIsChecked(true);
     }
