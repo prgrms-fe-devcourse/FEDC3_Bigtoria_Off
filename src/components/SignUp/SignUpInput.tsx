@@ -47,7 +47,7 @@ const SignUpInput = ({
         helperText={errorMsg && errorMsg}
         error={!!errorMsg}
       />
-      {isName ? (
+      {isName && (
         <Button
           variant='contained'
           type='button'
@@ -56,8 +56,6 @@ const SignUpInput = ({
           onClick={duplicate}>
           중복확인
         </Button>
-      ) : (
-        ''
       )}
     </Box>
   );
