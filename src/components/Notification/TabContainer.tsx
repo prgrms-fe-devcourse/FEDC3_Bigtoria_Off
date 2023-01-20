@@ -13,8 +13,8 @@ const TAB_TYPE = {
 };
 
 const TAB_VALUE = {
-  MESSAGE: '메세지',
-  POST: '게시글',
+  MESSAGE: '메세지 팔로우',
+  POST: '좋아요 댓글',
 };
 
 const { MESSAGE, POST } = TAB_TYPE;
