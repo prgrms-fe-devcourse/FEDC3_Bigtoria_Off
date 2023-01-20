@@ -44,4 +44,16 @@ export interface StoryData {
   title: string;
   author: User;
   createdAt: string;
+  updatedAt: string;
+}
+
+export interface StoryInfo {
+  title: string;
+  date: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  imageURL?: string;
+  content: string;
 }

@@ -2,18 +2,14 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import StoryEditForm from '../components/StoryEdit/StoryEditForm';
-import { useFetchStory } from '../hooks/useStory';
 
 const StoryEdit = () => {
-  const { story } = useFetchStory();
   const { storyId } = useParams();
-
-  const isNew = storyId === 'new';
 
   return (
     <Container>
-      <h1>스토리 {isNew ? '추가' : '수정'}</h1>
-      <StoryEditForm story={story} isNew={isNew} />
+      <h1>스토리 {storyId === 'new' ? '추가' : '수정'}</h1>
+      <StoryEditForm />
     </Container>
   );
 };
