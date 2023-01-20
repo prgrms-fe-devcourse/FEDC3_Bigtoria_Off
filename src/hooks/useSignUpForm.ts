@@ -5,16 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { signin } from '../apis/auth';
 import { postSignUp } from '../apis/signup';
 import { CHANNEL_ID } from '../constants/apiParams';
+import { getDateInfo } from '../utils/helpers';
 import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
 import { postStory } from './../apis/story';
 import { ROUTES } from './../constants/routes';
-
-const getDateInfo = (date: Dayjs) => ({
-  year: date.get('year'),
-  month: date.get('month') + 1,
-  day: date.get('date'),
-});
 
 const error = {
   fullName: '',

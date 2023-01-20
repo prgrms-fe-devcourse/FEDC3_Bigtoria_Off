@@ -45,3 +45,14 @@ export interface StoryData {
   author: User;
   createdAt: string;
 }
+
+export interface StoryInfo {
+  title: string;
+  date: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  imageURL: string;
+  content: string;
+}

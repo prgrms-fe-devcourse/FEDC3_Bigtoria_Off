@@ -5,7 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
 import { CHANNEL_ID } from '../constants/apiParams';
 import { ROUTES } from '../constants/routes';
-import { Story } from '../interfaces/story';
+import { Story, StoryInfo } from '../interfaces/story';
+import { getDateInfo } from '../utils/helpers';
 import { isBlankString } from '../utils/validations';
 import { getStoriesOfChannel, putStory } from './../apis/story';
 import { ERROR_MESSAGES } from './../constants/errorMessages';
@@ -72,39 +73,15 @@ export const useFetchStory = () => {
   return { story, isLoading, fetchComment };
 };
 
-const getDateInfo = (date: Dayjs) => ({
-  year: date.get('year'),
-  month: date.get('month') + 1,
-  date: date.get('date'),
-});
-interface StoryInfo {
-  title: string;
-  date: {
-    year: number;
-    month: number;
-    date: number;
-  };
-  imageURL?: string;
-  content: string;
-}
-
-export const useStoryForm = (initialValues: StoryInfo | undefined) => {
-  const today = dayjs(new Date());
-
-  const [values, setValues] = useState(
-    initialValues || {
-      title: '',
-      date: getDateInfo(today),
-      content: '',
-    }
-  );
+export const useStoryForm = (initialValues: StoryInfo) => {
+  const [values, setValues] = useState(initialValues);
   const [date, setDate] = useState<Dayjs | null>(() => {
     if (initialValues && Object.keys(initialValues.date).length) {
-      const { year, month, date } = initialValues.date;
-      return dayjs(new Date(year, month - 1, date));
+      const { year, month, day } = initialValues.date;
+      return dayjs(new Date(year, month - 1, day));
     }
 
-    return today;
+    return dayjs(new Date());
   });
   const [imageBase64, setImageBase64] = useState('');
   const [imageFile, setImageFile] = useState<File | null>();
@@ -165,7 +142,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
         storyTitle: values.title,
         year: values.date.year,
         month: values.date.month,
-        day: values.date.date,
+        day: values.date.day,
         content: values.content,
       })
     );
@@ -197,7 +174,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
       const story = initialValues
         ? await putStory(formData)
         : await postStory(formData);
-      navigate(ROUTES.STORY_BY_STORY_ID(story._id));
+      navigate(ROUTES.STORY_BY_STORY_ID(story._id), { state: story });
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
