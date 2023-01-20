@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteStory, getStoryDetail, postStory } from '../apis/story';
 import { CHANNEL_ID } from '../constants/apiParams';
 import { ROUTES } from '../constants/routes';
-import { Story, StoryInfo } from '../interfaces/story';
+import { Story, StoryData, StoryInfo } from '../interfaces/story';
 import { getDateInfo } from '../utils/helpers';
 import { isBlankString } from '../utils/validations';
 import { getStoriesOfChannel, putStory } from './../apis/story';
@@ -73,11 +73,37 @@ export const useFetchStory = () => {
   return { story, isLoading, fetchComment };
 };
 
-export const useStoryForm = (initialValues: StoryInfo) => {
-  const [values, setValues] = useState(initialValues);
+const initialValues = {
+  title: '',
+  date: getDateInfo(dayjs(new Date())),
+  imageURL: '',
+  content: '',
+};
+
+const getInitialValues = (story: StoryData) => {
+  if (!story || !story?.title) return initialValues;
+  else {
+    const { storyTitle, year, month, day, content } = JSON.parse(story.title);
+    return {
+      title: storyTitle,
+      date: { year: Number(year), month: Number(month), day: Number(day) },
+      imageURL: story.image,
+      content,
+    };
+  }
+};
+
+export const useStoryForm = (story: StoryData) => {
+  const [values, setValues] = useState<StoryInfo>(initialValues);
+
+  useEffect(() => {
+    const { title, date, content, imageURL } = getInitialValues(story);
+    setValues({ ...values, title, date, content, imageURL });
+  }, [story]);
+
   const [date, setDate] = useState<Dayjs | null>(() => {
-    if (initialValues && Object.keys(initialValues.date).length) {
-      const { year, month, day } = initialValues.date;
+    if (values && Object.keys(values.date).length) {
+      const { year, month, day } = values.date;
       return dayjs(new Date(year, month - 1, day));
     }
 
@@ -147,7 +173,7 @@ export const useStoryForm = (initialValues: StoryInfo) => {
       })
     );
     formData.append('channelId', CHANNEL_ID);
-    initialValues && storyId && formData.append('postId', storyId);
+    story && storyId && formData.append('postId', storyId);
 
     if (values.imageURL) return formData;
 
@@ -171,10 +197,10 @@ export const useStoryForm = (initialValues: StoryInfo) => {
 
     try {
       const formData = generateFormData(imagePublicId);
-      const story = initialValues
+      const storyData = story
         ? await putStory(formData)
         : await postStory(formData);
-      navigate(ROUTES.STORY_BY_STORY_ID(story._id), { state: story });
+      navigate(ROUTES.STORY_BY_STORY_ID(storyData._id), { state: storyData });
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);

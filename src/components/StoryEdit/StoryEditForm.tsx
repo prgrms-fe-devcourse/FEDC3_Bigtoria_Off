@@ -3,34 +3,13 @@ import { Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 import { useStoryForm } from '../../hooks/useStory';
-import { StoryData } from '../../interfaces/story';
 import DatePicker from './DatePicker';
 import ImageUpload from './ImageUpload';
 import SubmitButton from './SubmitButton';
 import TextInput from './TextInput';
 
-interface Props {
-  story: StoryData;
-  isNew: boolean;
-}
-
-const setInitialValues = (story: StoryData) => {
-  if (story._id) {
-    const { storyTitle, year, month, day, content } = JSON.parse(story.title);
-
-    return {
-      title: storyTitle,
-      date: { year: Number(year), month: Number(month), date: Number(day) },
-      imageURL: story.image,
-      content,
-    };
-  }
-};
-
-const StoryEditForm = ({ story, isNew }: Props) => {
+const StoryEditForm = () => {
   const { state } = useLocation();
-
-  const initialValues = setInitialValues(isNew ? story : state);
 
   const {
     values,
@@ -43,12 +22,12 @@ const StoryEditForm = ({ story, isNew }: Props) => {
     handleImageChange,
     handleImageDelete,
     handleSubmit,
-  } = useStoryForm(initialValues);
+  } = useStoryForm(state);
 
   const image = values.imageURL || imageBase64;
 
   return (
-    <form onSubmit={(e) => handleSubmit(e, story.imagePublicId)}>
+    <form onSubmit={(e) => handleSubmit(e, state?.imagePublicId || '')}>
       <Section>
         <Box sx={{ width: '100%' }}>
           <DatePicker value={date} onChange={handleDateChange} />
