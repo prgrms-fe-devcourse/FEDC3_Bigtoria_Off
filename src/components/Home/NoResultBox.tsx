@@ -1,6 +1,10 @@
 import { Box, Typography } from '@mui/material';
 
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
+
 const NoResultBox = () => {
+  const { displayMode } = useDisplayModeContext();
+
   return (
     <Box
       sx={{
@@ -14,7 +18,10 @@ const NoResultBox = () => {
         component='h1'
         sx={{
           textAlign: 'center',
-          color: 'rgba(0, 0, 0, 0.5)',
+          color:
+            displayMode === 'dark'
+              ? 'rgba(255, 255, 255, 0.5)'
+              : 'rgba(0, 0, 0, 0.5)',
           fontSize: '1.5rem',
         }}>
         No Results...

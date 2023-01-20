@@ -16,6 +16,7 @@ import StoryAddButton from '../StoryBook/StoryAddButton';
 import DarkModeSwitch from './DarkModeSwitch';
 
 const Header = () => {
+  const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
@@ -101,8 +102,12 @@ const Header = () => {
         <HamburgerButton onClick={handleClick}>
           {click ? <FaArrowRight fontSize={'1.25rem'} /> : <FaHamburger />}
         </HamburgerButton>
-        <NotificationButton onClick={handleClickHamburgerClose} />
-        <StoryAddButton onClick={handleClickHamburgerClose} />
+        {hasToken && (
+          <>
+            <NotificationButton onClick={handleClickHamburgerClose} />
+            <StoryAddButton onClick={handleClickHamburgerClose} />
+          </>
+        )}
         <DarkModeSwitch
           displayMode={displayMode}
           onClick={handleClickDarkModeSwitch}
