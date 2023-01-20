@@ -197,7 +197,7 @@ export const useStoryForm = (initialValues: StoryInfo | undefined) => {
       const story = initialValues
         ? await putStory(formData)
         : await postStory(formData);
-      navigate(ROUTES.STORY_BY_STORY_ID(story._id));
+      navigate(ROUTES.STORY_BY_STORY_ID(story._id), { state: story });
     } catch (error) {
       console.error(error);
       alert(ERROR_MESSAGES.INVOKED_ERROR_POSTING_STORY);
