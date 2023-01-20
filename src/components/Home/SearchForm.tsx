@@ -21,7 +21,7 @@ const SearchForm = ({ onSubmit }: Props) => {
   return (
     <Box
       sx={{
-        backgroundColor: displayMode === 'dark' ? 'black' : 'white',
+        backgroundColor: displayMode === 'dark' ? '#1e1e1e' : 'white',
         transition: 'background-color 0.2s ease-out',
         borderRadius: 4,
         padding: '1rem',
@@ -38,7 +38,7 @@ const SearchForm = ({ onSubmit }: Props) => {
           sx={{
             width: '100%',
             '& input': {
-              height: '50px',
+              height: '40px',
               paddingLeft: '11px',
             },
           }}
@@ -57,9 +57,9 @@ const SearchForm = ({ onSubmit }: Props) => {
             component='label'
             sx={{
               position: 'absolute',
-              right: '2px',
-              top: '30px',
-              color: '#00000099',
+              right: 0,
+              top: '24px',
+              color: displayMode === 'dark' ? 'white' : '#00000099',
             }}
             onClick={handleInputClear}>
             <HighlightOff />

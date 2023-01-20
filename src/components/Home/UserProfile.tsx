@@ -29,7 +29,6 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
         borderRadius: 4,
         marginBottom: '12px',
         padding: 0,
-        backgroundColor: 'white',
       }}>
       <ListItemButton
         onClick={() => navigate(path)}

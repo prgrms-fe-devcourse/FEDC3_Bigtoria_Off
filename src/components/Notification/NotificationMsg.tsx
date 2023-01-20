@@ -133,14 +133,14 @@ const NotificationMsg = ({ notification }: Props) => {
   return (
     <ListItem
       sx={{
-        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
         boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.06)',
-        borderRadius: 2,
+        borderRadius: 2.5,
         marginBottom: '12px',
         padding: 0,
-        backgroundColor: 'white',
       }}>
-      <ListItemButton onClick={handleListItemClick}>
+      <ListItemButton
+        sx={{ borderRadius: 2.5, padding: '8px 8px' }}
+        onClick={handleListItemClick}>
         <ListItemAvatar
           sx={{
             display: 'flex',
