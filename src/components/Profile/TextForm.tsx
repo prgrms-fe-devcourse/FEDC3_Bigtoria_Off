@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 
 import { putUserInfo } from '../../apis/userInfo';
@@ -92,26 +92,34 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextField
-        type='text'
-        value={value}
-        label={`새 ${type}`}
-        error={!!error}
-        color='warning'
-        helperText={error}
-        fullWidth
-        onChange={handleChange}
-        sx={{ marginBottom: '20px' }}
-      />
-      <ButtonWrapper>
+    <form onSubmit={handleSubmit}>
+      <TitleWrapper>
+        <TextField
+          type='text'
+          value={value}
+          label={`새 ${type}`}
+          error={!!error}
+          color='warning'
+          helperText={error}
+          fullWidth
+          onChange={handleChange}
+        />
+      </TitleWrapper>
+      <Stack
+        direction='row'
+        spacing={0}
+        justifyContent='center'
+        sx={{ width: '100%' }}>
         <Button
           type='button'
           variant='outlined'
           color='warning'
           disabled={isLoading}
-          fullWidth
-          onClick={handleOpen}>
+          size='large'
+          onClick={handleOpen}
+          sx={{
+            width: '50%',
+          }}>
           취소
         </Button>
         <Button
@@ -119,20 +127,16 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
           variant='contained'
           color='warning'
           disabled={isLoading}
-          fullWidth>
+          sx={{ width: '50%' }}>
           {type} 변경
         </Button>
-      </ButtonWrapper>
-    </Form>
+      </Stack>
+    </form>
   );
 };
 
 export default TextForm;
 
-const Form = styled.form`
-  margin: 15px 0;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
+const TitleWrapper = styled.div`
+  margin: 15px;
 `;

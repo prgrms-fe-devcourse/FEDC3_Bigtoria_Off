@@ -108,6 +108,7 @@ const UploadContainer = styled(Box)`
   width: 100%;
   height: 300px;
   border: 1px dashed grey;
+  border-radius: 5px;
   cursor: pointer;
 `;
 
