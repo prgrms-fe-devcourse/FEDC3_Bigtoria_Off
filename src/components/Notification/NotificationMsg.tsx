@@ -59,12 +59,12 @@ const NOTI_MESSAGE: NOTI_TYPE = {
   },
 };
 
-const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
+const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID, CHAT } = ROUTES;
 
 const NotificationMsg = ({ notification }: Props) => {
   const {
     seen,
-    author: { fullName, image },
+    author: { fullName, image, _id },
     like,
     post,
     follow,
@@ -73,6 +73,11 @@ const NotificationMsg = ({ notification }: Props) => {
     createdAt,
   } = notification;
   const navigate = useNavigate();
+  const notificationSender = {
+    image,
+    fullName,
+    user: _id,
+  };
 
   const getTotalMsg = (front: string, middle: string, rear: string) => {
     return (
@@ -127,7 +132,7 @@ const NotificationMsg = ({ notification }: Props) => {
   const handleListItemClick = () => {
     if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
-    if (message) '';
+    if (message) navigate(CHAT, { state: notificationSender });
   };
 
   return (

@@ -21,6 +21,7 @@ import { getLocalStorage } from '../utils/storage';
 const Chat = () => {
   const hasToken = getLocalStorage(TOKEN_KEY) ? true : false;
   const { state: userInfo } = useLocation();
+  console.log(userInfo);
   const [conversationPartner, setConversationPartner] = useState(
     userInfo.user ?? ''
   );
