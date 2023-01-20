@@ -1,23 +1,30 @@
 import styled from '@emotion/styled';
 import { Box, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import StoryComment from '../components/Story/StoryComment';
 import StoryInfo from '../components/Story/StoryInfo';
-import Loading from '../components/StoryBook/Loading';
 import { useFetchStory } from '../hooks/useStory';
 
 const Story = () => {
-  const { story, fetchComment, isLoading } = useFetchStory();
+  const { story, fetchComment } = useFetchStory();
+  const { state } = useLocation();
+  const [detailStory, setDetailStory] = useState(state);
 
-  if (isLoading || !story.title) return <Loading />;
+  useEffect(() => {
+    if (story.createdAt !== '') {
+      setDetailStory(story);
+    }
+  }, [story]);
 
   return (
     <Container>
-      <StoryInfo story={story} />
+      <StoryInfo story={detailStory} />
       <Divider />
       <StoryComment
-        storyAuthorId={story.author._id}
-        comments={story.comments}
+        storyAuthorId={detailStory.author._id}
+        comments={detailStory.comments}
         fetchComment={fetchComment}
       />
     </Container>

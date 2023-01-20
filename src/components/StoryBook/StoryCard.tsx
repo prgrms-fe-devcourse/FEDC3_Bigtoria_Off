@@ -5,20 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import defaultImage from '../../assets/images/defaultImage.png';
 import { COLORS } from '../../constants/colors';
 import useLazyLoadImage from '../../hooks/useLazyLoadImage';
+import { Story } from '../../interfaces/story';
 
 interface Props {
+  story: Story;
   title: string;
   storyId: string;
   image?: string;
   lazy?: boolean;
 }
 
-const StoryCard = ({ title, storyId, image, lazy = false }: Props) => {
+const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
   const { loaded, imageRef } = useLazyLoadImage(lazy);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/story/${storyId}`);
+    navigate(`/story/${storyId}`, { state: story });
   };
 
   return (

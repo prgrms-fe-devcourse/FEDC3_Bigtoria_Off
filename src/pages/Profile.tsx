@@ -213,14 +213,14 @@ const ProfileImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  bottom: -70px;
+  bottom: -90px;
   left: 50%;
-  margin-left: -40px;
+  margin-left: -60px;
 `;
 
 const ProfileImage = styled(Avatar)`
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   cursor: pointer;
 `;
 
