@@ -24,6 +24,7 @@ const style = css`
     src: url('/MaplestoryOTFLight.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
 
   body {
