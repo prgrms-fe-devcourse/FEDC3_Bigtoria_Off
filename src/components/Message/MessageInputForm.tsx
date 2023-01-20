@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import http from '../../apis/instance';
 import { postNotification } from '../../apis/notification';
@@ -47,6 +47,12 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Props) => {
 
     messageInputRef.current.value = '';
   };
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current?.scrollHeight,
+    });
+  }, [sendMessage]);
 
   return (
     <ChatWrapper>
