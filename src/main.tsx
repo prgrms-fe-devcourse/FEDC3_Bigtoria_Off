@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './App';
-import { DisplayModeProvider } from './contexts/DisplayModeContext';
-import NotificationsProvider from './contexts/NotificationContext';
-import FontStyle from './styles/FontStyle';
-import GlobalStyle from './styles/GlobalStyle';
+import App from './App.js';
+import { DisplayModeProvider } from './contexts/DisplayModeContext.js';
+import NotificationsProvider from './contexts/NotificationContext.js';
+import GlobalStyle from './styles/GlobalStyle.js';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
+
+root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <FontStyle />
     <DisplayModeProvider>
       <NotificationsProvider>
         <App />
