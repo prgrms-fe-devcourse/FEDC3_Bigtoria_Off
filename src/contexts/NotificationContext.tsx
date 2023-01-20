@@ -44,9 +44,9 @@ const NotificationsProvider = ({ children }: Props) => {
 
     const unSeenNotificationCount = notifications.filter(
       (notification: Notification) => {
-        const { seen, like, follow, comment, message } = notification;
+        const { seen, like, follow, comment } = notification;
 
-        if (!seen && (like || follow || comment || message)) return true;
+        if (!seen && (like || follow || comment)) return true;
         return false;
       }
     ).length;

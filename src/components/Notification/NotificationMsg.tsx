@@ -1,5 +1,4 @@
 import CommentIcon from '@mui/icons-material/Comment';
-import SendIcon from '@mui/icons-material/Send';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
@@ -12,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { getStoryDetail } from '../../apis/story';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
@@ -33,7 +33,6 @@ const NOTI_TYPE = {
   LIKE: 'LIKE',
   COMMENT: 'COMMENT',
   FOLLOW: 'FOLLOW',
-  MESSAGE: 'MESSAGE',
 };
 
 const NOTI_MESSAGE: NOTI_TYPE = {
@@ -52,32 +51,21 @@ const NOTI_MESSAGE: NOTI_TYPE = {
     MIDDLE: '팔로우',
     REAR: '합니다',
   },
-  MESSAGE: {
-    FRONT: '님이 회원님께 ',
-    MIDDLE: '메세지',
-    REAR: '를 보냈습니다',
-  },
 };
 
-const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID, CHAT } = ROUTES;
+const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
 
 const NotificationMsg = ({ notification }: Props) => {
   const {
     seen,
-    author: { fullName, image, _id },
+    author: { fullName, image },
     like,
     post,
     follow,
     comment,
-    message,
     createdAt,
   } = notification;
   const navigate = useNavigate();
-  const notificationSender = {
-    image,
-    fullName,
-    user: _id,
-  };
 
   const getTotalMsg = (front: string, middle: string, rear: string) => {
     return (
@@ -94,9 +82,8 @@ const NotificationMsg = ({ notification }: Props) => {
 
   const getMsgType = () => {
     if (like) return NOTI_TYPE.LIKE;
-    else if (comment) return NOTI_TYPE.COMMENT;
-    else if (follow) return NOTI_TYPE.FOLLOW;
-    else return NOTI_TYPE.MESSAGE;
+    if (comment) return NOTI_TYPE.COMMENT;
+    return NOTI_TYPE.FOLLOW;
   };
 
   const generateMsg = () => {
@@ -122,13 +109,12 @@ const NotificationMsg = ({ notification }: Props) => {
           src={image ? image : ''}
         />
       );
-    if (message) return <SendIcon />;
   };
 
-  const handleListItemClick = () => {
-    if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
+  const handleListItemClick = async () => {
+    if ((like || comment) && post)
+      navigate(STORY_BY_STORY_ID(post), { state: await getStoryDetail(post) });
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
-    if (message) navigate(CHAT, { state: notificationSender });
   };
 
   return (

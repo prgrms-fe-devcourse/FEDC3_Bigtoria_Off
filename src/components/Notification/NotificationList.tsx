@@ -5,7 +5,7 @@ import { Notification } from '../../interfaces/notification';
 import { isExpiredDate } from '../../utils/calcCreatedToCurrentTime';
 import NotificationMsg from './NotificationMsg';
 
-const MESSAGE = 'message';
+const FOLLOW = 'follow';
 
 interface Props {
   type: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const NotificationList = ({ type, notifications }: Props) => {
-  const [msgList, setMsgList] = useState<Notification[]>([]);
+  const [followList, setFollowList] = useState<Notification[]>([]);
   const [postList, setPostList] = useState<Notification[]>([]);
 
   const filterNotification = (notifications: Notification[]) => {
@@ -22,7 +22,7 @@ const NotificationList = ({ type, notifications }: Props) => {
     );
 
     setPostList(filteredNotSeenOrUnexpired.filter((n) => n.like || n.comment));
-    setMsgList(filteredNotSeenOrUnexpired.filter((n) => n.follow || n.message));
+    setFollowList(filteredNotSeenOrUnexpired.filter((n) => n.follow));
   };
 
   useEffect(() => {
@@ -34,8 +34,10 @@ const NotificationList = ({ type, notifications }: Props) => {
       sx={{
         width: '100%',
       }}>
-      {type === MESSAGE
-        ? msgList?.map((n, i) => <NotificationMsg key={i} notification={n} />)
+      {type === FOLLOW
+        ? followList?.map((n, i) => (
+            <NotificationMsg key={i} notification={n} />
+          ))
         : postList?.map((n, i) => <NotificationMsg key={i} notification={n} />)}
     </List>
   );
