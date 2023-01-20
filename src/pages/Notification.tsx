@@ -14,7 +14,7 @@ import { Notification as NotificationType } from '../interfaces/notification';
 
 const { SIGNIN } = ROUTES;
 
-const DEFAULT_TAB_VALUE = 'message';
+const DEFAULT_TAB_VALUE = 'post';
 const CHECK_ALL_NOTIFICATION = '전체 읽음';
 
 const Notification = () => {

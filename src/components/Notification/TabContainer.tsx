@@ -12,29 +12,34 @@ const TAB_TYPE = {
   POST: 'post',
 };
 
+const TAB_VALUE = {
+  MESSAGE: '메세지',
+  POST: '게시글',
+};
+
 const { MESSAGE, POST } = TAB_TYPE;
 
 const TabContainer = ({ onClick }: Props) => {
-  const [tabValue, setTabValue] = useState('message');
+  const [tabValue, setTabValue] = useState(POST);
 
   return (
     <Stack direction='row' spacing={2}>
       <TabButtonItem
-        text='메세지'
-        type={MESSAGE}
-        curTabValue={tabValue}
-        onClick={() => {
-          setTabValue(MESSAGE);
-          onClick(MESSAGE);
-        }}
-      />
-      <TabButtonItem
-        text='게시글'
+        text={TAB_VALUE.POST}
         type={POST}
         curTabValue={tabValue}
         onClick={() => {
           setTabValue(POST);
           onClick(POST);
+        }}
+      />
+      <TabButtonItem
+        text={TAB_VALUE.MESSAGE}
+        type={MESSAGE}
+        curTabValue={tabValue}
+        onClick={() => {
+          setTabValue(MESSAGE);
+          onClick(MESSAGE);
         }}
       />
     </Stack>
