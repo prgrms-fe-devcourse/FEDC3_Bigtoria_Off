@@ -24,7 +24,7 @@ const SearchForm = ({ onSubmit }: Props) => {
         backgroundColor: displayMode === 'dark' ? '#1e1e1e' : 'white',
         transition: 'background-color 0.2s ease-out',
         borderRadius: 4,
-        padding: '1rem',
+        padding: '1rem 20px',
       }}>
       <Box
         component='form'
