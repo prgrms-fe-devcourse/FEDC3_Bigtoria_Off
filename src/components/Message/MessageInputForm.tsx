@@ -3,6 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useRef } from 'react';
 
 import http from '../../apis/instance';
+import { postNotification } from '../../apis/notification';
 import { Message } from '../../interfaces/message';
 import MessageBubble from './MessageBubble';
 
@@ -28,13 +29,21 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Props) => {
   const sendMessage = async () => {
     if (!messageInputRef.current) return;
 
-    await http.post({
+    const result = await http.post({
       url: '/messages/create',
       data: {
         message: messageInputRef.current?.value,
         receiver: conversationPartner,
       },
     });
+
+    //send notification
+    await postNotification(
+      'MESSAGE',
+      result.data._id,
+      conversationPartner,
+      null
+    );
 
     messageInputRef.current.value = '';
   };
