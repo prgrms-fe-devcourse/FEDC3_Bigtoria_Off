@@ -59,12 +59,12 @@ const NOTI_MESSAGE: NOTI_TYPE = {
   },
 };
 
-const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID } = ROUTES;
+const { STORY_BOOK_BY_USER_ID, STORY_BY_STORY_ID, CHAT } = ROUTES;
 
 const NotificationMsg = ({ notification }: Props) => {
   const {
     seen,
-    author: { fullName, image },
+    author: { fullName, image, _id },
     like,
     post,
     follow,
@@ -73,6 +73,11 @@ const NotificationMsg = ({ notification }: Props) => {
     createdAt,
   } = notification;
   const navigate = useNavigate();
+  const notificationSender = {
+    image,
+    fullName,
+    user: _id,
+  };
 
   const getTotalMsg = (front: string, middle: string, rear: string) => {
     return (
@@ -120,14 +125,10 @@ const NotificationMsg = ({ notification }: Props) => {
     if (message) return <SendIcon />;
   };
 
-  //TODO
-  //1. like, comment => 게시글로 이동 (o)
-  //2. follow => 사용자 프로필로 이동 (o)
-  //3. message => 메세지 대화창으로 이동
   const handleListItemClick = () => {
     if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
-    if (message) '';
+    if (message) navigate(CHAT, { state: notificationSender });
   };
 
   return (
