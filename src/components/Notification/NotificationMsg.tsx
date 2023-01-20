@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { getStoryDetail } from '../../apis/story';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import { Notification } from '../../interfaces/notification';
@@ -81,8 +82,8 @@ const NotificationMsg = ({ notification }: Props) => {
 
   const getMsgType = () => {
     if (like) return NOTI_TYPE.LIKE;
-    else if (comment) return NOTI_TYPE.COMMENT;
-    else return NOTI_TYPE.FOLLOW;
+    if (comment) return NOTI_TYPE.COMMENT;
+    return NOTI_TYPE.FOLLOW;
   };
 
   const generateMsg = () => {
@@ -110,8 +111,9 @@ const NotificationMsg = ({ notification }: Props) => {
       );
   };
 
-  const handleListItemClick = () => {
-    if ((like || comment) && post) navigate(STORY_BY_STORY_ID(post));
+  const handleListItemClick = async () => {
+    if ((like || comment) && post)
+      navigate(STORY_BY_STORY_ID(post), { state: await getStoryDetail(post) });
     if (follow) navigate(STORY_BOOK_BY_USER_ID(follow.follower));
   };
 
