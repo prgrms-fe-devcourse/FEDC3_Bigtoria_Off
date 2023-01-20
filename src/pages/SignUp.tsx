@@ -1,5 +1,6 @@
 import { Box, Container } from '@mui/material';
 
+// import { useEffect } from 'react';
 import SignUpInput from '../components/SignUp//SignUpInput';
 import SignUpButton from '../components/SignUp/SignUpButton';
 import DatePicker from '../components/StoryEdit/DatePicker';
@@ -13,8 +14,13 @@ const SignUp = () => {
     date,
     handleSubmit,
     handleChange,
+    handleDuplicate,
     handleDateChange,
   } = useSignUpForm();
+
+  // useEffect(() => {
+
+  // }, [])
 
   return (
     <Container sx={{ marginTop: '1rem' }}>
@@ -28,6 +34,8 @@ const SignUp = () => {
           value={values.fullName}
           onChange={handleChange}
           errorMsg={errors.fullName}
+          isName={true}
+          duplicate={handleDuplicate}
         />
         <SignUpInput
           placeholder='이메일 주소'
