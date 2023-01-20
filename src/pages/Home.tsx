@@ -36,7 +36,7 @@ const Home = () => {
     <Box
       sx={{
         minWidth: '320px',
-        maxWidth: '480px',
+        maxWidth: '412px',
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',

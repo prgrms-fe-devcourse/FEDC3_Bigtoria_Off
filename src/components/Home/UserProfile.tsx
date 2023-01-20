@@ -29,16 +29,15 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
         borderRadius: 4,
         marginBottom: '12px',
         padding: 0,
-        backgroundColor: 'white',
       }}>
       <ListItemButton
         onClick={() => navigate(path)}
         sx={{ padding: '18px 20px', borderRadius: 3.5 }}>
-        <ListItemAvatar sx={{ marginRight: '10px' }}>
+        <ListItemAvatar sx={{ marginRight: '15px' }}>
           <Avatar
             sx={{
-              width: 42,
-              height: 42,
+              width: 54,
+              height: 54,
               backgroundColor: `${!image ? COLORS.SUB : ''}`,
             }}
             alt={fullName}
@@ -50,7 +49,12 @@ const UserProfile = ({ path, image, fullName, job, year }: Props) => {
           secondary={
             <React.Fragment>
               <Typography sx={{ display: 'inline' }} component='span'>
-                {year} {job}
+                {year}
+              </Typography>
+              <Typography
+                sx={{ display: 'inline', marginLeft: '7px' }}
+                component='span'>
+                {job}
               </Typography>
             </React.Fragment>
           }></ListItemText>

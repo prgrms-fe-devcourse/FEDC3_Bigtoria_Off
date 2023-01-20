@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import SendIcon from '@mui/icons-material/Send';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import http from '../../apis/instance';
 import { Message } from '../../interfaces/message';
