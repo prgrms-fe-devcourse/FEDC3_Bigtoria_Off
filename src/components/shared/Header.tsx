@@ -155,8 +155,6 @@ export default Header;
 const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
   background-color: ${({ displayMode }) =>
     displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
-  /* color: ${({ displayMode }) =>
-    displayMode === 'dark' ? `white` : `black`}; */
   position: sticky;
   top: 0;
   padding: 1.2rem 1rem;
@@ -184,7 +182,7 @@ const Hamburger = styled.nav<{ click: boolean; displayMode: string }>`
   align-items: center;
   height: 100vh;
   position: absolute;
-  top: 3.6rem;
+  top: 4.5rem;
   left: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
   animation-name: slide;
@@ -208,7 +206,6 @@ const HamburgerButton = styled.div`
 
 const Logo = styled.h1`
   margin: 0;
-  font-display: fallback;
   font-size: 1.25rem;
   cursor: pointer;
 `;

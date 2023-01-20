@@ -48,8 +48,7 @@ const Home = () => {
         component='span'
         sx={{
           display: 'inline-block',
-          margin: '45px 0 30px 0',
-          paddingTop: '4px',
+          padding: '3rem 0',
           fontSize: '5rem',
         }}>
         B.
