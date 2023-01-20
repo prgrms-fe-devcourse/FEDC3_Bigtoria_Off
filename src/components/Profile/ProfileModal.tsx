@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { Modal, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { createTheme, Dialog, ThemeProvider, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
 import { ModalType } from '../../pages/Profile';
@@ -78,31 +77,55 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
   };
 
   return (
-    <Modal open={open} onClose={handleOpen}>
-      <ContentWrapper>
-        <Typography variant='h6' component='h2'>
-          {modal[type].title}
-        </Typography>
-        {modal[type].form}
-      </ContentWrapper>
-    </Modal>
+    <ThemeProvider theme={theme}>
+      <Dialog open={open} onClose={handleOpen} disableScrollLock={true}>
+        <Container>
+          <TitleWrapper>
+            <Typography variant='h6' component='h2' sx={{ padding: '5px' }}>
+              {modal[type].title} 변경
+            </Typography>
+          </TitleWrapper>
+          <div>{modal[type].form}</div>
+        </Container>
+      </Dialog>
+    </ThemeProvider>
   );
 };
 
 export default ProfileModal;
 
-const ContentWrapper = styled(Box)`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  width: 50%;
-  min-width: 300px;
-  max-width: 500px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 10px 5px 5px grey;
+  width: 300px;
+  overflow: hidden;
 `;
+
+const TitleWrapper = styled.div`
+  padding-top: 10px;
+  padding-left: 10px;
+`;
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "'MaplestoryOTFLight', cursive",
+  },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: '5%',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '0',
+          border: '0',
+          borderTop: '1px solid rgba(237, 108, 2, 0.5)',
+        },
+      },
+    },
+  },
+});

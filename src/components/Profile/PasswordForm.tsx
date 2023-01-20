@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 import { putPassword } from '../../apis/userInfo';
@@ -89,8 +89,8 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputWrapper>
+    <form onSubmit={handleSubmit}>
+      <InputContainer>
         <TextField
           type='password'
           name='oldValue'
@@ -102,8 +102,6 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputWrapper>
-      <InputWrapper>
         <TextField
           type='password'
           name='newValue'
@@ -116,8 +114,6 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputWrapper>
-      <InputWrapper>
         <TextField
           type='password'
           name='newValueCheck'
@@ -129,15 +125,22 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           fullWidth
           onChange={handleChange}
         />
-      </InputWrapper>
-      <ButtonWrapper>
+      </InputContainer>
+      <Stack
+        direction='row'
+        spacing={0}
+        justifyContent='center'
+        sx={{ width: '100%' }}>
         <Button
           type='button'
           variant='outlined'
           color='warning'
+          size='large'
           disabled={isLoading}
-          fullWidth
-          onClick={handleOpen}>
+          onClick={handleOpen}
+          sx={{
+            width: '50%',
+          }}>
           취소
         </Button>
         <Button
@@ -145,26 +148,19 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           variant='contained'
           color='warning'
           disabled={isLoading}
-          fullWidth>
+          sx={{ width: '50%' }}>
           비밀번호 변경
         </Button>
-      </ButtonWrapper>
-    </Form>
+      </Stack>
+    </form>
   );
 };
 
 export default PasswordForm;
 
-const Form = styled.form`
-  width: 100%;
-  padding-top: 15px;
-`;
-
-const InputWrapper = styled.div`
-  width: 100%;
-  padding-bottom: 13px;
-`;
-
-const ButtonWrapper = styled.div`
+const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 8px 15px 18px 15px;
 `;
