@@ -54,11 +54,12 @@ const useSignUpForm = () => {
   const handleDuplicate = async () => {
     const res = await userList();
     const nameList = res.map((user: User) => user.fullName);
+    const fullNameRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
     if (nameList.includes(values.fullName)) {
       alert('중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.');
       setIsChecked(false);
-    } else if (values.fullName.length < 1)
-      alert('두글자 이상으로 입력해주세요');
+    } else if (!fullNameRegex.test(values.fullName))
+      alert('불가능한 닉네임입니다.');
     else {
       alert('사용가능한 닉네임입니다.');
       setIsChecked(true);
