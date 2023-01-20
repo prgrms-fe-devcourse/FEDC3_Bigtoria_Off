@@ -90,3 +90,144 @@
 <br />
 
 # 폴더 구조
+📦src
+ ┣ 📂apis
+ ┃ ┣ 📜auth.ts
+ ┃ ┣ 📜follow.ts
+ ┃ ┣ 📜getFollowUser.ts
+ ┃ ┣ 📜instance.ts
+ ┃ ┣ 📜notification.ts
+ ┃ ┣ 📜search.ts
+ ┃ ┣ 📜signup.ts
+ ┃ ┣ 📜story.ts
+ ┃ ┣ 📜userInfo.ts
+ ┃ ┗ 📜userList.ts
+ ┣ 📂assets
+ ┃ ┗ 📂images
+ ┃ ┃ ┗ 📜defaultImage.png
+ ┣ 📂components
+ ┃ ┣ 📂Follow
+ ┃ ┃ ┣ 📜FollowEmpty.tsx
+ ┃ ┃ ┣ 📜FollowModal.tsx
+ ┃ ┃ ┣ 📜FollowerButton.tsx
+ ┃ ┃ ┣ 📜FollowingButton.tsx
+ ┃ ┃ ┗ 📜FollowingList.tsx
+ ┃ ┣ 📂Home
+ ┃ ┃ ┣ 📜NoResultBox.tsx
+ ┃ ┃ ┣ 📜SearchForm.tsx
+ ┃ ┃ ┣ 📜UserList.tsx
+ ┃ ┃ ┗ 📜UserProfile.tsx
+ ┃ ┣ 📂Message
+ ┃ ┃ ┣ 📜MessageBubble.tsx
+ ┃ ┃ ┗ 📜MessageInputForm.tsx
+ ┃ ┣ 📂Notification
+ ┃ ┃ ┣ 📜NotificationButton.tsx
+ ┃ ┃ ┣ 📜NotificationList.tsx
+ ┃ ┃ ┣ 📜NotificationMsg.tsx
+ ┃ ┃ ┣ 📜TabContainer.tsx
+ ┃ ┃ ┗ 📜TabItem.tsx
+ ┃ ┣ 📂Profile
+ ┃ ┃ ┣ 📜ImageForm.tsx
+ ┃ ┃ ┣ 📜PasswordForm.tsx
+ ┃ ┃ ┣ 📜ProfileModal.tsx
+ ┃ ┃ ┗ 📜TextForm.tsx
+ ┃ ┣ 📂SignIn
+ ┃ ┃ ┣ 📜SignInForm.tsx
+ ┃ ┃ ┗ 📜SignInLinks.tsx
+ ┃ ┣ 📂SignUp
+ ┃ ┃ ┣ 📜SignUpButton.tsx
+ ┃ ┃ ┣ 📜SignUpInput.tsx
+ ┃ ┃ ┗ 📜SignUpSelector.tsx
+ ┃ ┣ 📂Story
+ ┃ ┃ ┣ 📜CommentForm.tsx
+ ┃ ┃ ┣ 📜CommentList.tsx
+ ┃ ┃ ┣ 📜LikeButton.tsx
+ ┃ ┃ ┣ 📜StoryComment.tsx
+ ┃ ┃ ┗ 📜StoryInfo.tsx
+ ┃ ┣ 📂StoryBook
+ ┃ ┃ ┣ 📜Empty.tsx
+ ┃ ┃ ┣ 📜FollowButton.tsx
+ ┃ ┃ ┣ 📜Loading.tsx
+ ┃ ┃ ┣ 📜StoriesByYear.tsx
+ ┃ ┃ ┣ 📜StoryAddButton.tsx
+ ┃ ┃ ┣ 📜StoryBookTitle.tsx
+ ┃ ┃ ┗ 📜StoryCard.tsx
+ ┃ ┣ 📂StoryEdit
+ ┃ ┃ ┣ 📜DatePicker.tsx
+ ┃ ┃ ┣ 📜ImageInput.tsx
+ ┃ ┃ ┣ 📜ImageUpload.tsx
+ ┃ ┃ ┣ 📜StoryEditForm.tsx
+ ┃ ┃ ┣ 📜SubmitButton.tsx
+ ┃ ┃ ┗ 📜TextInput.tsx
+ ┃ ┗ 📂shared
+ ┃ ┃ ┣ 📜DarkModeSwitch.tsx
+ ┃ ┃ ┣ 📜Header.tsx
+ ┃ ┃ ┣ 📜ScrollToTop.tsx
+ ┃ ┃ ┗ 📜SignInButton.tsx
+ ┣ 📂constants
+ ┃ ┣ 📜apiParams.ts
+ ┃ ┣ 📜apiUrls.ts
+ ┃ ┣ 📜auth.ts
+ ┃ ┣ 📜colors.ts
+ ┃ ┣ 📜errorMessages.ts
+ ┃ ┣ 📜http.ts
+ ┃ ┗ 📜routes.ts
+ ┣ 📂contexts
+ ┃ ┣ 📜DisplayModeContext.tsx
+ ┃ ┗ 📜NotificationContext.tsx
+ ┣ 📂hooks
+ ┃ ┣ 📜useCheckAuthToken.ts
+ ┃ ┣ 📜useComment.ts
+ ┃ ┣ 📜useDebounce.ts
+ ┃ ┣ 📜useFetchStories.ts
+ ┃ ┣ 📜useFetchUser.ts
+ ┃ ┣ 📜useGetFollow.ts
+ ┃ ┣ 📜useGetFollower.ts
+ ┃ ┣ 📜useInfiniteScroll.ts
+ ┃ ┣ 📜useIntersectionObserver.ts
+ ┃ ┣ 📜useIsOverByScroll.ts
+ ┃ ┣ 📜useLazyLoadImage.ts
+ ┃ ┣ 📜useLike.ts
+ ┃ ┣ 📜useSearchForm.ts
+ ┃ ┣ 📜useSignInForm.ts
+ ┃ ┣ 📜useSignUpForm.ts
+ ┃ ┣ 📜useStory.ts
+ ┃ ┗ 📜useTimeoutFn.ts
+ ┣ 📂interfaces
+ ┃ ┣ 📜comment.ts
+ ┃ ┣ 📜displayMode.ts
+ ┃ ┣ 📜followList.ts
+ ┃ ┣ 📜like.ts
+ ┃ ┣ 📜message.ts
+ ┃ ┣ 📜notification.ts
+ ┃ ┣ 📜signUp.ts
+ ┃ ┣ 📜story.ts
+ ┃ ┗ 📜user.ts
+ ┣ 📂pages
+ ┃ ┣ 📜404.tsx
+ ┃ ┣ 📜Chat.tsx
+ ┃ ┣ 📜Home.tsx
+ ┃ ┣ 📜Notification.tsx
+ ┃ ┣ 📜Profile.tsx
+ ┃ ┣ 📜SignIn.tsx
+ ┃ ┣ 📜SignUp.tsx
+ ┃ ┣ 📜Story.tsx
+ ┃ ┣ 📜StoryBook.tsx
+ ┃ ┣ 📜StoryEdit.tsx
+ ┃ ┗ 📜follow.tsx
+ ┣ 📂styles
+ ┃ ┗ 📜GlobalStyle.tsx
+ ┣ 📂utils
+ ┃ ┣ 📜calcCreatedToCurrentTime.ts
+ ┃ ┣ 📜getChangedIndex.ts
+ ┃ ┣ 📜getF4FId.ts
+ ┃ ┣ 📜helpers.ts
+ ┃ ┣ 📜setUserListImageFirst.ts
+ ┃ ┣ 📜signUpIsValid.ts
+ ┃ ┣ 📜signUpValidate.ts
+ ┃ ┣ 📜storage.ts
+ ┃ ┣ 📜validationSearchForm.ts
+ ┃ ┗ 📜validations.ts
+ ┣ 📜App.tsx
+ ┣ 📜main.tsx
+ ┗ 📜vite-env.d.ts
