@@ -13,6 +13,7 @@ const SignUp = () => {
     date,
     handleSubmit,
     handleChange,
+    handleDuplicate,
     handleDateChange,
   } = useSignUpForm();
 
@@ -28,6 +29,8 @@ const SignUp = () => {
           value={values.fullName}
           onChange={handleChange}
           errorMsg={errors.fullName}
+          isName={true}
+          duplicate={handleDuplicate}
         />
         <SignUpInput
           placeholder='이메일 주소'
