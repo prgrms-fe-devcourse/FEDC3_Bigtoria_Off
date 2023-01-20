@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { signin } from '../apis/auth';
 import { postSignUp } from '../apis/signup';
+import { userList } from '../apis/userList';
 import { CHANNEL_ID } from '../constants/apiParams';
 import { getDateInfo } from '../utils/helpers';
+import { User } from '../interfaces/user';
 import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
 import { postStory } from './../apis/story';
@@ -36,11 +38,24 @@ const useSignUpForm = () => {
   const [errors, setErrors] = useState(error);
   const [date, setDate] = useState<Dayjs | null>(today);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value.replace(/\s/g, '') });
+  };
+
+  const handleDuplicate = async () => {
+    const res = await userList();
+    const nameList = res.map((user: User) => user.fullName);
+    if (nameList.includes(values.fullName)) {
+      alert('중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.');
+      setIsChecked(false);
+    } else {
+      alert('사용가능한 닉네임입니다.');
+      setIsChecked(true);
+    }
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
@@ -72,6 +87,11 @@ const useSignUpForm = () => {
 
     if (signUpIsValid(newError)) {
       setIsLoading(true);
+      if (!isChecked) {
+        alert('중복확인 버튼을 눌러주세요');
+        setIsLoading(false);
+        return;
+      }
       try {
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
@@ -96,6 +116,7 @@ const useSignUpForm = () => {
     handleSubmit,
     handleChange,
     handleDateChange,
+    handleDuplicate,
     errors,
   };
 };

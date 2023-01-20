@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { ChangeEventHandler } from 'react';
 
 interface Props {
@@ -9,7 +9,9 @@ interface Props {
   errorMsg?: string;
   value: string;
   maxLength: string;
+  isName?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  duplicate?: () => void;
 }
 
 const SignUpInput = ({
@@ -20,11 +22,14 @@ const SignUpInput = ({
   errorMsg,
   value,
   maxLength,
+  isName,
+  duplicate,
   onChange,
 }: Props) => {
   return (
     <Box
       sx={{
+        display: 'flex',
         alignItems: 'center',
         position: 'relative',
         paddingBottom: '15px',
@@ -42,6 +47,16 @@ const SignUpInput = ({
         helperText={errorMsg && errorMsg}
         error={!!errorMsg}
       />
+      {isName && (
+        <Button
+          variant='contained'
+          type='button'
+          color='warning'
+          sx={{ position: 'absolute', right: '10px', top: '9.75px' }}
+          onClick={duplicate}>
+          중복확인
+        </Button>
+      )}
     </Box>
   );
 };

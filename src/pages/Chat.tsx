@@ -84,11 +84,55 @@ const Chat = () => {
       .then((data) => setSpecificUser(data.data));
   };
 
+  /* TODO : 채팅 API 구현
+  const businessLogic = () => {
+    // const myConversationPartnersLastMessage: MyPartnerLastMessage[];
+
+    // messages?.map((message) => console.log(message));
+
+    const myConversationPartners = messages
+      ?.map((message) => message._id)
+      .map((id) => {
+        return id.find((v) => v !== myID);
+      });
+
+    const myConversationPartnersData = myConversationPartners.map(async (v) => {
+      return {
+        partner: v,
+        partnerImage: await userSearch(v as string).then((data) => data?.image),
+      };
+    });
+
+    const promiseMyConversationPartnersMessages = myConversationPartners.map(
+      async (partner) =>
+        await http
+          .get({
+            url: '/messages',
+            params: {
+              userId: partner,
+            },
+          })
+          .then((data) => {
+            return {
+              partner,
+              lastMessage: data.data,
+            };
+          })
+    );
+
+    const MyConversationPartners = () =>
+      promiseMyConversationPartnersMessages.map((myConversation) =>
+        myConversation.then((data) => {
+          return data;
+        })
+      );
+  }; */
+
   return (
     <Wrapper>
       <List sx={{ width: '40%' }}>
         {!hasToken && <div>로그인이 필요해요</div>}
-        {messages?.map((message) => {
+        {messages.map((message) => {
           return (
             <ListItem
               key={message.createdAt}

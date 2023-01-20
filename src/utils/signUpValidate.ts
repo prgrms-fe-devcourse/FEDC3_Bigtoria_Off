@@ -4,7 +4,7 @@ export const signUpValidate = (values: args) => {
   const emailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4})(\]?)$/;
   const fullNameRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
-  const passwordRegex = /^\s{6,15}$/;
+  const passwordRegex = /^.{6,15}$/;
   const jobRegex = /^[가-힣]{2,6}$/;
 
   const newError = {

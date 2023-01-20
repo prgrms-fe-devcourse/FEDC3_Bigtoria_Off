@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Avatar } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaArrowRight, FaHamburger } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import { TOKEN_KEY, USER_ID_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useDisplayModeContext from '../../contexts/DisplayModeContext';
+import useIsOverByScroll from '../../hooks/useIsOverByScroll';
 import { getLocalStorage, removeLocalStorage } from '../../utils/storage';
 import NotificationButton from '../Notification/NotificationButton';
 import StoryAddButton from '../StoryBook/StoryAddButton';
@@ -19,8 +20,7 @@ const Header = () => {
   const handleClick = () => setClick(!click);
   const navigate = useNavigate();
   const token = getLocalStorage(TOKEN_KEY);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const { ref, isOverByScroll } = useIsOverByScroll();
   const [user, setUser] = useState({
     image: '',
     fullName: '',
@@ -40,23 +40,6 @@ const Header = () => {
 
     fetchUser();
   }, [token]);
-
-  useEffect(() => {
-    const headerHeight = headerRef?.current?.getBoundingClientRect();
-    const scrollEvent = () => {
-      if (headerHeight && window.scrollY > headerHeight?.height) {
-        setIsScrolled(true);
-        return;
-      }
-
-      setIsScrolled(false);
-    };
-
-    document.addEventListener('scroll', scrollEvent);
-    return () => {
-      document.removeEventListener('scroll', scrollEvent);
-    };
-  }, []);
 
   const handleClickDarkModeSwitch = () => {
     toggleDisplayMode();
@@ -103,18 +86,17 @@ const Header = () => {
     navigate(ROUTES.SIGNIN);
   };
 
+  const handleClickLogo = () => {
+    setClick(false);
+    navigate(ROUTES.HOME);
+  };
+
   return (
     <Container
-      ref={headerRef}
-      isScrolled={isScrolled}
+      ref={ref}
+      isOverByScroll={isOverByScroll}
       displayMode={displayMode}>
-      <Logo
-        onClick={() => {
-          handleClickHamburgerClose();
-          navigate(ROUTES.HOME);
-        }}>
-        Bigtoria
-      </Logo>
+      <Logo onClick={handleClickLogo}>Bigtoria</Logo>
       <ButtonsContainer>
         <HamburgerButton onClick={handleClick}>
           {click ? <FaArrowRight fontSize={'1.25rem'} /> : <FaHamburger />}
@@ -152,7 +134,10 @@ const Header = () => {
 
 export default Header;
 
-const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
+const Container = styled.header<{
+  isOverByScroll: boolean;
+  displayMode: string;
+}>`
   background-color: ${({ displayMode }) =>
     displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
   position: sticky;
@@ -163,8 +148,8 @@ const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
   align-items: center;
   justify-content: space-between;
   z-index: 999;
-  box-shadow: ${({ isScrolled }) =>
-    isScrolled && `0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER}`};
+  box-shadow: ${({ isOverByScroll }) =>
+    isOverByScroll && `0px 4px 4px -4px ${COLORS.STORY_CARD_BORDER}`};
   transition: all 0.5s ease-out;
 `;
 
