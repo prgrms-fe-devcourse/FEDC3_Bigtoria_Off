@@ -155,8 +155,6 @@ export default Header;
 const Container = styled.header<{ isScrolled: boolean; displayMode: string }>`
   background-color: ${({ displayMode }) =>
     displayMode === 'dark' ? `${COLORS.DARK_MODE_HEADER}` : `${COLORS.MAIN}`};
-  /* color: ${({ displayMode }) =>
-    displayMode === 'dark' ? `white` : `black`}; */
   position: sticky;
   top: 0;
   padding: 1.2rem 1rem;
