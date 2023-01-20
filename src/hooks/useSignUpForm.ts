@@ -58,7 +58,7 @@ const useSignUpForm = () => {
     formData.append(
       'title',
       JSON.stringify({
-        storyTitle: '님 태어난 날',
+        storyTitle: `${values.fullName}님 탄생일`,
         year: values.date.year,
         month: values.date.month,
         day: values.date.day,

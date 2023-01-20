@@ -114,6 +114,7 @@ const FollowModal = ({ open, userInfo, onClick }: Props) => {
               variant='contained'
               endIcon={<SendTwoToneIcon />}
               color='warning'
+              onClick={() => navigate('/chat', { state: userInfo })}
               sx={{ width: '50%' }}>
               채팅
             </Button>

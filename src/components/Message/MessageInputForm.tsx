@@ -6,12 +6,12 @@ import http from '../../apis/instance';
 import { Message } from '../../interfaces/message';
 import MessageBubble from './MessageBubble';
 
-interface Prop {
+interface Props {
   conversationPartner: string;
   specificUsers: Message[];
 }
 
-const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
+const MessageInputForm = ({ conversationPartner, specificUsers }: Props) => {
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -19,7 +19,15 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
     e.preventDefault();
   };
 
+  const handleKeyboardEvent = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   const sendMessage = async () => {
+    if (!messageInputRef.current) return;
+
     await http.post({
       url: '/messages/create',
       data: {
@@ -27,14 +35,9 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
         receiver: conversationPartner,
       },
     });
-  };
 
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current?.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [specificUsers]);
+    messageInputRef.current.value = '';
+  };
 
   return (
     <ChatWrapper>
@@ -48,6 +51,7 @@ const MessageInputForm = ({ conversationPartner, specificUsers }: Prop) => {
       </ChatList>
       <MessageInputFormWrap onSubmit={handleSubmit}>
         <MessageInput
+          onKeyDown={handleKeyboardEvent}
           autoFocus
           ref={messageInputRef}
           data-testid='textarea'
