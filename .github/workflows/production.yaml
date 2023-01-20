@@ -24,8 +24,8 @@ jobs:
                 "source": "/api/:url*",
                 "destination": "${{ secrets.API_BASE_URL }}/:url*"
               }
-            ],
-          },
+            ]
+          }
           ' >> vercel.json
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
