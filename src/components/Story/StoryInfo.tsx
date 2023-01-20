@@ -72,14 +72,12 @@ const StoryInfo = ({ story }: Props) => {
             {content}
           </StoryContentWrapper>
         )}
-        {!isLoading && (
-          <LikeButton
-            user={user}
-            authorId={story.author._id}
-            storyId={story._id}
-            likes={story.likes}
-          />
-        )}
+        <LikeButton
+          user={user}
+          authorId={story.author._id}
+          storyId={story._id}
+          likes={story.likes}
+        />
       </StoryContainer>
     </>
   );
@@ -114,6 +112,7 @@ const StoryImageWrapper = styled.div`
 
 const StoryImage = styled.img`
   width: 100%;
+  height: 230px;
   object-fit: contain;
   cursor: pointer;
 `;
