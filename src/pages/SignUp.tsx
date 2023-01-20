@@ -1,6 +1,5 @@
 import { Box, Container } from '@mui/material';
 
-// import { useEffect } from 'react';
 import SignUpInput from '../components/SignUp//SignUpInput';
 import SignUpButton from '../components/SignUp/SignUpButton';
 import DatePicker from '../components/StoryEdit/DatePicker';
@@ -17,10 +16,6 @@ const SignUp = () => {
     handleDuplicate,
     handleDateChange,
   } = useSignUpForm();
-
-  // useEffect(() => {
-
-  // }, [])
 
   return (
     <Container sx={{ marginTop: '1rem' }}>
