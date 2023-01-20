@@ -8,16 +8,16 @@ interface Props {
 }
 
 const TAB_TYPE = {
-  MESSAGE: 'message',
+  FOLLOW: 'follow',
   POST: 'post',
 };
 
 const TAB_VALUE = {
-  MESSAGE: '메세지 팔로우',
+  FOLLOW: '팔로우',
   POST: '좋아요 댓글',
 };
 
-const { MESSAGE, POST } = TAB_TYPE;
+const { FOLLOW, POST } = TAB_TYPE;
 
 const TabContainer = ({ onClick }: Props) => {
   const [tabValue, setTabValue] = useState(POST);
@@ -34,12 +34,12 @@ const TabContainer = ({ onClick }: Props) => {
         }}
       />
       <TabButtonItem
-        text={TAB_VALUE.MESSAGE}
-        type={MESSAGE}
+        text={TAB_VALUE.FOLLOW}
+        type={FOLLOW}
         curTabValue={tabValue}
         onClick={() => {
-          setTabValue(MESSAGE);
-          onClick(MESSAGE);
+          setTabValue(FOLLOW);
+          onClick(FOLLOW);
         }}
       />
     </Stack>
