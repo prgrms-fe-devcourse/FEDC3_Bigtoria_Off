@@ -16,7 +16,7 @@ import {
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
 
@@ -34,10 +34,15 @@ interface Props {
 }
 
 const FollowModal = ({ open, userInfo, onClick }: Props) => {
+  const { userId } = useParams();
   const navigate = useNavigate();
   const { job, year } = userInfo.username && JSON.parse(userInfo.username);
 
   const handleClickStoryBook = () => {
+    if (userId && userId === userInfo.user) {
+      onClick();
+    }
+
     navigate(ROUTES.STORY_BOOK_BY_USER_ID(userInfo.user));
   };
 

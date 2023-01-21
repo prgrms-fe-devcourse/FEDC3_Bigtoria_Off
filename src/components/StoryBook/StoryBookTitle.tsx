@@ -4,12 +4,15 @@ import FollowButton from './FollowButton';
 
 interface Props {
   fullName: string;
+  onClick: () => void;
 }
 
-const StoryBookTitle = ({ fullName }: Props) => {
+const StoryBookTitle = ({ fullName, onClick }: Props) => {
   return (
     <Container>
-      <Title title={`${fullName}님의 스토리북`}>{fullName}님의 스토리북</Title>
+      <Title title={`${fullName}님의 스토리북`} onClick={onClick}>
+        {fullName}님의 스토리북
+      </Title>
       <FollowButton />
     </Container>
   );
@@ -28,4 +31,5 @@ const Title = styled.h3`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 `;

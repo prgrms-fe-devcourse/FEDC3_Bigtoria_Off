@@ -12,11 +12,12 @@ import {
 import { getStoriesOfUser } from './../apis/story';
 import { userInfo } from './../apis/userInfo';
 import { ROUTES } from './../constants/routes';
+import { User } from './../interfaces/user';
 
 const TOTAL_MONTHS_NUMBER = 12;
 
 const useFetchStories = () => {
-  const [fullName, setFullName] = useState('');
+  const [currentUserInfo, setCurrentUserInfo] = useState<User>();
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
@@ -93,9 +94,9 @@ const useFetchStories = () => {
       try {
         if (userId) {
           const fetchedStories = await getStoriesOfUser(userId);
-          const { fullName } = await userInfo(userId);
+          const fetchedUserInfo = await userInfo(userId);
           setStories(fetchedStories);
-          setFullName(fullName);
+          setCurrentUserInfo(fetchedUserInfo);
         } else {
           navigate(ROUTES.NOT_FOUND);
         }
@@ -110,7 +111,7 @@ const useFetchStories = () => {
     fetchStoriesAndUser();
   }, [userId]);
 
-  return { storiesByYear, fullName, isLoading };
+  return { storiesByYear, currentUserInfo, isLoading };
 };
 
 export default useFetchStories;
