@@ -24,7 +24,7 @@ const StoryBook = () => {
   return (
     <Container>
       <StoriesContainer>
-        {!!currentUserInfo && (
+        {currentUserInfo && (
           <StoryBookTitle
             fullName={currentUserInfo.fullName}
             onClick={handleClick}
