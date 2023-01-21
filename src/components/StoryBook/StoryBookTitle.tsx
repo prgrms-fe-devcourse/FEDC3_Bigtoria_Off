@@ -9,8 +9,10 @@ interface Props {
 
 const StoryBookTitle = ({ fullName, onClick }: Props) => {
   return (
-    <Container onClick={onClick}>
-      <Title title={`${fullName}님의 스토리북`}>{fullName}님의 스토리북</Title>
+    <Container>
+      <Title title={`${fullName}님의 스토리북`} onClick={onClick}>
+        {fullName}님의 스토리북
+      </Title>
       <FollowButton />
     </Container>
   );
