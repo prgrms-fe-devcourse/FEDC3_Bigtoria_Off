@@ -6,6 +6,8 @@ import { createFollow, removeFollow } from '../../apis/follow';
 import { postNotification } from '../../apis/notification';
 import { userInfo } from '../../apis/userInfo';
 import { USER_ID_KEY } from '../../constants/auth';
+import { COLORS } from '../../constants/colors';
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import { Follow as Following } from '../../interfaces/user';
 import { getLocalStorage } from '../../utils/storage';
 
@@ -14,6 +16,8 @@ const FollowButton = () => {
   const [canBeRendered, setCanBeRendered] = useState(false);
   const [followId, setFollowId] = useState('');
   const { userId } = useParams();
+  const { displayMode } = useDisplayModeContext();
+  const isDarkAndIsFollowing = displayMode === 'dark' && isFollowing;
 
   const storedUserId = getLocalStorage(USER_ID_KEY);
   const isMyStoryBook = userId === storedUserId;
@@ -62,6 +66,10 @@ const FollowButton = () => {
     <span>
       {!isMyStoryBook && canBeRendered && (
         <CustomButton
+          sx={{
+            borderColor: isDarkAndIsFollowing ? COLORS.MUI_LABEL : null,
+            color: isDarkAndIsFollowing ? COLORS.MUI_LABEL : null,
+          }}
           variant='outlined'
           color='warning'
           onClick={handleClick}

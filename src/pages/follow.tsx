@@ -16,6 +16,7 @@ import FollowingButton from '../components/Follow/FollowingButton';
 import FollowingList from '../components/Follow/FollowingList';
 import Loading from '../components/StoryBook/Loading';
 import { COLORS } from '../constants/colors';
+import useDisplayModeContext from '../contexts/DisplayModeContext';
 import useGetFollow from '../hooks/useGetFollow';
 import useGetFollower from '../hooks/useGetFollower';
 
@@ -149,10 +150,12 @@ const Follow = () => {
 export default Follow;
 
 const LinkTab = (props: LinkTabProps) => {
+  const { displayMode } = useDisplayModeContext();
+
   return (
     <Tab
       component='div'
-      sx={{ width: '50%' }}
+      sx={{ width: '50%', color: displayMode === 'dark' ? 'white' : null }}
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
       }}
