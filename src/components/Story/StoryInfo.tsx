@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Avatar, Button, Paper, Typography } from '@mui/material';
+import { Avatar, Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,15 +62,11 @@ const StoryInfo = ({ story }: Props) => {
         </Box>
       </Box>
       <StoryContainer>
+        {content && <StoryContentWrapper>{content}</StoryContentWrapper>}
         {story.image && (
           <StoryImageWrapper>
             <StoryImage src={story.image} alt='story image' />
           </StoryImageWrapper>
-        )}
-        {content && (
-          <StoryContentWrapper variant='outlined'>
-            {content}
-          </StoryContentWrapper>
         )}
         <LikeButton
           user={user}
@@ -116,9 +112,8 @@ const StoryImage = styled.img`
   cursor: pointer;
 `;
 
-const StoryContentWrapper = styled(Paper)`
-  min-width: 90%;
-  padding: 15px;
+const StoryContentWrapper = styled.div`
+  width: 100%;
   margin: 15px 0;
   line-height: 1.5rem;
   word-break: keep-all;
