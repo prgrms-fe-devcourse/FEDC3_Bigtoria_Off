@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
+import FollowModal from '../components/Follow/FollowModal';
 import Empty from '../components/StoryBook/Empty';
 import Loading from '../components/StoryBook/Loading';
 import StoriesByYear from '../components/StoryBook/StoriesByYear';
 import StoryBookTitle from '../components/StoryBook/StoryBookTitle';
-import UserInfoModal from '../components/StoryBook/UserInfoModal';
 import useFetchStories from '../hooks/useFetchStories';
 
 const StoryBook = () => {
@@ -18,6 +18,8 @@ const StoryBook = () => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
+
+  console.log(currentUserInfo?.username);
 
   if (isLoading) return <Loading />;
 
@@ -43,10 +45,17 @@ const StoryBook = () => {
         )}
       </StoriesContainer>
       {currentUserInfo && (
-        <UserInfoModal
-          userInfo={currentUserInfo}
+        <FollowModal
+          userInfo={{
+            image: currentUserInfo.image,
+            user: currentUserInfo._id,
+            fullName: currentUserInfo.fullName,
+            username: currentUserInfo.username,
+            coverImage: currentUserInfo.coverImage,
+            isOnline: currentUserInfo.isOnline,
+          }}
           open={isModalOpen}
-          onClose={handleClose}
+          onClick={handleClose}
         />
       )}
     </Container>
