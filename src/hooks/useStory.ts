@@ -93,28 +93,35 @@ const getInitialValues = (story: StoryData) => {
   }
 };
 
+interface Date {
+  year: number;
+  month: number;
+  day: number;
+}
+
+const generateDayjsDate = (date: Date): Dayjs => {
+  if (Object.keys(date).length) {
+    const { year, month, day } = date;
+    return dayjs(new Date(year, month - 1, day));
+  }
+  return dayjs(new Date());
+};
+
 export const useStoryForm = (story: StoryData) => {
   const [values, setValues] = useState<StoryInfo>(initialValues);
-
-  useEffect(() => {
-    const { title, date, content, imageURL } = getInitialValues(story);
-    setValues({ ...values, title, date, content, imageURL });
-  }, [story]);
-
-  const [date, setDate] = useState<Dayjs | null>(() => {
-    if (values && Object.keys(values.date).length) {
-      const { year, month, day } = values.date;
-      return dayjs(new Date(year, month - 1, day));
-    }
-
-    return dayjs(new Date());
-  });
+  const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [imageBase64, setImageBase64] = useState('');
   const [imageFile, setImageFile] = useState<File | null>();
   const [errors, setErrors] = useState({ title: '', content: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { storyId } = useParams();
+
+  useEffect(() => {
+    const { title, date, content, imageURL } = getInitialValues(story);
+    setValues({ ...values, title, date, content, imageURL });
+    setDate(generateDayjsDate(date));
+  }, [story]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
