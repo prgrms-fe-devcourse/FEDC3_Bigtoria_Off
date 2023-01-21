@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import { IconButton, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent } from 'react';
 
 import { TOKEN_KEY } from '../../constants/auth';
@@ -25,17 +26,18 @@ const CommentForm = ({
       <TextField
         fullWidth
         color='warning'
-        multiline
-        rows={4}
         placeholder={
           hasToken ? '댓글을 입력해 주세요.' : '로그인 후 이용해 주세요'
         }
         value={comment}
         onChange={handleChange}
         disabled={!hasToken}></TextField>
-      <Button color='warning' type='submit' disabled={!hasToken || isLoading}>
-        댓글 작성
-      </Button>
+      <IconButton
+        type='submit'
+        color='warning'
+        disabled={!hasToken || isLoading}>
+        <SendIcon />
+      </IconButton>
     </Form>
   );
 };
@@ -44,7 +46,6 @@ export default CommentForm;
 
 const Form = styled.form`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 5px;
 `;
