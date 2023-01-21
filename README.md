@@ -156,11 +156,9 @@
  ┃ ┃ ┗ 📜StoryCard.tsx
  ┃ ┣ 📂StoryEdit
  ┃ ┃ ┣ 📜DatePicker.tsx
- ┃ ┃ ┣ 📜ImageInput.tsx
  ┃ ┃ ┣ 📜ImageUpload.tsx
  ┃ ┃ ┣ 📜StoryEditForm.tsx
- ┃ ┃ ┣ 📜SubmitButton.tsx
- ┃ ┃ ┗ 📜TextInput.tsx
+ ┃ ┃ ┗ 📜SubmitButton.tsx
  ┃ ┗ 📂shared
  ┃ ┃ ┣ 📜DarkModeSwitch.tsx
  ┃ ┃ ┣ 📜Header.tsx

@@ -61,15 +61,3 @@ const DatePicker = ({ value, text = 'date', onChange }: Props) => {
 };
 
 export default DatePicker;
-
-// const theme = createTheme({
-//   components: {
-//     MuiButton: {
-//       styleOverrides: {
-//         root: {
-//           color: `${COLORS.SUB}`,
-//         },
-//       },
-//     },
-//   },
-// });

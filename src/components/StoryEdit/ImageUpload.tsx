@@ -22,8 +22,10 @@ const ImageUpload = ({ src, onChange, onDelete }: Props) => {
   };
 
   const handleFileDelete = () => {
-    setCurrentImage(null);
-    onDelete();
+    if (confirm('사진을 삭제하시겠습니까?')) {
+      setCurrentImage(null);
+      onDelete();
+    }
   };
 
   const handleFileChoose = () => {
