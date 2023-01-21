@@ -40,14 +40,7 @@ const Profile = () => {
   if (isLoading) return <Loading />;
 
   const handleModalType = (e: MouseEvent) => {
-    if (
-      !(
-        e.target instanceof HTMLButtonElement ||
-        e.target instanceof HTMLDivElement
-      )
-    )
-      return;
-
+    if (!(e.target instanceof HTMLElement)) return;
     const { type } = e.target.dataset;
     if (!type) return;
 
@@ -100,8 +93,12 @@ const Profile = () => {
           <ProfileImage
             src={image}
             alt='profile image'
-            data-type='profileImage'
-            onClick={handleModalType}></ProfileImage>
+            imgProps={{
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              'data-type': 'profileImage',
+              onClick: handleModalType,
+            }}></ProfileImage>
           <Button
             color='warning'
             data-type='profileImage'
