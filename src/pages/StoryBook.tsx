@@ -19,8 +19,6 @@ const StoryBook = () => {
     setIsModalOpen(false);
   };
 
-  console.log(currentUserInfo?.username);
-
   if (isLoading) return <Loading />;
 
   return (
