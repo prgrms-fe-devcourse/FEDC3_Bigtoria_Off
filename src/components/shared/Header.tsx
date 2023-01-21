@@ -173,7 +173,7 @@ const Hamburger = styled.nav<{ click: boolean; displayMode: string }>`
   height: 100vh;
   position: absolute;
   top: 4.5rem;
-  left: ${({ click }) => (click ? 0 : '-1000%')};
+  left: ${({ click }) => (click ? 0 : '-100%')};
   opacity: ${({ click }) => (click ? 1 : 0)};
   animation-name: slide;
   animation-duration: 0.5s;
