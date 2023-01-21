@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.js';
 import { DisplayModeProvider } from './contexts/DisplayModeContext.js';
@@ -15,7 +16,9 @@ root.render(
     <GlobalStyle />
     <DisplayModeProvider>
       <NotificationsProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </NotificationsProvider>
     </DisplayModeProvider>
   </React.StrictMode>
