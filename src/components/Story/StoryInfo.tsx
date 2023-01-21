@@ -112,7 +112,6 @@ const StoryImageWrapper = styled.div`
 
 const StoryImage = styled.img`
   width: 100%;
-  height: 230px;
   object-fit: contain;
   cursor: pointer;
 `;
