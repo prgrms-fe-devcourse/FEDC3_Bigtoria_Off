@@ -15,17 +15,17 @@ interface Props {
 }
 
 const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
-  const [initialValue, job, date] = useMemo(() => {
+  const [initialValue, job, year, month, day] = useMemo(() => {
+    const { job, year, month, day } = JSON.parse(username);
+
     let initialValue = '';
-    const job = username ? JSON.parse(username).job : '';
-    const date = username ? JSON.parse(username).date : {};
     if (type === '닉네임') {
       initialValue = fullName;
     } else if (type === '직업') {
       initialValue = job;
     }
 
-    return [initialValue, job, date];
+    return [initialValue, job, year, month, day];
   }, [username]);
 
   const [value, setValue] = useState(initialValue);
@@ -68,7 +68,9 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
           value,
           JSON.stringify({
             job,
-            date,
+            year,
+            month,
+            day,
           })
         );
       } else if (type === '직업') {
@@ -76,7 +78,9 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
           fullName,
           JSON.stringify({
             job: value,
-            date,
+            year,
+            month,
+            day,
           })
         );
       }
