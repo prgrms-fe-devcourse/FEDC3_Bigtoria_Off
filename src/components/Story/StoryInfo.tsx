@@ -113,7 +113,7 @@ const StoryImage = styled.img`
 `;
 
 const StoryContentWrapper = styled.div`
-  min-width: 90%;
+  width: 100%;
   margin: 15px 0;
   line-height: 1.5rem;
   word-break: keep-all;
