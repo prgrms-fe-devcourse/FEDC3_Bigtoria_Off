@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 import { useStoryForm } from '../../hooks/useStory';
 import DatePicker from './DatePicker';
 import ImageUpload from './ImageUpload';
 import SubmitButton from './SubmitButton';
-import TextInput from './TextInput';
 
 const StoryEditForm = () => {
   const { state } = useLocation();
@@ -35,11 +34,15 @@ const StoryEditForm = () => {
       </Section>
       <Section>
         <InputDiv>
-          <TextInput
+          <TextField
             name='title'
+            color='warning'
+            variant='outlined'
             value={values.title}
+            fullWidth
             label='제목'
             error={!!errors.content}
+            helperText={errors.content}
             onChange={handleChange}
           />
         </InputDiv>
@@ -55,13 +58,17 @@ const StoryEditForm = () => {
       </Section>
       <Section>
         <InputDiv>
-          <TextInput
+          <TextField
             name='content'
+            color='warning'
+            variant='outlined'
             value={values.content}
+            fullWidth
             multiline
             rows={10}
             label='설명'
             error={!!errors.content}
+            helperText={errors.content}
             onChange={handleChange}
           />
         </InputDiv>
