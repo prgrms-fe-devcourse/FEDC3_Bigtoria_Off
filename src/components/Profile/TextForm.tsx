@@ -3,7 +3,9 @@ import { Button, Stack, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 
 import { putUserInfo } from '../../apis/userInfo';
+import { getUserList } from '../../apis/userList';
 import { ERROR_MESSAGES } from '../../constants/errorMessages';
+import { User } from '../../interfaces/user';
 import { isBlankString } from '../../utils/validations';
 
 interface Props {
@@ -11,64 +13,96 @@ interface Props {
   fullName: string;
   username: string;
   open: boolean;
+  placeholder: string;
   handleOpen: () => void;
 }
 
-const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
-  const [initialValue, job, date] = useMemo(() => {
+const TextForm = ({
+  type,
+  fullName,
+  username,
+  open,
+  placeholder,
+  handleOpen,
+}: Props) => {
+  const [initialValue, job, year, month, day] = useMemo(() => {
+    const { job, year, month, day } = JSON.parse(username);
+
     let initialValue = '';
-    const job = username ? JSON.parse(username).job : '';
-    const date = username ? JSON.parse(username).date : {};
     if (type === '닉네임') {
       initialValue = fullName;
     } else if (type === '직업') {
       initialValue = job;
     }
 
-    return [initialValue, job, date];
+    return [initialValue, job, year, month, day];
   }, [username]);
 
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const fullNameRegex = /^[A-Za-z0-9가-힣]{4,12}$/;
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     setError('');
   }, [open]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value.replace(/\s/g, ''));
+  };
+
+  const validate = (regex: RegExp) => {
+    let error = '';
+
+    if (!value || isBlankString(value)) error = `${type}을 입력해 주세요`;
+    else if (value === initialValue) error = `현재 ${type}과 같습니다`;
+    else if (!regex.test(value)) error = `${placeholder}만 입력 가능합니다.`;
+
+    return error;
+  };
+
+  const checkDuplicate = async () => {
+    const userList = await getUserList();
+    const nameList = userList.map((user: User) => user.fullName);
+    if (nameList.includes(value)) {
+      alert('중복된 닉네임입니다. 다른 닉네임을 입력해주세요.');
+      setIsChecked(false);
+    } else {
+      setIsChecked(true);
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const validate = () => {
-      let newError = '';
-      if (!value || isBlankString(value)) newError = `${type}을 입력해 주세요`;
-      else if (value === initialValue) newError = `현재 ${type}과 같습니다`;
-      else if (type === '닉네임' && !fullNameRegex.test(value))
-        newError = '영어, 숫자, 한글만 입력가능합니다.(4-12자리)';
-
-      return newError;
-    };
-
     try {
-      const newError = validate();
+      let newError = '';
+      if (type === '닉네임') {
+        newError = validate(/^[A-Za-z0-9가-힣]{2,8}$/);
+        await checkDuplicate();
+        if (!isChecked) {
+          setIsLoading(false);
+          return;
+        }
+      } else if (type === '직업') {
+        newError = validate(/^[가-힣]{2,6}$/);
+      }
+
       if (newError) {
         setError(newError);
         setIsLoading(false);
         return;
       }
 
-      if (type === '닉네임') {
+      if (type === '닉네임' && isChecked) {
         await putUserInfo(
           value,
           JSON.stringify({
             job,
-            date,
+            year,
+            month,
+            day,
           })
         );
       } else if (type === '직업') {
@@ -76,7 +110,9 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
           fullName,
           JSON.stringify({
             job: value,
-            date,
+            year,
+            month,
+            day,
           })
         );
       }
@@ -101,6 +137,7 @@ const TextForm = ({ type, fullName, username, open, handleOpen }: Props) => {
           error={!!error}
           color='warning'
           helperText={error}
+          placeholder={placeholder}
           fullWidth
           onChange={handleChange}
         />

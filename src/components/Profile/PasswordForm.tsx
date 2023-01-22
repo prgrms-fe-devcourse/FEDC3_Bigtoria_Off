@@ -36,7 +36,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const validate = () => {
@@ -50,7 +50,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
     else if (oldValue === newValue) {
       errors.newValue = '현재 비밀번호와 일치합니다.';
     } else if (!passwordRegex.test(newValue)) {
-      errors.newValue = '비밀번호는 6자리 이상, 15자리 이하로 입력해주세요';
+      errors.newValue = '6자리 이상, 15자리 이하로 입력해주세요';
     }
 
     if (isBlankString(newValueCheck))
@@ -97,6 +97,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           label='현재 비밀번호'
           size='small'
           color='warning'
+          value={values.oldValue}
           error={!!errors.oldValue}
           helperText={errors.oldValue}
           fullWidth
@@ -109,6 +110,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           placeholder='6-15자리'
           size='small'
           color='warning'
+          value={values.newValue}
           error={!!errors.newValue}
           helperText={errors.newValue}
           fullWidth
@@ -120,6 +122,7 @@ const PasswordForm = ({ open, handleOpen }: Props) => {
           label='새 비밀번호 확인'
           size='small'
           color='warning'
+          value={values.newValueCheck}
           error={!!errors.newValueCheck}
           helperText={errors.newValueCheck}
           fullWidth

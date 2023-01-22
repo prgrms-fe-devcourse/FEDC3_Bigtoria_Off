@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { signin } from '../apis/auth';
 import { postSignUp } from '../apis/signup';
-import { userList } from '../apis/userList';
+import { getUserList } from '../apis/userList';
 import { CHANNEL_ID } from '../constants/apiParams';
-import { getDateInfo } from '../utils/helpers';
 import { User } from '../interfaces/user';
+import { getDateInfo } from '../utils/helpers';
 import { signUpIsValid } from '../utils/signUpIsValid';
 import { signUpValidate } from '../utils/signUpValidate';
 import { postStory } from './../apis/story';
@@ -47,7 +47,7 @@ const useSignUpForm = () => {
   };
 
   const handleDuplicate = async () => {
-    const res = await userList();
+    const res = await getUserList();
     const nameList = res.map((user: User) => user.fullName);
     const fullNameRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
     if (nameList.includes(values.fullName)) {
