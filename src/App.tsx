@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/shared/Header';
 import ScrollToTop from './components/shared/ScrollToTop';
@@ -14,10 +14,13 @@ import SignUp from './pages/SignUp';
 import Story from './pages/Story';
 import StoryBook from './pages/StoryBook';
 import StoryEdit from './pages/StoryEdit';
+import RouteChangeTracker from './RouteChangeTracker';
 
 const App = () => {
+  RouteChangeTracker();
+
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <Header />
       <Routes>
@@ -33,7 +36,7 @@ const App = () => {
         <Route path={ROUTES.PROFILE} element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 
