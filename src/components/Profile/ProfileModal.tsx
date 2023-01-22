@@ -38,6 +38,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
           fullName={user.fullName || ''}
           username={user.username || ''}
           open={open}
+          placeholder='영문, 한글, 숫자 2-8자리'
           handleOpen={handleOpen}></TextForm>
       ),
     },
@@ -49,6 +50,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
           fullName={user.fullName || ''}
           username={user.username || ''}
           open={open}
+          placeholder='한글 2-6자리'
           handleOpen={handleOpen}></TextForm>
       ),
     },
