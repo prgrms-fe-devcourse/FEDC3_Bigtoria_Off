@@ -48,7 +48,7 @@ const TextForm = ({
   }, [open]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value.replace(/\s/g, ''));
   };
 
   const validate = (regex: RegExp) => {
