@@ -6,7 +6,6 @@ import { putUserInfo } from '../../apis/userInfo';
 import { getUserList } from '../../apis/userList';
 import { ERROR_MESSAGES } from '../../constants/errorMessages';
 import { User } from '../../interfaces/user';
-import { isBlankString } from '../../utils/validations';
 
 interface Props {
   type: string;
@@ -41,7 +40,6 @@ const TextForm = ({
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     setError('');
@@ -51,51 +49,64 @@ const TextForm = ({
     setValue(e.target.value.replace(/\s/g, ''));
   };
 
-  const validate = (regex: RegExp) => {
+  const checkDuplicate = async () => {
+    const userList = await getUserList();
+    const nameList = userList.map((user: User) => user.fullName);
+    return nameList.includes(value);
+  };
+
+  const validateNickname = async () => {
+    const nicknameRegex = /^[A-Za-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,8}$/;
+    const koreanRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
     let error = '';
 
-    if (!value || isBlankString(value)) error = `${type}을 입력해 주세요`;
-    else if (value === initialValue) error = `현재 ${type}과 같습니다`;
-    else if (!regex.test(value)) error = `${placeholder}만 입력 가능합니다.`;
+    if (!value) error = '닉네임을 입력해 주세요';
+    else if (value === initialValue) error = '현재 닉네임과 같습니다';
+    else if (await checkDuplicate()) {
+      error = '중복된 닉네임 입니다. 다른 닉네임을 입력해 주세요.';
+    } else if (!nicknameRegex.test(value))
+      error = '영어, 한글, 숫자 (2~8자리)로 입력해 주세요.';
+    else if (!koreanRegex.test(value))
+      error =
+        '한글은 완성된 단어로 입력해 주세요(자음과 모음은 독립적으로 사용이 불가능합니다).';
 
     return error;
   };
 
-  const checkDuplicate = async () => {
-    const userList = await getUserList();
-    const nameList = userList.map((user: User) => user.fullName);
-    if (nameList.includes(value)) {
-      alert('중복된 닉네임입니다. 다른 닉네임을 입력해주세요.');
-      setIsChecked(false);
-    } else {
-      setIsChecked(true);
-    }
+  const validateJob = () => {
+    const jobRegex = /^[가-힣]{2,6}$/;
+    let error = '';
+
+    if (!value) error = '직업을 입력해 주세요.';
+    else if (value === initialValue) error = '현재 직업과 같습니다';
+    else if (!jobRegex.test(value)) error = '한글만 입력가능합니다.';
+
+    return error;
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    try {
-      let newError = '';
-      if (type === '닉네임') {
-        newError = validate(/^[A-Za-z0-9가-힣]{2,8}$/);
-        await checkDuplicate();
-        if (!isChecked) {
-          setIsLoading(false);
-          return;
-        }
-      } else if (type === '직업') {
-        newError = validate(/^[가-힣]{2,6}$/);
-      }
+    let newError = '';
+    if (type === '닉네임') {
+      newError = await validateNickname();
+    } else if (type === '직업') {
+      newError = validateJob();
+    }
 
-      if (newError) {
-        setError(newError);
+    if (newError) {
+      setError(newError);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      if (error) {
         setIsLoading(false);
         return;
       }
-
-      if (type === '닉네임' && isChecked) {
+      if (type === '닉네임') {
         await putUserInfo(
           value,
           JSON.stringify({
