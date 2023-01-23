@@ -94,8 +94,6 @@ const useSignUpForm = () => {
     const newError = signUpValidate(values);
     setErrors(newError);
 
-    console.log(errors);
-
     if (signUpIsValid(newError)) {
       setIsLoading(true);
       if (!isChecked) {
@@ -104,7 +102,6 @@ const useSignUpForm = () => {
         return;
       }
       try {
-        console.log(isChecked);
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
         const formData = generateFormData();
