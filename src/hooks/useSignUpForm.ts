@@ -43,20 +43,26 @@ const useSignUpForm = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === 'fullName') setIsChecked(false);
     setValues({ ...values, [name]: value.replace(/\s/g, '') });
   };
 
   const handleDuplicate = async () => {
     const res = await getUserList();
     const nameList = res.map((user: User) => user.fullName);
-    const fullNameRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
+    const fullNameRegex = /^[A-Za-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,8}$/;
+    const koreanRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
     if (nameList.includes(values.fullName)) {
       alert('중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.');
-      setIsChecked(false);
     } else if (!fullNameRegex.test(values.fullName))
-      alert('불가능한 닉네임입니다.');
+      alert('영어, 한글, 숫자 (2~8자리)로 입력해주세요.');
+    else if (!koreanRegex.test(values.fullName))
+      alert(
+        '한글은 완성된 단어로 입력해주세요. \n(자음과 모음은 독립적으로 사용이 불가능합니다.)'
+      );
     else {
       alert('사용가능한 닉네임입니다.');
+      setErrors({ ...errors, fullName: '' });
       setIsChecked(true);
     }
   };
@@ -88,6 +94,8 @@ const useSignUpForm = () => {
     const newError = signUpValidate(values);
     setErrors(newError);
 
+    console.log(errors);
+
     if (signUpIsValid(newError)) {
       setIsLoading(true);
       if (!isChecked) {
@@ -96,6 +104,7 @@ const useSignUpForm = () => {
         return;
       }
       try {
+        console.log(isChecked);
         await postSignUp(values);
         await signin({ email: values.email, password: values.password });
         const formData = generateFormData();
