@@ -40,5 +40,6 @@ const WarningContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: 20vw;
+  height: 400px;
+  width: 400px;
 `;
