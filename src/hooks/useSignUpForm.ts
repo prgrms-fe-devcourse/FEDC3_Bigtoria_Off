@@ -52,9 +52,9 @@ const useSignUpForm = () => {
     const nameList = res.map((user: User) => user.fullName);
     const fullNameRegex = /^[A-Za-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,8}$/;
     const koreanRegex = /^[A-Za-z0-9가-힣]{2,8}$/;
-    if (nameList.includes(values.fullName)) {
+    if (nameList.includes(values.fullName))
       alert('중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.');
-    } else if (!fullNameRegex.test(values.fullName))
+    else if (!fullNameRegex.test(values.fullName))
       alert('영어, 한글, 숫자 (2~8자리)로 입력해주세요.');
     else if (!koreanRegex.test(values.fullName))
       alert(
