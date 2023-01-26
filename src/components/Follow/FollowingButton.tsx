@@ -18,6 +18,7 @@ const FollowingButton = ({ isLoading, followId, userId, onClick }: Props) => {
           width: '100%',
           alignItems: 'center',
           position: 'relative',
+          marginRight: '10px',
         }}>
         <Button
           variant={isFollowing ? 'contained' : 'outlined'}
