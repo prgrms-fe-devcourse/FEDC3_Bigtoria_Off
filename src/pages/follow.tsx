@@ -33,6 +33,7 @@ const Follow = () => {
   const [value, setValue] = useState<FOLLOW>('FOLLOWING');
   const { followerList, loading, f4f, getUserInfo, handleClick } =
     useGetFollower();
+  const { displayMode } = useDisplayModeContext();
 
   const {
     followingList,
@@ -82,7 +83,9 @@ const Follow = () => {
               coverImage,
               username,
             }) => (
-              <Wrapper key={_id}>
+              <Wrapper
+                key={_id}
+                display={displayMode === 'dark' ? 'dark' : 'white'}>
                 <FollowingList
                   userInfo={{
                     image,
@@ -120,7 +123,9 @@ const Follow = () => {
               coverImage,
               username,
             }) => (
-              <Wrapper key={_id}>
+              <Wrapper
+                key={_id}
+                display={displayMode === 'dark' ? 'dark' : 'white'}>
                 <FollowingList
                   userInfo={{
                     image,
@@ -164,7 +169,7 @@ const LinkTab = (props: LinkTabProps) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ display: string | null }>`
   display: flex;
   width: 100%;
   margin: 0 auto;
@@ -173,7 +178,8 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
-  background-color: white;
+  background-color: ${(props) =>
+    props.display === 'dark' ? '#121212' : 'white'};
 `;
 
 const tabsColor = createTheme({
