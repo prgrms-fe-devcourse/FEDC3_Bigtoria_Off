@@ -8,7 +8,7 @@ import {
   Tabs,
   ThemeProvider,
 } from '@mui/material';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useLayoutEffect, useState } from 'react';
 
 import FollowEmpty from '../components/Follow/FollowEmpty';
 import FollowerButton from '../components/Follow/FollowerButton';
@@ -43,10 +43,10 @@ const Follow = () => {
     handleClick: ingHandleClick,
   } = useGetFollow();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserInfo();
     ingGetUserInfo();
-  }, []);
+  }, [value]);
 
   const handleChange = (e: SyntheticEvent, newValue: FOLLOW) => {
     setValue(newValue);
@@ -169,7 +169,7 @@ const LinkTab = (props: LinkTabProps) => {
   );
 };
 
-const Wrapper = styled.div<{ display: string | null }>`
+const Wrapper = styled.div<{ display: string }>`
   display: flex;
   width: 100%;
   margin: 0 auto;
