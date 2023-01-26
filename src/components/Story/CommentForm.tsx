@@ -35,6 +35,7 @@ const CommentForm = ({
       <IconButton
         type='submit'
         color='warning'
+        aria-label='comment-submit'
         disabled={!hasToken || isLoading}>
         <SendIcon />
       </IconButton>
