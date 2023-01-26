@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { List } from '@mui/material';
+import { List, ListProps, styled as muiStyled } from '@mui/material';
 
 import { COLORS } from '../../constants/colors';
 import useDisplayModeContext from '../../contexts/DisplayModeContext';
@@ -36,6 +36,10 @@ const StoriesByYear = ({ year, stories }: StoriesWithYear) => {
 
 export default StoriesByYear;
 
+interface StyledListProps extends ListProps {
+  displayMode: string;
+}
+
 const Container = styled.div`
   margin-top: 0.3rem;
   margin-bottom: 1rem;
@@ -54,26 +58,27 @@ const Year = styled.div`
   color: white;
 `;
 
-const CardsContainer = styled(List)<{ displayMode: string }>`
-  flex: 1;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-end;
-  overflow-x: auto;
-  padding: 1rem;
-  background-color: ${({ displayMode }) =>
-    displayMode === 'dark' ? 'black' : 'white'};
-  transition: background-color 0.2s ease-out;
+const CardsContainer = muiStyled(List, {
+  shouldForwardProp: (prop) => prop !== 'displayMode',
+})<StyledListProps>(({ displayMode }) => ({
+  flex: 1,
+  display: 'flex',
+  flexWrap: 'nowrap',
+  alignItems: 'flex-end',
+  overflowX: 'auto',
+  padding: '1rem',
+  backgroundColor: displayMode === 'dark' ? 'black' : 'white',
+  transition: 'background-color 0.2s ease-out',
 
-  &::-webkit-scrollbar {
-    height: 0.15rem;
-  }
+  '&::-webkit-scrollbar': {
+    height: '0.15rem',
+  },
 
-  &::-webkit-scrollbar-thumb {
-    background-color: ${COLORS.SUB};
-    border-radius: 1rem;
-  }
-`;
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: COLORS.SUB,
+    borderRadius: '1rem',
+  },
+}));
 
 const CardContainer = styled.div`
   display: flex;

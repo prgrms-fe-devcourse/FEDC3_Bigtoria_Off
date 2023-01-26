@@ -51,7 +51,10 @@ const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
         image={loaded ? (image ? image : defaultImage) : defaultImage}
         title={`${title} 사진`}
       />
-      <CardContent>
+      <CardContent
+        sx={{
+          width: '100%',
+        }}>
         <Typography
           sx={{
             textAlign: 'center',
