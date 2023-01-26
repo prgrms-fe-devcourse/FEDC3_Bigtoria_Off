@@ -11,6 +11,7 @@ import defaultImage from '../../assets/images/defaultImage.png';
 import { COLORS } from '../../constants/colors';
 import useLazyLoadImage from '../../hooks/useLazyLoadImage';
 import { Story } from '../../interfaces/story';
+import Loading from './Loading';
 
 interface Props {
   story: Story;
@@ -51,6 +52,7 @@ const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
         image={loaded ? (image ? image : defaultImage) : defaultImage}
         title={`${title} 사진`}
       />
+      {!loaded && <Loading />}
       <CardContent
         sx={{
           width: '100%',
