@@ -26,7 +26,8 @@ const Container = styled.div`
   gap: 1rem;
 `;
 
-const Title = styled.h3`
+const Title = styled.h1`
+  font-size: 1.2rem;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
