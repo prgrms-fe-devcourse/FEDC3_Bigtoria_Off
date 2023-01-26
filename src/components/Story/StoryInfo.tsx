@@ -26,7 +26,7 @@ const StoryInfo = ({ story }: Props) => {
       <Box>
         <h1>{storyTitle}</h1>
         <DateContainer>
-          <Typography variant='subtitle1'>
+          <Typography variant='inherit'>
             {year}년 {month}월 {day}일
           </Typography>
           {!isLoading && user?._id === story.author._id && (

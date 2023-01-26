@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { List } from '@mui/material';
 
 import { COLORS } from '../../constants/colors';
 import useDisplayModeContext from '../../contexts/DisplayModeContext';
@@ -53,7 +54,7 @@ const Year = styled.div`
   color: white;
 `;
 
-const CardsContainer = styled.div<{ displayMode: string }>`
+const CardsContainer = styled(List)<{ displayMode: string }>`
   flex: 1;
   display: flex;
   flex-wrap: nowrap;

@@ -45,7 +45,7 @@ const Home = () => {
         userSelect: 'none',
       }}>
       <Typography
-        component='span'
+        component='title'
         sx={{
           display: 'inline-block',
           padding: '3rem 0',

@@ -83,7 +83,7 @@ const ProfileModal = ({ type, user, open, handleOpen }: Props) => {
       <Dialog open={open} onClose={handleOpen} disableScrollLock={true}>
         <Container>
           <TitleWrapper>
-            <Typography variant='h6' component='h2' sx={{ padding: '5px' }}>
+            <Typography variant='h2' component='h2' sx={{ padding: '5px' }}>
               {modal[type].title} 변경
             </Typography>
           </TitleWrapper>

@@ -53,10 +53,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
+const label = { inputProps: { 'aria-label': 'dark_mode' } };
+
 const DarkModeSwitch = ({ displayMode, onClick }: Props) => {
   const checked = displayMode === 'dark';
 
-  return <MaterialUISwitch checked={checked} onClick={onClick} />;
+  return <MaterialUISwitch checked={checked} onClick={onClick} {...label} />;
 };
 
 export default DarkModeSwitch;

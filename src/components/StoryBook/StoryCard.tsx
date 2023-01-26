@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import {
+  CardContent,
+  CardMedia,
+  ListItemButton,
+  Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import defaultImage from '../../assets/images/defaultImage.png';
@@ -26,10 +31,12 @@ const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
   return (
     <CustomCard
       sx={{
+        flexDirection: 'column',
+        padding: '0',
         width: '210px',
+        borderRadius: '0.5rem',
         marginRight: '16px',
         marginTop: '.3rem',
-        cursor: 'pointer',
         boxShadow: `1px 1px 3px 1px ${COLORS.STORY_CARD_BORDER}`,
       }}
       onClick={handleClick}>
@@ -38,6 +45,7 @@ const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
         ref={imageRef}
         sx={{
           height: 280,
+          borderRadius: '0.5rem 0.5rem 0 0',
           borderBottom: `1px solid ${COLORS.STORY_CARD_BORDER}`,
         }}
         image={loaded ? (image ? image : defaultImage) : defaultImage}
@@ -61,7 +69,7 @@ const StoryCard = ({ story, title, storyId, image, lazy = false }: Props) => {
 
 export default StoryCard;
 
-const CustomCard = styled(Card)`
+const CustomCard = styled(ListItemButton)`
   animation: cardSmoothAppear 0.5s;
 
   @keyframes cardSmoothAppear {
