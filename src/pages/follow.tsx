@@ -44,8 +44,8 @@ const Follow = () => {
   } = useGetFollow();
 
   useLayoutEffect(() => {
-    getUserInfo();
-    ingGetUserInfo();
+    if (value === 'FOLLOWING') ingGetUserInfo();
+    else getUserInfo();
   }, [value]);
 
   const handleChange = (e: SyntheticEvent, newValue: FOLLOW) => {
