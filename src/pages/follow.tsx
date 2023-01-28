@@ -8,7 +8,7 @@ import {
   Tabs,
   ThemeProvider,
 } from '@mui/material';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useLayoutEffect, useState } from 'react';
 
 import FollowEmpty from '../components/Follow/FollowEmpty';
 import FollowerButton from '../components/Follow/FollowerButton';
@@ -33,6 +33,7 @@ const Follow = () => {
   const [value, setValue] = useState<FOLLOW>('FOLLOWING');
   const { followerList, loading, f4f, getUserInfo, handleClick } =
     useGetFollower();
+  const { displayMode } = useDisplayModeContext();
 
   const {
     followingList,
@@ -42,10 +43,10 @@ const Follow = () => {
     handleClick: ingHandleClick,
   } = useGetFollow();
 
-  useEffect(() => {
-    getUserInfo();
-    ingGetUserInfo();
-  }, []);
+  useLayoutEffect(() => {
+    if (value === 'FOLLOWING') ingGetUserInfo();
+    else getUserInfo();
+  }, [value]);
 
   const handleChange = (e: SyntheticEvent, newValue: FOLLOW) => {
     setValue(newValue);
@@ -82,7 +83,9 @@ const Follow = () => {
               coverImage,
               username,
             }) => (
-              <Wrapper key={_id}>
+              <Wrapper
+                key={_id}
+                display={displayMode === 'dark' ? 'dark' : 'white'}>
                 <FollowingList
                   userInfo={{
                     image,
@@ -120,7 +123,9 @@ const Follow = () => {
               coverImage,
               username,
             }) => (
-              <Wrapper key={_id}>
+              <Wrapper
+                key={_id}
+                display={displayMode === 'dark' ? 'dark' : 'white'}>
                 <FollowingList
                   userInfo={{
                     image,
@@ -164,7 +169,7 @@ const LinkTab = (props: LinkTabProps) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ display: string }>`
   display: flex;
   width: 100%;
   margin: 0 auto;
@@ -173,7 +178,8 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
-  background-color: white;
+  background-color: ${(props) =>
+    props.display === 'dark' ? COLORS.DARK_MODE_HEADER : 'white'};
 `;
 
 const tabsColor = createTheme({
