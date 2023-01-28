@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "tsc-check": "tsc"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
