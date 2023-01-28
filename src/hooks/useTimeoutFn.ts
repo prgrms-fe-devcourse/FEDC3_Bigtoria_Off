@@ -15,7 +15,7 @@ const useTimeoutFn = ({ fn, ms }: Props) => {
 
   const run = useCallback(() => {
     timeoutId.current && clearTimeout(timeoutId.current);
-    timeoutId.current = setTimeout(() => {
+    timeoutId.current = window.setTimeout(() => {
       callback.current();
     }, ms);
   }, [ms]);
