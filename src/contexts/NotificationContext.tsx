@@ -42,6 +42,7 @@ const NotificationsProvider = ({ children }: Props) => {
       return;
     }
 
+    if (!notifications) return;
     const unSeenNotificationCount = notifications.filter(
       (notification: Notification) => {
         const { seen, like, follow, comment } = notification;
@@ -63,10 +64,14 @@ const NotificationsProvider = ({ children }: Props) => {
   );
 
   useEffect(() => {
-    if (!isLoading && notifications) {
+    if (!notifications) return;
+
+    if (!isLoading) {
       changeBadgeCount();
     }
   }, [notifications]);
+
+  if (!notifications) return null;
 
   return (
     <NotificationsContext.Provider value={{ badgeCount, notifications }}>
