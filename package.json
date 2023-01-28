@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "tsc-build": "tsc --build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -27,6 +28,7 @@
     "swr": "^2.0.1"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
