@@ -2,7 +2,7 @@ import { MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createFollow, removeFollow } from '../apis/follow';
-import { getFollowingUser } from '../apis/getFollowUser';
+import { getFollowUser } from '../apis/getFollowUser';
 import { postNotification } from '../apis/notification';
 import { userInfo } from '../apis/userInfo';
 import { List } from '../interfaces/followList';
@@ -32,7 +32,7 @@ const useGetFollow = () => {
         });
       }
       if (userId) {
-        const res = await getFollowingUser(infoList.map((data) => data.user));
+        const res = await getFollowUser(infoList.map((data) => data.user));
         res.map(
           ({ fullName, image, isOnline, coverImage, username }, index) => {
             infoList[index].fullName = fullName;
