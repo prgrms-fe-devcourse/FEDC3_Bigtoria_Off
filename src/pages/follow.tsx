@@ -179,7 +179,7 @@ const Wrapper = styled.div<{ display: string }>`
   margin-bottom: 0.5rem;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.display === 'dark' ? '#121212' : 'white'};
+    props.display === 'dark' ? COLORS.DARK_MODE_HEADER : 'white'};
 `;
 
 const tabsColor = createTheme({

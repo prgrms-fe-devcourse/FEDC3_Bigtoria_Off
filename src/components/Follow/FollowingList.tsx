@@ -10,6 +10,8 @@ import {
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 
+import { COLORS } from '../../constants/colors';
+import useDisplayModeContext from '../../contexts/DisplayModeContext';
 import FollowModal from './FollowModal';
 
 interface Props {
@@ -26,6 +28,7 @@ interface Props {
 const FollowingList = ({ userInfo }: Props) => {
   const [open, setOpen] = useState(false);
   const handleClick = () => setOpen(!open);
+  const { displayMode } = useDisplayModeContext();
 
   return (
     <List
@@ -33,7 +36,8 @@ const FollowingList = ({ userInfo }: Props) => {
       sx={{
         width: '100%',
         maxWidth: 360,
-        bgcolor: 'background.paper',
+        bgcolor:
+          displayMode === 'dark' ? COLORS.DARK_MODE_HEADER : 'background.paper',
         borderRadius: '0.5rem',
       }}>
       <ListItem>
