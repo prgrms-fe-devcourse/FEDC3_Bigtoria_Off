@@ -26,3 +26,6 @@ dist-ssr
 # 환경변수
 .env
 .vercel
+
+# 타입스크립트
+tsconfig.node.tsbuildinfo
