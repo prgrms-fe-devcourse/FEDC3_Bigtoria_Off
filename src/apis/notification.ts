@@ -1,5 +1,6 @@
 import { API_URLS } from '../constants/apiUrls';
 import { TOKEN_KEY } from '../constants/auth';
+import { Notification } from '../interfaces/notification';
 import { getLocalStorage } from '../utils/storage';
 import http from './instance';
 
@@ -10,7 +11,7 @@ export const getNotificationList = async () => {
   if (!token) return null;
 
   try {
-    const { data: notificationList } = await http.get({
+    const { data: notificationList }: { data: Notification } = await http.get({
       url: NOTIFICATION.GET_NOTIFICATIONS,
     });
 
@@ -27,7 +28,7 @@ export const postNotification = async (
   userId: string,
   postId: string | null
 ) => {
-  const { data: notification } = await http.post({
+  const { data: notification }: { data: Notification } = await http.post({
     url: API_URLS.NOTIFICATION.CREATE_NOTIFICATION,
     data: {
       notificationType: type,
@@ -42,7 +43,7 @@ export const postNotification = async (
 
 export const checkNotificationSeen = async () => {
   try {
-    const { data } = await http.put({
+    const { data }: { data: Notification } = await http.put({
       url: NOTIFICATION.UPDATE_NOTIFICATION,
     });
 
