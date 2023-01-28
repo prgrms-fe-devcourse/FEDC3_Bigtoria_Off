@@ -11,9 +11,11 @@ export const getNotificationList = async () => {
   if (!token) return null;
 
   try {
-    const { data: notificationList }: { data: Notification } = await http.get({
-      url: NOTIFICATION.GET_NOTIFICATIONS,
-    });
+    const { data: notificationList }: { data: Notification[] } = await http.get(
+      {
+        url: NOTIFICATION.GET_NOTIFICATIONS,
+      }
+    );
 
     return notificationList;
   } catch (error) {
@@ -28,7 +30,7 @@ export const postNotification = async (
   userId: string,
   postId: string | null
 ) => {
-  const { data: notification }: { data: Notification } = await http.post({
+  const { data: notification }: { data: Notification[] } = await http.post({
     url: API_URLS.NOTIFICATION.CREATE_NOTIFICATION,
     data: {
       notificationType: type,
@@ -43,7 +45,7 @@ export const postNotification = async (
 
 export const checkNotificationSeen = async () => {
   try {
-    const { data }: { data: Notification } = await http.put({
+    const { data }: { data: Notification[] } = await http.put({
       url: NOTIFICATION.UPDATE_NOTIFICATION,
     });
 
