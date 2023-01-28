@@ -36,8 +36,7 @@ const FollowingList = ({ userInfo }: Props) => {
       sx={{
         width: '100%',
         maxWidth: 360,
-        bgcolor:
-          displayMode === 'dark' ? COLORS.DARK_MODE_HEADER : 'background.paper',
+        bgcolor: displayMode === 'dark' ? COLORS.DARK_MODE_HEADER : 'white',
         borderRadius: '0.5rem',
       }}>
       <ListItem>
